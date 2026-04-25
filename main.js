@@ -256,6 +256,7 @@ async function onFileSelected(file) {
   setTimeout(() => review.scrollIntoView({ behavior: "smooth", block: "nearest" }), 100);
   setTimeout(() => previewChannels.start(), 200);
   resetSimSteps();
+  updateWizardUI();
 }
 
 
@@ -314,8 +315,10 @@ async function startAnalysis() {
   const checkedMods = Array.from(document.querySelectorAll('input[name="cfg-model"]:checked')).map(el => el.value);
   if (checkedMods.length === 0) { showErr("Veuillez sélectionner au moins un modèle."); return; }
 
-  const btn = document.getElementById("btn-analyse");
-  btn.classList.add("running"); btn.innerHTML = "Analyse en cours…";
+  const btn1 = document.getElementById("btn-analyse");
+  const btn2 = document.getElementById("btn-analyse-wiz");
+  if (btn1) { btn1.classList.add("running"); btn1.innerHTML = "Analyse en cours…"; }
+  if (btn2) { btn2.classList.add("running"); btn2.innerHTML = "Analyse en cours…"; }
   hideErr(); previewChannels.stop();
   const sim = document.getElementById("analysis-sim");
   sim.classList.add("visible");
@@ -347,16 +350,45 @@ async function startAnalysis() {
     simAnim.stop(); sim.classList.remove("visible");
     showErr(err.message || "Erreur serveur. Le serveur est-il démarré?");
   } finally {
-    btn.classList.remove("running");
-    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg> Analyser le PSG';
+    if (btn1) { btn1.classList.remove("running"); btn1.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg> Analyser le PSG'; }
+    if (btn2) { btn2.classList.remove("running"); btn2.innerHTML = '▷ ANALYSER'; }
   }
 }
-function updateConfigUI() {
-  const checkedMods = Array.from(document.querySelectorAll('input[name="cfg-model"]:checked')).map(el => el.value);
+/* ── WIZARD ── */
+function selectCard(labelEl) {
+  const input = labelEl.querySelector('input');
+  if (input) input.checked = true;
+  updateWizardUI();
+}
+
+function goToStep(step) {
+  // Update header UI
+  for (let i = 1; i <= 4; i++) {
+    const s = document.getElementById("wiz-step-" + i);
+    if (!s) continue;
+    if (i < step) { s.className = "wiz-step done"; }
+    else if (i === step) { s.className = "wiz-step active"; }
+    else { s.className = "wiz-step"; }
+  }
+
+  // Show corresponding panel
+  for (let i = 1; i <= 3; i++) {
+    const p = document.getElementById("wiz-panel-" + i);
+    if (p) {
+      if (i === step) {
+        p.classList.add("active");
+      } else {
+        p.classList.remove("active");
+      }
+    }
+  }
+}
+
+function updateWizardUI() {
   const chInput = document.querySelector('input[name="cfg-channels"]:checked');
   const clsInput = document.querySelector('input[name="cfg-classes"]:checked');
   const ch = chInput ? chInput.value : "5";
-  const cls = clsInput ? clsInput.value : "5";
+  const cls = clsInput ? clsInput.value : "3";
 
   // Update card active states
   document.querySelectorAll('input[name="cfg-channels"]').forEach(el => {
@@ -366,39 +398,38 @@ function updateConfigUI() {
     el.closest('.sel-card').classList.toggle('active', el.checked);
   });
 
-  // Update confidence score
-  let conf = 0;
-  let desc = "";
-  if (ch === "5" && cls === "5") { conf = 96; desc = "Très élevé : configuration optimale recommandée par l'AASM."; }
-  else if (ch === "5" && cls === "3") { conf = 98; desc = "Excellent : tâche simplifiée avec un maximum de signaux."; }
-  else if (ch === "2" && cls === "5") { conf = 85; desc = "Moyen : l'absence d'EOG et d'EMG réduit la précision sur le stade REM et N1."; }
-  else if (ch === "2" && cls === "3") { conf = 91; desc = "Élevé : bon compromis pour des dispositifs portables EEG."; }
+  // Update summary in step 3
+  const sumCh = document.getElementById("sum-ch");
+  const sumCls = document.getElementById("sum-cls");
+  const sumMod = document.getElementById("sum-mod");
+  if (sumCh) sumCh.textContent = ch === "5" ? "5 canaux (EEG×2, EOG×2, EMG)" : "2 canaux (EEG×2)";
+  if (sumCls) sumCls.textContent = cls === "5" ? "5 classes (Wake / N1 / N2 / N3 / REM)" : "3 classes (Wake / NREM / REM)";
+  if (sumMod) sumMod.textContent = `stacking ${ch}ch ${cls}cls`;
 
-  const confValEl = document.getElementById("conf-val");
-  const confDescEl = document.getElementById("conf-desc");
-  if (confValEl) confValEl.textContent = conf + "%";
-  if (confDescEl) confDescEl.textContent = desc;
+  // Update file selected UI
+  const sumFile = document.getElementById("sum-file");
+  const btnAnaWiz = document.getElementById("btn-analyse-wiz");
+  if (sumFile && btnAnaWiz) {
+    if (_currentFile) {
+      sumFile.textContent = _currentFile.name;
+      sumFile.style.fontStyle = "normal";
+      btnAnaWiz.classList.remove("disabled");
+    } else {
+      sumFile.textContent = "Aucun fichier sélectionné";
+      sumFile.style.fontStyle = "italic";
+      btnAnaWiz.classList.add("disabled");
+    }
+  }
 
-  let name = checkedMods.length > 0 ? checkedMods.join(" & ") : "Aucun modèle";
-  document.getElementById("hero-desc").innerHTML = name + ` analysis.<br>Upload a PSG recording, get a full AASM-scored hypnogram and clinical metrics.`;
-
-  // Update psg-review chips
-  const chChip = document.querySelector(".psg-chip.green");
-  if (chChip) chChip.textContent = ch + " channels";
-
-  // Hide/show channels in preview and simulation
+  // Hide/show channels in simulation if needed
   const is2Ch = ch === "2";
-  ["eogl", "eogr", "emg"].forEach(c => {
-    const pRow = document.getElementById("prev-" + c)?.closest('.psg-ch-row');
-    if (pRow) pRow.style.display = is2Ch ? "none" : "flex";
-  });
   ["eog", "emg"].forEach(c => {
     const sRow = document.getElementById("sim-" + c)?.closest('.sim-ch-row');
     if (sRow) sRow.style.display = is2Ch ? "none" : "flex";
   });
 }
 // Init UI state
-updateConfigUI();
+updateWizardUI();
 function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 /* ── RESET ── */
@@ -432,6 +463,7 @@ function renderResults(data) {
   document.getElementById("step2-lbl").style.display = "flex";
   document.getElementById("osa-panel").style.display = "block";
   document.getElementById("osa-report").style.display = "none";
+  goToStep(4);
 
   data.results.forEach((res, i) => {
     const { model_info, stages, stats } = res;

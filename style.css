@@ -2481,3 +2481,214 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* ── WIZARD ────────────────────────────────────── */
+.wizard-container {
+  max-width: 900px;
+  margin: 20px auto 60px;
+  background: var(--surface);
+  border-radius: var(--r);
+  padding: 30px;
+  box-shadow: var(--sh2);
+  border: 1px solid var(--border);
+}
+.wizard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.wiz-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text3);
+  cursor: pointer;
+  transition: var(--t);
+}
+.wiz-step.active, .wiz-step.done {
+  color: var(--text);
+}
+.wiz-circle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--border2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+}
+.wiz-step.active .wiz-circle {
+  border-color: var(--red);
+  background: var(--red);
+  color: #fff;
+}
+.wiz-step.done .wiz-circle {
+  border-color: #059669;
+  background: #059669;
+  color: #fff;
+}
+.wiz-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+.wiz-line {
+  flex: 1;
+  height: 2px;
+  background: var(--border);
+  margin: 0 15px;
+}
+.wiz-panel {
+  display: none;
+  animation: fadeUp 0.3s ease;
+}
+.wiz-panel.active {
+  display: block;
+}
+.wiz-info-box {
+  display: flex;
+  gap: 16px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+.wiz-info-icon {
+  flex-shrink: 0;
+  color: #1d4ed8;
+  background: rgba(29, 78, 216, 0.1);
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wiz-info-title {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.wiz-info-text {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.5;
+}
+.wiz-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.btn-next, .btn-prev {
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: var(--t);
+  border: none;
+}
+.btn-next {
+  background: var(--red);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-next:hover {
+  background: #a93226;
+}
+.btn-next.disabled {
+  background: var(--border2);
+  cursor: not-allowed;
+}
+.btn-prev {
+  background: transparent;
+  color: var(--text2);
+  border: 1px solid var(--border);
+}
+.btn-prev:hover {
+  background: var(--bg2);
+}
+.sel-card-icon {
+  margin-bottom: 12px;
+  color: var(--text2);
+}
+.sel-card.active .sel-card-icon {
+  color: var(--red);
+}
+.sel-card-tag {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-top: 10px;
+}
+.sel-card-tag.green { background: #d1fae5; color: #065f46; }
+.sel-card-tag.blue { background: #dbeafe; color: #1e40af; }
+.sel-card-tag.purple { background: #f3e8ff; color: #6b21a8; }
+.sel-card-stats {
+  margin-top: 20px;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+  font-size: 11px;
+}
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.stat-row span:first-child {
+  color: var(--text3);
+}
+.stat-row span:last-child {
+  font-family: var(--mono);
+  font-weight: 500;
+}
+.wiz-summary {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+.wiz-sum-title {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 16px;
+}
+.wiz-sum-row {
+  display: flex;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+.wiz-sum-lbl {
+  width: 120px;
+  color: var(--text2);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.wiz-sum-row b, .wiz-sum-row i {
+  color: var(--text);
+}
+.dot.green { background: #059669; }
+.dot.blue { background: #2563eb; }
+.dot.purple { background: #9333ea; }
+.dot.grey { background: #9ca3af; }
