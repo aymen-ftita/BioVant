@@ -1,0 +1,8 @@
+step2
+models
+__pycache__
+venv
+.env
+.vscode
+best_LSTM_shhs.pth
+implementation_plan.md
