@@ -566,7 +566,7 @@ function hideErr() { document.getElementById("error-bar").classList.remove("visi
 
 async function predictOSA() {
   const btn = document.getElementById("btn-predict-osa");
-  btn.classList.add("running"); btn.innerHTML = "Calcul en cours...";
+  btn.classList.add("running"); btn.innerHTML = "Analyse en cours...";
   try {
     const payload = {
       stages_int: _stagesInt,
@@ -577,6 +577,12 @@ async function predictOSA() {
         bmi: document.getElementById("osa-bmi").value,
         avgsat: document.getElementById("osa-avg-sat").value,
         minsat: document.getElementById("osa-min-sat").value,
+        pctsa90h: document.getElementById("osa-pctsa90").value || null,
+        pctsa85h: document.getElementById("osa-pctsa85").value || null,
+        pctsa95h: document.getElementById("osa-pctsa95").value || null,
+        ai_all: document.getElementById("osa-ai-all").value || null,
+        ai_nrem: document.getElementById("osa-ai-nrem").value || null,
+        ai_rem: document.getElementById("osa-ai-rem").value || null,
       }
     };
     const res = await fetch(API + "/predict_osa", {
@@ -586,34 +592,156 @@ async function predictOSA() {
     const data = await res.json();
     if (data.error) throw new Error(data.error);
 
-    // Render
+    // ═══════════════════════════════════════════════
+    //  RENDER FULL CLINICAL REPORT
+    // ═══════════════════════════════════════════════
     const report = document.getElementById("osa-report");
     report.style.display = "block";
+
+    // 1. Severity Badge
     const badge = document.getElementById("osa-sev-badge");
     badge.textContent = data.severity;
     const s = data.severity.toLowerCase();
     badge.className = "osa-severity-badge " + (s.includes("severe") ? "sev-severe" : s.includes("moderate") ? "sev-moderate" : s.includes("mild") ? "sev-mild" : "sev-normal");
 
+    // Model badge
+    const modelBadge = document.getElementById("osa-model-badge");
+    if (modelBadge) modelBadge.textContent = "🧠 " + (data.model_used || "XGBoost");
+
+    // 2. Probability Distribution
+    if (data.probabilities) {
+      const probaContainer = document.getElementById("osa-proba-bars");
+      probaContainer.innerHTML = "";
+      const classOrder = ["Normal", "Mild", "Moderate", "Severe"];
+      const classColors = { Normal: "#059669", Mild: "#d97706", Moderate: "#ea580c", Severe: "#dc2626" };
+      const classLabels = { Normal: "Normal", Mild: "Léger", Moderate: "Modéré", Severe: "Sévère" };
+
+      classOrder.forEach(cls => {
+        const pct = data.probabilities[cls] || 0;
+        const pctStr = (pct * 100).toFixed(1);
+        const isPredicted = cls.toLowerCase() === s;
+        const row = document.createElement("div");
+        row.className = "osa-proba-row";
+        row.innerHTML = `
+          <div class="osa-proba-label" style="color:${classColors[cls]};${isPredicted ? 'font-weight:800' : ''}">${classLabels[cls]}</div>
+          <div class="osa-proba-track">
+            <div class="osa-proba-fill proba-${cls.toLowerCase()}" style="width:0%" data-w="${Math.max(pct * 100, 1)}%">${pct > 0.08 ? pctStr + '%' : ''}</div>
+          </div>
+          <div class="osa-proba-pct" style="color:${classColors[cls]}">${pctStr}%</div>
+        `;
+        probaContainer.appendChild(row);
+        requestAnimationFrame(() => setTimeout(() => {
+          const fill = row.querySelector(".osa-proba-fill");
+          fill.style.width = fill.getAttribute("data-w");
+        }, 100));
+      });
+    }
+
+    // 3. AASM Feature Cards
+    if (data.aasm_features) {
+      const featGrid = document.getElementById("osa-features-grid");
+      featGrid.innerHTML = "";
+      const feats = [
+        { key: "tst_min", label: "TST", unit: "min", src: "timing", goodRange: [360, 540], warnRange: [300, 600] },
+        { key: "se_pct", label: "Efficacité", unit: "%", src: "timing", goodRange: [85, 100], warnRange: [75, 100] },
+        { key: "sol_min", label: "Latence", unit: "min", src: "timing", goodRange: [10, 20], warnRange: [5, 30] },
+        { key: "waso_min", label: "WASO", unit: "min", src: "timing", goodRange: [0, 30], warnRange: [0, 60] },
+        { key: "N1_pct", label: "N1", unit: "%", src: "stages" },
+        { key: "N2_pct", label: "N2", unit: "%", src: "stages" },
+        { key: "N3_pct", label: "N3", unit: "%", src: "stages", goodRange: [15, 30], warnRange: [10, 40] },
+        { key: "REM_pct", label: "REM", unit: "%", src: "stages", goodRange: [20, 25], warnRange: [15, 30] },
+        { key: "rem_latency_min", label: "Lat. REM", unit: "min", src: "latencies", goodRange: [70, 120], warnRange: [60, 150] },
+        { key: "frag_index", label: "Fragmentation", unit: "/h", src: "fragmentation" },
+        { key: "n_wake_bouts", label: "Éveils", unit: "", src: "fragmentation" },
+        { key: "n_rem_cycles", label: "Cycles REM", unit: "", src: "fragmentation" },
+      ];
+
+      feats.forEach(f => {
+        const val = data.aasm_features[f.src] ? data.aasm_features[f.src][f.key] : null;
+        if (val === null || val === undefined) return;
+        let cls = "";
+        if (f.goodRange) {
+          if (val >= f.goodRange[0] && val <= f.goodRange[1]) cls = "good";
+          else if (f.warnRange && (val < f.warnRange[0] || val > f.warnRange[1])) cls = "danger";
+          else cls = "warn";
+        }
+        const card = document.createElement("div");
+        card.className = "osa-feat-card " + cls;
+        card.innerHTML = `
+          <div class="osa-feat-label">${f.label}</div>
+          <div class="osa-feat-value">${typeof val === 'number' ? (Number.isInteger(val) ? val : val.toFixed(1)) : val}<span class="osa-feat-unit">${f.unit}</span></div>
+        `;
+        featGrid.appendChild(card);
+      });
+    }
+
+    // 4. SHAP Waterfall
     const shaps = document.getElementById("osa-shaps");
     shaps.innerHTML = "";
-    const maxImp = Math.max(...data.shap_explanations.map(x => Math.abs(x.impact)), 0.1);
+    const shapData = data.shap_explanations || [];
+    if (shapData.length > 0) {
+      const maxImp = Math.max(...shapData.map(x => Math.abs(x.impact)), 0.1);
 
-    data.shap_explanations.forEach(sh => {
-      const isPos = sh.impact > 0;
-      const pct = (Math.abs(sh.impact) / maxImp * 48).toFixed(1);
-      const row = document.createElement("div");
-      row.className = "shap-item";
-      row.innerHTML = `<div class="shap-lbl">${sh.feature} <span style="color:var(--text3)">(${sh.value})</span></div>
-                       <div class="shap-bar-wrap">
-                         <div class="shap-bar ${isPos ? 'shap-pos' : 'shap-neg'}" style="width:0%" data-w="${pct}%"></div>
-                       </div>
-                       <div class="shap-val" style="color:${isPos ? 'var(--red)' : '#1d4ed8'}">${isPos ? '+' : ''}${sh.impact.toFixed(3)}</div>`;
-      shaps.appendChild(row);
-      requestAnimationFrame(() => setTimeout(() => {
-        const b = row.querySelector(".shap-bar");
-        b.style.width = b.getAttribute("data-w");
-      }, 100));
-    });
+      shapData.forEach((sh, idx) => {
+        const isPos = sh.impact > 0;
+        const pct = (Math.abs(sh.impact) / maxImp * 45).toFixed(1);
+        const row = document.createElement("div");
+        row.className = "shap-item";
+        row.style.animationDelay = (idx * 50) + "ms";
+        
+        // Human-readable feature names
+        const featureNames = {
+          "ai_all": "Index Arousal Total", "ai_nrem": "Arousal NREM", "ai_rem": "Arousal REM",
+          "avgsat": "SpO₂ Moyenne", "minsat": "SpO₂ Minimum", "pctsa90h": "% Temps <90%",
+          "pctsa85h": "% Temps <85%", "pctsa95h": "% Temps <95%",
+          "sleep_efficiency": "Efficacité Sommeil", "waso_min": "WASO",
+          "frag_index": "Fragmentation", "tst_min": "TST", "sol_min": "Latence",
+          "N1_pct": "% N1", "N2_pct": "% N2", "N3_pct": "% N3", "REM_pct": "% REM",
+          "rem_latency_min": "Latence REM", "bmi_s2": "IMC", "age_s2": "Âge", "gender": "Sexe",
+          "hypoxia_score": "Score Hypoxie", "arousal_frag": "Arousal × Frag.",
+          "sat_drop": "Chute SpO₂", "bmi_arousal": "IMC × Arousal",
+          "n3_suppression": "Suppression N3", "waso_arousal": "WASO × Arousal",
+          "slpeffp": "Eff. Sommeil (PSG)", "n_wake_bouts": "Nb Éveils",
+          "nrem_rem_ratio": "Ratio NREM/REM", "light_deep_ratio": "Ratio Léger/Profond",
+        };
+        const displayName = featureNames[sh.feature] || sh.feature.replace(/_/g, " ");
+        
+        row.innerHTML = `<div class="shap-lbl">${displayName} <span style="color:var(--text3)">(${sh.value})</span></div>
+                         <div class="shap-bar-wrap">
+                           <div class="shap-bar ${isPos ? 'shap-pos' : 'shap-neg'}" style="width:0%" data-w="${pct}%"></div>
+                         </div>
+                         <div class="shap-val" style="color:${isPos ? 'var(--red)' : '#1d4ed8'}">${isPos ? '+' : ''}${sh.impact.toFixed(3)}</div>`;
+        shaps.appendChild(row);
+        requestAnimationFrame(() => setTimeout(() => {
+          const b = row.querySelector(".shap-bar");
+          b.style.width = b.getAttribute("data-w");
+        }, 100 + idx * 30));
+      });
+    }
+
+    // 5. Clinical Interpretation
+    const interpSection = document.getElementById("osa-interp-section");
+    interpSection.innerHTML = "";
+    if (data.interpretation && data.interpretation.length > 0) {
+      const title = document.createElement("div");
+      title.className = "osa-interp-title";
+      title.textContent = "Interprétation Clinique";
+      interpSection.appendChild(title);
+
+      const icons = {
+        warning: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+        danger: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>',
+        info: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>',
+      };
+
+      data.interpretation.forEach((item, idx) => {
+        const el = document.createElement("div");
+        el.className = `osa-interp-item type-${item.type}`;
+        el.style.animationDelay = (idx * 80) + "ms";
+        el.innerHTML = `<span class="osa-interp-icon">${icons[item.type] || icons.info}</span>${item.text}`;
+        interpSection.appendChild(el);
+      });
+    }
 
     setTimeout(() => report.scrollIntoView({ behavior: "smooth", block: "nearest" }), 100);
 
