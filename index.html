@@ -318,78 +318,22 @@
 
             <div id="dynamic-results"></div>
 
-            <div class="sec-lbl" id="step2-lbl" style="margin-top:40px;display:none">Étape 2 : Analyse de Sévérité OSA
-              (Stacking + SHAP)</div>
+            <div class="sec-lbl" id="step2-lbl" style="margin-top:40px;display:none">Étape 2 : Prédiction de Sévérité du
+              SAOS (XGBoost + SHAP)</div>
             <div class="osa-panel" id="osa-panel" style="display:none">
-
-              <!-- CLINICAL DATA FORM -->
               <div class="osa-form" id="osa-form">
                 <div style="font-size:11px;margin-bottom:18px;color:var(--text2)">Renseignez les données cliniques du
-                  patient pour affiner l'évaluation de la sévérité de l'apnée obstructive du sommeil.</div>
-
-                <!-- Demographics -->
-                <div class="osa-section-title">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                  Données Démographiques
-                </div>
+                  patient pour affiner l'évaluation de la sévérité de l'apnée.</div>
                 <div class="osa-grid">
-                  <label>Âge (ans)<input type="number" id="osa-age" value="50" min="18" max="100"></label>
+                  <label>Âge (ans)<input type="number" id="osa-age" value="50"></label>
                   <label>Sexe<select id="osa-gender">
                       <option value="M">Homme</option>
                       <option value="F">Femme</option>
                     </select></label>
-                  <label>IMC (kg/m²)<input type="number" step="0.1" id="osa-bmi" value="28.0" min="15" max="60"></label>
+                  <label>IMC (kg/m²)<input type="number" step="0.1" id="osa-bmi" value="28.0"></label>
+                  <label>SaO2 Moy. (%)<input type="number" id="osa-avg-sat" value="94"></label>
+                  <label>SaO2 Min. (%)<input type="number" id="osa-min-sat" value="85"></label>
                 </div>
-
-                <!-- Oximetry -->
-                <div class="osa-section-title">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-                  Oxymétrie Nocturne
-                </div>
-                <div class="osa-grid">
-                  <label>SpO₂ Moy. (%)
-                    <input type="number" id="osa-avg-sat" value="94" min="70" max="100" step="0.1">
-                    <span class="osa-hint">Saturation moyenne</span>
-                  </label>
-                  <label>SpO₂ Min. (%)
-                    <input type="number" id="osa-min-sat" value="85" min="50" max="100" step="0.1">
-                    <span class="osa-hint">Nadir nocturne</span>
-                  </label>
-                  <label>% Temps &lt;90%
-                    <input type="number" id="osa-pctsa90" value="" placeholder="auto" min="0" max="100" step="0.1">
-                    <span class="osa-hint">Hypoxémie modérée</span>
-                  </label>
-                  <label>% Temps &lt;85%
-                    <input type="number" id="osa-pctsa85" value="" placeholder="auto" min="0" max="100" step="0.1">
-                    <span class="osa-hint">Hypoxémie sévère</span>
-                  </label>
-                  <label>% Temps &lt;95%
-                    <input type="number" id="osa-pctsa95" value="" placeholder="auto" min="0" max="100" step="0.1">
-                    <span class="osa-hint">Désaturation légère</span>
-                  </label>
-                </div>
-
-                <!-- Arousal indices -->
-                <div class="osa-section-title">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
-                  Indices d'Éveils (Arousal)
-                  <span class="osa-optional">(optionnel — améliore la précision)</span>
-                </div>
-                <div class="osa-grid">
-                  <label>Index Global (AI)
-                    <input type="number" id="osa-ai-all" value="" placeholder="auto" min="0" max="200" step="0.1">
-                    <span class="osa-hint">Événements/h total</span>
-                  </label>
-                  <label>AI NREM
-                    <input type="number" id="osa-ai-nrem" value="" placeholder="auto" min="0" max="200" step="0.1">
-                    <span class="osa-hint">Éveils en NREM</span>
-                  </label>
-                  <label>AI REM
-                    <input type="number" id="osa-ai-rem" value="" placeholder="auto" min="0" max="200" step="0.1">
-                    <span class="osa-hint">Éveils en REM</span>
-                  </label>
-                </div>
-
                 <button class="btn-analyse" onclick="predictOSA()" id="btn-predict-osa">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -399,49 +343,18 @@
                 </button>
               </div>
 
-              <!-- CLINICAL REPORT -->
               <div class="osa-report" id="osa-report">
-                <!-- Header: Severity + Model + Probabilities -->
-                <div class="osa-report-header">
-                  <div class="osa-report-left">
-                    <div class="osa-report-title">Rapport de Sévérité OSA</div>
-                    <div class="osa-model-badge" id="osa-model-badge">Stacking Ensemble</div>
-                  </div>
-                  <div class="osa-severity-block">
-                    <div class="osa-severity-label">Sévérité Prédite</div>
-                    <div class="osa-severity-badge" id="osa-sev-badge">Normal</div>
-                  </div>
+                <div class="osa-severity">
+                  Sévérité Prédite : <div class="osa-severity-badge" id="osa-sev-badge">Normal</div>
                 </div>
-
-                <!-- Probability distribution -->
-                <div class="osa-proba-section">
-                  <div class="osa-proba-title">Distribution de Confiance</div>
-                  <div class="osa-proba-bars" id="osa-proba-bars"></div>
+                <div
+                  style="font-size:9.5px;text-transform:uppercase;letter-spacing:1.5px;color:var(--text3);margin-bottom:14px;display:flex;align-items:center;justify-content:space-between">
+                  <span style="flex:1;text-align:right;padding-right:20px;color:#1d4ed8">Impact Négatif (Réduit
+                    SAOS)</span>
+                  <span style="width:160px;text-align:center">Explication SHAP</span>
+                  <span style="flex:1;padding-left:20px;color:var(--red)">Impact Positif (Aggrave SAOS)</span>
                 </div>
-
-                <!-- AASM Feature Tables -->
-                <div class="osa-features-section">
-                  <div class="osa-features-title">Architecture du Sommeil — Métriques AASM</div>
-                  <div class="osa-features-grid" id="osa-features-grid"></div>
-                </div>
-
-                <!-- SHAP Explanations -->
-                <div class="osa-shap-section">
-                  <div class="osa-shap-header">
-                    <div>
-                      <div class="osa-shap-title">Explications SHAP — Facteurs Déterminants</div>
-                      <div class="osa-shap-subtitle">Impact de chaque variable sur la prédiction de sévérité</div>
-                    </div>
-                    <div class="osa-shap-legend">
-                      <span class="shap-leg-neg">← Réduit le risque</span>
-                      <span class="shap-leg-pos">Aggrave le risque →</span>
-                    </div>
-                  </div>
-                  <div id="osa-shaps"></div>
-                </div>
-
-                <!-- Clinical Interpretation -->
-                <div class="osa-interp-section" id="osa-interp-section"></div>
+                <div id="osa-shaps"></div>
               </div>
             </div>
 

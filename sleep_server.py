@@ -189,9 +189,7 @@ def predict_osa():
         if not stages_int or not class_names:
             return jsonify({"error": "Missing stages data."}), 400
             
-        # ═══════════════════════════════════════════════════════════════
-        # 1. COMPUTE HYPNOGRAM FEATURES (25 AASM-compliant features)
-        # ═══════════════════════════════════════════════════════════════
+        # 1. Compute Hypnogram Features
         hypno = np.array(stages_int)
         n = len(hypno)
         epoch_min = EPOCH_SEC / 60.0
@@ -214,19 +212,19 @@ def predict_osa():
         spt_min = (last_sleep - sleep_onset + 1) * epoch_min if len(sleep_epochs) > 0 else 0
         se = (tst_min / tib_min * 100) if tib_min > 0 else 0
         
-        post_onset = hypno[sleep_onset:] if len(sleep_epochs) > 0 else np.array([], dtype=int)
-        waso_min = float(np.sum(post_onset == wake_idx)) * epoch_min
+        post_onset = hypno[sleep_onset:] if len(sleep_epochs) > 0 else []
+        waso_min = np.sum(post_onset == wake_idx) * epoch_min
         
-        n1_min = float(np.sum(hypno == n1_idx)) * epoch_min
-        n2_min = float(np.sum(hypno == n2_idx)) * epoch_min
-        n3_min = float(np.sum(hypno == n3_idx)) * epoch_min
-        rem_min = float(np.sum(hypno == rem_idx)) * epoch_min
+        n1_min = np.sum(hypno == n1_idx) * epoch_min
+        n2_min = np.sum(hypno == n2_idx) * epoch_min
+        n3_min = np.sum(hypno == n3_idx) * epoch_min
+        rem_min = np.sum(hypno == rem_idx) * epoch_min
         
         # REM / N3 Latency
         rem_epochs = np.where(hypno == rem_idx)[0]
         n3_epochs = np.where(hypno == n3_idx)[0]
-        rem_latency_min = float((rem_epochs[0] - sleep_onset) * epoch_min) if len(rem_epochs) > 0 else -1.0
-        n3_latency_min = float((n3_epochs[0] - sleep_onset) * epoch_min) if len(n3_epochs) > 0 else -1.0
+        rem_latency_min = (rem_epochs[0] - sleep_onset) * epoch_min if len(rem_epochs) > 0 else 0
+        n3_latency_min = (n3_epochs[0] - sleep_onset) * epoch_min if len(n3_epochs) > 0 else 0
         
         # Bouts and Transitions
         wake_bouts = 0
@@ -237,7 +235,7 @@ def predict_osa():
         total_transitions_from = {wake_idx: 0, rem_idx: 0, n2_idx: 0, n3_idx: 0, n1_idx: 0}
         
         for i in range(1, len(post_onset)):
-            prev, curr = int(post_onset[i-1]), int(post_onset[i])
+            prev, curr = post_onset[i-1], post_onset[i]
             if prev != curr:
                 shifts += 1
                 if (prev, curr) in transitions:
@@ -255,17 +253,15 @@ def predict_osa():
         nrem_rem_ratio = (nrem_min / rem_min) if rem_min > 0 else 0
         light_deep_ratio = ((n1_min + n2_min) / n3_min) if n3_min > 0 else 0
         
-        def tp(f, t): return transitions.get((f, t), 0) / total_transitions_from.get(f, 1) if total_transitions_from.get(f, 0) > 0 else 0
-        
-        n1_pct = (n1_min / tst_min * 100) if tst_min else 0
-        n2_pct = (n2_min / tst_min * 100) if tst_min else 0
-        n3_pct = (n3_min / tst_min * 100) if tst_min else 0
-        rem_pct = (rem_min / tst_min * 100) if tst_min else 0
+        def tp(f, t): return transitions[(f, t)] / total_transitions_from[f] if total_transitions_from[f] > 0 else 0
         
         calc_feats = {
             "sol_min": sol_min, "tst_min": tst_min, "tib_min": tib_min, "spt_min": spt_min,
             "sleep_efficiency": se, "waso_min": waso_min,
-            "N1_pct": n1_pct, "N2_pct": n2_pct, "N3_pct": n3_pct, "REM_pct": rem_pct,
+            "N1_pct": (n1_min/tst_min*100) if tst_min else 0,
+            "N2_pct": (n2_min/tst_min*100) if tst_min else 0,
+            "N3_pct": (n3_min/tst_min*100) if tst_min else 0,
+            "REM_pct": (rem_min/tst_min*100) if tst_min else 0,
             "rem_latency_min": rem_latency_min, "n3_latency_min": n3_latency_min,
             "frag_index": frag_index, "n_wake_bouts": wake_bouts, "mean_wake_bout_min": mean_wake_bout_min,
             "n_rem_cycles": rem_bouts, "mean_rem_bout_min": mean_rem_bout_min,
@@ -275,155 +271,64 @@ def predict_osa():
             "p_N2_REM": tp(n2_idx, rem_idx), "p_N1_W": tp(n1_idx, wake_idx)
         }
         
-        # Map to PSG-scored column aliases expected by the model
+        # 2. Map calculated features to the exact expected redundant columns as well
         calc_feats.update({
             "slpeffp": se, "slplatp": sol_min, 
-            "timest1p": n1_pct, "timest2p": n2_pct,
-            "timest34": n3_pct, "timeremp": rem_pct,
-            "waso": waso_min, "remt1p": n1_pct, "remt34p": n3_pct
+            "timest1p": calc_feats["N1_pct"], "timest2p": calc_feats["N2_pct"],
+            "timest34": calc_feats["N3_pct"], "timeremp": calc_feats["REM_pct"],
+            "waso": waso_min, "remt1p": calc_feats["N1_pct"], "remt34p": calc_feats["N3_pct"]
         })
         
-        # ═══════════════════════════════════════════════════════════════
-        # 2. CLINICAL DATA — demographics + oximetry + arousal indices
-        # ═══════════════════════════════════════════════════════════════
-        def safe_float(val, fallback_key, default=0):
-            if val is not None and val != "" and val != "null":
-                try: return float(val)
-                except: pass
-            return float(osa_predictor.osa_medians.get(fallback_key, default))
-        
+        # 3. Handle Clinical Data
         gender_val = 1 if str(clinical.get("gender", "")).lower().startswith("m") else 2
-        
         input_feats = {
-            # Demographics
-            "age_s2": safe_float(clinical.get("age"), "age_s2", 50),
-            "bmi_s2": safe_float(clinical.get("bmi"), "bmi_s2", 28),
+            "age_s2": float(clinical.get("age") or osa_predictor.osa_medians.get("age_s2", 50)),
+            "bmi_s2": float(clinical.get("bmi") or osa_predictor.osa_medians.get("bmi_s2", 28)),
             "gender": gender_val,
-            # Oximetry
-            "avgsat": safe_float(clinical.get("avgsat"), "avgsat", 94),
-            "minsat": safe_float(clinical.get("minsat"), "minsat", 85),
-            "pctsa90h": safe_float(clinical.get("pctsa90h"), "pctsa90h", 0),
-            "pctsa85h": safe_float(clinical.get("pctsa85h"), "pctsa85h", 0),
-            "pctsa95h": safe_float(clinical.get("pctsa95h"), "pctsa95h", 0),
-            # Arousal indices
-            "ai_all": safe_float(clinical.get("ai_all"), "ai_all", 0),
-            "ai_nrem": safe_float(clinical.get("ai_nrem"), "ai_nrem", 0),
-            "ai_rem": safe_float(clinical.get("ai_rem"), "ai_rem", 0),
+            "avgsat": float(clinical.get("avgsat") or osa_predictor.osa_medians.get("avgsat", 94)),
+            "minsat": float(clinical.get("minsat") or osa_predictor.osa_medians.get("minsat", 85)),
         }
+        input_feats["hypoxia_score"] = (100 - input_feats["avgsat"]) * (100 - input_feats["minsat"]) / 100
         
-        # ═══════════════════════════════════════════════════════════════
-        # 3. FEATURE ENGINEERING — interaction features
-        # ═══════════════════════════════════════════════════════════════
-        engineered = {}
-        
-        # Hypoxia severity score
-        engineered["hypoxia_score"] = (
-            input_feats["pctsa95h"] * 1.0 +
-            input_feats["pctsa90h"] * 3.0 +
-            input_feats["pctsa85h"] * 9.0
-        )
-        
-        # Arousal × fragmentation interaction
-        engineered["arousal_frag"] = input_feats["ai_all"] * calc_feats["frag_index"]
-        
-        # SpO2 drop depth
-        engineered["sat_drop"] = input_feats["avgsat"] - input_feats["minsat"]
-        
-        # Arousal per wake bout
-        engineered["arousal_per_bout"] = input_feats["ai_all"] / (calc_feats["n_wake_bouts"] + 1)
-        
-        # REM disruption ratio
-        engineered["rem_nrem_arousal_ratio"] = input_feats["ai_rem"] / (input_feats["ai_nrem"] + 0.1)
-        
-        # WASO × arousal
-        engineered["waso_arousal"] = calc_feats["waso_min"] * input_feats["ai_all"]
-        
-        # N3 suppression
-        engineered["n3_suppression"] = calc_feats["N3_pct"] / (input_feats["ai_all"] + 0.1)
-        
-        # BMI × arousal
-        engineered["bmi_arousal"] = input_feats["bmi_s2"] * input_feats["ai_all"]
-        
-        # ═══════════════════════════════════════════════════════════════
-        # 4. BUILD FEATURE VECTOR (aligned to osa_features order)
-        # ═══════════════════════════════════════════════════════════════
-        all_feats = {**calc_feats, **input_feats, **engineered}
-        
+        # 4. Build feature vector and impute
         feature_vector = []
         for col in osa_predictor.osa_features:
-            if col in all_feats:
-                feature_vector.append(all_feats[col])
+            if col in calc_feats:
+                feature_vector.append(calc_feats[col])
+            elif col in input_feats:
+                feature_vector.append(input_feats[col])
             else:
                 feature_vector.append(osa_predictor.osa_medians.get(col, 0))
                 
         X = pd.DataFrame([feature_vector], columns=osa_predictor.osa_features)
         
-        # ═══════════════════════════════════════════════════════════════
-        # 5. PREDICT + SHAP EXPLAIN
-        # ═══════════════════════════════════════════════════════════════
-        from osa_predictor import predict_osa_severity
-        pred_label, proba_dict, feature_impacts = predict_osa_severity(X)
+        # 5. Predict & SHAP
+        pred_idx = int(osa_predictor.osa_model.predict(X)[0])
+        pred_label = str(osa_predictor.osa_le.inverse_transform([pred_idx])[0]) if osa_predictor.osa_le else str(pred_idx)
         
-        # ═══════════════════════════════════════════════════════════════
-        # 6. BUILD RESPONSE — full clinical report data
-        # ═══════════════════════════════════════════════════════════════
-        
-        # AASM features table for the report
-        aasm_features = {
-            "timing": {
-                "tst_min": round(tst_min, 1),
-                "tib_min": round(tib_min, 1),
-                "spt_min": round(spt_min, 1),
-                "sol_min": round(sol_min, 1),
-                "se_pct": round(se, 1),
-                "waso_min": round(waso_min, 1),
-            },
-            "stages": {
-                "N1_pct": round(n1_pct, 1),
-                "N2_pct": round(n2_pct, 1),
-                "N3_pct": round(n3_pct, 1),
-                "REM_pct": round(rem_pct, 1),
-            },
-            "latencies": {
-                "rem_latency_min": round(rem_latency_min, 1),
-                "n3_latency_min": round(n3_latency_min, 1),
-            },
-            "fragmentation": {
-                "frag_index": round(frag_index, 1),
-                "n_wake_bouts": int(wake_bouts),
-                "n_rem_cycles": int(rem_bouts),
-                "nrem_rem_ratio": round(nrem_rem_ratio, 2),
-            },
-        }
-        
-        # Clinical interpretation
-        interpretation = []
-        if se < 85:
-            interpretation.append({"type": "warning", "text": "Efficacité du sommeil réduite (<85%) — fragmentation significative"})
-        if rem_pct < 15:
-            interpretation.append({"type": "warning", "text": "Temps REM insuffisant (<15%) — perturbation du sommeil paradoxal"})
-        if n3_pct < 10:
-            interpretation.append({"type": "warning", "text": "Sommeil profond (N3) réduit (<10%) — régénération altérée"})
-        if frag_index > 30:
-            interpretation.append({"type": "danger", "text": "Index de fragmentation élevé — sommeil très instable"})
-        if rem_latency_min > 0 and rem_latency_min < 60:
-            interpretation.append({"type": "info", "text": "Latence REM courte — possible narcolepsie ou privation de sommeil"})
-        if sol_min < 5:
-            interpretation.append({"type": "info", "text": "Latence d'endormissement très courte — possible privation sévère"})
-        if waso_min > 60:
-            interpretation.append({"type": "warning", "text": "WASO élevé (>60 min) — réveils nocturnes fréquents"})
-        
-        # Model info
-        model_used = "Stacking (XGB+LGBM+MLP→LR)" if osa_predictor.stacking_model else "XGBoost"
+        shap_values = osa_predictor.explainer(X)
+        shap_vals = shap_values.values[0]
+        # Depending on XGBoost objective, shap_values.values might have shape (n_features, n_classes)
+        # We take the impacts for the predicted class if it's multi-class
+        if len(shap_vals.shape) > 1:
+            impacts = shap_vals[:, pred_idx]
+        else:
+            impacts = shap_vals
+            
+        feature_impacts = []
+        for i, col in enumerate(osa_predictor.osa_features):
+            val = float(X.iloc[0, i])
+            imp = float(impacts[i])
+            if abs(imp) > 0.001:
+                feature_impacts.append({"feature": col, "value": round(val, 2), "impact": round(imp, 4)})
+                
+        # Sort by absolute impact
+        feature_impacts.sort(key=lambda x: abs(x["impact"]), reverse=True)
+        top_impacts = feature_impacts[:6] # Top 6 drivers
         
         return jsonify({
             "severity": pred_label,
-            "probabilities": proba_dict,
-            "model_used": model_used,
-            "aasm_features": aasm_features,
-            "interpretation": interpretation,
-            "shap_explanations": feature_impacts[:10],  # Top 10 drivers
-            "shap_all": feature_impacts,                 # All for detailed view
+            "shap_explanations": top_impacts
         })
         
     except Exception as e:
