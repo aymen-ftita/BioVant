@@ -5,3 +5,5 @@ venv
 .env
 .vscode
 implementation_plan.md
+backend\models
+backend\step2
