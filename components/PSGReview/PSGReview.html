@@ -1,0 +1,78 @@
+<div id="psg-review">
+  <div class="psg-info-bar">
+    <div class="psg-file-name" id="psg-fname">recording.edf</div>
+    <div class="psg-chips">
+      <span class="psg-chip" id="chip-dur">—</span>
+      <span class="psg-chip blue">100 Hz</span>
+      <span class="psg-chip green">5 channels</span>
+      <span class="psg-chip green">Ready</span>
+    </div>
+  </div>
+  <div class="psg-channels">
+    <div class="psg-ch-header">
+      <div class="psg-ch-title">Aperçu des canaux — Signal simulé</div>
+      <div class="psg-ch-note">Formes d'onde représentatives · L'analyse réelle traite le fichier EDF complet
+      </div>
+    </div>
+    <div class="psg-ch-rows">
+      <div class="psg-ch-row">
+        <div class="psg-ch-label">
+          <div class="ch-name" style="color:#c0392b">EEG</div>
+          <div class="ch-hz">125→100 Hz</div>
+        </div>
+        <div class="psg-ch-canvas-wrap"><canvas id="prev-eeg"></canvas></div>
+      </div>
+      <div class="psg-ch-row">
+        <div class="psg-ch-label">
+          <div class="ch-name" style="color:rgba(192,57,43,.55)">EEG (sec)</div>
+          <div class="ch-hz">125→100 Hz</div>
+        </div>
+        <div class="psg-ch-canvas-wrap"><canvas id="prev-eeg2"></canvas></div>
+      </div>
+      <div class="psg-ch-row">
+        <div class="psg-ch-label">
+          <div class="ch-name" style="color:#6d28d9">EOG (L)</div>
+          <div class="ch-hz">50→100 Hz</div>
+        </div>
+        <div class="psg-ch-canvas-wrap"><canvas id="prev-eogl"></canvas></div>
+      </div>
+      <div class="psg-ch-row">
+        <div class="psg-ch-label">
+          <div class="ch-name" style="color:rgba(109,40,217,.55)">EOG (R)</div>
+          <div class="ch-hz">50→100 Hz</div>
+        </div>
+        <div class="psg-ch-canvas-wrap"><canvas id="prev-eogr"></canvas></div>
+      </div>
+      <div class="psg-ch-row">
+        <div class="psg-ch-label">
+          <div class="ch-name" style="color:#1d4ed8">EMG</div>
+          <div class="ch-hz">Chin · 256 Hz</div>
+        </div>
+        <div class="psg-ch-canvas-wrap"><canvas id="prev-emg"></canvas></div>
+      </div>
+    </div>
+  </div>
+  <div class="psg-action-bar">
+    <div class="psg-meta">
+      <div><strong id="meta-fname">—</strong></div>
+      <div id="meta-size">—</div>
+      <div style="margin-top:4px;font-size:8.5px;letter-spacing:.5px">Modèle : BiLSTM-SHHS1 · Acc 95.2% · κ
+        0.911</div>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <button class="btn-reset" onclick="resetApp()">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="1 4 1 10 7 10" />
+          <path d="M3.51 15a9 9 0 1 0 .49-3.51" />
+        </svg>
+        Reset
+      </button>
+      <button class="btn-analyse" id="btn-analyse" onclick="startAnalysis()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="5 3 19 12 5 21 5 3" />
+        </svg>
+        Analyser le PSG
+      </button>
+    </div>
+  </div>
+</div>

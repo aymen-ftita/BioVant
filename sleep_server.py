@@ -174,6 +174,147 @@ def analyze():
             os.remove(tmp_path)
 
 
+@app.route("/extract_features", methods=["POST"])
+def extract_features():
+    """Compute and return hypnogram-derived features for display before OSA prediction."""
+    try:
+        data = request.json
+        stages_int = data.get("stages_int", [])
+        class_names = data.get("class_names", [])
+
+        if not stages_int or not class_names:
+            return jsonify({"error": "Missing stages data."}), 400
+
+        hypno = np.array(stages_int)
+        n = len(hypno)
+        epoch_min = EPOCH_SEC / 60.0
+        is_3cls = len(class_names) == 3
+
+        label_map = {name: idx for idx, name in enumerate(class_names)}
+        wake_idx = label_map.get("Wake", 0)
+        rem_idx = label_map.get("REM", 2 if is_3cls else 4)
+
+        sleep_epochs = np.where(hypno != wake_idx)[0]
+        sleep_onset = int(sleep_epochs[0]) if len(sleep_epochs) > 0 else n
+        last_sleep = int(sleep_epochs[-1]) if len(sleep_epochs) > 0 else n
+
+        tib_min = n * epoch_min
+        tst_min = len(sleep_epochs) * epoch_min
+        sol_min = sleep_onset * epoch_min
+        spt_min = (last_sleep - sleep_onset + 1) * epoch_min if len(sleep_epochs) > 0 else 0
+        se = (tst_min / tib_min * 100) if tib_min > 0 else 0
+
+        post_onset = hypno[sleep_onset:] if len(sleep_epochs) > 0 else np.array([], dtype=int)
+        waso_min = float(np.sum(post_onset == wake_idx)) * epoch_min
+        rem_min = float(np.sum(hypno == rem_idx)) * epoch_min
+
+        if is_3cls:
+            nrem_idx = label_map.get("NREM", 1)
+            total_nrem_min = float(np.sum(hypno == nrem_idx)) * epoch_min
+            n1_min = total_nrem_min * 0.073
+            n2_min = total_nrem_min * 0.710
+            n3_min = total_nrem_min * 0.217
+            n1_idx_t = nrem_idx
+            n2_idx_t = nrem_idx
+            n3_idx_t = nrem_idx
+        else:
+            n1_idx_t = label_map.get("N1", 1)
+            n2_idx_t = label_map.get("N2", 2)
+            n3_idx_t = label_map.get("N3", 3)
+            n1_min = float(np.sum(hypno == n1_idx_t)) * epoch_min
+            n2_min = float(np.sum(hypno == n2_idx_t)) * epoch_min
+            n3_min = float(np.sum(hypno == n3_idx_t)) * epoch_min
+
+        rem_epochs = np.where(hypno == rem_idx)[0]
+        rem_latency_min = float((rem_epochs[0] - sleep_onset) * epoch_min) if len(rem_epochs) > 0 else -1.0
+        if is_3cls:
+            n3_latency_min = -1.0
+        else:
+            n3_epochs = np.where(hypno == n3_idx_t)[0]
+            n3_latency_min = float((n3_epochs[0] - sleep_onset) * epoch_min) if len(n3_epochs) > 0 else -1.0
+
+        wake_bouts = 0
+        rem_bouts = 0
+        shifts = 0
+        for i in range(1, len(post_onset)):
+            prev, curr = int(post_onset[i-1]), int(post_onset[i])
+            if prev != curr:
+                shifts += 1
+            if prev != wake_idx and curr == wake_idx: wake_bouts += 1
+            if prev != rem_idx and curr == rem_idx: rem_bouts += 1
+
+        mean_wake_bout_min = (waso_min / wake_bouts) if wake_bouts > 0 else 0
+        mean_rem_bout_min = (rem_min / rem_bouts) if rem_bouts > 0 else 0
+        frag_index = (shifts / (tst_min / 60)) if tst_min > 0 else 0
+
+        nrem_min = n1_min + n2_min + n3_min
+        nrem_rem_ratio = (nrem_min / rem_min) if rem_min > 0 else 0
+        light_deep_ratio = ((n1_min + n2_min) / n3_min) if n3_min > 0 else 0
+
+        n1_pct = (n1_min / tst_min * 100) if tst_min else 0
+        n2_pct = (n2_min / tst_min * 100) if tst_min else 0
+        n3_pct = (n3_min / tst_min * 100) if tst_min else 0
+        rem_pct = (rem_min / tst_min * 100) if tst_min else 0
+
+        # REM distribution across sleep thirds
+        if len(rem_epochs) > 0 and spt_min > 0:
+            spt_epochs = last_sleep - sleep_onset + 1
+            third = spt_epochs / 3.0
+            rem_in_spt = rem_epochs[(rem_epochs >= sleep_onset) & (rem_epochs <= last_sleep)]
+            rem_first_third = int(np.sum(rem_in_spt < (sleep_onset + third)))
+            rem_last_two = int(np.sum(rem_in_spt >= (sleep_onset + third)))
+            total_rem = len(rem_in_spt)
+            remt1p_val = (rem_first_third / total_rem * 100) if total_rem > 0 else 0
+            remt34p_val = (rem_last_two / total_rem * 100) if total_rem > 0 else 0
+        else:
+            remt1p_val = 0
+            remt34p_val = 0
+
+        # Return features grouped for display
+        return jsonify({
+            "timing": [
+                {"name": "Total Sleep Time (TST)", "key": "tst_min", "value": round(tst_min, 1), "unit": "min"},
+                {"name": "Time in Bed (TIB)", "key": "tib_min", "value": round(tib_min, 1), "unit": "min"},
+                {"name": "Sleep Period Time (SPT)", "key": "spt_min", "value": round(spt_min, 1), "unit": "min"},
+                {"name": "Sleep Onset Latency (SOL)", "key": "sol_min", "value": round(sol_min, 1), "unit": "min"},
+                {"name": "Sleep Efficiency (SE)", "key": "sleep_efficiency", "value": round(se, 1), "unit": "%"},
+                {"name": "WASO", "key": "waso_min", "value": round(waso_min, 1), "unit": "min"},
+            ],
+            "stages": [
+                {"name": "N1 %", "key": "N1_pct", "value": round(n1_pct, 1), "unit": "%", "note": "estimated" if is_3cls else ""},
+                {"name": "N2 %", "key": "N2_pct", "value": round(n2_pct, 1), "unit": "%", "note": "estimated" if is_3cls else ""},
+                {"name": "N3 (Deep) %", "key": "N3_pct", "value": round(n3_pct, 1), "unit": "%", "note": "estimated" if is_3cls else ""},
+                {"name": "REM %", "key": "REM_pct", "value": round(rem_pct, 1), "unit": "%"},
+            ],
+            "latencies": [
+                {"name": "REM Latency", "key": "rem_latency_min", "value": round(rem_latency_min, 1), "unit": "min"},
+                {"name": "N3 Latency", "key": "n3_latency_min", "value": round(n3_latency_min, 1), "unit": "min", "note": "N/A" if is_3cls else ""},
+            ],
+            "fragmentation": [
+                {"name": "Fragmentation Index", "key": "frag_index", "value": round(frag_index, 1), "unit": "shifts/h"},
+                {"name": "Wake Bouts", "key": "n_wake_bouts", "value": int(wake_bouts), "unit": ""},
+                {"name": "Mean Wake Bout", "key": "mean_wake_bout_min", "value": round(mean_wake_bout_min, 1), "unit": "min"},
+                {"name": "REM Cycles", "key": "n_rem_cycles", "value": int(rem_bouts), "unit": ""},
+                {"name": "Mean REM Bout", "key": "mean_rem_bout_min", "value": round(mean_rem_bout_min, 1), "unit": "min"},
+                {"name": "NREM/REM Ratio", "key": "nrem_rem_ratio", "value": round(nrem_rem_ratio, 2), "unit": ""},
+                {"name": "Light/Deep Ratio", "key": "light_deep_ratio", "value": round(light_deep_ratio, 2), "unit": ""},
+            ],
+            "rem_distribution": [
+                {"name": "REM in 1st Third", "key": "remt1p", "value": round(remt1p_val, 1), "unit": "%"},
+                {"name": "REM in Last 2/3", "key": "remt34p", "value": round(remt34p_val, 1), "unit": "%"},
+            ],
+            "metadata": {
+                "n_epochs": n,
+                "is_3class": is_3cls,
+                "class_names": class_names,
+            }
+        })
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route("/predict_osa", methods=["POST"])
 def predict_osa():
     init_osa_predictor()
@@ -195,18 +336,16 @@ def predict_osa():
         hypno = np.array(stages_int)
         n = len(hypno)
         epoch_min = EPOCH_SEC / 60.0
+        is_3cls = len(class_names) == 3  # Wake/NREM/REM
         
         # Identify stage indices
         label_map = {name: idx for idx, name in enumerate(class_names)}
         wake_idx = label_map.get("Wake", 0)
-        rem_idx = label_map.get("REM", 2 if len(class_names)==3 else 4)
-        n1_idx = label_map.get("N1", 1) if "N1" in label_map else label_map.get("NREM", 1)
-        n2_idx = label_map.get("N2", 2) if "N2" in label_map else label_map.get("NREM", 1)
-        n3_idx = label_map.get("N3", 3) if "N3" in label_map else label_map.get("NREM", 1)
+        rem_idx = label_map.get("REM", 2 if is_3cls else 4)
         
         sleep_epochs = np.where(hypno != wake_idx)[0]
-        sleep_onset = sleep_epochs[0] if len(sleep_epochs) > 0 else n
-        last_sleep = sleep_epochs[-1] if len(sleep_epochs) > 0 else n
+        sleep_onset = int(sleep_epochs[0]) if len(sleep_epochs) > 0 else n
+        last_sleep = int(sleep_epochs[-1]) if len(sleep_epochs) > 0 else n
         
         tib_min = n * epoch_min
         tst_min = len(sleep_epochs) * epoch_min
@@ -216,25 +355,46 @@ def predict_osa():
         
         post_onset = hypno[sleep_onset:] if len(sleep_epochs) > 0 else np.array([], dtype=int)
         waso_min = float(np.sum(post_onset == wake_idx)) * epoch_min
-        
-        n1_min = float(np.sum(hypno == n1_idx)) * epoch_min
-        n2_min = float(np.sum(hypno == n2_idx)) * epoch_min
-        n3_min = float(np.sum(hypno == n3_idx)) * epoch_min
         rem_min = float(np.sum(hypno == rem_idx)) * epoch_min
+        
+        if is_3cls:
+            # 3-class: NREM is a single category — estimate N1/N2/N3 using
+            # population ratios from SHHS2 (N1≈6%, N2≈60%, N3≈16% of NREM)
+            nrem_idx = label_map.get("NREM", 1)
+            total_nrem_min = float(np.sum(hypno == nrem_idx)) * epoch_min
+            n1_min = total_nrem_min * 0.073  # ~7.3% of NREM is N1
+            n2_min = total_nrem_min * 0.710  # ~71% of NREM is N2
+            n3_min = total_nrem_min * 0.217  # ~21.7% of NREM is N3
+            
+            # For transitions, use the single NREM index
+            n1_idx_t = nrem_idx
+            n2_idx_t = nrem_idx
+            n3_idx_t = nrem_idx
+        else:
+            # 5-class: use actual indices
+            n1_idx_t = label_map.get("N1", 1)
+            n2_idx_t = label_map.get("N2", 2)
+            n3_idx_t = label_map.get("N3", 3)
+            n1_min = float(np.sum(hypno == n1_idx_t)) * epoch_min
+            n2_min = float(np.sum(hypno == n2_idx_t)) * epoch_min
+            n3_min = float(np.sum(hypno == n3_idx_t)) * epoch_min
         
         # REM / N3 Latency
         rem_epochs = np.where(hypno == rem_idx)[0]
-        n3_epochs = np.where(hypno == n3_idx)[0]
         rem_latency_min = float((rem_epochs[0] - sleep_onset) * epoch_min) if len(rem_epochs) > 0 else -1.0
-        n3_latency_min = float((n3_epochs[0] - sleep_onset) * epoch_min) if len(n3_epochs) > 0 else -1.0
+        if is_3cls:
+            n3_latency_min = -1.0  # Can't determine N3 latency from 3-class
+        else:
+            n3_epochs = np.where(hypno == n3_idx_t)[0]
+            n3_latency_min = float((n3_epochs[0] - sleep_onset) * epoch_min) if len(n3_epochs) > 0 else -1.0
         
         # Bouts and Transitions
         wake_bouts = 0
         rem_bouts = 0
         shifts = 0
-        transitions = {(wake_idx, n1_idx): 0, (rem_idx, wake_idx): 0, (n2_idx, wake_idx): 0, 
-                       (n3_idx, wake_idx): 0, (n2_idx, rem_idx): 0, (n1_idx, wake_idx): 0}
-        total_transitions_from = {wake_idx: 0, rem_idx: 0, n2_idx: 0, n3_idx: 0, n1_idx: 0}
+        transitions = {(wake_idx, n1_idx_t): 0, (rem_idx, wake_idx): 0, (n2_idx_t, wake_idx): 0, 
+                       (n3_idx_t, wake_idx): 0, (n2_idx_t, rem_idx): 0, (n1_idx_t, wake_idx): 0}
+        total_transitions_from = {wake_idx: 0, rem_idx: 0, n2_idx_t: 0, n3_idx_t: 0, n1_idx_t: 0}
         
         for i in range(1, len(post_onset)):
             prev, curr = int(post_onset[i-1]), int(post_onset[i])
@@ -270,17 +430,45 @@ def predict_osa():
             "frag_index": frag_index, "n_wake_bouts": wake_bouts, "mean_wake_bout_min": mean_wake_bout_min,
             "n_rem_cycles": rem_bouts, "mean_rem_bout_min": mean_rem_bout_min,
             "nrem_rem_ratio": nrem_rem_ratio, "light_deep_ratio": light_deep_ratio,
-            "p_W_N1": tp(wake_idx, n1_idx), "p_REM_W": tp(rem_idx, wake_idx),
-            "p_N2_W": tp(n2_idx, wake_idx), "p_N3_W": tp(n3_idx, wake_idx),
-            "p_N2_REM": tp(n2_idx, rem_idx), "p_N1_W": tp(n1_idx, wake_idx)
+            "p_W_N1": tp(wake_idx, n1_idx_t), "p_REM_W": tp(rem_idx, wake_idx),
+            "p_N2_W": tp(n2_idx_t, wake_idx), "p_N3_W": tp(n3_idx_t, wake_idx),
+            "p_N2_REM": tp(n2_idx_t, rem_idx), "p_N1_W": tp(n1_idx_t, wake_idx)
         }
         
-        # Map to PSG-scored column aliases expected by the model
+        # Map to PSG-scored column aliases expected by the model.
+        # These columns come from SHHS2 PSG scoring and have specific semantics:
+        #   slpeffp  = sleep efficiency %
+        #   slplatp  = sleep latency in minutes
+        #   timest1p = % of sleep period in stage 1 (N1)
+        #   timest2p = % of sleep period in stage 2 (N2)
+        #   timest34 = time in stage 3+4 (N3) in MINUTES (not %)
+        #   timeremp = % of sleep period in REM
+        #   waso     = wake after sleep onset in minutes
+        #   remt1p   = % of REM occurring in first third of sleep period
+        #   remt34p  = % of REM occurring in last two thirds of sleep period
+        
+        # Compute REM distribution across sleep thirds
+        if len(rem_epochs) > 0 and spt_min > 0:
+            spt_epochs = last_sleep - sleep_onset + 1
+            third = spt_epochs / 3.0
+            rem_in_spt = rem_epochs[(rem_epochs >= sleep_onset) & (rem_epochs <= last_sleep)]
+            rem_first_third = np.sum(rem_in_spt < (sleep_onset + third))
+            rem_last_two = np.sum(rem_in_spt >= (sleep_onset + third))
+            total_rem = len(rem_in_spt)
+            remt1p_val = (rem_first_third / total_rem * 100) if total_rem > 0 else 0
+            remt34p_val = (rem_last_two / total_rem * 100) if total_rem > 0 else 0
+        else:
+            remt1p_val = 0
+            remt34p_val = 0
+        
         calc_feats.update({
             "slpeffp": se, "slplatp": sol_min, 
             "timest1p": n1_pct, "timest2p": n2_pct,
-            "timest34": n3_pct, "timeremp": rem_pct,
-            "waso": waso_min, "remt1p": n1_pct, "remt34p": n3_pct
+            "timest34": n3_min,       # N3 time in MINUTES (SHHS convention)
+            "timeremp": rem_pct,
+            "waso": waso_min,
+            "remt1p": remt1p_val,      # % of REM in first third
+            "remt34p": remt34p_val     # % of REM in last two thirds
         })
         
         # ═══════════════════════════════════════════════════════════════
@@ -350,13 +538,24 @@ def predict_osa():
         all_feats = {**calc_feats, **input_feats, **engineered}
         
         feature_vector = []
+        used_features = {}
         for col in osa_predictor.osa_features:
             if col in all_feats:
                 feature_vector.append(all_feats[col])
+                used_features[col] = round(all_feats[col], 4)
             else:
-                feature_vector.append(osa_predictor.osa_medians.get(col, 0))
+                med = osa_predictor.osa_medians.get(col, 0)
+                feature_vector.append(med)
+                used_features[col] = round(float(med), 4)
                 
         X = pd.DataFrame([feature_vector], columns=osa_predictor.osa_features)
+        
+        # Debug: verify features vary between different files
+        print(f"\n[OSA DEBUG] {n} epochs | 3cls={is_3cls}")
+        print(f"  TST={tst_min:.1f}min  WASO={waso_min:.1f}min  SE={se:.1f}%  SOL={sol_min:.1f}min")
+        print(f"  N1%={n1_pct:.1f}  N2%={n2_pct:.1f}  N3%={n3_pct:.1f}  REM%={rem_pct:.1f}")
+        print(f"  frag={frag_index:.1f}  wake_bouts={wake_bouts}  rem_cycles={rem_bouts}")
+        print(f"  timest34={calc_feats['timest34']:.1f}min  remt1p={calc_feats['remt1p']:.1f}%  remt34p={calc_feats['remt34p']:.1f}%")
         
         # ═══════════════════════════════════════════════════════════════
         # 5. PREDICT + SHAP EXPLAIN
@@ -421,11 +620,235 @@ def predict_osa():
             "probabilities": proba_dict,
             "model_used": model_used,
             "aasm_features": aasm_features,
+            "used_features": used_features,
             "interpretation": interpretation,
             "shap_explanations": feature_impacts[:10],  # Top 10 drivers
             "shap_all": feature_impacts,                 # All for detailed view
         })
         
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/parse_features_file", methods=["POST"])
+def parse_features_file():
+    """Parse an uploaded CSV or XML file and extract feature values for OSA prediction."""
+    if "file" not in request.files:
+        return jsonify({"error": "No file uploaded"}), 400
+    
+    f = request.files["file"]
+    fname = f.filename.lower()
+    
+    try:
+        import io
+        content = f.read()
+        
+        if fname.endswith(".csv"):
+            df = pd.read_csv(io.BytesIO(content))
+            if len(df) == 0:
+                return jsonify({"error": "CSV file is empty."}), 400
+                
+            features = {}
+            # Handle standard single-row CSV vs our exported 'Section,Key,Value' format
+            if list(df.columns) == ["Section", "Key", "Value"]:
+                for _, row in df.iterrows():
+                    sec = str(row["Section"])
+                    # Import only specific sections that contain actual numeric features
+                    if sec.startswith("ModelFeature") or sec.startswith("AASM_"):
+                        col = str(row["Key"]).strip()
+                        val = row["Value"]
+                        if pd.isna(val): continue
+                        
+                        # Strip percent signs and units if present
+                        val_str = str(val).replace("%", "").replace(" min", "").strip()
+                        try:
+                            features[col] = float(val_str)
+                        except ValueError:
+                            features[col] = val_str
+            else:
+                # Take first row as feature values
+                row = df.iloc[0]
+                for col in df.columns:
+                    val = row[col]
+                    if pd.isna(val): continue
+                    try:
+                        features[col.strip()] = float(val)
+                    except (ValueError, TypeError):
+                        if isinstance(val, str):
+                            features[col.strip()] = val.strip()
+            
+            return jsonify({
+                "features": features,
+                "source": fname,
+                "n_columns": len(features),
+                "all_columns": list(df.columns) if list(df.columns) != ["Section", "Key", "Value"] else list(features.keys()),
+                "n_rows": len(df),
+            })
+        
+        elif fname.endswith(".xml"):
+            import xml.etree.ElementTree as ET
+            root = ET.fromstring(content.decode("utf-8", errors="replace"))
+            features = {}
+            
+            # Try multiple XML structures:
+            # 1. Flat: <features><feature_name>value</feature_name>...</features>
+            # 2. Key-value: <features><feature name="x" value="y"/>...</features>
+            # 3. Nested: <ScoredEvent>/<EventConcept> style (NSRR XML)
+            
+            # Strategy: walk all leaf elements
+            for elem in root.iter():
+                if len(elem) == 0 and elem.text and elem.text.strip():
+                    tag = elem.tag.split("}")[-1] if "}" in elem.tag else elem.tag
+                    try:
+                        features[tag] = float(elem.text.strip())
+                    except ValueError:
+                        features[tag] = elem.text.strip()
+                # Check for name/value attributes
+                if elem.get("name") and elem.get("value"):
+                    try:
+                        features[elem.get("name")] = float(elem.get("value"))
+                    except ValueError:
+                        features[elem.get("name")] = elem.get("value")
+            
+            return jsonify({
+                "features": features,
+                "source": fname,
+                "n_columns": len(features),
+                "all_columns": list(features.keys()),
+            })
+        
+        else:
+            return jsonify({"error": f"Unsupported format: {fname}. Use .csv or .xml"}), 400
+    
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/predict_osa_custom", methods=["POST"])
+def predict_osa_custom():
+    """Run OSA severity prediction from manually provided feature values (no EDF needed)."""
+    init_osa_predictor()
+    if osa_predictor.osa_model is None:
+        return jsonify({"error": "OSA models not initialized."}), 500
+    
+    try:
+        data = request.json
+        features = data.get("features", {})
+        
+        if not features:
+            return jsonify({"error": "No features provided."}), 400
+        
+        def safe_float(val, fallback_key, default=0):
+            if val is not None and val != "" and val != "null":
+                try: return float(val)
+                except: pass
+            return float(osa_predictor.osa_medians.get(fallback_key, default))
+        
+        # Map user-friendly keys to model-expected keys
+        key_aliases = {
+            "age": "age_s2", "bmi": "bmi_s2",
+            "sleep_efficiency": "slpeffp", "sol_min": "slplatp",
+            "N1_pct": "timest1p", "N2_pct": "timest2p",
+            "N3_min": "timest34", "REM_pct": "timeremp",
+            "waso_min": "waso",
+        }
+        
+        # Build flat feature dict with all possible names
+        all_feats = {}
+        for k, v in features.items():
+            all_feats[k] = safe_float(v, k, 0)
+            if k in key_aliases:
+                all_feats[key_aliases[k]] = safe_float(v, key_aliases[k], 0)
+        
+        # Handle gender specially
+        if "gender" in features:
+            gval = str(features["gender"]).strip().lower()
+            all_feats["gender"] = 1 if gval.startswith("m") or gval == "1" else 2
+        
+        # Compute engineered features if components are present
+        ai_all = all_feats.get("ai_all", osa_predictor.osa_medians.get("ai_all", 0))
+        ai_nrem = all_feats.get("ai_nrem", osa_predictor.osa_medians.get("ai_nrem", 0))
+        ai_rem = all_feats.get("ai_rem", osa_predictor.osa_medians.get("ai_rem", 0))
+        avgsat = all_feats.get("avgsat", osa_predictor.osa_medians.get("avgsat", 94))
+        minsat = all_feats.get("minsat", osa_predictor.osa_medians.get("minsat", 85))
+        pctsa90h = all_feats.get("pctsa90h", osa_predictor.osa_medians.get("pctsa90h", 0))
+        pctsa85h = all_feats.get("pctsa85h", osa_predictor.osa_medians.get("pctsa85h", 0))
+        pctsa95h = all_feats.get("pctsa95h", osa_predictor.osa_medians.get("pctsa95h", 0))
+        bmi = all_feats.get("bmi_s2", osa_predictor.osa_medians.get("bmi_s2", 28))
+        frag = all_feats.get("frag_index", osa_predictor.osa_medians.get("frag_index", 0))
+        waso = all_feats.get("waso_min", all_feats.get("waso", osa_predictor.osa_medians.get("waso_min", 0)))
+        n3_pct = all_feats.get("N3_pct", osa_predictor.osa_medians.get("N3_pct", 0))
+        n_wake = all_feats.get("n_wake_bouts", osa_predictor.osa_medians.get("n_wake_bouts", 0))
+        
+        engineered = {}
+        if "hypoxia_score" not in all_feats:
+            engineered["hypoxia_score"] = pctsa95h * 1.0 + pctsa90h * 3.0 + pctsa85h * 9.0
+        if "arousal_frag" not in all_feats:
+            engineered["arousal_frag"] = ai_all * frag
+        if "sat_drop" not in all_feats:
+            engineered["sat_drop"] = avgsat - minsat
+        if "arousal_per_bout" not in all_feats:
+            engineered["arousal_per_bout"] = ai_all / (n_wake + 1)
+        if "rem_nrem_arousal_ratio" not in all_feats:
+            engineered["rem_nrem_arousal_ratio"] = ai_rem / (ai_nrem + 0.1)
+        if "waso_arousal" not in all_feats:
+            engineered["waso_arousal"] = waso * ai_all
+        if "n3_suppression" not in all_feats:
+            engineered["n3_suppression"] = n3_pct / (ai_all + 0.1)
+        if "bmi_arousal" not in all_feats:
+            engineered["bmi_arousal"] = bmi * ai_all
+        
+        all_feats.update(engineered)
+        
+        # Also add PSG aliases if not present
+        if "slpeffp" not in all_feats and "sleep_efficiency" in all_feats:
+            all_feats["slpeffp"] = all_feats["sleep_efficiency"]
+        if "slplatp" not in all_feats and "sol_min" in all_feats:
+            all_feats["slplatp"] = all_feats["sol_min"]
+        if "timest1p" not in all_feats and "N1_pct" in all_feats:
+            all_feats["timest1p"] = all_feats["N1_pct"]
+        if "timest2p" not in all_feats and "N2_pct" in all_feats:
+            all_feats["timest2p"] = all_feats["N2_pct"]
+        if "timeremp" not in all_feats and "REM_pct" in all_feats:
+            all_feats["timeremp"] = all_feats["REM_pct"]
+        if "waso" not in all_feats and "waso_min" in all_feats:
+            all_feats["waso"] = all_feats["waso_min"]
+        
+        # Build feature vector aligned to model columns
+        feature_vector = []
+        used_features = {}
+        for col in osa_predictor.osa_features:
+            if col in all_feats:
+                feature_vector.append(all_feats[col])
+                used_features[col] = round(all_feats[col], 4)
+            else:
+                med = osa_predictor.osa_medians.get(col, 0)
+                feature_vector.append(med)
+                used_features[col] = round(float(med), 4)
+        
+        X = pd.DataFrame([feature_vector], columns=osa_predictor.osa_features)
+        
+        print(f"\n[CUSTOM OSA] {len(features)} input features → {len(feature_vector)} model features")
+        
+        from osa_predictor import predict_osa_severity
+        pred_label, proba_dict, feature_impacts = predict_osa_severity(X)
+        
+        model_used = "Stacking (XGB+LGBM+MLP→LR)" if osa_predictor.stacking_model else "XGBoost"
+        
+        return jsonify({
+            "severity": pred_label,
+            "probabilities": proba_dict,
+            "model_used": model_used,
+            "used_features": used_features,
+            "shap_explanations": feature_impacts[:10],
+            "shap_all": feature_impacts,
+            "expected_features": list(osa_predictor.osa_features),
+        })
+    
     except Exception as e:
         import traceback
         traceback.print_exc()

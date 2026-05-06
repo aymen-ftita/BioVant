@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wizard Component - Hypnora</title>
+    <link rel="stylesheet" href="../Common/Global.css">
+    <link rel="stylesheet" href="Wizard.css">
+</head>
+<body>
+    <div style="max-width: 1000px; margin: 40px auto; padding: 20px;">
+        <div id="wizard-container"></div>
+    </div>
+
+    <script src="Wizard.js"></script>
+    <script>
+        fetch('Wizard.html')
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('wizard-container').innerHTML = html;
+                updateWizardUI();
+            });
+            
+        // Mock functions that the wizard calls
+        function startAnalysis() {
+            alert("Analysis started!");
+        }
+    </script>
+</body>
+</html>

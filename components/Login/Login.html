@@ -1,0 +1,68 @@
+<div class="login-container">
+  <div class="doctor-avatar" id="doctor-avatar">
+    <svg class="doctor-svg" viewBox="0 0 200 200">
+      <!-- Body/Coat -->
+      <path class="coat" d="M40,200 Q40,160 60,140 L140,140 Q160,160 160,200 Z" />
+      <path class="shirt" d="M85,140 L115,140 L100,160 Z" />
+      <path class="tie" d="M100,148 L95,155 L100,165 L105,155 Z" />
+      
+      <!-- Head -->
+      <circle class="skin" cx="100" cy="85" r="55" />
+      
+      <!-- Hair -->
+      <path class="hair" d="M45,85 Q45,30 100,30 Q155,30 155,85 L145,85 Q145,50 100,50 Q55,50 55,85 Z" />
+      
+      <!-- Ears -->
+      <circle class="skin" cx="45" cy="90" r="10" />
+      <circle class="skin" cx="155" cy="90" r="10" />
+      
+      <!-- Eyes -->
+      <g id="eyes">
+        <g id="eye-l">
+          <circle class="eye-white" cx="75" cy="85" r="15" />
+          <circle class="pupil" id="pupil-l" cx="75" cy="85" r="7" />
+          <path class="eye-closed" d="M60,85 Q75,95 90,85" />
+        </g>
+        <g id="eye-r">
+          <circle class="eye-white" cx="125" cy="85" r="15" />
+          <circle class="pupil" id="pupil-r" cx="125" cy="85" r="7" />
+          <path class="eye-closed" d="M110,85 Q125,95 140,85" />
+        </g>
+      </g>
+      
+      <!-- Mouth -->
+      <path d="M85,115 Q100,125 115,115" fill="none" stroke="#4a3728" stroke-width="2" stroke-linecap="round" />
+    </svg>
+  </div>
+
+  <div class="login-card">
+    <div class="login-header">
+      <h2>Bienvenue</h2>
+      <p>Connectez-vous à votre espace Hypnora</p>
+    </div>
+
+    <form id="login-form" onsubmit="event.preventDefault()">
+      <div class="form-group">
+        <label for="email">Email Professionnel</label>
+        <div class="input-wrapper">
+          <input type="email" id="email" placeholder="docteur@hopital.fr" required>
+          <span id="email-cursor-measure" class="input-cursor-pos"></span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <div class="input-wrapper">
+          <input type="password" id="password" placeholder="••••••••" required>
+          <button type="button" class="toggle-password" id="toggle-password">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-login">S'identifier</button>
+    </form>
+  </div>
+</div>

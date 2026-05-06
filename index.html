@@ -12,9 +12,15 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow/dist/drawflow.min.css">
   <script src="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow/dist/drawflow.min.js"></script>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="components/Login/Login.css">
 </head>
 
 <body>
+  <div class="header">
+  <div class="header-inner">
+    <div class="logo"><div class="logo-dot"></div>SleepAI</div>
+  </div>
+</div>
   <div class="app-layout">
     <nav class="sidebar-nav">
       <div class="sidebar-brand">Hypnora<br><em>AI</em></div>
@@ -31,6 +37,18 @@
             <polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon>
           </svg>
           Développeur
+        </button>
+        <button class="app-tab" onclick="switchTab('custom-osa')">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+          </svg>
+          OSA Custom
+        </button>
+        <button class="app-tab" onclick="switchTab('login')">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3"/>
+          </svg>
+          Connexion
         </button>
       </div>
     </nav>
@@ -412,6 +430,21 @@
 
             <div id="dynamic-results"></div>
 
+            <!-- Export bar for hypnogram results -->
+            <div class="export-bar" id="export-hypno-bar" style="display:none">
+              <div class="export-bar-label">Exporter les résultats</div>
+              <div class="export-bar-btns">
+                <button class="export-btn xml" onclick="exportHypnoXML()">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                  XML
+                </button>
+                <button class="export-btn pdf" onclick="exportHypnoPDF()">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                  PDF
+                </button>
+              </div>
+            </div>
+
             <div class="sec-lbl" id="step2-lbl" style="margin-top:40px;display:none">Étape 2 : Analyse de Sévérité OSA
               (Stacking + SHAP)</div>
             <div class="osa-panel" id="osa-panel" style="display:none">
@@ -536,12 +569,273 @@
 
                 <!-- Clinical Interpretation -->
                 <div class="osa-interp-section" id="osa-interp-section"></div>
+
+                <!-- Export bar for OSA report -->
+                <div class="export-bar" id="export-osa-bar">
+                  <div class="export-bar-label">Exporter le rapport OSA</div>
+                  <div class="export-bar-btns">
+                    <button class="export-btn xml" onclick="exportOsaXML()">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                      XML
+                    </button>
+                    <button class="export-btn csv" onclick="exportOsaCSV()">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                      CSV
+                    </button>
+                    <button class="export-btn pdf" onclick="exportOsaPDF()">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                      PDF
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
 
           </div>
+
         </div>
       </div> <!-- end section-doctor -->
+
+      <div id="section-custom-osa" class="app-section">
+        <div class="container">
+          <div class="custom-osa-section" id="custom-osa-section">
+            <div class="custom-osa-header">
+              <div class="custom-osa-title-row">
+                <div>
+                  <div class="custom-osa-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+                    Prédiction OSA Personnalisée
+                  </div>
+                  <div class="custom-osa-subtitle">Saisissez les données manuellement ou importez un fichier CSV/XML — sans fichier EDF requis</div>
+                </div>
+              </div>
+
+              <!-- Input mode tabs -->
+              <div class="custom-osa-tabs">
+                <button class="co-tab active" id="co-tab-manual" onclick="switchCustomOsaTab('manual')">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                  Saisie Manuelle
+                </button>
+                <button class="co-tab" id="co-tab-file" onclick="switchCustomOsaTab('file')">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                  Import CSV / XML
+                </button>
+              </div>
+            </div>
+
+            <!-- ──── TAB 1: MANUAL INPUT ──── -->
+            <div class="co-panel active" id="co-panel-manual">
+              <div class="osa-form">
+                <!-- Demographics -->
+                <div class="osa-section-title">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                  Données Démographiques
+                </div>
+                <div class="osa-grid">
+                  <label>Âge (ans)<input type="number" id="co-age" value="50" min="18" max="100"></label>
+                  <label>Sexe<select id="co-gender"><option value="M">Homme</option><option value="F">Femme</option></select></label>
+                  <label>IMC (kg/m²)<input type="number" step="0.1" id="co-bmi" value="28.0" min="15" max="60"></label>
+                </div>
+
+                <!-- Sleep Architecture -->
+                <div class="osa-section-title">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+                  Architecture du Sommeil
+                </div>
+                <div class="osa-grid">
+                  <label>TST (min)
+                    <input type="number" id="co-tst" value="420" min="0" max="600" step="0.1">
+                    <span class="osa-hint">Temps total de sommeil</span>
+                  </label>
+                  <label>TIB (min)
+                    <input type="number" id="co-tib" value="480" min="0" max="700" step="0.1">
+                    <span class="osa-hint">Temps au lit</span>
+                  </label>
+                  <label>SOL (min)
+                    <input type="number" id="co-sol" value="15" min="0" max="120" step="0.1">
+                    <span class="osa-hint">Latence d'endormissement</span>
+                  </label>
+                  <label>Eff. Sommeil (%)
+                    <input type="number" id="co-se" value="87.5" min="0" max="100" step="0.1">
+                    <span class="osa-hint">TST / TIB × 100</span>
+                  </label>
+                  <label>WASO (min)
+                    <input type="number" id="co-waso" value="30" min="0" max="300" step="0.1">
+                    <span class="osa-hint">Éveil après endormissement</span>
+                  </label>
+                  <label>SPT (min)
+                    <input type="number" id="co-spt" value="460" min="0" max="600" step="0.1">
+                    <span class="osa-hint">Période de sommeil</span>
+                  </label>
+                </div>
+
+                <!-- Stage Percentages -->
+                <div class="osa-section-title">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                  Distribution des Stades (% du TST)
+                </div>
+                <div class="osa-grid">
+                  <label>N1 %<input type="number" id="co-n1" value="7.3" min="0" max="100" step="0.1"><span class="osa-hint">Sommeil léger N1</span></label>
+                  <label>N2 %<input type="number" id="co-n2" value="50" min="0" max="100" step="0.1"><span class="osa-hint">Sommeil N2</span></label>
+                  <label>N3 %<input type="number" id="co-n3" value="18" min="0" max="100" step="0.1"><span class="osa-hint">Sommeil profond</span></label>
+                  <label>REM %<input type="number" id="co-rem" value="22" min="0" max="100" step="0.1"><span class="osa-hint">Sommeil paradoxal</span></label>
+                  <label>N3 durée (min)<input type="number" id="co-n3min" value="75.6" min="0" max="300" step="0.1"><span class="osa-hint">timest34 (SHHS)</span></label>
+                </div>
+
+                <!-- Latencies -->
+                <div class="osa-section-title">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                  Latences
+                </div>
+                <div class="osa-grid">
+                  <label>Latence REM (min)<input type="number" id="co-remlat" value="90" min="0" max="300" step="0.1"><span class="osa-hint">Temps jusqu'au 1er REM</span></label>
+                  <label>Latence N3 (min)<input type="number" id="co-n3lat" value="20" min="-1" max="300" step="0.1"><span class="osa-hint">-1 si non applicable</span></label>
+                </div>
+
+                <!-- Oximetry -->
+                <div class="osa-section-title">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                  Oxymétrie Nocturne
+                </div>
+                <div class="osa-grid">
+                  <label>SpO₂ Moy. (%)<input type="number" id="co-avgsat" value="94" min="70" max="100" step="0.1"><span class="osa-hint">Saturation moyenne</span></label>
+                  <label>SpO₂ Min. (%)<input type="number" id="co-minsat" value="85" min="50" max="100" step="0.1"><span class="osa-hint">Nadir nocturne</span></label>
+                  <label>% Temps &lt;90%<input type="number" id="co-pctsa90" value="" placeholder="auto" min="0" max="100" step="0.1"><span class="osa-hint">Hypoxémie modérée</span></label>
+                  <label>% Temps &lt;85%<input type="number" id="co-pctsa85" value="" placeholder="auto" min="0" max="100" step="0.1"><span class="osa-hint">Hypoxémie sévère</span></label>
+                  <label>% Temps &lt;95%<input type="number" id="co-pctsa95" value="" placeholder="auto" min="0" max="100" step="0.1"><span class="osa-hint">Désaturation légère</span></label>
+                </div>
+
+                <!-- Arousal Indices -->
+                <div class="osa-section-title">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+                  Indices d'Éveils (Arousal)
+                  <span class="osa-optional">(optionnel)</span>
+                </div>
+                <div class="osa-grid">
+                  <label>Index Global (AI)<input type="number" id="co-ai-all" value="" placeholder="auto" min="0" max="200" step="0.1"><span class="osa-hint">Événements/h total</span></label>
+                  <label>AI NREM<input type="number" id="co-ai-nrem" value="" placeholder="auto" min="0" max="200" step="0.1"><span class="osa-hint">Éveils en NREM</span></label>
+                  <label>AI REM<input type="number" id="co-ai-rem" value="" placeholder="auto" min="0" max="200" step="0.1"><span class="osa-hint">Éveils en REM</span></label>
+                </div>
+
+                <!-- Fragmentation -->
+                <div class="osa-section-title">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 18l2-2-2-2"/><path d="M8 6L6 8l2 2"/><line x1="12" y1="2" x2="12" y2="22"/></svg>
+                  Fragmentation & Cycles
+                  <span class="osa-optional">(optionnel)</span>
+                </div>
+                <div class="osa-grid">
+                  <label>Index Fragmentation<input type="number" id="co-frag" value="" placeholder="auto" min="0" max="200" step="0.1"><span class="osa-hint">Transitions/h</span></label>
+                  <label>Nb Éveils<input type="number" id="co-wakebouts" value="" placeholder="auto" min="0" max="500" step="1"><span class="osa-hint">Wake bouts</span></label>
+                  <label>Cycles REM<input type="number" id="co-remcycles" value="" placeholder="auto" min="0" max="20" step="1"><span class="osa-hint">Nb cycles REM</span></label>
+                  <label>REM 1er Tiers (%)<input type="number" id="co-remt1p" value="" placeholder="auto" min="0" max="100" step="0.1"><span class="osa-hint">% REM 1er tiers</span></label>
+                  <label>REM 2/3 Dernier (%)<input type="number" id="co-remt34p" value="" placeholder="auto" min="0" max="100" step="0.1"><span class="osa-hint">% REM dernier 2/3</span></label>
+                </div>
+
+                <button class="btn-analyse" onclick="predictCustomOSA()" id="btn-predict-custom-osa">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 11l3 3L22 4"/>
+                    <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+                  </svg>
+                  Prédire la Sévérité OSA
+                </button>
+              </div>
+            </div>
+
+            <!-- ──── TAB 2: FILE UPLOAD ──── -->
+            <div class="co-panel" id="co-panel-file">
+              <div class="co-file-zone" id="co-file-zone">
+                <div class="co-file-idle" id="co-file-idle">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:0.4">
+                    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <path d="M12 18v-6"/><path d="m9 15 3-3 3 3"/>
+                  </svg>
+                  <div class="co-file-title">Déposez votre fichier CSV ou XML ici</div>
+                  <div class="co-file-sub">Fichier de features extraites d'un rapport PSG — ou <b onclick="document.getElementById('co-file-input').click()" style="cursor:pointer;color:var(--red)">parcourir</b></div>
+                  <div class="co-file-formats">
+                    <span class="co-format-tag">📄 CSV</span>
+                    <span class="co-format-tag">📋 XML</span>
+                  </div>
+                </div>
+                <input type="file" id="co-file-input" accept=".csv,.xml" style="display:none">
+              </div>
+
+              <!-- Parsed features preview -->
+              <div class="co-parsed-preview" id="co-parsed-preview" style="display:none;">
+                <div class="co-parsed-header">
+                  <div>
+                    <div class="co-parsed-title" id="co-parsed-title">Features extraites</div>
+                    <div class="co-parsed-subtitle" id="co-parsed-subtitle">—</div>
+                  </div>
+                  <button class="btn-reset" onclick="resetCustomFileUpload()" style="padding:6px 14px;font-size:11px">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.51"/></svg>
+                    Réinitialiser
+                  </button>
+                </div>
+                <div class="co-parsed-grid" id="co-parsed-grid"></div>
+                <button class="btn-analyse" onclick="predictCustomOSAFromFile()" id="btn-predict-file-osa">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 11l3 3L22 4"/>
+                    <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+                  </svg>
+                  Prédire la Sévérité OSA
+                </button>
+              </div>
+            </div>
+
+            <!-- Custom OSA Report (rendered here) -->
+            <div class="osa-report" id="custom-osa-report" style="display:none">
+              <div class="osa-report-header">
+                <div class="osa-report-left">
+                  <div class="osa-report-title">Rapport de Sévérité OSA — Mode Personnalisé</div>
+                  <div class="osa-model-badge" id="custom-osa-model-badge">Stacking Ensemble</div>
+                </div>
+                <div class="osa-severity-block">
+                  <div class="osa-severity-label">Sévérité Prédite</div>
+                  <div class="osa-severity-badge" id="custom-osa-sev-badge">Normal</div>
+                </div>
+              </div>
+              <div class="osa-proba-section">
+                <div class="osa-proba-title">Distribution de Confiance</div>
+                <div class="osa-proba-bars" id="custom-osa-proba-bars"></div>
+              </div>
+              <div class="osa-shap-section">
+                <div class="osa-shap-header">
+                  <div>
+                    <div class="osa-shap-title">Explications SHAP — Facteurs Déterminants</div>
+                    <div class="osa-shap-subtitle">Impact de chaque variable sur la prédiction de sévérité</div>
+                  </div>
+                  <div class="osa-shap-legend">
+                    <span class="shap-leg-neg">← Réduit le risque</span>
+                    <span class="shap-leg-pos">Aggrave le risque →</span>
+                  </div>
+                </div>
+                <div id="custom-osa-shaps"></div>
+              </div>
+
+              <!-- Export bar for custom OSA report -->
+              <div class="export-bar" id="export-custom-osa-bar">
+                <div class="export-bar-label">Exporter le rapport OSA</div>
+                <div class="export-bar-btns">
+                  <button class="export-btn xml" onclick="exportCustomOsaXML()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    XML
+                  </button>
+                  <button class="export-btn csv" onclick="exportCustomOsaCSV()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    CSV
+                  </button>
+                  <button class="export-btn pdf" onclick="exportCustomOsaPDF()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    PDF
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="co-error-bar" id="co-error-bar" style="display:none"></div>
+          </div>
+        </div>
+      </div> <!-- end section-custom-osa -->
 
       <div id="section-developer" class="app-section">
         <div class="container" style="max-width:1400px; padding-top:20px;">
@@ -613,10 +907,84 @@
           </div>
         </div>
       </div>
+      
+      <div id="section-login" class="app-section">
+        <!-- The content will be loaded/injected here or just placed here -->
+        <!-- I'll put the HTML content here directly for simplicity in this project structure -->
+        <div class="login-container">
+          <div class="doctor-avatar" id="doctor-avatar">
+            <svg class="doctor-svg" viewBox="0 0 200 200">
+              <!-- Body/Coat -->
+              <path class="coat" d="M40,200 Q40,160 60,140 L140,140 Q160,160 160,200 Z" />
+              <path class="shirt" d="M85,140 L115,140 L100,160 Z" />
+              <path class="tie" d="M100,148 L95,155 L100,165 L105,155 Z" />
+              
+              <!-- Head -->
+              <circle class="skin" cx="100" cy="85" r="55" />
+              
+              <!-- Hair -->
+              <path class="hair" d="M45,85 Q45,30 100,30 Q155,30 155,85 L145,85 Q145,50 100,50 Q55,50 55,85 Z" />
+              
+              <!-- Ears -->
+              <circle class="skin" cx="45" cy="90" r="10" />
+              <circle class="skin" cx="155" cy="90" r="10" />
+              
+              <!-- Eyes -->
+              <g id="eyes">
+                <g id="eye-l">
+                  <circle class="eye-white" cx="75" cy="85" r="15" />
+                  <circle class="pupil" id="pupil-l" cx="75" cy="85" r="7" />
+                  <path class="eye-closed" d="M60,85 Q75,95 90,85" />
+                </g>
+                <g id="eye-r">
+                  <circle class="eye-white" cx="125" cy="85" r="15" />
+                  <circle class="pupil" id="pupil-r" cx="125" cy="85" r="7" />
+                  <path class="eye-closed" d="M110,85 Q125,95 140,85" />
+                </g>
+              </g>
+              
+              <!-- Mouth -->
+              <path d="M85,115 Q100,125 115,115" fill="none" stroke="#4a3728" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </div>
+        
+          <div class="login-card">
+            <div class="login-header">
+              <h2>Bienvenue</h2>
+              <p>Connectez-vous à votre espace Hypnora</p>
+            </div>
+        
+            <form id="login-form" onsubmit="event.preventDefault()">
+              <div class="form-group">
+                <label for="email">Email Professionnel</label>
+                <div class="input-wrapper">
+                  <input type="email" id="email" placeholder="docteur@hopital.fr" required>
+                  <span id="email-cursor-measure" class="input-cursor-pos"></span>
+                </div>
+              </div>
+        
+              <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <div class="input-wrapper">
+                  <input type="password" id="password" placeholder="••••••••" required>
+                  <button type="button" class="toggle-password" id="toggle-password">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+        
+              <button type="submit" class="btn-login">S'identifier</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </main>
   </div>
 
   <script src="main.js"></script>
+  <script src="components/Login/Login.js"></script>
 </body>
 
 </html>

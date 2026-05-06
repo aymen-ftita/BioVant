@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hero Component - Hypnora</title>
+    <link rel="stylesheet" href="../Common/Global.css">
+    <link rel="stylesheet" href="Hero.css">
+</head>
+<body>
+    <div id="hero-container"></div>
+
+    <script src="Hero.js"></script>
+    <script>
+        fetch('Hero.html')
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('hero-container').innerHTML = html;
+                initHeroSignals(); // Re-init signals after injection
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results Component - Hypnora</title>
+    <link rel="stylesheet" href="../Common/Global.css">
+    <link rel="stylesheet" href="Results.css">
+    <style>#results { display: block !important; }</style>
+</head>
+<body>
+    <div style="max-width: 1000px; margin: 40px auto; padding: 20px;">
+        <div id="results-container"></div>
+    </div>
+
+    <script src="Results.js"></script>
+    <script>
+        fetch('Results.html')
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('results-container').innerHTML = html;
+                
+                // Mock data for rendering
+                const mockData = {
+                    results: [{
+                        model_info: { type: 'Bi-LSTM', channels: 5, classes: 3 },
+                        stages: ['Wake', 'NREM', 'NREM', 'REM', 'REM', 'Wake'],
+                        stats: {
+                            class_names: ['Wake', 'NREM', 'REM'],
+                            se: 88, tst: 420, tib: 480, sol: 15, waso: 45,
+                            stage_minutes: { Wake: 60, NREM: 300, REM: 120 },
+                            stage_pct: { Wake: 12, NREM: 63, REM: 25 },
+                            alerts: ["Delayed REM onset detected."]
+                        }
+                    }]
+                };
+                renderResults(mockData);
+            });
+    </script>
+</body>
+</html>

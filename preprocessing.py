@@ -81,9 +81,12 @@ def compute_aasm_stats(predictions, class_names):
     n         = len(hypno)
     epoch_min = EPOCH_SEC / 60.0
 
-    sleep_idx   = np.where(hypno != 0)[0]
+    wake_label = label_map.get("Wake", 0)
+    rem_label  = label_map.get("REM", len(class_names) - 1)
+
+    sleep_idx   = np.where(hypno != wake_label)[0]
     sleep_onset = int(sleep_idx[0]) if len(sleep_idx) > 0 else n
-    rem_idx     = np.where(hypno == 2)[0]
+    rem_idx     = np.where(hypno == rem_label)[0]
     rem_start   = int(rem_idx[0]) if len(rem_idx) > 0 else None
 
     tib_min = round(n * epoch_min, 2)
@@ -96,12 +99,12 @@ def compute_aasm_stats(predictions, class_names):
         rem_latency_min = round((rem_start - sleep_onset) * epoch_min, 2)
 
     post_onset = hypno[sleep_onset:]
-    waso_min   = round(np.sum(post_onset == 0) * epoch_min, 2)
+    waso_min   = round(np.sum(post_onset == wake_label) * epoch_min, 2)
 
     stage_minutes, stage_pct = {}, {}
     for idx, name in enumerate(class_names):
         mins  = round(np.sum(hypno == idx) * epoch_min, 2)
-        denom = tst_min if (tst_min > 0 and idx != 0) else tib_min
+        denom = tst_min if (tst_min > 0 and idx != wake_label) else tib_min
         pct   = round(mins / denom * 100, 1) if denom > 0 else 0.0
         stage_minutes[name] = mins
         stage_pct[name]     = pct

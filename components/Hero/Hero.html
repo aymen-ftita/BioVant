@@ -1,0 +1,41 @@
+<div class="hero">
+  <div class="hero-inner">
+
+    <div class="hero-text">
+      <div class="eyebrow">Neural Polysomnography Analysis</div>
+
+      <!-- ECG heartbeat SVG animation -->
+      <svg class="ecg-bar" viewBox="0 0 220 28" preserveAspectRatio="none">
+        <path d="M0,14 L18,14 L24,14 L27,3 L30,25 L33,14 L38,14
+         L46,14 L50,2 L54,26 L58,14 L68,14
+         L75,14 L79,7 L83,21 L87,14 L100,14
+         L108,14 L111,3 L114,25 L117,14 L122,14
+         L130,14 L134,8 L138,20 L142,14 L155,14
+         L159,3 L163,25 L167,14 L180,14
+         L184,6 L188,22 L192,14 L220,14" />
+      </svg>
+
+      <h1>Hypnora</h1>
+      <p class="hero-sub" id="hero-desc">Bidirectional LSTM trained on SHHS.<br>
+        Upload a PSG recording, get a full AASM-scored hypnogram and clinical metrics.</p>
+      <input type="checkbox" name="cfg-model" value="Stacking" checked style="display:none;">
+    </div>
+
+    <!-- live PSG signal canvases -->
+    <div class="hero-signals">
+      <div class="sig-row">
+        <span class="sig-lbl">EEG</span>
+        <canvas id="sig-eeg"></canvas>
+      </div>
+      <div class="sig-row">
+        <span class="sig-lbl">EMG</span>
+        <canvas id="sig-emg"></canvas>
+      </div>
+      <div class="sig-row">
+        <span class="sig-lbl">EOG</span>
+        <canvas id="sig-eog"></canvas>
+      </div>
+    </div>
+
+  </div>
+</div>

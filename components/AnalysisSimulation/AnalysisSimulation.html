@@ -1,0 +1,74 @@
+<div id="analysis-sim">
+  <div class="sim-header">
+    <div class="sim-title">
+      <div class="sim-spinner-el"></div>Analyse en cours
+    </div>
+    <div class="sim-step-label" id="sim-current-step">Initialisation…</div>
+  </div>
+  <div class="sim-channels">
+    <div class="sim-ch-row">
+      <div class="sim-ch-label" style="color:#c0392b">
+        <div class="ch-name" style="color:#c0392b">EEG</div>
+        <div class="ch-amp">μV · 100Hz</div>
+      </div>
+      <div class="sim-ch-canvas-wrap-dark"><canvas id="sim-eeg"></canvas></div>
+    </div>
+    <div class="sim-ch-row">
+      <div class="sim-ch-label">
+        <div class="ch-name" style="color:#6d28d9">EOG</div>
+        <div class="ch-amp">μV · 100Hz</div>
+      </div>
+      <div class="sim-ch-canvas-wrap-dark"><canvas id="sim-eog"></canvas></div>
+    </div>
+    <div class="sim-ch-row">
+      <div class="sim-ch-label">
+        <div class="ch-name" style="color:#1d4ed8">EMG</div>
+        <div class="ch-amp">μV · 256Hz</div>
+      </div>
+      <div class="sim-ch-canvas-wrap-dark"><canvas id="sim-emg"></canvas></div>
+    </div>
+  </div>
+  <div class="sim-steps" id="sim-steps">
+    <div class="sim-step" id="step-0">
+      <div class="sim-step-icon">1</div>
+      <div>
+        <div class="sim-step-text">Chargement et décodage EDF</div>
+        <div class="sim-step-sub">Lecture des canaux · Résolution des métadonnées</div>
+      </div>
+    </div>
+    <div class="sim-step" id="step-1">
+      <div class="sim-step-icon">2</div>
+      <div>
+        <div class="sim-step-text">Prétraitement du signal</div>
+        <div class="sim-step-sub">Rééchantillonnage 125Hz→100Hz · Normalisation z-score par époque</div>
+      </div>
+    </div>
+    <div class="sim-step" id="step-2">
+      <div class="sim-step-icon">3</div>
+      <div>
+        <div class="sim-step-text">Segmentation en époques de 30 secondes</div>
+        <div class="sim-step-sub">Découpage · Empilement → (N, 5, 3000)</div>
+      </div>
+    </div>
+    <div class="sim-step" id="step-3">
+      <div class="sim-step-icon">4</div>
+      <div>
+        <div class="sim-step-text">Inférence modèle</div>
+        <div class="sim-step-sub">Prédiction par lots de 64 · Wake / NREM / REM</div>
+      </div>
+    </div>
+    <div class="sim-step" id="step-4">
+      <div class="sim-step-icon">5</div>
+      <div>
+        <div class="sim-step-text">Calcul des métriques AASM</div>
+        <div class="sim-step-sub">TST · WASO · SE · Latence REM · Architecture du sommeil</div>
+      </div>
+    </div>
+  </div>
+  <div class="sim-progress-wrap">
+    <div class="sim-progress-track">
+      <div class="sim-progress-fill" id="sim-progress"></div>
+    </div>
+    <div class="sim-progress-label"><span id="sim-pct">0%</span><span id="sim-epochs-done"></span></div>
+  </div>
+</div>

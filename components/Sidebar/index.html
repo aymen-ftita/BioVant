@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar Component - Hypnora</title>
+    <link rel="stylesheet" href="../Common/Global.css">
+    <link rel="stylesheet" href="Sidebar.css">
+</head>
+<body>
+    <div style="display: flex;">
+        <!-- Injecting Sidebar.html content -->
+        <div id="sidebar-container"></div>
+        
+        <main style="flex:1; padding: 40px;">
+            <h1>Sidebar Component Preview</h1>
+            <p>This is a standalone preview of the Sidebar component.</p>
+            
+            <div id="section-doctor" class="app-section active">
+                <h2>Doctor Section</h2>
+                <p>Content for the doctor view.</p>
+            </div>
+            
+            <div id="section-developer" class="app-section">
+                <h2>Developer Section</h2>
+                <p>Content for the developer view.</p>
+            </div>
+        </main>
+    </div>
+
+    <script src="Sidebar.js"></script>
+    <script>
+        // Load the HTML snippet
+        fetch('Sidebar.html')
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('sidebar-container').innerHTML = html;
+            });
+            
+        // Mock app sections toggle
+        const style = document.createElement('style');
+        style.textContent = '.app-section { display: none; } .app-section.active { display: block; }';
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

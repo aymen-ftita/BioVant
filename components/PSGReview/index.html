@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSGReview Component - Hypnora</title>
+    <link rel="stylesheet" href="../Common/Global.css">
+    <link rel="stylesheet" href="PSGReview.css">
+    <style>#psg-review { display: block !important; }</style>
+</head>
+<body>
+    <div style="max-width: 1000px; margin: 40px auto; padding: 20px;">
+        <div id="psgreview-container"></div>
+    </div>
+
+    <script src="PSGReview.js"></script>
+    <script>
+        fetch('PSGReview.html')
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('psgreview-container').innerHTML = html;
+                previewChannels.start();
+            });
+            
+        function startAnalysis() { alert("Analysis started!"); }
+    </script>
+</body>
+</html>

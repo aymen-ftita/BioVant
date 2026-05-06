@@ -299,14 +299,17 @@ function completeAllSteps() {
 function switchTab(tab) {
   document.querySelectorAll('.app-tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.app-section').forEach(s => s.classList.remove('active'));
-  if (tab === 'doctor') {
-    document.querySelector('.app-tab:nth-child(1)').classList.add('active');
-    document.getElementById('section-doctor').classList.add('active');
-  } else {
-    document.querySelector('.app-tab:nth-child(2)').classList.add('active');
-    document.getElementById('section-developer').classList.add('active');
-    if (typeof editor === 'undefined') initDrawflow();
-  }
+  
+  const section = document.getElementById('section-' + tab);
+  if (section) section.classList.add('active');
+  
+  // Update button state via onclick attribute match
+  const btn = document.querySelector(`.app-tab[onclick="switchTab('${tab}')"]`);
+  if (btn) btn.classList.add('active');
+  
+  // Tab-specific init
+  if (tab === 'developer' && typeof editor === 'undefined') initDrawflow();
+  if (tab === 'login' && window.Login) Login.init();
 }
 
 /* ── START ANALYSIS ── */
@@ -441,6 +444,7 @@ function resetApp() {
   document.getElementById("step2-lbl").style.display = "none";
   document.getElementById("osa-panel").style.display = "none";
   document.getElementById("osa-report").style.display = "none";
+  document.getElementById("export-hypno-bar").style.display = "none";
   document.getElementById("file-input").value = "";
   hideErr(); resetSimSteps();
   document.getElementById("drop-zone").scrollIntoView({ behavior: "smooth", block: "nearest" });
@@ -448,6 +452,7 @@ function resetApp() {
 
 /* ── RENDER ── */
 let _stages = null, _stagesInt = null, _classNames = null;
+let _lastHypnoData = null, _lastOsaData = null, _lastCustomOsaData = null;
 function renderResults(data) {
   const dyn = document.getElementById("dynamic-results");
   dyn.innerHTML = "";
@@ -459,7 +464,10 @@ function renderResults(data) {
   _stagesInt = primary.stages_int;
   _classNames = primary.stats.class_names;
 
+  _lastHypnoData = data;
+
   document.getElementById("results").classList.add("visible");
+  document.getElementById("export-hypno-bar").style.display = "flex";
   document.getElementById("step2-lbl").style.display = "flex";
   document.getElementById("osa-panel").style.display = "block";
   document.getElementById("osa-report").style.display = "none";
@@ -623,6 +631,7 @@ async function predictOSA() {
     });
     const data = await res.json();
     if (data.error) throw new Error(data.error);
+    _lastOsaData = data;
 
     // ═══════════════════════════════════════════════
     //  RENDER FULL CLINICAL REPORT
@@ -783,6 +792,495 @@ async function predictOSA() {
     btn.classList.remove("running");
     btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path d="M12 8v4l3 3"/></svg> Générer le Rapport Clinique';
   }
+}
+
+/* ═════════════════════════════════════════════
+   CUSTOM OSA PREDICTION — Standalone Section
+   ═════════════════════════════════════════════ */
+let _customOsaParsedFeatures = null;
+
+function switchCustomOsaTab(tab) {
+  document.querySelectorAll('.co-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.co-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('co-tab-' + tab).classList.add('active');
+  document.getElementById('co-panel-' + tab).classList.add('active');
+}
+
+function getCustomManualFeatures() {
+  const v = id => { const el = document.getElementById(id); return el ? el.value : ""; };
+  return {
+    age_s2: v("co-age"), gender: v("co-gender"), bmi_s2: v("co-bmi"),
+    tst_min: v("co-tst"), tib_min: v("co-tib"), sol_min: v("co-sol"),
+    sleep_efficiency: v("co-se"), waso_min: v("co-waso"), spt_min: v("co-spt"),
+    N1_pct: v("co-n1"), N2_pct: v("co-n2"), N3_pct: v("co-n3"), REM_pct: v("co-rem"),
+    timest34: v("co-n3min"),
+    rem_latency_min: v("co-remlat"), n3_latency_min: v("co-n3lat"),
+    avgsat: v("co-avgsat"), minsat: v("co-minsat"),
+    pctsa90h: v("co-pctsa90"), pctsa85h: v("co-pctsa85"), pctsa95h: v("co-pctsa95"),
+    ai_all: v("co-ai-all"), ai_nrem: v("co-ai-nrem"), ai_rem: v("co-ai-rem"),
+    frag_index: v("co-frag"), n_wake_bouts: v("co-wakebouts"), n_rem_cycles: v("co-remcycles"),
+    remt1p: v("co-remt1p"), remt34p: v("co-remt34p"),
+  };
+}
+
+async function predictCustomOSA() {
+  const btn = document.getElementById("btn-predict-custom-osa");
+  btn.classList.add("running"); btn.innerHTML = "Analyse en cours…";
+  hideCustomOsaError();
+
+  try {
+    const features = getCustomManualFeatures();
+    const res = await fetch(API + "/predict_osa_custom", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ features })
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    renderCustomOSAReport(data);
+  } catch (e) {
+    showCustomOsaError(e.message);
+  } finally {
+    btn.classList.remove("running");
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg> Prédire la Sévérité OSA';
+  }
+}
+
+async function predictCustomOSAFromFile() {
+  if (!_customOsaParsedFeatures) { showCustomOsaError("Aucune feature chargée."); return; }
+  const btn = document.getElementById("btn-predict-file-osa");
+  btn.classList.add("running"); btn.innerHTML = "Analyse en cours…";
+  hideCustomOsaError();
+
+  try {
+    const res = await fetch(API + "/predict_osa_custom", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ features: _customOsaParsedFeatures })
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    renderCustomOSAReport(data);
+  } catch (e) {
+    showCustomOsaError(e.message);
+  } finally {
+    btn.classList.remove("running");
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg> Prédire la Sévérité OSA';
+  }
+}
+
+function renderCustomOSAReport(data) {
+  _lastCustomOsaData = data;
+  const report = document.getElementById("custom-osa-report");
+  report.style.display = "block";
+
+  // Severity badge
+  const badge = document.getElementById("custom-osa-sev-badge");
+  badge.textContent = data.severity;
+  const s = data.severity.toLowerCase();
+  badge.className = "osa-severity-badge " + (s.includes("severe") ? "sev-severe" : s.includes("moderate") ? "sev-moderate" : s.includes("mild") ? "sev-mild" : "sev-normal");
+
+  // Model badge
+  const modelBadge = document.getElementById("custom-osa-model-badge");
+  if (modelBadge) modelBadge.textContent = "🧠 " + (data.model_used || "XGBoost");
+
+  // Probabilities
+  if (data.probabilities) {
+    const probaContainer = document.getElementById("custom-osa-proba-bars");
+    probaContainer.innerHTML = "";
+    const classOrder = ["Normal", "Mild", "Moderate", "Severe"];
+    const classColors = { Normal: "#059669", Mild: "#d97706", Moderate: "#ea580c", Severe: "#dc2626" };
+    const classLabels = { Normal: "Normal", Mild: "Léger", Moderate: "Modéré", Severe: "Sévère" };
+
+    classOrder.forEach(cls => {
+      const pct = data.probabilities[cls] || 0;
+      const pctStr = (pct * 100).toFixed(1);
+      const isPredicted = cls.toLowerCase() === s;
+      const row = document.createElement("div");
+      row.className = "osa-proba-row";
+      row.innerHTML = `
+        <div class="osa-proba-label" style="color:${classColors[cls]};${isPredicted ? 'font-weight:800' : ''}">${classLabels[cls]}</div>
+        <div class="osa-proba-track">
+          <div class="osa-proba-fill proba-${cls.toLowerCase()}" style="width:0%" data-w="${Math.max(pct * 100, 1)}%">${pct > 0.08 ? pctStr + '%' : ''}</div>
+        </div>
+        <div class="osa-proba-pct" style="color:${classColors[cls]}">${pctStr}%</div>
+      `;
+      probaContainer.appendChild(row);
+      requestAnimationFrame(() => setTimeout(() => {
+        const fill = row.querySelector(".osa-proba-fill");
+        fill.style.width = fill.getAttribute("data-w");
+      }, 100));
+    });
+  }
+
+  // SHAP
+  const shaps = document.getElementById("custom-osa-shaps");
+  shaps.innerHTML = "";
+  const shapData = data.shap_explanations || [];
+  if (shapData.length > 0) {
+    const maxImp = Math.max(...shapData.map(x => Math.abs(x.impact)), 0.1);
+    const featureNames = {
+      "ai_all": "Index Arousal Total", "ai_nrem": "Arousal NREM", "ai_rem": "Arousal REM",
+      "avgsat": "SpO₂ Moyenne", "minsat": "SpO₂ Minimum", "pctsa90h": "% Temps <90%",
+      "pctsa85h": "% Temps <85%", "pctsa95h": "% Temps <95%",
+      "sleep_efficiency": "Efficacité Sommeil", "waso_min": "WASO",
+      "frag_index": "Fragmentation", "tst_min": "TST", "sol_min": "Latence",
+      "N1_pct": "% N1", "N2_pct": "% N2", "N3_pct": "% N3", "REM_pct": "% REM",
+      "rem_latency_min": "Latence REM", "bmi_s2": "IMC", "age_s2": "Âge", "gender": "Sexe",
+      "hypoxia_score": "Score Hypoxie", "arousal_frag": "Arousal × Frag.",
+      "sat_drop": "Chute SpO₂", "bmi_arousal": "IMC × Arousal",
+      "n3_suppression": "Suppression N3", "waso_arousal": "WASO × Arousal",
+      "slpeffp": "Eff. Sommeil (PSG)", "n_wake_bouts": "Nb Éveils",
+      "nrem_rem_ratio": "Ratio NREM/REM", "light_deep_ratio": "Ratio Léger/Profond",
+    };
+
+    shapData.forEach((sh, idx) => {
+      const isPos = sh.impact > 0;
+      const pct = (Math.abs(sh.impact) / maxImp * 45).toFixed(1);
+      const row = document.createElement("div");
+      row.className = "shap-item";
+      row.style.animationDelay = (idx * 50) + "ms";
+      const displayName = featureNames[sh.feature] || sh.feature.replace(/_/g, " ");
+      row.innerHTML = `<div class="shap-lbl">${displayName} <span style="color:var(--text3)">(${sh.value})</span></div>
+                       <div class="shap-bar-wrap">
+                         <div class="shap-bar ${isPos ? 'shap-pos' : 'shap-neg'}" style="width:0%" data-w="${pct}%"></div>
+                       </div>
+                       <div class="shap-val" style="color:${isPos ? 'var(--red)' : '#1d4ed8'}">${isPos ? '+' : ''}${sh.impact.toFixed(3)}</div>`;
+      shaps.appendChild(row);
+      requestAnimationFrame(() => setTimeout(() => {
+        const b = row.querySelector(".shap-bar");
+        b.style.width = b.getAttribute("data-w");
+      }, 100 + idx * 30));
+    });
+  }
+
+  setTimeout(() => report.scrollIntoView({ behavior: "smooth", block: "nearest" }), 100);
+}
+
+// File upload handling for custom OSA
+(function initCustomFileUpload() {
+  const zone = document.getElementById("co-file-zone");
+  const input = document.getElementById("co-file-input");
+  if (!zone || !input) return;
+
+  zone.addEventListener("dragover", e => { e.preventDefault(); zone.classList.add("drag-over"); });
+  zone.addEventListener("dragleave", () => zone.classList.remove("drag-over"));
+  zone.addEventListener("drop", e => { e.preventDefault(); zone.classList.remove("drag-over"); if (e.dataTransfer.files[0]) handleCustomFile(e.dataTransfer.files[0]); });
+  input.addEventListener("change", e => { if (e.target.files[0]) handleCustomFile(e.target.files[0]); });
+})();
+
+async function handleCustomFile(file) {
+  const fname = file.name.toLowerCase();
+  if (!fname.endsWith(".csv") && !fname.endsWith(".xml")) {
+    showCustomOsaError("Format non supporté. Utilisez .csv ou .xml");
+    return;
+  }
+  hideCustomOsaError();
+
+  const form = new FormData();
+  form.append("file", file);
+
+  try {
+    const res = await fetch(API + "/parse_features_file", { method: "POST", body: form });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+
+    _customOsaParsedFeatures = data.features;
+
+    // Show preview
+    const preview = document.getElementById("co-parsed-preview");
+    const zone = document.getElementById("co-file-zone");
+    zone.style.display = "none";
+    preview.style.display = "block";
+
+    document.getElementById("co-parsed-title").textContent = `✓ ${data.n_columns} features extraites de ${data.source}`;
+    document.getElementById("co-parsed-subtitle").textContent = data.n_rows ? `${data.n_rows} lignes · Première ligne utilisée` : `Fichier XML parsé`;
+
+    const grid = document.getElementById("co-parsed-grid");
+    grid.innerHTML = "";
+    let idx = 0;
+    for (const [key, val] of Object.entries(data.features)) {
+      const card = document.createElement("div");
+      card.className = "feat-card";
+      card.style.animationDelay = (idx * 25) + "ms";
+      const isNum = typeof val === "number";
+      card.innerHTML = `
+        <div class="feat-card-name">${key}</div>
+        <div class="feat-card-value">${isNum ? val.toFixed ? val.toFixed(2) : val : val}</div>
+      `;
+      grid.appendChild(card);
+      idx++;
+    }
+
+  } catch (e) {
+    showCustomOsaError(e.message);
+  }
+}
+
+function resetCustomFileUpload() {
+  _customOsaParsedFeatures = null;
+  document.getElementById("co-file-zone").style.display = "block";
+  document.getElementById("co-parsed-preview").style.display = "none";
+  document.getElementById("co-file-input").value = "";
+  document.getElementById("custom-osa-report").style.display = "none";
+}
+
+function showCustomOsaError(msg) {
+  const bar = document.getElementById("co-error-bar");
+  bar.textContent = "⚠  " + msg;
+  bar.style.display = "block";
+}
+function hideCustomOsaError() {
+  document.getElementById("co-error-bar").style.display = "none";
+}
+
+/* ═════════════════════════════════════════════
+   EXPORT FUNCTIONS — Hypnogram, OSA, Custom OSA
+   ═════════════════════════════════════════════ */
+
+// ── Utility: trigger file download ──
+function downloadFile(filename, content, mimeType) {
+  const blob = new Blob([content], { type: mimeType });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(a.href); }, 100);
+}
+
+function timestamp() {
+  return new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19);
+}
+
+// ── HYPNOGRAM EXPORTS ──
+function exportHypnoXML() {
+  if (!_lastHypnoData || !_lastHypnoData.results) return;
+  const res = _lastHypnoData.results[0];
+  const stats = res.stats;
+  let xml = '<?xml version="1.0" encoding="UTF-8"?>\n<SleepAnalysis>\n';
+  xml += `  <GeneratedAt>${new Date().toISOString()}</GeneratedAt>\n`;
+  xml += `  <Model>${res.model_info?.type || "Stacking"}</Model>\n`;
+  xml += '  <Metrics>\n';
+  xml += `    <TotalSleepTime unit="min">${stats.tst}</TotalSleepTime>\n`;
+  xml += `    <TimeInBed unit="min">${stats.tib}</TimeInBed>\n`;
+  xml += `    <SleepEfficiency unit="%">${stats.se}</SleepEfficiency>\n`;
+  xml += `    <SleepOnsetLatency unit="min">${stats.sol}</SleepOnsetLatency>\n`;
+  xml += `    <WASO unit="min">${stats.waso}</WASO>\n`;
+  xml += `    <REMLatency unit="min">${stats.rem_latency != null ? stats.rem_latency : "N/A"}</REMLatency>\n`;
+  xml += '  </Metrics>\n';
+  xml += '  <StageDistribution>\n';
+  for (const [stage, pct] of Object.entries(stats.stage_pct || {})) {
+    xml += `    <Stage name="${stage}" percent="${pct}" minutes="${stats.stage_minutes[stage]}"/>\n`;
+  }
+  xml += '  </StageDistribution>\n';
+  xml += '  <Hypnogram>\n';
+  res.stages.forEach((s, i) => { xml += `    <Epoch index="${i+1}" stage="${s}"/>\n`; });
+  xml += '  </Hypnogram>\n';
+  xml += '</SleepAnalysis>\n';
+  downloadFile(`hypnogram_${timestamp()}.xml`, xml, "application/xml");
+}
+
+function exportHypnoPDF() {
+  if (!_lastHypnoData || !_lastHypnoData.results) return;
+  const res = _lastHypnoData.results[0];
+  const s = res.stats;
+  const stagesTable = Object.entries(s.stage_pct || {}).map(([st, pct]) =>
+    `<tr><td>${st}</td><td>${pct}%</td><td>${s.stage_minutes[st]} min</td></tr>`
+  ).join("");
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Hypnogram Report</title>
+  <style>body{font-family:Georgia,serif;max-width:800px;margin:40px auto;color:#261c10;line-height:1.6}
+  h1{color:#c0392b;border-bottom:2px solid #c0392b;padding-bottom:8px;font-size:24px}
+  h2{color:#6b5840;font-size:16px;margin-top:28px}table{width:100%;border-collapse:collapse;margin:12px 0}
+  th,td{border:1px solid #ddd5c4;padding:8px 12px;text-align:left;font-size:13px}
+  th{background:#f4efe6;font-weight:700;text-transform:uppercase;font-size:10px;letter-spacing:1px}
+  .metric{display:inline-block;min-width:160px;padding:10px 16px;margin:4px;background:#f4efe6;border-radius:8px;border:1px solid #ddd5c4}
+  .metric .val{font-size:20px;font-weight:700;color:#c0392b}.metric .lbl{font-size:10px;color:#6b5840;text-transform:uppercase;letter-spacing:1px}
+  .footer{margin-top:40px;font-size:10px;color:#a0917e;border-top:1px solid #ddd5c4;padding-top:12px}
+  @media print{body{margin:20px}}</style></head><body>
+  <h1>Rapport d'Hypnogramme — Hypnora AI</h1>
+  <p style="color:#6b5840;font-size:12px">${new Date().toLocaleString("fr-FR")} · Modèle: ${res.model_info?.type || "Stacking"} · ${res.stages.length} époques</p>
+  <h2>Métriques AASM</h2>
+  <div>
+    <div class="metric"><div class="lbl">TST</div><div class="val">${s.tst} min</div></div>
+    <div class="metric"><div class="lbl">TIB</div><div class="val">${s.tib} min</div></div>
+    <div class="metric"><div class="lbl">Efficacité</div><div class="val">${s.se}%</div></div>
+    <div class="metric"><div class="lbl">Latence</div><div class="val">${s.sol} min</div></div>
+    <div class="metric"><div class="lbl">WASO</div><div class="val">${s.waso} min</div></div>
+    <div class="metric"><div class="lbl">Lat. REM</div><div class="val">${s.rem_latency != null ? s.rem_latency + " min" : "N/A"}</div></div>
+  </div>
+  <h2>Distribution des Stades</h2>
+  <table><thead><tr><th>Stade</th><th>%</th><th>Durée</th></tr></thead><tbody>${stagesTable}</tbody></table>
+  <div class="footer">Généré par Hypnora AI · Analyse automatique BiLSTM-SHHS · Ce rapport ne remplace pas un avis médical</div>
+  </body></html>`;
+  const w = window.open("", "_blank");
+  w.document.write(html);
+  w.document.close();
+  setTimeout(() => w.print(), 400);
+}
+
+// ── OSA REPORT EXPORTS ──
+function getOsaExportData() {
+  return _lastOsaData;
+}
+
+function buildOsaXML(data, title) {
+  let xml = '<?xml version="1.0" encoding="UTF-8"?>\n<OSAReport>\n';
+  xml += `  <GeneratedAt>${new Date().toISOString()}</GeneratedAt>\n`;
+  xml += `  <Title>${title}</Title>\n`;
+  xml += `  <Model>${data.model_used || "XGBoost"}</Model>\n`;
+  xml += `  <Severity>${data.severity}</Severity>\n`;
+  xml += '  <Probabilities>\n';
+  for (const [cls, prob] of Object.entries(data.probabilities || {})) {
+    xml += `    <Class name="${cls}" probability="${(prob * 100).toFixed(1)}"/>\n`;
+  }
+  xml += '  </Probabilities>\n';
+  if (data.aasm_features) {
+    xml += '  <AASMFeatures>\n';
+    for (const [group, feats] of Object.entries(data.aasm_features)) {
+      xml += `    <Group name="${group}">\n`;
+      for (const [k, v] of Object.entries(feats)) {
+        xml += `      <Feature name="${k}" value="${v}"/>\n`;
+      }
+      xml += '    </Group>\n';
+    }
+    xml += '  </AASMFeatures>\n';
+  }
+  if (data.used_features) {
+    xml += '  <ModelFeatures>\n';
+    for (const [k, v] of Object.entries(data.used_features)) {
+      xml += `    <Feature name="${k}" value="${v}"/>\n`;
+    }
+    xml += '  </ModelFeatures>\n';
+  }
+  if (data.shap_explanations) {
+    xml += '  <SHAPExplanations>\n';
+    data.shap_explanations.forEach(sh => {
+      xml += `    <Factor feature="${sh.feature}" value="${sh.value}" impact="${sh.impact.toFixed(4)}"/>\n`;
+    });
+    xml += '  </SHAPExplanations>\n';
+  }
+  if (data.interpretation) {
+    xml += '  <Interpretation>\n';
+    data.interpretation.forEach(item => {
+      xml += `    <Finding type="${item.type}">${item.text}</Finding>\n`;
+    });
+    xml += '  </Interpretation>\n';
+  }
+  xml += '</OSAReport>\n';
+  return xml;
+}
+
+function buildOsaCSV(data) {
+  let rows = [];
+  rows.push(["Section", "Key", "Value"]);
+  rows.push(["Prediction", "Severity", data.severity]);
+  rows.push(["Prediction", "Model", data.model_used || "XGBoost"]);
+  for (const [cls, prob] of Object.entries(data.probabilities || {})) {
+    rows.push(["Probability", cls, (prob * 100).toFixed(1) + "%"]);
+  }
+  if (data.aasm_features) {
+    for (const [group, feats] of Object.entries(data.aasm_features)) {
+      for (const [k, v] of Object.entries(feats)) {
+        rows.push(["AASM_" + group, k, v]);
+      }
+    }
+  }
+  if (data.used_features) {
+    for (const [k, v] of Object.entries(data.used_features)) {
+      rows.push(["ModelFeature", k, v]);
+    }
+  }
+  if (data.shap_explanations) {
+    data.shap_explanations.forEach(sh => {
+      rows.push(["SHAP", sh.feature, sh.impact.toFixed(4)]);
+    });
+  }
+  return rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
+}
+
+function buildOsaPDF(data, title) {
+  const s = data.severity;
+  const sevColor = s.toLowerCase().includes("severe") ? "#dc2626" : s.toLowerCase().includes("moderate") ? "#ea580c" : s.toLowerCase().includes("mild") ? "#d97706" : "#059669";
+  const probaRows = Object.entries(data.probabilities || {}).map(([cls, prob]) => {
+    const colors = { Normal: "#059669", Mild: "#d97706", Moderate: "#ea580c", Severe: "#dc2626" };
+    const labels = { Normal: "Normal", Mild: "Léger", Moderate: "Modéré", Severe: "Sévère" };
+    return `<tr><td style="color:${colors[cls]}">${labels[cls] || cls}</td><td><div style="background:${colors[cls]}20;border-radius:4px;height:18px;width:100%"><div style="background:${colors[cls]};border-radius:4px;height:18px;width:${(prob*100).toFixed(0)}%"></div></div></td><td style="font-weight:700">${(prob*100).toFixed(1)}%</td></tr>`;
+  }).join("");
+  let featHtml = "";
+  if (data.aasm_features) {
+    for (const [group, feats] of Object.entries(data.aasm_features)) {
+      featHtml += `<h3 style="color:#6b5840;font-size:12px;margin:16px 0 6px;text-transform:uppercase;letter-spacing:1px">${group}</h3><div style="display:flex;flex-wrap:wrap;gap:6px">`;
+      for (const [k, v] of Object.entries(feats)) {
+        featHtml += `<div class="metric"><div class="lbl">${k}</div><div class="val">${v}</div></div>`;
+      }
+      featHtml += "</div>";
+    }
+  }
+  let shapHtml = "";
+  if (data.shap_explanations && data.shap_explanations.length > 0) {
+    const maxImp = Math.max(...data.shap_explanations.map(x => Math.abs(x.impact)), 0.1);
+    shapHtml = data.shap_explanations.map(sh => {
+      const isPos = sh.impact > 0;
+      const pct = (Math.abs(sh.impact) / maxImp * 60).toFixed(0);
+      return `<tr><td style="font-size:11px">${sh.feature}<br><span style="color:#a0917e">${sh.value}</span></td><td style="width:50%"><div style="background:${isPos?'rgba(192,57,43,0.15)':'rgba(29,78,216,0.15)'};border-radius:3px;height:14px;width:${pct}%"></div></td><td style="color:${isPos?'#c0392b':'#1d4ed8'};font-weight:700;font-size:12px">${isPos?'+':''}${sh.impact.toFixed(3)}</td></tr>`;
+    }).join("");
+  }
+  let interpHtml = "";
+  if (data.interpretation && data.interpretation.length > 0) {
+    interpHtml = '<h2>Interprétation Clinique</h2>' + data.interpretation.map(item => {
+      const colors = { warning: "#d97706", danger: "#dc2626", info: "#2563eb" };
+      return `<div style="padding:8px 12px;margin:4px 0;border-left:3px solid ${colors[item.type]||'#2563eb'};background:${colors[item.type]||'#2563eb'}08;border-radius:0 6px 6px 0;font-size:12px">${item.text}</div>`;
+    }).join("");
+  }
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${title}</title>
+  <style>body{font-family:Georgia,serif;max-width:800px;margin:40px auto;color:#261c10;line-height:1.6}
+  h1{color:#c0392b;border-bottom:2px solid #c0392b;padding-bottom:8px;font-size:22px}
+  h2{color:#6b5840;font-size:14px;margin-top:24px;border-bottom:1px solid #ddd5c4;padding-bottom:6px}
+  table{width:100%;border-collapse:collapse;margin:10px 0}th,td{padding:6px 10px;text-align:left;font-size:12px;border-bottom:1px solid #ede7db}
+  .sev-badge{display:inline-block;padding:8px 24px;border-radius:10px;font-size:18px;font-weight:900;color:#fff;background:${sevColor}}
+  .metric{display:inline-block;min-width:120px;padding:8px 12px;margin:3px;background:#f4efe6;border-radius:6px;border:1px solid #ddd5c4}
+  .metric .val{font-size:16px;font-weight:700;color:#261c10}.metric .lbl{font-size:9px;color:#6b5840;text-transform:uppercase;letter-spacing:1px}
+  .footer{margin-top:40px;font-size:10px;color:#a0917e;border-top:1px solid #ddd5c4;padding-top:12px}
+  @media print{body{margin:20px}}</style></head><body>
+  <h1>${title}</h1>
+  <p style="color:#6b5840;font-size:11px">${new Date().toLocaleString("fr-FR")} · Modèle: ${data.model_used || "XGBoost"}</p>
+  <div style="margin:20px 0"><span style="font-size:11px;color:#6b5840;text-transform:uppercase;letter-spacing:1px">Sévérité prédite</span><br><span class="sev-badge">${data.severity}</span></div>
+  <h2>Distribution de Confiance</h2><table>${probaRows}</table>
+  ${featHtml ? '<h2>Architecture du Sommeil — AASM</h2>' + featHtml : ''}
+  ${shapHtml ? '<h2>Facteurs Déterminants (SHAP)</h2><table>' + shapHtml + '</table>' : ''}
+  ${interpHtml}
+  <div class="footer">Généré par Hypnora AI · Stacking Ensemble (XGB+LGBM+MLP→LR) · Ce rapport ne remplace pas un avis médical</div>
+  </body></html>`;
+  const w = window.open("", "_blank");
+  w.document.write(html);
+  w.document.close();
+  setTimeout(() => w.print(), 400);
+}
+
+function exportOsaXML() {
+  const d = getOsaExportData(); if (!d) return;
+  downloadFile(`osa_report_${timestamp()}.xml`, buildOsaXML(d, "Rapport OSA"), "application/xml");
+}
+function exportOsaCSV() {
+  const d = getOsaExportData(); if (!d) return;
+  downloadFile(`osa_report_${timestamp()}.csv`, buildOsaCSV(d), "text/csv");
+}
+function exportOsaPDF() {
+  const d = getOsaExportData(); if (!d) return;
+  buildOsaPDF(d, "Rapport de Sévérité OSA — Hypnora AI");
+}
+
+// ── CUSTOM OSA EXPORTS ──
+function exportCustomOsaXML() {
+  if (!_lastCustomOsaData) return;
+  downloadFile(`osa_custom_${timestamp()}.xml`, buildOsaXML(_lastCustomOsaData, "Rapport OSA Custom"), "application/xml");
+}
+function exportCustomOsaCSV() {
+  if (!_lastCustomOsaData) return;
+  downloadFile(`osa_custom_${timestamp()}.csv`, buildOsaCSV(_lastCustomOsaData), "text/csv");
+}
+function exportCustomOsaPDF() {
+  if (!_lastCustomOsaData) return;
+  buildOsaPDF(_lastCustomOsaData, "Rapport OSA Personnalisé — Hypnora AI");
 }
 
 let _rzT;

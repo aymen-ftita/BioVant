@@ -4,5 +4,4 @@ __pycache__
 venv
 .env
 .vscode
-best_LSTM_shhs.pth
 implementation_plan.md
