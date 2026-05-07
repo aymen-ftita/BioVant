@@ -168,3 +168,106 @@ def add_psg_record(
     db.refresh(db_psg)
     return db_psg
 
+# --- Conversation Routes ---
+
+@app.get("/doctors", response_model=list[schemas.UserResponse])
+def list_doctors(current_user: db_models.User = Depends(get_current_user), db: Session = Depends(get_db)):
+    if current_user.role != "doctor":
+        raise HTTPException(status_code=403, detail="Not authorized")
+    # List all doctors except the current user
+    doctors = db.query(db_models.User).filter(db_models.User.role == "doctor", db_models.User.id != current_user.id).all()
+    return doctors
+
+@app.post("/conversations", response_model=schemas.FileConversationResponse)
+def get_or_create_conversation(
+    conv: schemas.FileConversationCreate, 
+    current_user: db_models.User = Depends(get_current_user), 
+    db: Session = Depends(get_db)
+):
+    # Check if target doctor exists
+    target_doctor = db.query(db_models.User).filter(db_models.User.id == conv.target_doctor_id, db_models.User.role == "doctor").first()
+    if not target_doctor:
+        raise HTTPException(status_code=404, detail="Target doctor not found")
+
+    # Check if PSG exists
+    psg = db.query(db_models.PSG).filter(db_models.PSG.id == conv.psg_id).first()
+    if not psg:
+        raise HTTPException(status_code=404, detail="PSG record not found")
+
+    # Try to find existing conversation between these two doctors for this file
+    # We check both directions (current_user as doctor_one or doctor_two)
+    existing_conv = db.query(db_models.FileConversation).filter(
+        db_models.FileConversation.psg_id == conv.psg_id,
+        db_models.FileConversation.file_type == conv.file_type,
+        (
+            ((db_models.FileConversation.doctor_one_id == current_user.id) & (db_models.FileConversation.doctor_two_id == conv.target_doctor_id)) |
+            ((db_models.FileConversation.doctor_one_id == conv.target_doctor_id) & (db_models.FileConversation.doctor_two_id == current_user.id))
+        )
+    ).first()
+
+    if existing_conv:
+        return existing_conv
+
+    # Create new conversation
+    new_conv = db_models.FileConversation(
+        psg_id=conv.psg_id,
+        file_type=conv.file_type,
+        doctor_one_id=current_user.id,
+        doctor_two_id=conv.target_doctor_id
+    )
+    db.add(new_conv)
+    db.commit()
+    db.refresh(new_conv)
+    return new_conv
+
+@app.get("/conversations", response_model=list[schemas.FileConversationResponse])
+def get_my_conversations(current_user: db_models.User = Depends(get_current_user), db: Session = Depends(get_db)):
+    conversations = db.query(db_models.FileConversation).filter(
+        (db_models.FileConversation.doctor_one_id == current_user.id) | 
+        (db_models.FileConversation.doctor_two_id == current_user.id)
+    ).all()
+    return conversations
+
+@app.get("/conversations/psg/{psg_id}", response_model=list[schemas.FileConversationResponse])
+def get_psg_conversations(psg_id: int, current_user: db_models.User = Depends(get_current_user), db: Session = Depends(get_db)):
+    conversations = db.query(db_models.FileConversation).filter(
+        db_models.FileConversation.psg_id == psg_id,
+        ((db_models.FileConversation.doctor_one_id == current_user.id) | (db_models.FileConversation.doctor_two_id == current_user.id))
+    ).all()
+    return conversations
+
+@app.get("/conversations/{conversation_id}/messages", response_model=list[schemas.FileMessageResponse])
+def get_messages(conversation_id: int, current_user: db_models.User = Depends(get_current_user), db: Session = Depends(get_db)):
+    conv = db.query(db_models.FileConversation).filter(db_models.FileConversation.id == conversation_id).first()
+    if not conv:
+        raise HTTPException(status_code=404, detail="Conversation not found")
+    
+    if conv.doctor_one_id != current_user.id and conv.doctor_two_id != current_user.id:
+        raise HTTPException(status_code=403, detail="Not authorized to view these messages")
+    
+    return conv.messages
+
+@app.post("/conversations/{conversation_id}/messages", response_model=schemas.FileMessageResponse)
+def send_message(
+    conversation_id: int, 
+    msg: schemas.FileMessageCreate, 
+    current_user: db_models.User = Depends(get_current_user), 
+    db: Session = Depends(get_db)
+):
+    conv = db.query(db_models.FileConversation).filter(db_models.FileConversation.id == conversation_id).first()
+    if not conv:
+        raise HTTPException(status_code=404, detail="Conversation not found")
+    
+    if conv.doctor_one_id != current_user.id and conv.doctor_two_id != current_user.id:
+        raise HTTPException(status_code=403, detail="Not authorized to send messages here")
+
+    db_msg = db_models.FileMessage(
+        conversation_id=conversation_id,
+        sender_id=current_user.id,
+        content=msg.content
+    )
+    db.add(db_msg)
+    db.commit()
+    db.refresh(db_msg)
+    return db_msg
+
