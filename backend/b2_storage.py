@@ -49,6 +49,6 @@ def upload_file_to_b2(file_obj, filename: str, content_type: str = None) -> str:
         
         return public_url
 
-    except ClientError as e:
+    except Exception as e:
         print(f"Error uploading to B2: {e}")
         return None

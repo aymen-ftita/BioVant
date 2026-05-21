@@ -1,0 +1,63 @@
+/* Sidebar Styles */
+.sidebar-nav {
+  width: 240px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 24px 20px;
+  flex-shrink: 0;
+  z-index: 10;
+  height: 100vh;
+}
+
+.sidebar-brand {
+  font-family: var(--serif);
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--text);
+  margin-bottom: 40px;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+.sidebar-brand em {
+  color: var(--red);
+  font-style: italic;
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.app-tab {
+  padding: 14px 18px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--text2);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: var(--t);
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.app-tab:hover {
+  background: var(--bg2);
+}
+
+.app-tab.active {
+  background: var(--red);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(192, 57, 43, .35);
+  border-color: var(--red);
+}

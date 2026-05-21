@@ -52,6 +52,14 @@ class PSGResponse(BaseModel):
     class Config:
         from_attributes = True
 
+class PSGUpdate(BaseModel):
+    severity: Optional[str] = None
+    report_data: Optional[str] = None
+    edf_url: Optional[str] = None
+    hypnogram_url: Optional[str] = None
+    csv_url: Optional[str] = None
+
+
 class Token(BaseModel):
     access_token: str
     token_type: str

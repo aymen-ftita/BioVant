@@ -1,0 +1,206 @@
+/* Analysis Simulation Styles */
+#analysis-sim {
+  display: none;
+  margin-top: 20px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r);
+  box-shadow: var(--sh2);
+  overflow: hidden;
+  animation: fadeUp .35s ease both;
+}
+
+#analysis-sim.visible {
+  display: block;
+}
+
+.sim-header {
+  padding: 16px 22px;
+  background: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.sim-title {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 700;
+  color: #faf7f2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sim-spinner-el {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(250, 247, 242, .2);
+  border-top-color: #faf7f2;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  flex-shrink: 0;
+}
+
+.sim-step-label {
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(250, 247, 242, .5);
+}
+
+.sim-channels {
+  display: flex;
+  flex-direction: column;
+}
+
+.sim-ch-row {
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  height: 86px;
+  overflow: hidden;
+}
+
+.sim-ch-row:last-child {
+  border-bottom: none;
+}
+
+.sim-ch-label {
+  width: 80px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 10px 12px;
+  background: var(--text);
+  border-right: 1px solid rgba(255, 255, 255, .08);
+  gap: 3px;
+}
+
+.sim-ch-label .ch-name {
+  font-size: 8px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: #fff;
+}
+
+.sim-ch-label .ch-amp {
+  font-size: 7px;
+  color: rgba(255, 255, 255, .3);
+}
+
+.sim-ch-canvas-wrap-dark {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: rgba(30, 20, 12, .97);
+}
+
+.sim-ch-canvas-wrap-dark canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.sim-steps {
+  padding: 18px 22px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sim-step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  color: var(--text3);
+  transition: color .3s;
+}
+
+.sim-step.active {
+  color: var(--text2);
+}
+
+.sim-step.done {
+  color: #059669;
+}
+
+.sim-step-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  flex-shrink: 0;
+  transition: all .3s;
+}
+
+.sim-step.active .sim-step-icon {
+  border-color: var(--red);
+  background: var(--red-s);
+  animation: stepPulse 1s ease-in-out infinite;
+}
+
+.sim-step.done .sim-step-icon {
+  border-color: #059669;
+  background: rgba(5, 150, 105, .08);
+  color: #059669;
+}
+
+.sim-step-text {
+  font-weight: 500;
+}
+
+.sim-step-sub {
+  font-size: 9px;
+  color: var(--text3);
+  margin-top: 2px;
+}
+
+.sim-progress-wrap {
+  padding: 15px 22px 22px;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+}
+
+.sim-progress-track {
+  height: 6px;
+  background: var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.sim-progress-fill {
+  height: 100%;
+  background: var(--red);
+  width: 0%;
+  transition: width 0.4s ease;
+}
+
+.sim-progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--text3);
+  font-family: var(--mono);
+}
+
+@keyframes stepPulse {
+  0%, 100% { box-shadow: 0 0 0 0 var(--red-m) }
+  50% { box-shadow: 0 0 0 5px var(--red-s) }
+}

@@ -168,7 +168,61 @@ def add_psg_record(
     db.refresh(db_psg)
     return db_psg
 
+@app.put("/psgs/{psg_id}", response_model=schemas.PSGResponse)
+def update_psg_record(
+    psg_id: int,
+    psg_update: schemas.PSGUpdate,
+    current_user: db_models.User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    db_psg = db.query(db_models.PSG).filter(db_models.PSG.id == psg_id).first()
+    if not db_psg:
+        raise HTTPException(status_code=404, detail="PSG record not found")
+    
+    # Check that current doctor is the owner of the patient
+    patient = db.query(db_models.Patient).filter(db_models.Patient.id == db_psg.patient_id).first()
+    if not patient or (patient.doctor_id != current_user.id and current_user.role != "admin"):
+        raise HTTPException(status_code=403, detail="Not authorized to update this PSG record")
+
+    if psg_update.severity is not None:
+        db_psg.severity = psg_update.severity
+    if psg_update.report_data is not None:
+        db_psg.report_data = psg_update.report_data
+    if psg_update.edf_url is not None:
+        db_psg.edf_url = psg_update.edf_url
+    if psg_update.hypnogram_url is not None:
+        db_psg.hypnogram_url = psg_update.hypnogram_url
+    if psg_update.csv_url is not None:
+        db_psg.csv_url = psg_update.csv_url
+
+    db.commit()
+    db.refresh(db_psg)
+    return db_psg
+
+@app.post("/psgs/{psg_id}/upload_edf", response_model=schemas.PSGResponse)
+def upload_psg_edf(
+    psg_id: int,
+    edf_file: UploadFile = File(...),
+    current_user: db_models.User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    db_psg = db.query(db_models.PSG).filter(db_models.PSG.id == psg_id).first()
+    if not db_psg:
+        raise HTTPException(status_code=404, detail="PSG record not found")
+    
+    # Check that current doctor is the owner of the patient
+    patient = db.query(db_models.Patient).filter(db_models.Patient.id == db_psg.patient_id).first()
+    if not patient or (patient.doctor_id != current_user.id and current_user.role != "admin"):
+        raise HTTPException(status_code=403, detail="Not authorized to update this PSG record")
+        
+    edf_url = upload_file_to_b2(edf_file.file, edf_file.filename, edf_file.content_type)
+    db_psg.edf_url = edf_url
+    db.commit()
+    db.refresh(db_psg)
+    return db_psg
+
 # --- Conversation Routes ---
+
 
 @app.get("/doctors", response_model=list[schemas.UserResponse])
 def list_doctors(current_user: db_models.User = Depends(get_current_user), db: Session = Depends(get_db)):
