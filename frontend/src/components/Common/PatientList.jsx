@@ -14,9 +14,93 @@ import {
   PlusCircle, 
   Brain,
   X,
-  PieChart
+  PieChart,
+  Download,
+  Image,
+  ExternalLink
 } from 'lucide-react';
 import axios from 'axios';
+
+const HistoryTrendChart = ({ psgs }) => {
+  if (!psgs || psgs.length < 2) return null;
+  
+  // Sort PSGs by date chronologically
+  const sortedPsgs = [...psgs].sort((a, b) => new Date(a.date) - new Date(b.date));
+  
+  const dates = sortedPsgs.map(p => p.date);
+  const seList = sortedPsgs.map(p => p.metrics?.sleep_efficiency || 80);
+  const remList = sortedPsgs.map(p => p.metrics?.stage_rem || 18);
+  const ahiList = sortedPsgs.map(p => {
+    const match = String(p.severity).match(/IAH:\s*([0-9.]+)/i);
+    return match ? parseFloat(match[1]) : (p.metrics?.arousal_index || 15);
+  });
+
+  const getPathData = (dataList, minVal, maxVal) => {
+    const points = dataList.map((val, idx) => {
+      const x = 50 + (idx / (dataList.length - 1)) * 390;
+      const range = maxVal - minVal;
+      const y = 90 - ((val - minVal) / (range || 1)) * 70;
+      return `${x},${y}`;
+    });
+    return `M ${points.join(' L ')}`;
+  };
+
+  const sePath = getPathData(seList, 50, 100);
+  const remPath = getPathData(remList, 0, 30);
+  const ahiPath = getPathData(ahiList, 0, 50);
+
+  return (
+    <div className="trend-card" style={{ background: 'rgba(255,255,255,0.01)', border: '1px solid var(--border)', borderRadius: '10px', padding: '16px', marginBottom: '24px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', fontSize: '13px', fontWeight: 'bold', color: 'var(--red)' }}>
+        📈 Suivi d'Évolution Clinique (CPAP / Traitement)
+      </div>
+      <p style={{ fontSize: '11px', color: 'var(--text3)', marginBottom: '14px' }}>
+        Suivi de l'efficacité thérapeutique sur {sortedPsgs.length} polysomnographies.
+      </p>
+
+      {/* Sleep Efficiency & REM% Curve */}
+      <div style={{ marginBottom: '10px' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', fontSize: '10px', marginBottom: '8px', fontWeight: 600 }}>
+          <span style={{ color: '#3498db', display: 'flex', alignItems: 'center', gap: '4px' }}>● Efficacité (SE %)</span>
+          <span style={{ color: '#9b59b6', display: 'flex', alignItems: 'center', gap: '4px' }}>● Sommeil REM (%)</span>
+          <span style={{ color: '#ef4444', display: 'flex', alignItems: 'center', gap: '4px' }}>● Sévérité SAOS (IAH/h)</span>
+        </div>
+        <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: '6px', padding: '10px', height: '120px' }}>
+          <svg width="100%" height="100%" viewBox="0 0 500 110" preserveAspectRatio="none">
+            <line x1="50" y1="20" x2="440" y2="20" stroke="rgba(255,255,255,0.04)" strokeWidth="0.5" strokeDasharray="3" />
+            <line x1="50" y1="55" x2="440" y2="55" stroke="rgba(255,255,255,0.04)" strokeWidth="0.5" strokeDasharray="3" />
+            <line x1="50" y1="90" x2="440" y2="90" stroke="var(--border)" strokeWidth="0.8" />
+
+            {/* SE Path */}
+            <path d={sePath} fill="none" stroke="#3498db" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+            {seList.map((val, idx) => (
+              <circle key={`se-${idx}`} cx={50 + (idx / (seList.length - 1)) * 390} cy={90 - ((val - 50) / 50) * 70} r="3.5" fill="#3498db" />
+            ))}
+
+            {/* REM Path */}
+            <path d={remPath} fill="none" stroke="#9b59b6" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+            {remList.map((val, idx) => (
+              <circle key={`rem-${idx}`} cx={50 + (idx / (remList.length - 1)) * 390} cy={90 - (val / 30) * 70} r="3.5" fill="#9b59b6" />
+            ))}
+
+            {/* AHI Path */}
+            <path d={ahiPath} fill="none" stroke="#ef4444" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+            {ahiList.map((val, idx) => (
+              <circle key={`ahi-${idx}`} cx={50 + (idx / (ahiList.length - 1)) * 390} cy={90 - (val / 50) * 70} r="3.5" fill="#ef4444" />
+            ))}
+
+            {/* X Axis Labels */}
+            {dates.map((d, idx) => (
+              <text key={`lbl-${idx}`} x={50 + (idx / (dates.length - 1)) * 390} y="103" fill="var(--text3)" fontSize="7.5" textAnchor="middle" fontWeight="bold">
+                {d.split('-').slice(1).join('/')}
+              </text>
+            ))}
+          </svg>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const PatientList = ({ onPingFile, onLaunchAnalysis }) => {
   const [patients, setPatients] = useState([]);
@@ -463,12 +547,18 @@ const PatientList = ({ onPingFile, onLaunchAnalysis }) => {
             <div style={{ flex: '2 2 500px' }}>
               
               {!selectedPsg ? (
-                <div className="patient-card" style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '60px', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '12px', textAlign: 'center' }}>
-                  <FileText size={48} color="var(--text3)" style={{ marginBottom: '16px' }} />
-                  <h3 style={{ marginBottom: '8px' }}>Aucun Examen Sélectionné</h3>
-                  <p style={{ color: 'var(--text3)', fontSize: '12px', maxWidth: '400px' }}>
-                    Sélectionnez l'un des rapports d'examen PSG dans l'historique de gauche pour en explorer les tracés de hypnogramme et l'analyse MLOps.
-                  </p>
+                <div className="patient-card" style={{ height: '100%', display: 'flex', flexDirection: 'column', padding: '28px', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '12px' }}>
+                  <HistoryTrendChart psgs={selectedPatient.psgs} />
+                  
+                  {selectedPatient.psgs.length < 2 && (
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '40px', textAlign: 'center' }}>
+                      <FileText size={48} color="var(--text3)" style={{ marginBottom: '16px' }} />
+                      <h3 style={{ marginBottom: '8px' }}>Aucun Examen Sélectionné</h3>
+                      <p style={{ color: 'var(--text3)', fontSize: '12px', maxWidth: '400px' }}>
+                        Sélectionnez l'un des rapports d'examen PSG dans l'historique de gauche pour en explorer les tracés de hypnogramme et l'analyse MLOps.
+                      </p>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <div className="patient-card" style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '12px', padding: '28px', animation: 'scaleUp 0.3s ease' }}>
@@ -491,6 +581,172 @@ const PatientList = ({ onPingFile, onLaunchAnalysis }) => {
                     >
                       <MessageSquare size={12} /> Collaborer avec un Confrère
                     </button>
+                  </div>
+
+                  {/* Documents d'Examen Stockés sur Backblaze B2 */}
+                  <div style={{ 
+                    background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.01) 100%)',
+                    border: '1px solid var(--border)', 
+                    borderRadius: '10px', 
+                    padding: '16px', 
+                    marginBottom: '24px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '12px'
+                  }}>
+                    <span style={{ fontSize: '12px', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text)' }}>
+                      <Shield size={14} color="var(--red)" />
+                      Documents d'Examen Stockés sur Backblaze B2
+                    </span>
+                    
+                    <div style={{ 
+                      display: 'grid', 
+                      gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', 
+                      gap: '12px' 
+                    }}>
+                      
+                      {/* PSG EDF BUTTON */}
+                      <a 
+                        href={selectedPsg.edf_url || '#'}
+                        target={selectedPsg.edf_url ? "_blank" : "_self"}
+                        rel="noreferrer"
+                        style={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          padding: '14px 10px',
+                          background: selectedPsg.edf_url ? 'rgba(52, 152, 219, 0.06)' : 'rgba(255, 255, 255, 0.02)',
+                          border: `1px solid ${selectedPsg.edf_url ? 'rgba(52, 152, 219, 0.25)' : 'var(--border)'}`,
+                          borderRadius: '8px',
+                          color: selectedPsg.edf_url ? '#3498db' : 'var(--text3)',
+                          textDecoration: 'none',
+                          cursor: selectedPsg.edf_url ? 'pointer' : 'not-allowed',
+                          opacity: selectedPsg.edf_url ? 1 : 0.4,
+                          transition: 'all 0.2s ease',
+                          textAlign: 'center'
+                        }}
+                        onMouseEnter={(e) => {
+                          if (selectedPsg.edf_url) {
+                            e.currentTarget.style.background = 'rgba(52, 152, 219, 0.12)';
+                            e.currentTarget.style.borderColor = 'rgba(52, 152, 219, 0.4)';
+                            e.currentTarget.style.transform = 'translateY(-2px)';
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (selectedPsg.edf_url) {
+                            e.currentTarget.style.background = 'rgba(52, 152, 219, 0.06)';
+                            e.currentTarget.style.borderColor = 'rgba(52, 152, 219, 0.25)';
+                            e.currentTarget.style.transform = 'translateY(0)';
+                          }
+                        }}
+                      >
+                        <Activity size={20} style={{ marginBottom: '6px' }} />
+                        <span style={{ fontSize: '11px', fontWeight: 'bold', display: 'block' }}>Fichier PSG (EDF)</span>
+                        <span style={{ fontSize: '9px', opacity: 0.8, marginTop: '4px', display: 'flex', alignItems: 'center', gap: '3px' }}>
+                          {selectedPsg.edf_url ? (
+                            <>
+                              <Download size={10} /> Télécharger
+                            </>
+                          ) : 'Non disponible'}
+                        </span>
+                      </a>
+
+                      {/* HYPNOGRAM BUTTON */}
+                      <a 
+                        href={selectedPsg.hypnogram_url || '#'}
+                        target={selectedPsg.hypnogram_url ? "_blank" : "_self"}
+                        rel="noreferrer"
+                        style={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          padding: '14px 10px',
+                          background: selectedPsg.hypnogram_url ? 'rgba(46, 204, 113, 0.06)' : 'rgba(255, 255, 255, 0.02)',
+                          border: `1px solid ${selectedPsg.hypnogram_url ? 'rgba(46, 204, 113, 0.25)' : 'var(--border)'}`,
+                          borderRadius: '8px',
+                          color: selectedPsg.hypnogram_url ? '#2ecc71' : 'var(--text3)',
+                          textDecoration: 'none',
+                          cursor: selectedPsg.hypnogram_url ? 'pointer' : 'not-allowed',
+                          opacity: selectedPsg.hypnogram_url ? 1 : 0.4,
+                          transition: 'all 0.2s ease',
+                          textAlign: 'center'
+                        }}
+                        onMouseEnter={(e) => {
+                          if (selectedPsg.hypnogram_url) {
+                            e.currentTarget.style.background = 'rgba(46, 204, 113, 0.12)';
+                            e.currentTarget.style.borderColor = 'rgba(46, 204, 113, 0.4)';
+                            e.currentTarget.style.transform = 'translateY(-2px)';
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (selectedPsg.hypnogram_url) {
+                            e.currentTarget.style.background = 'rgba(46, 204, 113, 0.06)';
+                            e.currentTarget.style.borderColor = 'rgba(46, 204, 113, 0.25)';
+                            e.currentTarget.style.transform = 'translateY(0)';
+                          }
+                        }}
+                      >
+                        <Image size={20} style={{ marginBottom: '6px' }} />
+                        <span style={{ fontSize: '11px', fontWeight: 'bold', display: 'block' }}>Hypnogramme (PNG)</span>
+                        <span style={{ fontSize: '9px', opacity: 0.8, marginTop: '4px', display: 'flex', alignItems: 'center', gap: '3px' }}>
+                          {selectedPsg.hypnogram_url ? (
+                            <>
+                              <ExternalLink size={10} /> Visualiser
+                            </>
+                          ) : 'Non disponible'}
+                        </span>
+                      </a>
+
+                      {/* OSA REPORT BUTTON */}
+                      <a 
+                        href={selectedPsg.osa_report_url || '#'}
+                        target={selectedPsg.osa_report_url ? "_blank" : "_self"}
+                        rel="noreferrer"
+                        style={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          padding: '14px 10px',
+                          background: selectedPsg.osa_report_url ? 'rgba(155, 89, 182, 0.06)' : 'rgba(255, 255, 255, 0.02)',
+                          border: `1px solid ${selectedPsg.osa_report_url ? 'rgba(155, 89, 182, 0.25)' : 'var(--border)'}`,
+                          borderRadius: '8px',
+                          color: selectedPsg.osa_report_url ? '#9b59b6' : 'var(--text3)',
+                          textDecoration: 'none',
+                          cursor: selectedPsg.osa_report_url ? 'pointer' : 'not-allowed',
+                          opacity: selectedPsg.osa_report_url ? 1 : 0.4,
+                          transition: 'all 0.2s ease',
+                          textAlign: 'center'
+                        }}
+                        onMouseEnter={(e) => {
+                          if (selectedPsg.osa_report_url) {
+                            e.currentTarget.style.background = 'rgba(155, 89, 182, 0.12)';
+                            e.currentTarget.style.borderColor = 'rgba(155, 89, 182, 0.4)';
+                            e.currentTarget.style.transform = 'translateY(-2px)';
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (selectedPsg.osa_report_url) {
+                            e.currentTarget.style.background = 'rgba(155, 89, 182, 0.06)';
+                            e.currentTarget.style.borderColor = 'rgba(155, 89, 182, 0.25)';
+                            e.currentTarget.style.transform = 'translateY(0)';
+                          }
+                        }}
+                      >
+                        <FileText size={20} style={{ marginBottom: '6px' }} />
+                        <span style={{ fontSize: '11px', fontWeight: 'bold', display: 'block' }}>Rapport OSA (HTML)</span>
+                        <span style={{ fontSize: '9px', opacity: 0.8, marginTop: '4px', display: 'flex', alignItems: 'center', gap: '3px' }}>
+                          {selectedPsg.osa_report_url ? (
+                            <>
+                              <ExternalLink size={10} /> Consulter
+                            </>
+                          ) : 'Non disponible'}
+                        </span>
+                      </a>
+
+                    </div>
                   </div>
 
                   {/* ──── STUNNING INTERACTIVE MOCK HYPNOGRAM CHART ──── */}

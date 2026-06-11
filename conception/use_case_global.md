@@ -13,12 +13,13 @@ graph LR
 
     subgraph Hypnoria_System [Hypnoria System]
         UC1(Authenticate)
-        UC2(Manage Doctors)
+        UC2(Manage Doctors & Licenses)
         UC3(Manage Patients)
         UC4(Upload PSG Data)
-        UC5(Analyze Sleep - OSA Prediction)
-        UC6(Consult with Colleagues - Chat)
-        UC7(View Reports)
+        UC5(Analyze Sleep - AI Pipeline Builder)
+        UC6(Custom OSA Prediction & Feature Export)
+        UC7(Consult with Colleagues - Chat)
+        UC8(View & Annotate Hypnograms)
     end
 
     %% Links
@@ -29,4 +30,5 @@ graph LR
     Doctor --- UC5
     Doctor --- UC6
     Doctor --- UC7
+    Doctor --- UC8
 ```

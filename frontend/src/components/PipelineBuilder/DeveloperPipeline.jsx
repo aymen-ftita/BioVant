@@ -3,6 +3,7 @@ import Drawflow from 'drawflow';
 import 'drawflow/dist/drawflow.min.css';
 import './PipelineBuilder.css';
 import axios from 'axios';
+import Hypnogram from '../Results/Hypnogram';
 
 /**
  * DeveloperPipeline — full port of vanilla PipelineBuilder with real /analyze calls
@@ -117,13 +118,17 @@ const PipelineResultCard = ({ result, groupLabel }) => {
         </span>
       </div>
 
-      {/* Stage distribution bar */}
-      <div style={{ display: 'flex', height: '14px', borderRadius: '6px', overflow: 'hidden', marginBottom: '10px' }}>
-        {classNames.map(st => {
-          const pct = stats.stage_pct[st] || 0;
-          return <div key={st} title={`${st}: ${pct}%`} style={{ width: `${pct}%`, background: SC[st] || '#888', transition: 'width .5s ease' }} />;
-        })}
-      </div>
+      {/* Hypnogram Display */}
+      {stages && stages.length > 0 && (
+        <div style={{ marginBottom: '20px' }}>
+          <Hypnogram 
+            stages={stages} 
+            classNames={classNames} 
+            spo2={result.spo2} 
+            apneaTimeline={result.apnea_timeline} 
+          />
+        </div>
+      )}
 
       {/* Key metrics */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '8px', marginBottom: '10px' }}>

@@ -1,0 +1,13 @@
+\babel@toc {french}{}\relax 
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Chronologie historique du CNI}}{7}{figure.caption.5}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Architecture globale du système}}{15}{figure.caption.7}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Maquette de l’interface utilisateur}}{17}{figure.caption.8}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Courbe d’apprentissage du CNN 5 canaux 3 classes}}{20}{figure.caption.11}%
+\contentsline {figure}{\numberline {6.2}{\ignorespaces Matrice de confusion normalisée (CNN 5ch, 3 classes)}}{21}{figure.caption.12}%
+\contentsline {figure}{\numberline {6.3}{\ignorespaces Attributions SHAP pour un épisode REM}}{22}{figure.caption.15}%

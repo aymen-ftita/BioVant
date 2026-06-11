@@ -1,0 +1,114 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{times}
+\usepackage[french]{babel}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+\usepackage{setspace}
+\setstretch{1.15}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{appendix}
+\usepackage{pgfgantt} % pour planning
+
+% Pagination
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[R]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+% Numérotation des sections
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+% Définition des couleurs pour les listings
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+\lstset{style=mystyle}
+
+% Pour les guillemets français
+\frenchbsetup{StandardLayout=true}
+
+\begin{document}
+
+% Page de garde (à adapter avec vos informations)
+\begin{titlepage}
+\centering
+\vspace*{1cm}
+\includegraphics[width=0.3\textwidth]{images/logo_esprit.png}\hfill
+\includegraphics[width=0.3\textwidth]{images/cni_logo.jpg}\\[1cm]
+{\Large \textbf{Projet de Fin d’Études}}\\[0.5cm]
+{\LARGE \textbf{Système Intelligent de Classification Explicable des Stades du Sommeil}}\\[0.5cm]
+{\Large (XAI-Sleep)}\\[1.5cm]
+\textbf{Présenté par :}\\
+Votre Nom\\
+Spécialité : Génie Informatique\\[1cm]
+\textbf{Encadrant industriel :} M. Abdelwaheb Dahmeni, Mme Hajer Dahmeni\\
+\textbf{Encadrant académique :} M. X\\[1cm]
+\textbf{Lieu :} Centre National de l’Informatique (CNI)\\
+\textbf{Période :} 2024-2025\\[1.5cm]
+\vfill
+\end{titlepage}
+
+% Remerciements
+\include{remerciements}
+
+% Table des matières
+\tableofcontents
+\newpage
+
+% Liste des figures et tableaux
+\listoffigures
+\listoftables
+\newpage
+
+% Introduction générale
+\include{introduction}
+
+% Chapitres
+\include{chapitre1}
+\include{chapitre2}
+\include{chapitre3}
+\include{chapitre4}
+\include{chapter5_with_results}
+
+% Conclusion
+\include{conclusion}
+
+% Bibliographie
+\include{bibliographie}
+
+% Annexes
+\include{annexes}
+
+\end{document}

@@ -50,6 +50,76 @@
       --paper-gradient: var(--paper-lines-y), var(--paper-lines-x), var(--paper-lines-y-major), var(--paper-lines-x-major), var(--paper-cross-mask), var(--paper-cross-y), var(--paper-cross-x);
     }
 
+    /* ── DARK MODE ─────────────────────────────── */
+    html.dark-mode {
+      --bg: #111014;
+      --bg2: #19171e;
+      --surface: #1e1c24;
+      --border: #2e2b36;
+      --border2: #3d3949;
+      --text: #ece8f4;
+      --text2: #a09ab0;
+      --text3: #6e6880;
+      --red: #e74c3c;
+      --red-s: rgba(231, 76, 60, 0.1);
+      --red-m: rgba(231, 76, 60, 0.2);
+      --sh: 0 1px 3px rgba(0, 0, 0, 0.3), 0 4px 18px rgba(0, 0, 0, 0.2);
+      --sh2: 0 4px 28px rgba(0, 0, 0, 0.4), 0 1px 4px rgba(0, 0, 0, 0.2);
+      --grid-light: hsl(260, 20%, 10%);
+      --grid-dark: hsl(260, 20%, 10%);
+      --grid-bg: hsl(260, 20%, 10%);
+      --grid-minor: hsl(260 30% 70% / 0.04);
+      --grid-major: hsl(260 30% 70% / 0.07);
+      --grid-cross: hsl(260 30% 70% / 0.1);
+      color-scheme: dark;
+    }
+
+    html.dark-mode body::after {
+      opacity: .12;
+    }
+
+    /* Dark mode overrides for specific elements */
+    html.dark-mode .confidence-card {
+      background: linear-gradient(135deg, #1e1c24, #2a2733);
+    }
+
+    html.dark-mode .drop-zone {
+      border-color: var(--border2);
+    }
+
+    html.dark-mode .config-bar select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath stroke='%23ece8f4' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M1 1l4 4 4-4'/%3E%3C/svg%3E");
+    }
+
+    html.dark-mode .drawflow .connection .main-path {
+      stroke: #5b8ff9;
+    }
+
+    /* ── THEME TOGGLE BUTTON ─────────────────── */
+    .theme-toggle-btn {
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--bg2);
+      color: var(--text2);
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .5px;
+      cursor: pointer;
+      transition: var(--t);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      text-align: left;
+    }
+
+    .theme-toggle-btn:hover {
+      background: var(--border);
+      color: var(--text);
+    }
+
     *,
     *::before,
     *::after {
@@ -3192,4 +3262,124 @@
 .btn-run-pipeline.running {
   background: #6b4226;
   cursor: not-allowed;
+}
+
+/* ══════════════════════════════════════════════════ */
+/* ── PRINT MODE ── Clean Clinical Report Output    */
+/* ══════════════════════════════════════════════════ */
+@media print {
+  /* Reset backgrounds and shadows for clean paper */
+  *,
+  *::before,
+  *::after {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  body {
+    background: #fff !important;
+    background-image: none !important;
+    color: #000 !important;
+    font-size: 11pt;
+    line-height: 1.5;
+  }
+
+  body::after {
+    display: none !important;
+  }
+
+  /* Hide interactive / non-printable elements */
+  .sidebar-nav,
+  .floating-upload-container,
+  .theme-toggle-btn,
+  .hero,
+  .config-bar,
+  .btn-next,
+  .btn-reset,
+  .btn-run-pipeline,
+  .upload-section,
+  .drop-zone,
+  .df-container,
+  .nav-links,
+  button,
+  .report-config-panel,
+  .annotation-toolbar,
+  #tooltip {
+    display: none !important;
+  }
+
+  /* Make main content fill the page */
+  .app-layout {
+    display: block !important;
+  }
+
+  .main-content {
+    overflow: visible !important;
+    background: #fff !important;
+    background-image: none !important;
+  }
+
+  .container {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .app-section {
+    display: block !important;
+    page-break-inside: avoid;
+  }
+
+  /* Style clinical result cards for print */
+  .stat-tile,
+  .patient-card,
+  .sel-card,
+  .confidence-card {
+    break-inside: avoid;
+    border: 1px solid #ccc !important;
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  .confidence-card {
+    color: #000 !important;
+  }
+
+  .confidence-card .conf-lbl,
+  .confidence-card .conf-desc {
+    color: #333 !important;
+  }
+
+  .confidence-card .conf-val {
+    color: #000 !important;
+  }
+
+  /* Ensure hypnogram canvas prints */
+  canvas {
+    max-width: 100% !important;
+  }
+
+  /* Make links visible */
+  a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 9pt;
+    color: #555;
+  }
+
+  /* Page setup */
+  @page {
+    size: A4 portrait;
+    margin: 15mm 12mm;
+  }
+
+  /* Header for printed reports */
+  .print-header {
+    display: block !important;
+    text-align: center;
+    border-bottom: 2px solid #000;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+    font-size: 18pt;
+    font-weight: bold;
+  }
 }

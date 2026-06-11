@@ -1,0 +1,12 @@
+\chapter{Introduction générale}
+\label{chap:intro}
+
+Les troubles du sommeil, tels que l’apnée du sommeil, l’insomnie ou la narcolepsie, touchent une part croissante de la population mondiale. Leur diagnostic repose sur l’examen polysomnographique (PSG), un enregistrement nocturne de multiples signaux physiologiques (EEG, EOG, EMG, ECG, etc.). L’analyse manuelle des PSG par des experts est une tâche longue, fastidieuse et sujette à une variabilité inter-évaluateur significative (accord de 70 à 85\%). Face à ce constat, l’automatisation de la classification des stades du sommeil à l’aide de techniques d’apprentissage profond est devenue un axe de recherche majeur.
+
+Cependant, les modèles de deep learning existants fonctionnent souvent comme des « boîtes noires » : ils fournissent une prédiction sans justifier leur décision. Ce manque de transparence limite leur adoption en milieu clinique, où l’explicabilité est essentielle pour la confiance et la validation médicale.
+
+Le présent projet de fin d’études, intitulé \textbf{XAI-Sleep} (Explainable AI for Sleep Staging), vise à développer un système intelligent de classification des stades du sommeil qui soit à la fois performant et explicable. Le système repose sur un modèle d’ensemble de type \textit{stacking} combinant CNN, LSTM et Transformer, enrichi d’un lissage contextuel localisé (LCS) pour assurer la cohérence temporelle. Des techniques d’explicabilité (SHAP, cartes de saillie, mécanismes d’attention) sont intégrées pour chaque modèle de base et pour l’ensemble, permettant aux cliniciens de comprendre les facteurs ayant conduit à chaque prédiction.
+
+Le projet a été réalisé au sein du \textbf{Centre National de l’Informatique (CNI)} à Tunis, sous la tutelle de M. Abdelwaheb Dahmeni et Mme Hajer Dahmeni. Il s’inscrit dans la durée de six mois, de novembre 2024 à avril 2025.
+
+Ce rapport présente l’ensemble des travaux menés. Après une présentation de l’organisme d’accueil (chapitre 1), nous détaillons le contexte médical et la problématique (chapitre 2). Un état de l’art des méthodes existantes est dressé au chapitre 3. Le chapitre 4 décrit la conception et l’architecture du système proposé, tandis que le chapitre 5 expose l’implémentation et les résultats de validation. Enfin, une conclusion générale dresse le bilan et ouvre des perspectives.

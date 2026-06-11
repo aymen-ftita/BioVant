@@ -6,7 +6,15 @@ import { AnalysisResults } from '../Results';
 import axios from 'axios';
 import './Wizard.css';
 
-const AnalysisWizard = ({ onAnalysisComplete, onStartBgUpload, preselectedPatient, onClearPreselectedPatient }) => {
+const AnalysisWizard = ({ 
+  onAnalysisComplete, 
+  onStartBgUpload, 
+  onStartHypnogramBgUpload, 
+  onStartHypnogramAnnotatedUpload,
+  onStartOsaReportBgUpload, 
+  preselectedPatient, 
+  onClearPreselectedPatient 
+}) => {
   const [step, setStep] = useState(1);
   const [channels, setChannels] = useState('5');
   const [classes, setClasses] = useState('3');
@@ -395,6 +403,9 @@ const AnalysisWizard = ({ onAnalysisComplete, onStartBgUpload, preselectedPatien
               analysisData={analysisData} 
               activePsgId={activePsgId}
               patient={preselectedPatient}
+              onStartHypnogramUpload={onStartHypnogramBgUpload}
+              onStartHypnogramAnnotatedUpload={onStartHypnogramAnnotatedUpload}
+              onStartOsaReportUpload={onStartOsaReportBgUpload}
             />
             
             <div className="wiz-actions" style={{justifyContent: 'space-between', marginTop: '40px'}}>

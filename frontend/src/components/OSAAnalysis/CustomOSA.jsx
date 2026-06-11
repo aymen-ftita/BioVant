@@ -166,6 +166,57 @@ const CustomOSA = () => {
     setError(null);
   };
 
+  const handleInjectToManual = () => {
+    if (!fileFeatures) return;
+    
+    // Helper to try multiple key variants for a feature
+    const get = (...keys) => {
+      for (const k of keys) {
+        if (fileFeatures[k] !== undefined) return fileFeatures[k];
+      }
+      return undefined;
+    };
+    
+    setManualFeatures({
+      age: get('age_s2', 'age') ?? 50,
+      gender: (() => {
+        const g = get('gender');
+        if (g === 1 || g === '1') return 'M';
+        if (g === 2 || g === '2') return 'F';
+        return g || 'M';
+      })(),
+      bmi: get('bmi_s2', 'bmi') ?? 28.0,
+      tst: get('tst_min', 'tst') ?? 420,
+      tib: get('tib_min', 'tib') ?? 480,
+      sol: get('sol_min', 'slplatp', 'sol') ?? 15,
+      se: get('sleep_efficiency', 'slpeffp', 'se') ?? 87.5,
+      waso: get('waso_min', 'waso') ?? 30,
+      spt: get('spt_min', 'spt') ?? 460,
+      n1: get('N1_pct', 'timest1p', 'n1') ?? 7.3,
+      n2: get('N2_pct', 'timest2p', 'n2') ?? 50,
+      n3: get('N3_pct', 'n3') ?? 18,
+      rem: get('REM_pct', 'timeremp', 'rem') ?? 22,
+      n3min: get('timest34', 'n3min') ?? 75.6,
+      remlat: get('rem_latency_min', 'remlat') ?? 90,
+      n3lat: get('n3_latency_min', 'n3lat') ?? 20,
+      avgsat: get('avgsat') ?? 94,
+      minsat: get('minsat') ?? 85,
+      pctsa90: get('pctsa90h', 'pctsa90') ?? '',
+      pctsa85: get('pctsa85h', 'pctsa85') ?? '',
+      pctsa95: get('pctsa95h', 'pctsa95') ?? '',
+      ai_all: get('ai_all') ?? '',
+      ai_nrem: get('ai_nrem') ?? '',
+      ai_rem: get('ai_rem') ?? '',
+      frag: get('frag_index', 'frag') ?? '',
+      wakebouts: get('n_wake_bouts', 'wakebouts') ?? '',
+      remcycles: get('n_rem_cycles', 'remcycles') ?? '',
+      remt1p: get('remt1p') ?? '',
+      remt34p: get('remt34p') ?? ''
+    });
+
+    setActiveTab('manual');
+  };
+
   function getClinicalInterpretations(feats) {
     const list = [];
     const se = parseFloat(feats.sleep_efficiency || feats.slpeffp || 100);
@@ -451,13 +502,22 @@ const CustomOSA = () => {
                 ))}
               </div>
 
-              <button 
-                className="btn-next" 
-                onClick={handlePredictFile} 
-                style={{ width: '100%', justifyContent: 'center', height: '48px', fontSize: '14px', fontWeight: 'bold' }}
-              >
-                <FileBarChart size={18} style={{ marginRight: '8px' }} /> Évaluer le Risque OSA
-              </button>
+              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                <button 
+                  className="btn-next" 
+                  onClick={handlePredictFile} 
+                  style={{ flex: 1, minWidth: '200px', justifyContent: 'center', height: '44px', fontSize: '13px', fontWeight: 'bold' }}
+                >
+                  <FileBarChart size={16} style={{ marginRight: '6px' }} /> Évaluer le Risque OSA
+                </button>
+                <button 
+                  className="btn-prev" 
+                  onClick={handleInjectToManual} 
+                  style={{ flex: 1, minWidth: '200px', justifyContent: 'center', height: '44px', fontSize: '13px', fontWeight: 'bold', background: 'rgba(192, 57, 43, 0.06)', color: 'var(--red)', borderColor: 'rgba(192, 57, 43, 0.2)' }}
+                >
+                  📥 Injecter dans la Saisie Manuelle
+                </button>
+              </div>
             </div>
           )}
         </div>

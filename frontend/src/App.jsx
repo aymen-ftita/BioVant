@@ -10,7 +10,7 @@ import { AnalysisWizard } from './components/Wizard'
 import { AnalysisResults } from './components/Results'
 import { CustomOSA } from './components/OSAAnalysis'
 import { DeveloperPipeline } from './components/PipelineBuilder'
-import { PatientList, CollaborationChat, DoctorList } from './components/Common'
+import { PatientList, CollaborationChat, DoctorList, HomeDashboard, AuditLogsDashboard, HospitalsDashboard, ConsultationsView, DoctorDashboard } from './components/Common'
 import { Terminal, CloudUpload, CheckCircle2, AlertTriangle, X } from 'lucide-react'
 
 function App() {
@@ -22,11 +22,10 @@ function App() {
   const [activePsgId, setActivePsgId] = useState(null)
   const [bgUploads, setBgUploads] = useState([])
 
-  const handleBgUpload = (file, patientName, psgId) => {
+  const handleEdfBgUpload = (file, patientName, psgId) => {
     const uploadId = Date.now();
     const token = localStorage.getItem('token');
     
-    // Add to active uploads tracking list
     setBgUploads(prev => [...prev, {
       id: uploadId,
       fileName: file.name,
@@ -38,17 +37,26 @@ function App() {
     const uploadFormData = new FormData();
     uploadFormData.append('edf_file', file);
 
+    // Smooth optimistic progress simulation (0% -> 95%) to show real-time progress while waiting for B2
+    let currentProgress = 0;
+    const progressInterval = setInterval(() => {
+      if (currentProgress < 95) {
+        const increment = Math.floor(Math.random() * 8) + 4; // 4% to 11% increments
+        currentProgress = Math.min(currentProgress + increment, 95);
+        setBgUploads(prev => prev.map(up => up.id === uploadId ? { ...up, progress: currentProgress } : up));
+      } else {
+        clearInterval(progressInterval);
+      }
+    }, 120);
+
     console.log(`[App] Starting background B2 upload for patient "${patientName}" (PSG ID: ${psgId})`);
     axios.post(`http://localhost:8000/psgs/${psgId}/upload_edf`, uploadFormData, {
       headers: {
         'Content-Type': 'multipart/form-data',
         Authorization: `Bearer ${token}`
-      },
-      onUploadProgress: (progressEvent) => {
-        const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-        setBgUploads(prev => prev.map(up => up.id === uploadId ? { ...up, progress: percentCompleted } : up));
       }
     }).then((uploadRes) => {
+      clearInterval(progressInterval);
       console.log('[App] Background B2 EDF upload completed successfully:', uploadRes.data);
       setBgUploads(prev => prev.map(up => up.id === uploadId ? { ...up, status: 'completed', progress: 100 } : up));
       
@@ -57,7 +65,155 @@ function App() {
         setBgUploads(prev => prev.filter(up => up.id !== uploadId));
       }, 5000);
     }).catch((uploadErr) => {
+      clearInterval(progressInterval);
       console.error('[App] Background B2 EDF upload failed:', uploadErr);
+      setBgUploads(prev => prev.map(up => up.id === uploadId ? { ...up, status: 'failed' } : up));
+    });
+  };
+
+  const handleHypnogramBgUpload = (psgId, blob) => {
+    const uploadId = Date.now();
+    const token = localStorage.getItem('token');
+    const patientName = preselectedPatient?.name || 'Patient';
+    
+    setBgUploads(prev => [...prev, {
+      id: uploadId,
+      fileName: 'hypnogramme.png',
+      patientName: patientName,
+      progress: 0,
+      status: 'uploading'
+    }]);
+
+    const uploadFormData = new FormData();
+    uploadFormData.append('hypnogram_file', blob, 'hypnogram.png');
+
+    // Smooth optimistic progress simulation (0% -> 95%) to show real-time progress while waiting for B2
+    let currentProgress = 0;
+    const progressInterval = setInterval(() => {
+      if (currentProgress < 95) {
+        const increment = Math.floor(Math.random() * 12) + 6; // 6% to 17% increments (smaller file uploads faster)
+        currentProgress = Math.min(currentProgress + increment, 95);
+        setBgUploads(prev => prev.map(up => up.id === uploadId ? { ...up, progress: currentProgress } : up));
+      } else {
+        clearInterval(progressInterval);
+      }
+    }, 100);
+
+    console.log(`[App] Starting background B2 Hypnogram upload for patient "${patientName}" (PSG ID: ${psgId})`);
+    axios.post(`http://localhost:8000/psgs/${psgId}/upload_hypnogram`, uploadFormData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${token}`
+      }
+    }).then((uploadRes) => {
+      clearInterval(progressInterval);
+      console.log('[App] Background B2 Hypnogram upload completed successfully:', uploadRes.data);
+      setBgUploads(prev => prev.map(up => up.id === uploadId ? { ...up, status: 'completed', progress: 100 } : up));
+      
+      setTimeout(() => {
+        setBgUploads(prev => prev.filter(up => up.id !== uploadId));
+      }, 5000);
+    }).catch((uploadErr) => {
+      clearInterval(progressInterval);
+      console.error('[App] Background B2 Hypnogram upload failed:', uploadErr);
+      setBgUploads(prev => prev.map(up => up.id === uploadId ? { ...up, status: 'failed' } : up));
+    });
+  };
+
+  const handleHypnogramAnnotatedBgUpload = (psgId, blob) => {
+    const uploadId = Date.now();
+    const token = localStorage.getItem('token');
+    const patientName = preselectedPatient?.name || 'Patient';
+    
+    setBgUploads(prev => [...prev, {
+      id: uploadId,
+      fileName: 'hypnogramme_annote.png',
+      patientName: patientName,
+      progress: 0,
+      status: 'uploading'
+    }]);
+
+    const uploadFormData = new FormData();
+    uploadFormData.append('hypnogram_file', blob, 'hypnogram_annotated.png');
+
+    // Smooth optimistic progress simulation (0% -> 95%) to show real-time progress while waiting for B2
+    let currentProgress = 0;
+    const progressInterval = setInterval(() => {
+      if (currentProgress < 95) {
+        const increment = Math.floor(Math.random() * 12) + 6; // 6% to 17% increments
+        currentProgress = Math.min(currentProgress + increment, 95);
+        setBgUploads(prev => prev.map(up => up.id === uploadId ? { ...up, progress: currentProgress } : up));
+      } else {
+        clearInterval(progressInterval);
+      }
+    }, 100);
+
+    console.log(`[App] Starting background B2 Annotated Hypnogram upload for patient "${patientName}" (PSG ID: ${psgId})`);
+    axios.post(`http://localhost:8000/psgs/${psgId}/upload_hypnogram_annotated`, uploadFormData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${token}`
+      }
+    }).then((uploadRes) => {
+      clearInterval(progressInterval);
+      console.log('[App] Background B2 Annotated Hypnogram upload completed successfully:', uploadRes.data);
+      setBgUploads(prev => prev.map(up => up.id === uploadId ? { ...up, status: 'completed', progress: 100 } : up));
+      
+      setTimeout(() => {
+        setBgUploads(prev => prev.filter(up => up.id !== uploadId));
+      }, 5000);
+    }).catch((uploadErr) => {
+      clearInterval(progressInterval);
+      console.error('[App] Background B2 Annotated Hypnogram upload failed:', uploadErr);
+      setBgUploads(prev => prev.map(up => up.id === uploadId ? { ...up, status: 'failed' } : up));
+    });
+  };
+
+  const handleOsaReportBgUpload = (psgId, blob) => {
+    const uploadId = Date.now();
+    const token = localStorage.getItem('token');
+    const patientName = preselectedPatient?.name || 'Patient';
+    
+    setBgUploads(prev => [...prev, {
+      id: uploadId,
+      fileName: 'rapport_osa.html',
+      patientName: patientName,
+      progress: 0,
+      status: 'uploading'
+    }]);
+
+    const uploadFormData = new FormData();
+    uploadFormData.append('osa_report_file', blob, 'osa_report.html');
+
+    // Smooth optimistic progress simulation (0% -> 95%) to show real-time progress while waiting for B2
+    let currentProgress = 0;
+    const progressInterval = setInterval(() => {
+      if (currentProgress < 95) {
+        const increment = Math.floor(Math.random() * 12) + 6; // 6% to 17% increments
+        currentProgress = Math.min(currentProgress + increment, 95);
+        setBgUploads(prev => prev.map(up => up.id === uploadId ? { ...up, progress: currentProgress } : up));
+      } else {
+        clearInterval(progressInterval);
+      }
+    }, 100);
+
+    console.log(`[App] Starting background B2 OSA Report upload for patient "${patientName}" (PSG ID: ${psgId})`);
+    axios.post(`http://localhost:8000/psgs/${psgId}/upload_osa_report`, uploadFormData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${token}`
+      }
+    }).then((uploadRes) => {
+      clearInterval(progressInterval);
+      console.log('[App] Background B2 OSA Report upload completed successfully:', uploadRes.data);
+      setBgUploads(prev => prev.map(up => up.id === uploadId ? { ...up, status: 'completed', progress: 100 } : up));
+      
+      setTimeout(() => {
+        setBgUploads(prev => prev.filter(up => up.id !== uploadId));
+      }, 5000);
+    }).catch((uploadErr) => {
+      clearInterval(progressInterval);
+      console.error('[App] Background B2 OSA Report upload failed:', uploadErr);
       setBgUploads(prev => prev.map(up => up.id === uploadId ? { ...up, status: 'failed' } : up));
     });
   };
@@ -67,7 +223,7 @@ function App() {
     if (savedUser) {
       const parsed = JSON.parse(savedUser)
       setUser(parsed)
-      setActiveTab(parsed.role === 'admin' ? 'doctors-list' : 'doctor')
+      setActiveTab(parsed.role === 'admin' ? 'home-dashboard' : 'doctor-dashboard')
     }
   }, [])
 
@@ -78,9 +234,9 @@ function App() {
     }
     setUser(mockUser)
     if (mockUser.role === 'admin') {
-      setActiveTab('doctors-list')
+      setActiveTab('home-dashboard')
     } else {
-      setActiveTab('doctor')
+      setActiveTab('doctor-dashboard')
     }
   }
 
@@ -111,6 +267,15 @@ function App() {
       <main className="main-content">
         <div id="tooltip"></div>
 
+        {/* ──── DOCTOR: DASHBOARD ──── */}
+        {user.role === 'doctor' && activeTab === 'doctor-dashboard' && (
+          <section className="app-section active">
+            <div className="container">
+               <DoctorDashboard onNavigate={setActiveTab} />
+            </div>
+          </section>
+        )}
+
         {/* ──── DOCTOR: PSG DIAGNOSTIC SECTION ──── */}
         {user.role === 'doctor' && activeTab === 'doctor' && (
           <section className="app-section active">
@@ -121,7 +286,10 @@ function App() {
                    setActiveAnalysis(data);
                    setActivePsgId(psgId || null);
                  }} 
-                 onStartBgUpload={handleBgUpload}
+                 onStartBgUpload={handleEdfBgUpload}
+                 onStartHypnogramBgUpload={handleHypnogramBgUpload}
+                 onStartHypnogramAnnotatedUpload={handleHypnogramAnnotatedBgUpload}
+                 onStartOsaReportBgUpload={handleOsaReportBgUpload}
                  preselectedPatient={preselectedPatient}
                  onClearPreselectedPatient={() => {
                    setPreselectedPatient(null);
@@ -158,11 +326,45 @@ function App() {
           </section>
         )}
 
+        {/* ──── DOCTOR: CONSULTATIONS (MESSAGES) ──── */}
+        {user.role === 'doctor' && activeTab === 'conversations' && (
+          <section className="app-section active" style={{ padding: '20px' }}>
+            <ConsultationsView />
+          </section>
+        )}
+
+        {/* ──── ADMIN: HOME DASHBOARD ──── */}
+        {user.role === 'admin' && activeTab === 'home-dashboard' && (
+          <section className="app-section active">
+            <div className="container">
+              <HomeDashboard user={user} onTabChange={setActiveTab} />
+            </div>
+          </section>
+        )}
+
         {/* ──── ADMIN: DOCTOR DATABASE MANAGEMENT ──── */}
         {user.role === 'admin' && activeTab === 'doctors-list' && (
           <section className="app-section active">
             <div className="container">
               <DoctorList />
+            </div>
+          </section>
+        )}
+
+        {/* ──── ADMIN: HOSPITALS / CLINICS MANAGEMENT ──── */}
+        {user.role === 'admin' && activeTab === 'hospitals' && (
+          <section className="app-section active">
+            <div className="container">
+              <HospitalsDashboard />
+            </div>
+          </section>
+        )}
+
+        {/* ──── ADMIN: AUDIT LOGS ──── */}
+        {user.role === 'admin' && activeTab === 'audit-logs' && (
+          <section className="app-section active">
+            <div className="container">
+              <AuditLogsDashboard />
             </div>
           </section>
         )}

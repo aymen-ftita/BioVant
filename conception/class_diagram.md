@@ -9,6 +9,9 @@ classDiagram
         +string role
         +string first_name
         +string last_name
+        +string status
+        +datetime license_expiry
+        +string hospital_id
         +datetime last_login
         +login()
         +logout()
@@ -17,6 +20,8 @@ classDiagram
     class Admin {
         +createDoctor()
         +viewAllDoctors()
+        +updateDoctorStatus()
+        +renewLicense()
     }
 
     class Doctor {
@@ -24,6 +29,8 @@ classDiagram
         +listPatients()
         +addPSG()
         +analyzePSG()
+        +customOSAPrediction()
+        +exportFeaturesCSV()
         +consultDoctor()
     }
 
@@ -45,7 +52,8 @@ classDiagram
         +json report_data
         +string edf_url
         +string hypnogram_url
-        +string csv_url
+        +string annotated_hypnogram_url
+        +string osa_report_url
     }
 
     class FileConversation {

@@ -1,0 +1,31 @@
+\chapter{Contexte médical et problématique}
+\label{chap:contexte}
+
+\section{Le sommeil et ses stades}
+
+Le sommeil humain est un état physiologique cyclique composé de plusieurs stades, définis selon les critères de l’American Academy of Sleep Medicine (AASM) :
+
+\begin{itemize}
+\item \textbf{Stade W (éveil)} : activité alpha/bêta, tonus musculaire élevé.
+\item \textbf{Stade N1 (sommeil léger)} : ralentissement du rythme cérébral, disparition des fuseaux.
+\item \textbf{Stade N2 (sommeil lent léger)} : présence de fuseaux et complexes K.
+\item \textbf{Stade N3 (sommeil lent profond)} : ondes lentes de haute amplitude.
+\item \textbf{Stade REM (paradoxal)} : mouvements oculaires rapides, atonie musculaire.
+\end{itemize}
+
+La classification manuelle des stades sur des enregistrements polysomnographiques (PSG) de 8 heures représente environ 6 à 8 heures de travail par patient, avec un accord inter-expert variant de 70 à 85\%.
+
+\section{Problématique de l’automatisation}
+
+L’apprentissage profond a permis d’atteindre des performances élevées (précision > 90\%) sur des bases publiques comme Sleep-EDF. Cependant, les modèles souffrent d’un manque d’explicabilité : ils ne fournissent pas de justification de leurs décisions, ce qui freine leur adoption clinique. Les médecins ont besoin de comprendre \textit{pourquoi} un modèle a classé un épisode en N1 plutôt qu’en REM.
+
+\section{Objectifs du projet}
+
+Le projet vise à répondre à cette double exigence :
+
+\begin{enumerate}
+\item \textbf{Performance} : atteindre une précision d’au moins 90\% sur le jeu de données Sleep-EDF.
+\item \textbf{Explicabilité} : fournir des explications locales et globales via SHAP, les cartes de saillie et les mécanismes d’attention.
+\end{enumerate}
+
+Le système devra être déployé sous forme d’une application web interactive, permettant aux cliniciens de télécharger un fichier EDF, d’obtenir un hypnogramme et des explications visuelles.

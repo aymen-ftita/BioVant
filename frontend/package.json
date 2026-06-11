@@ -12,9 +12,16 @@
   "dependencies": {
     "axios": "^1.16.0",
     "drawflow": "^0.0.60",
+    "html2canvas": "^1.4.1",
+    "html2pdf.js": "^0.14.0",
+    "i18next": "^26.3.1",
+    "jspdf": "^4.2.1",
+    "lodash": "^4.18.1",
     "lucide-react": "^1.14.0",
     "react": "^19.2.5",
-    "react-dom": "^19.2.5"
+    "react-dom": "^19.2.5",
+    "react-i18next": "^17.0.8",
+    "recharts": "^3.8.1"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

@@ -1,0 +1,392 @@
+Cahier des Charges
+1. Couche de modèles de base :
+· Un modèle CNN pour l'extraction de caractéristiques temporelles locales.
+· Un modèle LSTM pour la modélisation des dépendances séquentielles.
+
+1. Fiche d'Identité du Projet
+
+· Un modèle Transformer pour l'attention globale.
+2. Méta-apprenant :
+
+1.1. Informations Générales
+
+o Un modèle de type réseau de neurones avec une régularisation par lissage contextuel localisé (LCS) pour
+assurer la cohérence temporelle des prédictions.
+
+Titre du projet : Système Intelligent de Classification Explicable des Stades du Sommeil (XAI-Sleep)
+
+3. Couche d'explicabilité intégrée :
+
+Type de projet : Projet de Fin d'Études (PFE) - Ingénieur en Informatique
+
+o Chaque modèle de base aura ses propres méthodes d'explicabilité (saliency pour CNN, attention pour
+LSTM/Transformer).
+
+Durée : 6 mois du
+
+o Le méta-apprenant et l'ensemble global utiliseront SHAP pour une explicabilité unifiée.
+
+· Établissement : ESPRIT
+
+2.2. Spécifications Fonctionnelles
+
+· Encadrant industril : M Abdelwaheb Dahmeni & Mme Hajer Dahmeni
+
+2.2.1. Backend (Système de Classification)
+
+· Étudiant :
+
+, F1 : Chargement et prétraitement des fichiers EDF avec MNE-Python.
+· F2 : Segmentation en époques de 30 secondes.
+
+· Spécialité
+
+· F3 : Prédiction par le modèle d'ensemble (stacking) avec LCS.
+
+1.2. Contexte et Justification
+
+F4 : Calcul des scores de confiance par époque
+F5 : Generation des explications multi-methodes (SHAP, attention, saillance) pour chaque modele et pou
+
+Contexte médical : La polysomnographie (PSG) est l'examen de référence pour diagnostiquer les troubles
+
+l'ensemble.
+
+du sommeil. L'analyse manuelle des enregistrements PSG par des experts est longue (6-8 heures par patient)
+
+F6 : Application de règles cliniques pour la validation des transitions.
+
+et sujette à une variabilité inter-évaluateur importante (accord de 70-85%).
+
+F7 : Stockage des résultats dans une base de donnes PostgreSQL.
+F8 : API RESTful avec FastAPI pour communiquer avec le frontend.
+
+Problématique : Les modèles de deep learning existants pour la classification automatique des stades du
+sommeil fonctionnent comme des "boîtes noires", limitant leur adoption clinique par manque de
+
+2.2.2. Frontend (Interface Utilisateur)
+
+transparence.
+
+· F9 : Upload de fichiers EDF via une interface drag-and-drop.
+
+Solution proposée : Développer un système intelligent qui non seulement classe les stades du sommeil avec
+
+· F10 : Visualisation des signaux bruts (EEG, EOG, EMG) avec zoom et défilement.
+
+haute précision, mais explique également ses décisions en utilisant des techniques d'IA explicable (XAI).
+
+. F11 : Affichage de l'hypnogramme prédit et comparaison avec l'hypnogramme de référence (
+disponible).
+
+1.3. Objectifs du Projet
+
+F12 : Navigation interactive époque par époque, avec affichage des explications.
+F13 : Panel d'explications avec onglets pour SHAP, attention, saillance, et la fusion.
+
+Objectif principal :
+
+F14 : Export des résultats (PDF, JSON, CSV).
+
+Développer une application web interactive permettant aux experts du sommeil de classifier
+
+· F15 : Gestion des patients et des études.
+
+automatiquement les stades du sommeil avec des explications transparentes des décisions de l'IA, en
+
+· F16 : Tableau de bord avec métriques de performance
+
+utilisant un modèle d'ensemble de type stacking, et en mettant en place une automatisation du
+déploiement.
+
+2.2.3. Explicabilité (Moteur d'Explications)
+F17 : Calcul des valeurs SHAP pour chaque prédiction (global et local).
+
+Objectifs spécifiques :
+
+· F18 : Génération de cartes de saillance pour le CNN.
+
+1. Implémenter un modèle d'ensemble hétérogène (CNN, LSTM, Transformer) avec méta-apprentissage
+
+F19 : Extraction et visualisation des poids d'attention pour le LSTM et le Transformer.
+
+(stacking) et lissage contextuel localisé (LCS).
+
+· F20 : Fusion des explications et lissage temporel.
+
+2. Intégrer des techniques d'explicabilité (SHAP, attention, cartes de saillance) pour chaque modèle de base
+
+· F21 : Mise en évidence des features importantes et des transitions impossibles.
+
+et pour l'ensemble.
+3. Développer une interface web intuitive pour la visualisation interactive des résultats et des explications.
+
+2.3. Spécifications Non-Fonctionnelles
+
+4. Automatiser le déploiernent avec une pipeline CI/CD (GitHub Actions, Docker, Kubernetes).
+
+Critère
+
+5. Valider le système sur des données réelles (Sleep-EDF) et évaluer l'explicabilité.
+
+Exigence
+
+Metrique
+
+Précision
+
+90% accuracy sur Sleep-EDF
+
+F1-score, Cohen's Kappa
+
+2. Spécifications Techniques Détaillées
+
+Performance
+
+Traitement < 10 min pour une nuit complète 8 heures PSG en < 10 min
+
+2.1. Architecture du Modèle d'Ensemble (Stacking)
+
+Temps réponse
+< 2 sec par époque en inférence
+
+Latence P95 < 2000ms
+
+Disponibilite
+
+99% uptime pour la démo
+
+Monitoring Prometheus
+
+Le modèle d'ensemble de type stacking sera composé de :
+
+Évolutivité
+
+Support 100 utilisateurs simultanés
+
+Tests de charge k6
+
+Convivialité
+
+Interface intuitive pour experts
+
+SUS score ≥ 80
+
+4. Plan de Développement (5 mois)
+
+Interopérabilité Support EDF standard + dérivés
+
+Format EDF 2.0
+
+Sécurité
+
+Conformité RGPD pour données médicales
+
+Audit de sécurité
+
+Phase 1 : Préparation et Conception (Mois 1)
+
+3. Technologies et Outils
+
+Semaine 1-2 : Cadrage et Étude
+· Revue de la littérature sur le stacking et l'explicabilité.
+
+3.1. Stack Technologique
+
+· Analyse des datasets (Sleep-EDF).
+· Définition des métriques d'évaluation
+
+Backend (Python)
+
+· Planification avec diagramme de Gantt.
+
+. Framework API : FastAPI (performant, auto-documentation)
+. Machine Learning : PyTorch 2.0 + PyTorch Lightning
+
+Semaine 3-4 : Conception Architecturale
+
+. Traitement signal : MNE-Python, SciPy, NumPy
+
+· Design de l'architecture technique.
+
+· Explicabilité : SHAP, Captum (pour PyTorch)
+
+· Modélisation de la base de données.
+
+· Base de données : PostgreSQL + TimescaleDB
+
+· Prototypage des interfaces
+
+. Cache : Redis
+
+· Setup de l'environnement de développement.
+
+· Tâches async : Celery + RabbitMQ
+. Authentification : JWT, OAuth2
+
+Phase 2 : Développement Backend (Mois 2-3)
+
+Frontend (TypeScript)
+
+Mois 2 : Pipeline de Données et MModèles de Base
+
+. Framework : React 18+TypeScript
+
+. Implémentation du loader EDF avec MNE.
+
+· État global : Redux Toolkit
+
+· Développement des modèles CNN, LSTM, Transformer.
+
+. Visualisation : D3.js, Plotly.js, Chart.js
+
+· Entraînement sur sous-ensemble Sleep-EDF.
+
+· UI Components : Material-UI (MUI)
+. Gestion formulaires : React Hook Form
+
+Mois 3 : Stacking, Explicabilité et API
+
+. Tests : Jest, React Testing Library
+
+· Implémentation du méta-apprenant avec LCS.
+
+. Bundling : Vite
+
+· Intégration des techniques d'explicabilité (SHAP, Captum).
+· Développement de l'API FastAPI.
+
+DevCps & Déploiement Automatisé
+
+· Connexion base de données,
+
+· Contencurisation : Docker, Docker Compose
+· Orchestration : Kubernetes (minikube pour dev, k3s pour prod)
+
+Phase 3 : Développement Frontend (Mois 3-4)
+
+· CI/CD : GitHub Actions (automatisation des tests, build, déplolement)
+. Monitoring : Prometheus, Grafana
+
+Semaine 9-12 : Interface Utilisateur
+
+· Logging : ELK Stack (Elasticsearch, Logstash, Kibana)
+
+· Setup React + TypeScript + Vite.
+
+· Infrastructure as Code : Terraform (pour le provisionnement cloud)
+
+· Implémentation des pages principales,
+· Composants de wisualisation (signaux, hypnogramme).
+
+3.2. Environnement de Développement
+
+· Intégration avec l'API.
+
+Ressource
+
+Spécification
+
+Fournisseur
+
+Phase 4 : Automatisation du Déploiement et Tests (Mois 4-5)
+
+Station dev
+
+CPU 8 cores, RAM 32GB, GPU RTX 3060+
+
+École/Personnel
+
+Semaine 13-16 : CI/CD et Conteneurisation
+
+Serveurs dev
+4 vCPU, 16GB RAM, 200GB storage
+
+Cloud
+
+(AWS/GCP
+
+crédits
+
+· Mise en place de GitHub Actions pour les tests automatiques.
+
+éducatifs)
+
+· Création des Dockerfiles et docker-comnpose
+
+Bese
+
+PostgreSQL 15, Redis 7
+
+Docker local
+
+· Configuration de Kubernetes (minikube/k3s).
+
+données
+
+· Déploiement automatique sur un serveur de démonstration.
+
+Registry
+
+Docker Hub (gratuit) ou GitHub Container
+
+Semaine 17-20 : Intégration, Tests et Validation
+
+Registry
+
+· Intégration complète frontend/backend.
+
+Outils
+
+VS Code, Git, Jupyter, Postman
+
+· Tests d'intégration et end-to-end.
+· Tests de charge et performance.
+· Validation avec des experts (si disponible).
+
+Phase 5 : Documentation et Soutenance (Mois 5)
+Semaine 21-22 : Finalisation
+
+.
+
+Rédaction de la documentation technique et utilisateur.
+Préparation de la soutenance et démo.
+Redaction du rapport final.
+5. Livrables Attendus
+5.1. Livrables Techniques
+1. Code source complet sur GitHub,
+2.
+Documentation technique (architecture, API, déploiement).
+
+3.
+
+Manuel utilisateur pour experts du sommeil.
+4. Docker images et fichiers de déplolement Kubernetes.
+5.
+Pipeline CI/CD (fichiers GitHub Actions)
+5.2. Livrables Académiques
+1. Rapport final (60-80 pages) rédiger avec laTex.
+2. Présentation soutenance (30 min + questions).
+3. Démo interactive du système fonctionnel.
+5.3. Résultats Attendus
+· Précision : ≥ 0.90 F1-score (macro) sur Sleep-EDF.
+· Explicabilité : Visualisations compréhensibles par experts.
+· Performance : Traitement 8h PSG en < 15 min.
+· Automatisation déploiement : Pipeline CI/CD entièrement fonctionnel.
+6. Évaluation et Métriques
+6.1. Métriques de Performance
+· Accuracy, F1-score, Cohen's Kappa.
+· Temps d'inférence par époque.
+· Utilisation mémoire.
+6.2. Métriques d'Explicabilité
+· Fidélité (fidelity) : Perturbation des features importants.
+· Cohérence (consistency) : Similarité des explications pour des inputs similaires.
+· Utilité clinique : Évaluation par des experts.
+7. Gestion de Projet
+7.1. Méthodologle Agile
+· Cadre : Scrum adapté pour projet solo.
+· Sprints : 2 semaines (10 sprints total).
+· Outils : GitHub Projects, Notion.
+7.2. Suivi et Reporting
+· Hebdomadaire : Point avec encadrant académique.
+· Milestones : Jalons clés avec livrables intermédiaires.
