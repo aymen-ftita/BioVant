@@ -223,7 +223,7 @@ function App() {
     if (savedUser) {
       const parsed = JSON.parse(savedUser)
       setUser(parsed)
-      setActiveTab(parsed.role === 'admin' ? 'home-dashboard' : 'doctor-dashboard')
+      setActiveTab(parsed.role === 'admin' ? 'home-dashboard' : parsed.role === 'demo' ? 'doctor' : 'doctor-dashboard')
     }
   }, [])
 
@@ -235,6 +235,8 @@ function App() {
     setUser(mockUser)
     if (mockUser.role === 'admin') {
       setActiveTab('home-dashboard')
+    } else if (mockUser.role === 'demo') {
+      setActiveTab('doctor')
     } else {
       setActiveTab('doctor-dashboard')
     }
@@ -276,8 +278,8 @@ function App() {
           </section>
         )}
 
-        {/* ──── DOCTOR: PSG DIAGNOSTIC SECTION ──── */}
-        {user.role === 'doctor' && activeTab === 'doctor' && (
+        {/* ──── DOCTOR / DEMO: PSG DIAGNOSTIC SECTION ──── */}
+        {(user.role === 'doctor' || user.role === 'demo') && activeTab === 'doctor' && (
           <section className="app-section active">
             <Hero />
             <div className="container">
@@ -369,8 +371,8 @@ function App() {
           </section>
         )}
 
-        {/* ──── ADMIN: VISUAL MLOPS PIPELINE BUILDER ──── */}
-        {user.role === 'admin' && activeTab === 'developer' && (
+        {/* ──── ADMIN / DEMO: VISUAL MLOPS PIPELINE BUILDER ──── */}
+        {(user.role === 'admin' || user.role === 'demo') && activeTab === 'developer' && (
            <section className="app-section active">
               <div className="container">
                 <DeveloperPipeline />
