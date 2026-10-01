@@ -106,6 +106,25 @@ const Sidebar = ({ user, activeTab, onTabChange, onLogout }) => {
             </button>
           </>
         )}
+
+        {user && user.role === 'demo' && (
+          <>
+            <button
+              className={`app-tab ${activeTab === 'doctor' ? 'active' : ''}`}
+              onClick={() => onTabChange('doctor')}
+            >
+              <Activity size={18} />
+              {t('sidebar.new_analysis')}
+            </button>
+            <button
+              className={`app-tab ${activeTab === 'developer' ? 'active' : ''}`}
+              onClick={() => onTabChange('developer')}
+            >
+              <Terminal size={18} />
+              {t('sidebar.developer')}
+            </button>
+          </>
+        )}
       </div>
 
       <div style={{ flex: 1 }} />

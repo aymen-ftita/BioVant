@@ -63,6 +63,8 @@ const Login = ({ onLogin }) => {
     }
   };
 
+  const [showErrorModal, setShowErrorModal] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -88,20 +90,19 @@ const Login = ({ onLogin }) => {
         });
       }
     } catch (err) {
-      console.warn('Real API Login failed, logging in with mock credentials and using elegant local fallbacks:', err);
-      
-      // Fallback mock flow
-      const isMockAdmin = email.toLowerCase().includes('admin');
-      // Set a mock token so that PatientList / DoctorList attempts queries but falls back nicely
-      localStorage.setItem('token', 'mock-session-token');
-      
-      if (onLogin) {
-        onLogin({
-          id: isMockAdmin ? 2 : 1,
-          username: email.split('@')[0] || (isMockAdmin ? 'Admin' : 'Dr. Aymen'),
-          role: isMockAdmin ? 'admin' : 'doctor'
-        });
-      }
+      console.warn('Login failed, showing wrong credentials popup:', err);
+      setShowErrorModal(true);
+    }
+  };
+
+  const handleDemoMode = () => {
+    localStorage.setItem('token', 'demo-session-token');
+    if (onLogin) {
+      onLogin({
+        id: 99,
+        username: 'Visiteur Démo',
+        role: 'demo'
+      });
     }
   };
 
@@ -181,6 +182,37 @@ const Login = ({ onLogin }) => {
           <button type="submit" className="btn-login">S'identifier</button>
         </form>
       </div>
+
+      {showErrorModal && (
+        <div className="landing-modal-overlay" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, animation: 'fadeIn 0.2s ease' }}>
+          <div className="login-card" style={{ width: '400px', margin: '20px', padding: '32px', textAlign: 'center', border: '1px solid var(--red)', boxShadow: '0 10px 30px rgba(192,57,43,0.2)', position: 'relative', background: 'var(--surface)' }}>
+            <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: 'rgba(192,57,43,0.1)', color: 'var(--red)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', fontSize: '24px' }}>
+              ⚠️
+            </div>
+            <h3 style={{ color: 'var(--text)', marginBottom: '8px', fontSize: '18px', fontWeight: '700' }}>Identifiants Incorrects</h3>
+            <p style={{ color: 'var(--text2)', fontSize: '13px', marginBottom: '24px', lineHeight: '1.5' }}>
+              L'email ou le mot de passe saisi ne correspond à aucun compte praticien actif.
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <button 
+                type="button" 
+                className="btn-login" 
+                onClick={handleDemoMode}
+                style={{ background: 'var(--primary)', color: '#fff', fontWeight: '600' }}
+              >
+                🚀 Accéder au Mode Démo
+              </button>
+              <button 
+                type="button" 
+                onClick={() => setShowErrorModal(false)}
+                style={{ background: 'transparent', border: '1px solid var(--border)', color: 'var(--text2)', padding: '12px', borderRadius: '8px', cursor: 'pointer', fontSize: '13px', fontWeight: '500' }}
+              >
+                Réessayer
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
