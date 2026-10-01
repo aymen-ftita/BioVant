@@ -1,13 +1,65 @@
 \babel@toc {french}{}\relax 
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {1}{\ignorespaces Chronologie du Centre National de l'Informatique}}{16}{figure.caption.9}%
+\contentsline {figure}{\numberline {2}{\ignorespaces Hypnogramme d'une nuit physiologique}}{18}{figure.caption.11}%
+\contentsline {figure}{\numberline {3}{\ignorespaces Époque polysomnographique de 30 secondes}}{19}{figure.caption.12}%
+\contentsline {figure}{\numberline {4}{\ignorespaces Cycle Scrum adapté au projet}}{25}{figure.caption.18}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Chronologie historique du CNI}}{7}{figure.caption.5}%
+\contentsline {figure}{\numberline {5}{\ignorespaces Diagramme de cas d'utilisation global}}{29}{figure.caption.22}%
+\contentsline {figure}{\numberline {6}{\ignorespaces Raffinement du cas « Analyser un enregistrement »}}{30}{figure.caption.23}%
+\contentsline {figure}{\numberline {7}{\ignorespaces Diagramme de classes du modèle métier}}{35}{figure.caption.26}%
+\contentsline {figure}{\numberline {8}{\ignorespaces Schéma relationnel de la base}}{36}{figure.caption.27}%
+\contentsline {figure}{\numberline {9}{\ignorespaces Architecture générale du système}}{38}{figure.caption.30}%
+\contentsline {figure}{\numberline {10}{\ignorespaces Architecture fonctionnelle du pipeline d'analyse}}{40}{figure.caption.32}%
+\contentsline {figure}{\numberline {11}{\ignorespaces Vue de déploiement}}{41}{figure.caption.33}%
+\contentsline {figure}{\numberline {12}{\ignorespaces Feuille de route des releases}}{42}{figure.caption.35}%
+\contentsline {figure}{\numberline {13}{\ignorespaces Vélocité par sprint}}{44}{figure.caption.37}%
+\contentsline {figure}{\numberline {14}{\ignorespaces Diagramme de Gantt du projet}}{44}{figure.caption.38}%
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {15}{\ignorespaces Diagramme des cas d'utilisation du sprint 1 --- préparation des données}}{49}{figure.caption.41}%
+\contentsline {figure}{\numberline {16}{\ignorespaces Diagramme de séquence objet du sprint 1 --- préparation d'un enregistrement}}{51}{figure.caption.43}%
+\contentsline {figure}{\numberline {17}{\ignorespaces Chaîne de traitement du signal}}{51}{figure.caption.44}%
+\contentsline {figure}{\numberline {18}{\ignorespaces Distribution des stades dans le corpus SHHS1}}{52}{figure.caption.49}%
+\contentsline {figure}{\numberline {19}{\ignorespaces Diagramme des cas d'utilisation du sprint 2 --- classification des stades}}{55}{figure.caption.51}%
+\contentsline {figure}{\numberline {20}{\ignorespaces Diagramme de séquence objet du sprint 2 --- entraînement d'un modèle}}{56}{figure.caption.53}%
+\contentsline {figure}{\numberline {21}{\ignorespaces Architecture du réseau convolutif}}{57}{figure.caption.54}%
+\contentsline {figure}{\numberline {22}{\ignorespaces Architecture du réseau récurrent}}{57}{figure.caption.55}%
+\contentsline {figure}{\numberline {23}{\ignorespaces Architecture du modèle attentionnel}}{58}{figure.caption.56}%
+\contentsline {figure}{\numberline {24}{\ignorespaces Courbes d'apprentissage du modèle convolutif}}{60}{figure.caption.63}%
+\contentsline {figure}{\numberline {25}{\ignorespaces Matrices de confusion des trois architectures}}{61}{figure.caption.69}%
+\contentsline {figure}{\numberline {26}{\ignorespaces Matrice de confusion à cinq classes}}{62}{figure.caption.72}%
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {27}{\ignorespaces Diagramme des cas d'utilisation du sprint 3 --- diagnostic et explication}}{67}{figure.caption.79}%
+\contentsline {figure}{\numberline {28}{\ignorespaces Séquence de prédiction de la sévérité}}{69}{figure.caption.81}%
+\contentsline {figure}{\numberline {29}{\ignorespaces Principe de l'empilement de modèles}}{70}{figure.caption.83}%
+\contentsline {figure}{\numberline {30}{\ignorespaces Comparaison des $\kappa $ pour l'ensemble à cinq classes}}{71}{figure.caption.86}%
+\contentsline {figure}{\numberline {31}{\ignorespaces Matrice de confusion de l'ensemble}}{71}{figure.caption.87}%
+\contentsline {figure}{\numberline {32}{\ignorespaces Pipeline de prédiction de la sévérité}}{72}{figure.caption.91}%
+\contentsline {figure}{\numberline {33}{\ignorespaces Distribution des marqueurs selon la sévérité}}{73}{figure.caption.92}%
+\contentsline {figure}{\numberline {34}{\ignorespaces Comparaison des six classifieurs en validation croisée}}{73}{figure.caption.94}%
+\contentsline {figure}{\numberline {35}{\ignorespaces Matrice de confusion de la prédiction de sévérité}}{74}{figure.caption.100}%
+\contentsline {figure}{\numberline {36}{\ignorespaces Courbes ROC de la prédiction de sévérité}}{75}{figure.caption.101}%
+\contentsline {figure}{\numberline {37}{\ignorespaces Taxonomie des méthodes d'explication}}{75}{figure.caption.103}%
+\contentsline {figure}{\numberline {38}{\ignorespaces Lecture en cascade d'une explication SHAP}}{76}{figure.caption.104}%
+\contentsline {figure}{\numberline {39}{\ignorespaces Importance globale des variables}}{77}{figure.caption.106}%
+\contentsline {figure}{\numberline {40}{\ignorespaces Diagramme des cas d'utilisation du sprint 4 --- poste de travail du médecin}}{80}{figure.caption.111}%
+\contentsline {figure}{\numberline {41}{\ignorespaces Séquence d'authentification}}{82}{figure.caption.113}%
+\contentsline {figure}{\numberline {42}{\ignorespaces Séquence d'analyse d'un enregistrement}}{83}{figure.caption.114}%
+\contentsline {figure}{\numberline {43}{\ignorespaces Documentation OpenAPI générée automatiquement}}{85}{figure.caption.116}%
+\contentsline {figure}{\numberline {44}{\ignorespaces Assistant d'analyse, étape 1 : déclaration du montage}}{86}{figure.caption.119}%
+\contentsline {figure}{\numberline {45}{\ignorespaces Assistant d'analyse, étape 2 : granularité de classification}}{87}{figure.caption.120}%
+\contentsline {figure}{\numberline {46}{\ignorespaces Écran de progression du traitement}}{87}{figure.caption.121}%
+\contentsline {figure}{\numberline {47}{\ignorespaces Restitution des résultats d'analyse}}{87}{figure.caption.122}%
+\contentsline {figure}{\numberline {48}{\ignorespaces Prédiction de sévérité à partir d'une saisie manuelle}}{88}{figure.caption.123}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Architecture globale du système}}{15}{figure.caption.7}%
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Maquette de l’interface utilisateur}}{17}{figure.caption.8}%
-\addvspace {10\p@ }
-\contentsline {figure}{\numberline {6.1}{\ignorespaces Courbe d’apprentissage du CNN 5 canaux 3 classes}}{20}{figure.caption.11}%
-\contentsline {figure}{\numberline {6.2}{\ignorespaces Matrice de confusion normalisée (CNN 5ch, 3 classes)}}{21}{figure.caption.12}%
-\contentsline {figure}{\numberline {6.3}{\ignorespaces Attributions SHAP pour un épisode REM}}{22}{figure.caption.15}%
+\contentsline {figure}{\numberline {49}{\ignorespaces Diagramme des cas d'utilisation du sprint 5 --- dossier patient et gouvernance}}{92}{figure.caption.130}%
+\contentsline {figure}{\numberline {50}{\ignorespaces Cycle de vie d'un examen}}{93}{figure.caption.132}%
+\contentsline {figure}{\numberline {51}{\ignorespaces Registre des médecins et gestion des licences}}{94}{figure.caption.133}%
+\contentsline {figure}{\numberline {52}{\ignorespaces Gestion des établissements rattachés}}{95}{figure.caption.134}%
+\contentsline {figure}{\numberline {53}{\ignorespaces Journal d'audit : consultation et export}}{95}{figure.caption.135}%
+\contentsline {figure}{\numberline {54}{\ignorespaces Diagramme des cas d'utilisation du sprint 6 --- collaboration et restitution}}{98}{figure.caption.137}%
+\contentsline {figure}{\numberline {55}{\ignorespaces Diagramme de séquence objet du sprint 6 --- sollicitation d'un confrère}}{99}{figure.caption.139}%
+\contentsline {figure}{\numberline {56}{\ignorespaces Fil de discussion rattaché à un examen}}{100}{figure.caption.140}%
+\contentsline {figure}{\numberline {57}{\ignorespaces Compte rendu clinique généré}}{100}{figure.caption.141}%
+\contentsline {figure}{\numberline {58}{\ignorespaces Tableau de bord du médecin en thème sombre}}{101}{figure.caption.142}%
+\contentsline {figure}{\numberline {59}{\ignorespaces Exécution de la chaîne d'intégration continue}}{102}{figure.caption.145}%

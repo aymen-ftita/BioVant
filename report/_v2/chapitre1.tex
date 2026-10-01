@@ -1,0 +1,638 @@
+\chapter{Présentation générale}
+\label{chap:presentation}
+
+\sectionsansnum{Introduction}
+
+Ce premier chapitre situe le projet dans son double contexte : celui de l'organisme
+qui l'a accueilli et celui de la médecine du sommeil. Nous présentons le cadre du
+stage, l'organisme d'accueil et son activité, puis les notions médicales
+indispensables à la compréhension du mémoire. De ce contexte émerge une problématique
+que nous confrontons aux solutions existantes, avant d'en déduire le périmètre de la
+solution proposée et la méthodologie retenue pour la construire.
+
+\section{Cadre général du stage}
+
+Ce projet de fin d'études s'est déroulé du \textbf{26 janvier au 26 juillet 2026},
+soit six mois, au sein du \textbf{Centre National de l'Informatique} à Tunis. Il a été
+encadré côté entreprise par M. Abdelouaheb Dahmeni et M\textsuperscript{me} Hajer
+Dahmeni, et côté académique par M\textsuperscript{me} Ines Chouchane.
+
+Le projet consiste à concevoir et réaliser \hypnoria{}, une plateforme web d'aide à
+l'interprétation des enregistrements polysomnographiques. Il couvre l'ensemble du
+cycle de développement : constitution du corpus de données, entraînement et évaluation
+de modèles d'apprentissage, conception et développement de l'application, puis
+conteneurisation et automatisation du déploiement.
+
+\section{Présentation de l'organisme d'accueil}
+
+\subsection{Le Centre National de l'Informatique}
+
+Le Centre National de l'Informatique (CNI) est un établissement public à caractère non
+administratif, doté de la personnalité civile et de l'autonomie financière. Il a été
+créé par la loi n\textsuperscript{o} 75-83 du 30 décembre 1975, dont les articles 35 à
+42 fixent son statut et ses attributions. Placé sous la tutelle du ministère chargé des
+technologies de la communication, il est certifié ISO 9001 version 2015.
+
+Le CNI constitue le principal appui technique des structures publiques tunisiennes pour
+la conception, le déploiement et l'exploitation de leurs systèmes d'information. Il
+intervient aussi bien en maîtrise d'ouvrage déléguée qu'en réalisation directe, et
+opère une infrastructure d'hébergement mutualisée au service de l'administration.
+
+Le CNI a accompagné toutes les vagues d'informatisation de l'administration tunisienne,
+depuis les traitements centralisés des années 1970 jusqu'aux services numériques
+contemporains. La figure~\ref{fig:cni-timeline} en retrace les principaux jalons.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,
+    jalon/.style   = {align=center,font=\scriptsize,text width=2.6cm},
+    millesime/.style = {font=\footnotesize\bfseries,text=hypnoblue},
+  ]
+
+  % Axe temporel
+  \draw[line width=1.1pt,hypnoblue,-{Latex[length=3mm]}] (-0.4,0) -- (15,0);
+
+  % Jalons portés au-dessus de l'axe
+  \foreach \px/\yr/\txt in {
+      0/1975/{Création du CNI\\par la loi 75-83},
+      6/1992/{Élargissement de\\l'offre de formation},
+      12/2007/{Réseau national,\\e-gouvernement, backup}}
+  {
+    \draw[line width=1pt,hypnoblue] (\px,-0.18) -- (\px,0.18);
+    \fill[hypnored] (\px,0) circle (2.4pt);
+    \node[jalon,anchor=south]     at (\px, 0.62) {\txt};
+    \node[millesime,anchor=north] at (\px,-0.24) {\yr};
+  }
+
+  % Jalons portés sous l'axe
+  \foreach \px/\yr/\txt in {
+      3/1978/{Prise en charge de la\\formation en informatique},
+      9/1997/{Reclassement en\\établissement public},
+      14.4/{Auj.}/{Pôle d'excellence\\des TIC publiques}}
+  {
+    \draw[line width=1pt,hypnoblue] (\px,-0.18) -- (\px,0.18);
+    \fill[hypnored] (\px,0) circle (2.4pt);
+    \node[jalon,anchor=north]     at (\px,-0.62) {\txt};
+    \node[millesime,anchor=south] at (\px, 0.24) {\yr};
+  }
+
+\end{tikzpicture}
+\caption[Chronologie du Centre National de l'Informatique]%
+        {Principaux jalons de l'évolution du Centre National de l'Informatique.}
+\label{fig:cni-timeline}
+\end{figure}
+
+\subsection{Services proposés par le CNI}
+
+Les missions du CNI couvrent l'ensemble du cycle de vie d'un système d'information
+public :
+
+\begin{itemize}[itemsep=2pt,topsep=4pt]
+  \item \textbf{Maîtrise d'ouvrage déléguée} --- pilotage de projets pour le compte
+        des administrations bénéficiaires.
+  \item \textbf{Études et conseil} --- audits, études d'opportunité, schémas
+        directeurs, rédaction de cahiers des charges, conseil en réseaux et en sécurité
+        des systèmes d'information.
+  \item \textbf{Développement} --- conception, réalisation et maintenance applicative,
+        accompagnée de la formation des utilisateurs aux systèmes livrés.
+  \item \textbf{Hébergement} --- exploitation de serveurs, d'applications et de données
+        pour le compte des organismes publics.
+  \item \textbf{Continuité d'activité} --- solutions de sauvegarde, plans de reprise
+        après sinistre et plans de continuité.
+  \item \textbf{Formation et certification} --- formations continues et certifiantes,
+        séminaires techniques.
+  \item \textbf{Déploiement et assistance} --- mise en production des applications,
+        support sur site ou à distance.
+\end{itemize}
+
+\subsection{Intégration du projet au sein du CNI}
+
+Le projet \hypnoria{} s'inscrit dans les axes « Études et conseil » et
+« Développement » du CNI. Il relève d'une démarche exploratoire : appliquer les
+techniques d'apprentissage automatique récentes à l'aide au diagnostic médical, domaine
+où l'administration tunisienne dispose de gisements de données mais de peu d'outils
+d'exploitation.
+
+Trois caractéristiques du contexte CNI ont orienté les choix techniques du projet :
+
+\begin{itemize}[itemsep=2pt,topsep=4pt]
+  \item \textbf{La souveraineté des données.} Les données de santé sont sensibles.
+        L'architecture retenue sépare strictement les métadonnées cliniques, stockées
+        dans une base relationnelle maîtrisée, des fichiers volumineux, confiés à un
+        stockage objet dont l'accès n'est possible que par des liens signés à durée
+        limitée.
+  \item \textbf{La reproductibilité du déploiement.} Le CNI exploite des systèmes sur
+        une longue durée. L'ensemble de la plateforme est donc conteneurisé et
+        démarrable en une seule commande.
+  \item \textbf{La traçabilité.} Toute action sensible est journalisée avec son auteur,
+        son horodatage et son adresse d'origine, et le journal est exportable en vue
+        d'un contrôle de conformité.
+\end{itemize}
+
+\section{Présentation du projet}
+
+\subsection{Le sommeil et sa structure}
+
+Le sommeil n'est pas un état homogène de repos mais une succession organisée d'états
+physiologiques distincts, qui se répètent au cours de la nuit selon des cycles d'une
+durée moyenne de 90 minutes. On distingue le sommeil sans mouvements oculaires rapides,
+ou \emph{NREM}, subdivisé en stades de profondeur croissante, et le sommeil paradoxal,
+ou \emph{REM}, caractérisé par une activité cérébrale proche de l'éveil associée à une
+atonie musculaire complète.
+
+La classification de référence est celle de l'\emph{American Academy of Sleep
+Medicine}~\cite{aasm2020}, qui a succédé en 2007 aux règles de Rechtschaffen et
+Kales~\cite{rechtschaffen1968}. Elle définit cinq états, décrits au
+tableau~\ref{tab:stades}, et impose que le scorage se fasse par fenêtres, ou
+\emph{époques}, de 30 secondes.
+
+\begin{table}[H]
+\centering
+
+\small
+\begin{tabular}{@{}lL{4.6cm}L{5.4cm}c@{}}
+\toprule
+\textbf{Stade} & \textbf{Signature électrophysiologique} & \textbf{Éléments
+caractéristiques} & \textbf{Part typique} \\
+\midrule
+W (éveil) & Rythme alpha postérieur, activité bêta, tonus musculaire élevé &
+Mouvements oculaires volontaires et clignements & --- \\
+\addlinespace[2pt]
+N1 & Ralentissement du rythme de fond, ondes thêta & Mouvements oculaires lents,
+transition instable & \SI{5}{\percent} \\
+\addlinespace[2pt]
+N2 & Activité thêta dominante & Fuseaux du sommeil et complexes K & \SI{45}{\percent}
+à \SI{55}{\percent} \\
+\addlinespace[2pt]
+N3 & Ondes lentes de grande amplitude, sur plus de \SI{20}{\percent} de l'époque &
+Sommeil profond, seuil d'éveil élevé & \SI{15}{\percent} à \SI{25}{\percent} \\
+\addlinespace[2pt]
+REM & Rythme rapide et désynchronisé, proche de l'éveil & Mouvements oculaires
+rapides, atonie musculaire & \SI{20}{\percent} à \SI{25}{\percent} \\
+\bottomrule
+\end{tabular}
+\caption{Les cinq états de vigilance définis par le référentiel AASM}
+\label{tab:stades}
+\end{table}
+
+Deux points conditionnent la difficulté de la tâche d'automatisation. D'une part, la
+distribution des stades est fortement déséquilibrée : le N2 représente à lui seul
+environ la moitié d'une nuit, tandis que le N1 en occupe à peine un vingtième. D'autre
+part, le stade N1 est un état de transition sans marqueur graphique propre : il se
+définit par la disparition du rythme alpha et l'absence des fuseaux du N2, c'est-à-dire
+négativement. C'est la classe sur laquelle les experts humains eux-mêmes s'accordent le
+moins.
+
+La succession des stades attribués aux époques successives constitue
+l'\emph{hypnogramme} (figure~\ref{fig:hypnogramme}), document de référence du médecin
+du sommeil : il condense environ mille décisions élémentaires en une seule courbe.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1.02cm,y=1cm,
+    annot/.style = {font=\scriptsize,align=center},
+    fleche/.style= {-{Latex[length=2mm]},line width=0.55pt},
+  ]
+
+  % ── Bandes signalant les épisodes de sommeil paradoxal ────────────────────
+  \begin{scope}[on background layer]
+    \foreach \a/\b in {2.25/2.625, 4.5/5.025, 7.125/7.875, 9.0/9.9, 10.95/12.0}
+      \fill[stREM!14] (\a,-3.95) rectangle (\b,0.30);
+  \end{scope}
+
+  % ── Lignes de niveau ──────────────────────────────────────────────────────
+  \foreach \y in {0,-0.9,-1.8,-2.7,-3.6}
+    \draw[hypnogray!22,line width=0.4pt] (0,\y) -- (12.3,\y);
+
+  % ── Étiquettes des stades ─────────────────────────────────────────────────
+  \node[left,font=\scriptsize\bfseries,text=stWake] at (-0.12,0)    {W};
+  \node[left,font=\scriptsize\bfseries,text=stREM]  at (-0.12,-0.9) {REM};
+  \node[left,font=\scriptsize\bfseries,text=stN1]   at (-0.12,-1.8) {N1};
+  \node[left,font=\scriptsize\bfseries,text=stN2]   at (-0.12,-2.7) {N2};
+  \node[left,font=\scriptsize\bfseries,text=stN3]   at (-0.12,-3.6) {N3};
+
+  % ── Tracé ─────────────────────────────────────────────────────────────────
+  \draw[line width=1.15pt,hypnoblue]
+    (0,0) -- (0.45,0) -- (0.45,-1.8) -- (0.675,-1.8) -- (0.675,-2.7) --
+    (1.275,-2.7) -- (1.275,-3.6) -- (1.95,-3.6) -- (1.95,-2.7) --
+    (2.25,-2.7) -- (2.25,-0.9) -- (2.625,-0.9) -- (2.625,-1.8) --
+    (2.775,-1.8) -- (2.775,-2.7) -- (3.45,-2.7) -- (3.45,-3.6) --
+    (4.2,-3.6) -- (4.2,-2.7) -- (4.5,-2.7) -- (4.5,-0.9) --
+    (5.025,-0.9) -- (5.025,0) -- (5.175,0) -- (5.175,-1.8) --
+    (5.325,-1.8) -- (5.325,-2.7) -- (6.3,-2.7) -- (6.3,-3.6) --
+    (6.75,-3.6) -- (6.75,-2.7) -- (7.125,-2.7) -- (7.125,-0.9) --
+    (7.875,-0.9) -- (7.875,0) -- (8.025,0) -- (8.025,-1.8) --
+    (8.175,-1.8) -- (8.175,-2.7) -- (9.0,-2.7) -- (9.0,-0.9) --
+    (9.9,-0.9) -- (9.9,0) -- (10.125,0) -- (10.125,-1.8) --
+    (10.35,-1.8) -- (10.35,-2.7) -- (10.95,-2.7) -- (10.95,-0.9) --
+    (12.0,-0.9) -- (12.0,0) -- (12.3,0);
+
+  % ── Axe des temps ─────────────────────────────────────────────────────────
+  \draw[hypnogray,line width=0.6pt] (0,-4.05) -- (12.3,-4.05);
+  \foreach \h in {0,1,2,3,4,5,6,7,8} {
+    \pgfmathsetmacro{\xx}{\h*1.5}
+    \draw[hypnogray,line width=0.5pt] (\xx,-4.05) -- (\xx,-4.22);
+    \node[below,font=\scriptsize,text=hypnogray,inner sep=1.5pt] at (\xx,-4.22) {\h\,h};
+  }
+
+  % ── Annotation : sommeil profond ──────────────────────────────────────────
+  \node[annot,text=hypnored,text width=3.9cm,anchor=north] at (2.6,-4.85)
+       {sommeil profond concentré\\dans le premier tiers de la nuit};
+  \draw[fleche,hypnored] (1.75,-4.80) -- (1.62,-3.72);
+
+  % ── Annotation : sommeil paradoxal ────────────────────────────────────────
+  \node[annot,text=stREM,text width=4.3cm,anchor=south] at (9.7,1.05)
+       {épisodes de sommeil paradoxal\\de plus en plus longs};
+  \draw[fleche,stREM] (10.75,1.00) -- (11.45,-0.78);
+
+\end{tikzpicture}
+\vspace{0.35cm}
+\caption[Hypnogramme d'une nuit physiologique]%
+        {Hypnogramme schématique d'une nuit physiologique de huit heures. Les bandes
+         vertes signalent les épisodes de sommeil paradoxal.}
+\label{fig:hypnogramme}
+\end{figure}
+
+\subsection{La polysomnographie}
+
+L'hypnogramme n'est pas mesuré, il est \emph{interprété}. Il découle d'un examen appelé
+polysomnographie, qui enregistre simultanément plusieurs signaux physiologiques pendant
+une nuit complète. Le tableau~\ref{tab:derivations} décrit les dérivations minimales
+requises pour établir un scorage, qui sont précisément celles exploitées dans ce
+travail.
+
+\begin{table}[H]
+\centering
+
+\small
+\begin{tabular}{@{}llL{7.2cm}@{}}
+\toprule
+\textbf{Signal} & \textbf{Nombre} & \textbf{Apport au scorage} \\
+\midrule
+Électroencéphalogramme (EEG) & 2 & Rythme de fond, fuseaux, complexes K et ondes
+lentes : c'est le signal qui porte la décision \\
+\addlinespace[2pt]
+Électro-oculogramme (EOG) & 2 & Distingue les mouvements oculaires lents de
+l'endormissement des mouvements rapides du sommeil paradoxal \\
+\addlinespace[2pt]
+Électromyogramme (EMG) mentonnier & 1 & Le tonus musculaire sépare le sommeil
+paradoxal du sommeil lent : son effondrement signe le REM \\
+\bottomrule
+\end{tabular}
+\caption{Dérivations minimales d'un montage polysomnographique de scorage}
+\label{tab:derivations}
+\end{table}
+
+Un montage complet comporte en pratique d'autres capteurs --- flux nasal, sangles
+thoraciques, oxymétrie de pouls, électrocardiogramme --- destinés à la caractérisation
+des événements respiratoires. Le scorage des stades, lui, ne requiert que les cinq
+dérivations ci-dessus. Ce point est structurant : il rend possible un système
+compatible avec des montages allégés, et nous évaluerons d'ailleurs une configuration
+réduite à deux dérivations.
+
+\subsection{Le syndrome d'apnées obstructives du sommeil}
+
+Le syndrome d'apnées obstructives du sommeil (SAOS) résulte d'obstructions répétées des
+voies aériennes supérieures pendant le sommeil. Chaque obstruction provoque une
+désaturation en oxygène et un micro-éveil, invisible pour le patient mais destructeur
+pour l'architecture du sommeil.
+
+Sa prévalence est considérable : une analyse publiée en 2019 estime à environ
+936 millions le nombre d'adultes de 30 à 69 ans présentant un SAOS léger à sévère dans
+le monde, dont près de 425 millions sous une forme modérée à
+sévère~\cite{benjafield2019}. Non traité, le syndrome est associé à une surmorbidité
+cardiovasculaire documentée~\cite{marin2005}, et il reste largement
+sous-diagnostiqué~\cite{young1997}.
+
+La sévérité s'exprime par l'index d'apnées-hypopnées, nombre moyen d'événements
+respiratoires par heure de sommeil. Le référentiel AASM~\cite{kapur2017} en définit
+quatre classes, reprises au tableau~\ref{tab:iah}, qui constituent les classes cibles
+du second modèle développé dans ce mémoire.
+
+\begin{table}[H]
+\centering
+
+\small
+\begin{tabular}{@{}lcL{7.4cm}@{}}
+\toprule
+\textbf{Classe} & \textbf{IAH (évén./h)} & \textbf{Conduite habituelle} \\
+\midrule
+Normal   & $< 5$          & Pas de traitement spécifique \\
+Léger    & $5$ à $< 15$   & Mesures hygiéno-diététiques, surveillance \\
+Modéré   & $15$ à $< 30$  & Traitement discuté selon la symptomatologie \\
+Sévère   & $\geq 30$      & Traitement par pression positive continue indiqué \\
+\bottomrule
+\end{tabular}
+\caption{Classes de sévérité du SAOS selon l'index d'apnées-hypopnées}
+\label{tab:iah}
+\end{table}
+
+Le point essentiel pour la suite est le suivant : le SAOS ne se contente pas de
+provoquer des événements respiratoires, il \emph{déforme l'architecture du sommeil}.
+Les micro-éveils répétés fragmentent la nuit, suppriment le sommeil profond et
+raccourcissent les épisodes paradoxaux. Cette empreinte est mesurable sur le seul
+hypnogramme, indépendamment des capteurs respiratoires --- c'est l'hypothèse sur
+laquelle repose le second volet du projet.
+
+\subsection{Objectif général du projet}
+
+\hypnoria{} est une plateforme web d'aide à l'interprétation polysomnographique
+destinée aux médecins du sommeil. Elle poursuit quatre objectifs :
+
+\begin{enumerate}[itemsep=3pt,topsep=4pt]
+  \item \textbf{Automatiser le scorage des stades} à partir d'un fichier
+        d'enregistrement brut au format EDF, avec une exactitude comparable à l'accord
+        inter-expert.
+  \item \textbf{Prédire la sévérité du SAOS} à partir de l'architecture du sommeil et
+        de marqueurs cliniques, sans exiger l'annotation manuelle des événements
+        respiratoires.
+  \item \textbf{Expliquer chaque prédiction} en exposant les facteurs qui l'ont
+        déterminée, afin que le praticien puisse la valider ou la contester.
+  \item \textbf{Fournir la chaîne applicative complète} : dossier patient, archivage
+        sécurisé, annotation, compte rendu exportable, collaboration et administration
+        multi-établissements.
+\end{enumerate}
+
+\subsection{Problématique}
+
+Trois constats fondent ce projet.
+
+\subsubsection{Le coût du scorage manuel}
+
+Une nuit d'enregistrement de huit heures produit environ un millier d'époques de
+30 secondes. Chacune doit être examinée, comparée à ses voisines et classée par un
+technicien qualifié. L'opération représente plusieurs heures de travail expert par
+patient, auxquelles s'ajoutent l'analyse des événements respiratoires et la rédaction du
+compte rendu. Dans un service saturé, le facteur limitant n'est plus le nombre de lits
+d'enregistrement mais le temps d'expertise disponible pour interpréter ce qu'ils
+produisent.
+
+\subsubsection{La variabilité inter-scoreur}
+
+Le scorage manuel n'est pas seulement coûteux, il est également imparfaitement
+reproductible. Le programme de fiabilité inter-scoreurs de l'AASM mesure un accord
+global de l'ordre de \SI{83}{\percent}~\cite{rosenberg2013}, avec des écarts marqués
+selon le stade~\cite{danker2009}.
+
+Deux conséquences en découlent. La première est méthodologique : les annotations de
+référence ne sont pas une vérité absolue mais l'opinion d'un scoreur, et l'accord
+inter-expert constitue donc un plafond de performance réaliste. La seconde est
+clinique : elle légitime l'automatisation, car un modèle présente au moins la propriété
+d'être parfaitement reproductible.
+
+\subsubsection{L'opacité des modèles d'apprentissage profond}
+
+Depuis 2017, les réseaux de neurones profonds atteignent sur les bases publiques des
+performances comparables à celles d'un scoreur humain~\cite{supratak2017,perslev2021}.
+Le verrou n'est donc plus principalement la précision : il est l'adoption.
+
+Un modèle d'apprentissage profond fonctionne comme une boîte noire : il produit une
+classe sans énoncer ce qui l'a déterminée. Or le praticien engage sa responsabilité sur
+le diagnostic qu'il signe, et ne peut ni valider ni contester une décision dont il
+ignore les motifs. À ce frein pratique s'ajoute un cadre réglementaire européen qui
+reconnaît un droit à l'explication pour les décisions automatisées~\cite{goodman2017}.
+
+\medskip
+\noindent
+Ces trois constats convergent : la médecine du sommeil a besoin d'un système qui soit à
+la fois \textbf{rapide}, pour absorber le volume d'examens, \textbf{reproductible},
+pour lever la variabilité inter-scoreur, et \textbf{transparent}, pour que le praticien
+puisse s'en porter garant.
+
+\section{Étude préalable}
+
+\subsection{Étude de l'existant}
+
+\subsubsection{Les solutions commerciales}
+
+Le marché de l'analyse polysomnographique est dominé par des logiciels propriétaires
+adossés à du matériel d'acquisition : \emph{Noxturnal} de Nox Medical, \emph{Sleepware
+G3} de Philips Respironics, \emph{ProFusion PSG} de Compumedics ou encore
+\emph{SleepWorks} de Natus. Une seconde génération d'acteurs, dont \emph{EnsoSleep}
+d'EnsoData, propose un scorage automatique fondé sur l'apprentissage profond.
+
+En Tunisie, les laboratoires du sommeil s'appuient sur ces mêmes suites, acquises avec
+le matériel d'enregistrement. Le coût de licence et l'adhérence au matériel du
+constructeur en limitent la diffusion, et aucune solution nationale d'analyse
+automatique n'est à notre connaissance disponible.
+
+\subsubsection{Les travaux académiques}
+
+La littérature scientifique a produit une succession d'architectures de plus en plus
+performantes, résumées au tableau~\ref{tab:etat-art-staging}.
+\emph{DeepSleepNet}~\cite{supratak2017} combine une extraction convolutive
+multi-échelle et une modélisation séquentielle récurrente sur un unique canal.
+\emph{TinySleepNet}~\cite{supratak2020} en propose une version allégée.
+\emph{U-Sleep}~\cite{perslev2021} démontre une robustesse remarquable au montage et à
+la cohorte. \emph{SleepTransformer}~\cite{phan2022} introduit un mécanisme
+d'auto-attention ainsi qu'une forme d'interprétabilité par les poids d'attention.
+\emph{XSleepNet}~\cite{phan2021} exploite conjointement la représentation temporelle
+brute et la représentation temps-fréquence.
+
+\begin{table}[H]
+\centering
+
+\small
+\begin{tabular}{@{}L{3.3cm}cL{4.4cm}L{2.2cm}c@{}}
+\toprule
+\textbf{Travail} & \textbf{Année} & \textbf{Approche} & \textbf{Évaluation} &
+\textbf{Exactitude} \\
+\midrule
+Fraiwan \emph{et al.}~\cite{fraiwan2012} & 2012 & Temps-fréquence + forêt aléatoire &
+jeu propriétaire & $\approx$ \SI{83}{\percent} \\
+\addlinespace[2pt]
+Tsinalis \emph{et al.}~\cite{tsinalis2016} & 2016 & CNN sur EEG brut & Sleep-EDF &
+$\approx$ \SI{82}{\percent} \\
+\addlinespace[2pt]
+DeepSleepNet~\cite{supratak2017} & 2017 & CNN multi-échelle + BiLSTM & Sleep-EDF &
+$\approx$ \SI{82}{\percent} \\
+\addlinespace[2pt]
+Chambon \emph{et al.}~\cite{chambon2018} & 2018 & CNN multivarié (EEG, EOG, EMG) &
+MASS & $\approx$ \SI{83}{\percent} \\
+\addlinespace[2pt]
+SleepEEGNet~\cite{mousavi2019} & 2019 & CNN + séquence à séquence & Sleep-EDF &
+$\approx$ \SI{84}{\percent} \\
+\addlinespace[2pt]
+TinySleepNet~\cite{supratak2020} & 2020 & CNN + LSTM allégés & Sleep-EDF &
+$\approx$ \SI{85}{\percent} \\
+\addlinespace[2pt]
+AttnSleep~\cite{eldele2021} & 2021 & Multi-résolution + auto-attention & Sleep-EDF &
+$\approx$ \SI{84}{\percent} \\
+\addlinespace[2pt]
+U-Sleep~\cite{perslev2021} & 2021 & Entièrement convolutif & 15 cohortes &
+F1 macro $\approx$ 0,79 \\
+\addlinespace[2pt]
+SleepTransformer~\cite{phan2022} & 2022 & Transformer hiérarchique & SHHS &
+$\approx$ \SI{88}{\percent} \\
+\addlinespace[2pt]
+XSleepNet~\cite{phan2021} & 2022 & Fusion brut + temps-fréquence & SHHS &
+$\approx$ \SI{89}{\percent} \\
+\bottomrule
+\end{tabular}
+\caption{Principaux travaux de classification automatique des stades du sommeil}
+\label{tab:etat-art-staging}
+\end{table}
+
+\subsection{Critique de l'existant}
+
+Les suites commerciales sont matures et validées cliniquement, mais présentent quatre
+limites au regard de notre problématique. L'\textbf{adhérence matérielle} contraint les
+laboratoires disposant d'un parc hétérogène. Le \textbf{coût de licence}, calibré pour
+des structures hospitalières occidentales, reste hors de portée de nombreux centres.
+L'\textbf{installation locale} est peu compatible avec le travail à distance et la
+collaboration entre praticiens de sites différents. Enfin, lorsqu'un scorage
+automatique est proposé, il l'est \textbf{sans explication} des facteurs qui l'ont
+produit.
+
+Les travaux académiques, de leur côté, visent la performance de classification évaluée
+sur des jeux publics et s'arrêtent au modèle. Aucun ne livre la chaîne applicative qui
+permettrait à un praticien d'en faire usage : gestion des patients, archivage des
+examens, production d'un compte rendu, collaboration.
+
+Le tableau~\ref{tab:existant} confronte ces deux familles aux besoins identifiés.
+
+\begin{table}[H]
+\centering
+
+\small
+\begin{tabular}{@{}L{4.5cm}ccc@{}}
+\toprule
+\textbf{Critère} & \textbf{Suites commerciales} & \textbf{Travaux académiques} &
+\textbf{\hypnoria{}} \\
+\midrule
+Scorage automatique            & partiel  & oui  & oui \\
+Indépendance au matériel       & faible   & --   & oui \\
+Explicabilité des décisions    & non      & rare & oui \\
+Prédiction de la sévérité SAOS & indirecte& non  & oui \\
+Application web multi-utilisateurs & non  & non  & oui \\
+Dossier patient et historique  & oui      & non  & oui \\
+Collaboration entre praticiens & non      & non  & oui \\
+Traçabilité et audit           & partielle& non  & oui \\
+Coût d'acquisition             & élevé    & nul  & nul \\
+\bottomrule
+\end{tabular}
+\caption{Positionnement de \hypnoria{} face aux solutions existantes}
+\label{tab:existant}
+\end{table}
+
+\subsection{Solution proposée}
+
+Il ressort de cette analyse un espace non couvert, à l'intersection des deux familles :
+une plateforme applicative complète, indépendante du matériel d'acquisition, qui intègre
+des modèles de l'état de l'art \emph{et} les explique. C'est cet espace que le projet
+occupe.
+
+Le système s'articule autour de deux étages d'apprentissage successifs et d'une
+plateforme qui les met à disposition. Le premier étage assure la \textbf{classification
+des stades} : trois familles d'architectures --- convolutive, récurrente et
+attentionnelle --- sont entraînées séparément puis combinées par un méta-apprenant. Deux
+configurations de montage et deux granularités de sortie sont proposées, afin de couvrir
+aussi bien l'enregistrement de laboratoire que le dispositif ambulatoire. Le second
+étage assure la \textbf{prédiction de la sévérité} : il extrait de l'hypnogramme
+produit une vingtaine de marqueurs d'architecture du sommeil, les complète de données
+cliniques et oxymétriques, et prédit la classe de sévérité en accompagnant chaque
+prédiction de sa décomposition en contributions par variable.
+
+\section{Méthodologie de travail}
+
+\subsection{Choix du cadre Scrum}
+
+Le projet présentait deux sources d'incertitude difficilement compatibles avec une
+planification linéaire. La première tenait aux données : l'accès aux cohortes cliniques
+est soumis à une autorisation dont le délai d'instruction n'était pas connu à l'avance.
+La seconde tenait aux modèles : rien ne garantissait \emph{a priori} qu'une
+architecture donnée atteindrait le niveau de performance visé, ni que l'empilement
+apporterait un gain.
+
+Une démarche séquentielle aurait figé des décisions avant de disposer des éléments
+permettant de les prendre. Nous avons donc retenu le cadre Scrum~\cite{schwaber2020},
+dont le principe est d'avancer par incréments courts et d'ajuster la suite à ce que
+chaque incrément a révélé.
+
+\subsection{Les rôles dans la méthodologie Scrum}
+
+Scrum définit trois rôles. Le \emph{Product Owner} porte la vision du produit, arbitre
+les priorités du backlog et valide la valeur livrée. Le \emph{Scrum Master} garantit le
+respect du cadre, anime les cérémonies et lève les obstacles. L'\emph{équipe de
+développement} réalise l'incrément.
+
+Le projet étant mené par une seule personne, ces rôles ont été redistribués sans être
+dénaturés : la fonction de Product Owner a été portée par l'encadrement professionnel du
+CNI, celle de Scrum Master par l'encadrement académique lors des points de suivi, et
+celle d'équipe de développement par l'étudiant.
+
+\subsection{Adaptation au projet}
+
+La durée d'itération a été portée à quatre semaines plutôt que deux. Ce choix est
+directement lié à la nature du travail : l'entraînement d'un modèle profond sur près de
+deux cent mille exemples se compte en heures de calcul, et douze variantes devaient être
+produites. Une itération de deux semaines n'aurait pas permis de livrer un incrément
+évaluable pendant la phase de modélisation.
+
+Trois artefacts ont été tenus à jour : le \emph{Product Backlog}, liste priorisée des
+fonctionnalités attendues ; le \emph{Sprint Backlog}, sous-ensemble sélectionné pour
+l'itération en cours ; et l'\emph{incrément}, version fonctionnelle livrée en fin de
+sprint. Les cérémonies ont été condensées : une réunion de planification en début de
+sprint, un point hebdomadaire avec l'encadrement en substitution de la mêlée
+quotidienne, une revue de sprint sous forme de démonstration et une rétrospective
+écrite.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    node distance=0pt,
+    box/.style   = {rectangle,rounded corners=2pt,draw=hypnoblue!55,fill=hypnolight,
+                    align=center,font=\scriptsize,minimum height=1.05cm,text width=2.15cm},
+    dark/.style  = {rectangle,rounded corners=2pt,draw=hypnored!70,fill=hypnored!8,
+                    align=center,font=\scriptsize,minimum height=1.05cm,text width=2.15cm},
+    fl/.style    = {-{Latex[length=2.2mm]},hypnoblue!70,line width=0.8pt},
+  ]
+
+  \node[box] (backlog) at (0,0)      {\textbf{Product\\ Backlog}\\[1pt] 60 user stories};
+  \node[box] (planif)  at (3.3,0)    {\textbf{Planification}\\[1pt] sélection et
+                                      estimation};
+  \node[dark] (sprint) at (6.6,0)    {\textbf{Sprint}\\[1pt] 4 semaines};
+  \node[box] (revue)   at (9.9,0)    {\textbf{Revue}\\[1pt] démonstration à
+                                      l'encadrement};
+  \node[box] (retro)   at (13.0,0)   {\textbf{Rétrospective}\\[1pt] ajustement du
+                                      sprint suivant};
+
+  \draw[fl] (backlog) -- (planif);
+  \draw[fl] (planif)  -- (sprint);
+  \draw[fl] (sprint)  -- (revue);
+  \draw[fl] (revue)   -- (retro);
+
+  % Boucle de retour
+  \draw[fl] (retro.south) -- ++(0,-0.85) -- node[below,font=\scriptsize\itshape,
+        pos=0.5,hypnogray] {réalimentation du backlog à chaque itération}
+        ++(-13.0,0) -- (backlog.south);
+
+  % Incrément
+  \node[font=\scriptsize\itshape,hypnogray,align=center] at (6.6,1.15)
+       {incrément fonctionnel livré};
+  \draw[fl] (sprint.north) -- (6.6,0.95);
+
+\end{tikzpicture}
+\vspace{0.6cm}
+\caption[Cycle Scrum adapté au projet]%
+        {Cycle Scrum adapté à un projet individuel de six mois.}
+\label{fig:scrum}
+\end{figure}
+
+\sectionsansnum{Conclusion}
+
+Ce chapitre a posé le cadre du projet. Nous avons présenté le Centre National de
+l'Informatique et montré comment trois de ses contraintes structurantes ont orienté les
+choix techniques. Nous avons ensuite introduit les notions médicales nécessaires : les
+cinq stades du référentiel AASM, l'hypnogramme, le montage polysomnographique et les
+classes de sévérité du SAOS.
+
+De ce contexte se dégage une problématique à trois volets --- le coût du scorage manuel,
+sa variabilité entre experts et l'opacité des modèles qui prétendent l'automatiser.
+L'étude de l'existant a montré que les suites commerciales et les travaux académiques
+traitent chacun une partie du problème sans le couvrir entièrement, laissant ouvert
+l'espace qu'occupe \hypnoria{}.
+
+Le chapitre suivant traduit ces intentions en une spécification vérifiable : acteurs,
+besoins fonctionnels et non fonctionnels, backlog du produit, modèle de données et
+architecture globale.

@@ -1,0 +1,10 @@
+Deposer ici les logos des editeurs, au format PNG sur fond transparent ou blanc :
+
+  noxturnal.png   Noxturnal, Nox Medical
+  sleepware.png   Sleepware G3, Philips Respironics
+  profusion.png   ProFusion PSG, Compumedics
+  sleepworks.png  SleepWorks, Natus Medical
+  ensosleep.png   EnsoSleep, EnsoData
+
+Tant qu un fichier est absent, le tableau 1.4.1.1 affiche un cadre d attente
+portant le nom attendu (commande \logoedit de main.tex).

@@ -1,0 +1,280 @@
+\chapter{Sprint 5 : Dossier patient et gouvernance}
+\label{chap:sprint5}
+
+\sectionsansnum{Introduction}
+
+Le sprint précédent a livré un outil d'analyse. Celui-ci en fait un système d'information
+clinique : les examens sont rattachés à des patients, les fichiers volumineux archivés hors
+base, et la plateforme ouverte à plusieurs établissements sous le contrôle d'un
+administrateur.
+
+\section{Objectif du sprint}
+
+Trois exigences structuraient ce sprint.
+
+La première était la \textbf{persistance}. Une analyse sans dossier n'a pas d'usage
+clinique : il fallait rattacher chaque examen à un patient, conserver l'historique et
+cloisonner les données de chaque praticien.
+
+La deuxième était le \textbf{traitement des fichiers volumineux}. Un enregistrement pèse
+plusieurs centaines de mégaoctets. Le conserver en base aurait dégradé les sauvegardes et
+les temps de réponse sans bénéfice transactionnel.
+
+La troisième était la \textbf{gouvernance}. Ouvrir la plateforme à plusieurs centres
+suppose de pouvoir créer des comptes, en révoquer l'accès sans détruire de données, et
+tracer les actions sensibles.
+
+\section{Analyse du sprint 5}
+
+\subsection{Sprint Backlog}
+
+\begin{table}[H]
+\centering\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}c|L{2.5cm}|L{4.6cm}|L{4.6cm}|c@{}}
+\hline
+\ligneentete \entete{ID} & \entete{Module} & \entete{R\'ecit utilisateur} & \entete{T\^aches} & \entete{Estim.} \\
+\hline
+\multirow{3}{*}{US-16\,\`a\,20} & \multirow{3}{=}{Dossier patient} & \multirow{3}{=}{En tant que m\'edecin, je veux constituer et suivre mon registre de patients} & Mod\'eliser patients et examens & \multirow{3}{*}{19 pts} \\
+ &  &  & Cr\'eer le registre et l'historique &  \\
+ &  &  & Cloisonner les donn\'ees par praticien &  \\
+\hline
+\multirow{3}{*}{US-50\,\`a\,52} & \multirow{3}{=}{Archivage cloud} & \multirow{3}{=}{En tant que syst\`eme, je veux archiver les fichiers volumineux sans bloquer l'interface} & Int\'egrer le client de stockage objet & \multirow{3}{*}{18 pts} \\
+ &  &  & Transf\'erer en arri\`ere-plan avec suivi &  \\
+ &  &  & D\'elivrer des liens sign\'es \`a dur\'ee limit\'ee &  \\
+\hline
+\multirow{3}{*}{US-06\,\`a\,10} & \multirow{3}{=}{Comptes et licences} & \multirow{3}{=}{En tant qu'administrateur, je veux g\'erer le cycle de vie des comptes m\'edecins} & Cr\'eer et lister les comptes & \multirow{3}{*}{21 pts} \\
+ &  &  & Suspendre, r\'eactiver et fixer l'\'ech\'eance &  \\
+ &  &  & G\'erer les \'etablissements de rattachement &  \\
+\hline
+\multirow{3}{*}{US-05, 11\,\`a\,14} & \multirow{3}{=}{Tra\c{c}abilit\'e} & \multirow{3}{=}{En tant qu'administrateur, je veux tracer et exporter les actions sensibles} & Journaliser auteur, horodatage et adresse & \multirow{3}{*}{19 pts} \\
+ &  &  & Appliquer statut et licence \`a la connexion &  \\
+ &  &  & Exporter le journal au format tabulaire &  \\
+\hline
+\end{tabular}
+\caption{Sprint Backlog --- Sprint 5}
+\label{tab:bl-s5}
+\end{table}
+
+\subsection{Diagramme des cas d'utilisation}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    x=1cm,y=1cm,
+    uc/.style     = {ellipse, draw=hypnoblue!60, fill=hypnolight,
+                     align=center, font=\scriptsize, text width=2.7cm,
+                     inner sep=1.5pt, minimum height=1.0cm},
+    ucp/.style    = {ellipse, draw=hypnored!70, fill=hypnored!7,
+                     align=center, font=\scriptsize\bfseries, text width=2.7cm,
+                     inner sep=1.5pt, minimum height=1.0cm},
+    lien/.style   = {hypnogray!75, line width=0.55pt},
+    rel/.style    = {-{Latex[length=2mm]}, hypnoblue!70, line width=0.5pt, dashed},
+    et/.style     = {font=\tiny\itshape, text=hypnoblue!85, fill=white, inner sep=1pt},
+    nomact/.style = {font=\scriptsize\bfseries, align=center, text width=2.2cm},
+  ]
+
+  \tikzset{acteur/.pic={
+      \draw[hypnoblue,line width=0.8pt] (0,0) circle (0.17);
+      \draw[hypnoblue,line width=0.8pt] (0,-0.17) -- (0,-0.66);
+      \draw[hypnoblue,line width=0.8pt] (-0.28,-0.34) -- (0.28,-0.34);
+      \draw[hypnoblue,line width=0.8pt] (0,-0.66) -- (-0.24,-1.04);
+      \draw[hypnoblue,line width=0.8pt] (0,-0.66) -- (0.24,-1.04);}}
+
+  \draw[hypnoblue!55,line width=0.9pt,rounded corners=3pt]
+       (3.9,-5.4) rectangle (11.9,2.4);
+  \node[font=\small\bfseries,text=hypnoblue,anchor=north west] at (4.15,2.25)
+       {Système d'information clinique};
+
+  \node[uc]  (pat) at (6.1, 1.4)  {Gérer ses\\patients};
+  \node[ucp] (exa) at (6.1,-0.3)  {Constituer le\\dossier d'examen};
+  \node[uc]  (arc) at (6.1,-2.2)  {Archiver les\\pièces};
+  \node[uc]  (tab) at (6.1,-4.1)  {Consulter son\\tableau de bord};
+
+  \node[uc]  (com) at (9.9, 1.4)  {Gérer les comptes\\et licences};
+  \node[uc]  (eta) at (9.9,-0.3)  {Gérer les\\établissements};
+  \node[uc]  (aud) at (9.9,-2.2)  {Consulter le\\journal d'audit};
+  \node[uc]  (sta) at (9.9,-4.1)  {Suivre l'activité\\de la plateforme};
+
+  \pic at (1.6,0.9) {acteur};
+  \node[nomact,anchor=north] at (1.6,0.25) {Médecin};
+
+  \pic at (14.0,0.9) {acteur};
+  \node[nomact,anchor=north] at (14.0,0.25) {Administrateur};
+
+  \foreach \c in {pat,exa,arc,tab} \draw[lien] (2.0,0.55) -- (\c.west);
+  \foreach \c in {com,eta,aud,sta} \draw[lien] (13.6,0.55) -- (\c.east);
+
+  \draw[rel] (exa) -- node[et,pos=0.5] {$\ll$include$\gg$} (arc);
+
+\end{tikzpicture}
+\caption{Diagramme des cas d'utilisation du sprint 5 --- dossier patient et gouvernance}
+\label{fig:uc-s5}
+\end{figure}
+
+\subsubsection{Description textuelle des cas d'utilisation}
+
+\begin{casutilisation}{Description textuelle du cas « Gérer le cycle de vie d'un compte »}
+Titre & Gérer le cycle de vie d'un compte médecin \\ \hline
+Acteur & Administrateur \\ \hline
+Description & Créer un compte praticien, en suspendre ou réactiver l'accès, fixer son
+échéance de licence et le rattacher à un établissement \\ \hline
+Préconditions & L'administrateur est authentifié \\ \hline
+Scénario de base &
+\begin{minipage}[t]{\linewidth}
+\begin{enumerate}[leftmargin=1.1em,itemsep=1pt,topsep=3pt]
+  \item L'administrateur ouvre le registre des médecins.
+  \item Il crée un compte en renseignant identité, adresse et échéance de licence.
+  \item Le système vérifie l'unicité de l'adresse et hache le mot de passe initial.
+  \item Le système journalise la création.
+  \item L'administrateur peut ensuite suspendre, réactiver ou prolonger le compte.
+\end{enumerate}
+\end{minipage} \\ \hline
+Scénario alternatif &
+\begin{minipage}[t]{\linewidth}
+\begin{itemize}[leftmargin=1.1em,itemsep=1pt,topsep=3pt]
+  \item \textbf{3a} --- L'adresse est déjà enregistrée : la création est refusée.
+  \item \textbf{5a} --- Le praticien a perdu son accès : réinitialisation avec mot de
+        passe temporaire.
+\end{itemize}
+\end{minipage}
+\end{casutilisation}
+
+\subsection{Diagramme d'états}
+
+Un examen traverse une succession d'états. Cette modélisation explicite un point important :
+un examen reste consultable même si l'archivage échoue, car les résultats d'analyse sont
+stockés en base indépendamment des fichiers.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    x=1cm,y=1cm,
+    st/.style   = {rectangle,rounded corners=5pt,draw=hypnoblue!65,fill=hypnolight,
+                   align=center,font=\scriptsize,minimum height=0.9cm,text width=2.3cm},
+    stf/.style  = {rectangle,rounded corners=5pt,draw=hypnored!70,fill=hypnored!7,
+                   align=center,font=\scriptsize,minimum height=0.9cm,text width=2.3cm},
+    fl/.style   = {-{Latex[length=2mm]},hypnoblue!75,line width=0.7pt},
+    tr/.style   = {font=\tiny\itshape,text=hypnogray,fill=white,inner sep=1.5pt},
+  ]
+
+  \fill[hypnoblue] (0,0) circle (0.14);
+
+  \node[st]  (cre) at (2.5,0)   {Créé};
+  \node[st]  (ana) at (6.0,0)   {Analysé};
+  \node[st]  (arc) at (9.5,0)   {Archivé};
+  \node[stf] (eva) at (13.0,0)  {Évalué};
+  \node[st]  (ann) at (9.5,-2.3){Annoté};
+  \node[stf] (deg) at (6.0,-2.3){Archivage\\en échec};
+
+  \draw[fl] (0.16,0) -- node[tr,above] {dépôt du fichier} (cre);
+  \draw[fl] (cre) -- node[tr,above] {classification} (ana);
+  \draw[fl] (ana) -- node[tr,above] {transfert réussi} (arc);
+  \draw[fl] (arc) -- node[tr,above] {prédiction} (eva);
+  \draw[fl] (arc) -- node[tr,right,pos=0.5] {annotation} (ann);
+  \draw[fl] (ana) -- node[tr,right,pos=0.5] {transfert échoué} (deg);
+  \draw[fl] (deg) -- node[tr,below] {nouvelle tentative} (ann);
+
+  \fill[hypnoblue] (13.0,-2.3) circle (0.19);
+  \fill[white]     (13.0,-2.3) circle (0.135);
+  \fill[hypnoblue] (13.0,-2.3) circle (0.09);
+  \draw[fl] (eva) -- node[tr,right,pos=0.5] {compte rendu} (13.0,-2.11);
+  \draw[fl] (ann) -- node[tr,pos=0.72,below right] {prédiction} (eva.south west);
+
+\end{tikzpicture}
+\vspace{0.3cm}
+\caption[Cycle de vie d'un examen]%
+        {États successifs d'un examen ; l'échec d'archivage ne bloque pas
+         l'exploitation des résultats.}
+\label{fig:etats}
+\end{figure}
+
+\section{Réalisation}
+
+\subsection{Persistance et cloisonnement}
+
+Le modèle de données repose sur huit tables, présentées au chapitre~\ref{chap:analyse}. Le
+rattachement direct du patient à son praticien référent fonde le cloisonnement : chaque route
+vérifie, après le rôle, que la ressource demandée appartient bien à l'appelant. Un médecin ne
+peut donc pas accéder au dossier d'un confrère, même en devinant un identifiant.
+
+\subsection{Archivage sur stockage objet}
+
+Les fichiers volumineux sont confiés à un service de stockage objet compatible avec
+l'interface S3. Chaque objet est rangé dans un préfixe portant le nom du patient et nommé
+selon le motif \texttt{patient\_date\_alea}, ce qui rend l'arborescence lisible depuis la
+console du fournisseur sans consulter la base.
+
+Le point remarquable de cette réalisation est le \textbf{transfert en arrière-plan}. Attendre
+la fin du téléversement avant d'afficher les résultats aurait immobilisé le praticien pendant
+plusieurs minutes. L'enchaînement retenu est donc : l'analyse est exécutée, les résultats sont
+affichés, l'examen est créé en base, puis le transfert démarre sans bloquer l'interface. Une
+vignette flottante affiche la progression et disparaît quelques secondes après son achèvement.
+
+Un échec de transfert n'interrompt rien : il est signalé dans la vignette, et l'examen reste
+pleinement exploitable.
+
+Les \textbf{liens d'accès} aux fichiers sont signés et expirent au bout de vingt-quatre heures.
+Une subtilité a été traitée : les enregistrements et les fichiers tabulaires sont servis avec
+une en-tête forçant le téléchargement, tandis que les images et les comptes rendus restent
+affichables dans le navigateur.
+
+Ces références ne sont jamais transmises telles quelles : les schémas de sortie déclarent un
+validateur qui intercepte toute référence de fichier au moment de composer la réponse et la
+remplace par un lien signé. La conséquence est importante : aucune route ne peut divulguer une
+référence brute par inadvertance, puisque la conversion est appliquée par le schéma et non par
+la route.
+
+\subsection{Administration et cycle de vie des licences}
+
+Un compte peut être actif, suspendu ou en attente, et porte une date d'échéance. Ces trois
+conditions sont évaluées à chaque ouverture de session, avec un message distinct pour chacune,
+de sorte que le praticien sache s'il doit contacter son administrateur ou renouveler son
+abonnement.
+
+Ce dispositif permet de \textbf{révoquer un accès sans détruire de données}, ce qui est la
+seule manière acceptable de gérer une fin de contrat sur un système qui héberge des dossiers
+médicaux.
+
+\capturefig{admin-medecins}{0.9}{Registre des médecins et gestion des licences}{fig:adminmed}
+
+\capturefig{admin-hopitaux}{0.9}{Gestion des établissements rattachés}{fig:adminhop}
+
+\subsection{Traçabilité}
+
+Chaque action sensible inscrit dans le journal son auteur, son rôle, son horodatage, la nature
+de l'action et l'adresse d'origine. Sont journalisées les connexions, les créations de compte,
+les modifications de statut et les réinitialisations de mot de passe. Le journal est exportable
+au format tabulaire pour un contrôle externe.
+
+La table est délibérément dénormalisée : elle recopie l'adresse et le rôle plutôt que de
+référencer le compte, afin que la trace survive à la disparition de celui-ci.
+
+\capturefig{audit}{0.9}{Journal d'audit : consultation et export}{fig:audit}
+
+\subsection{Limites au regard du règlement européen}
+
+Le système n'est pas conforme au règlement général sur la protection des données, et il serait
+malhonnête de le prétendre. Trois écarts subsistent.
+
+Les \textbf{données patient ne sont pas chiffrées au repos} : elles reposent sur le chiffrement
+offert par le service de stockage et par le système de fichiers de la base, sans couche
+applicative supplémentaire. Le \textbf{droit à l'effacement} n'est pas outillé : aucune
+procédure n'efface un patient et ses fichiers archivés en une opération. Enfin, aucune
+\textbf{durée de conservation} n'est définie ni appliquée.
+
+Ces trois points relèvent d'un travail de mise en conformité qui dépasse le périmètre d'un
+projet de fin d'études, mais qu'une mise en service réelle imposerait.
+
+\sectionsansnum{Conclusion}
+
+Ce sprint a doté la plateforme d'une mémoire et d'une gouvernance. Les examens sont désormais
+rattachés à des patients, les fichiers volumineux archivés hors base et accessibles uniquement
+par des liens signés, et l'administrateur dispose des outils nécessaires pour ouvrir la
+plateforme à plusieurs établissements.
+
+Le principe directeur de la réalisation apparaît clairement ici : ne jamais faire attendre le
+praticien, et ne jamais laisser un incident technique compromettre l'exploitation d'un examen.
+
+Le dernier sprint couvre le travail à plusieurs, la restitution documentaire et
+l'industrialisation du déploiement.

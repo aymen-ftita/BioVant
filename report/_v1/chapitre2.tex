@@ -1,0 +1,633 @@
+\chapter{État de l'art}
+\label{chap:etat-art}
+
+Le chapitre précédent a établi ce que le système doit faire. Celui-ci examine ce que
+la communauté scientifique sait déjà faire, et ce qu'elle ne sait pas encore. Nous
+parcourons successivement les trois corpus de travaux sur lesquels s'appuie notre
+proposition : la classification automatique des stades du sommeil, l'apprentissage
+ensembliste, et l'intelligence artificielle explicable. Une quatrième section
+s'intéresse aux méthodes de dépistage du syndrome d'apnées obstructives, qui
+constituent le second volet du projet. Nous concluons en situant précisément notre
+contribution dans ce paysage.
+
+% =============================================================================
+\section{La classification automatique des stades du sommeil}
+% =============================================================================
+
+\subsection{Les approches fondées sur des caractéristiques expertes}
+
+Jusqu'au milieu des années 2010, la démarche dominante consistait à reproduire le
+raisonnement du scoreur humain en deux temps. Un ingénieur du signal concevait
+d'abord un jeu de descripteurs censés capturer les éléments décrits par le référentiel
+AASM : puissance spectrale dans les bandes delta, thêta, alpha et bêta, entropie de
+permutation, paramètres de Hjorth, coefficients d'ondelettes. Un classifieur classique
+— machine à vecteurs de support, forêt aléatoire, $k$ plus proches voisins — apprenait
+ensuite à associer ces descripteurs aux stades.
+
+Fraiwan \emph{et al.}~\cite{fraiwan2012} illustrent bien cette famille : une analyse
+temps-fréquence d'un unique canal EEG alimente une forêt aléatoire. Hassan et
+Bhuiyan~\cite{hassan2016} y ajoutent une décomposition modale empirique et une
+agrégation bootstrap.
+
+Ces méthodes présentent un avantage considérable, souvent oublié dans les comparaisons
+de performance : elles sont \emph{intrinsèquement interprétables}. Lorsqu'une forêt
+aléatoire classe une époque en N3 parce que la puissance dans la bande delta dépasse
+un seuil, la justification est immédiatement lisible par un clinicien, car elle emploie
+le vocabulaire même du référentiel de scorage.
+
+Leur limite est ailleurs. La qualité du résultat dépend entièrement de la pertinence
+des descripteurs choisis \emph{a priori}. Un motif discriminant que l'ingénieur n'a pas
+anticipé reste invisible au classifieur, quelle que soit sa puissance. C'est
+précisément ce plafond que l'apprentissage de représentations vient lever.
+
+\subsection{L'apprentissage de représentations : les réseaux convolutifs}
+
+Un réseau de neurones convolutif~\cite{lecun1998} apprend ses propres filtres au lieu
+de les recevoir. Appliqué à un signal unidimensionnel, il extrait des motifs locaux
+invariants par translation — ce qui correspond exactement à la nature des éléments
+recherchés dans une époque : un fuseau du sommeil ou un complexe K sont des formes
+brèves dont la position dans la fenêtre de 30 secondes est indifférente.
+
+Tsinalis \emph{et al.}~\cite{tsinalis2016} ont été parmi les premiers à appliquer un
+CNN à l'EEG brut, sans extraction préalable. Chambon \emph{et al.}~\cite{chambon2018}
+ont étendu l'approche au cas multivarié, en traitant conjointement EEG, EOG et EMG,
+configuration proche de celle que nous adoptons.
+
+Une propriété architecturale mérite d'être soulignée car elle guidera notre conception :
+la taille du noyau de convolution détermine l'échelle temporelle observée. Un noyau
+court capte les oscillations rapides ; un noyau long, les ondes lentes. Comme les
+stades du sommeil se distinguent précisément par des phénomènes d'échelles différentes,
+les architectures les plus efficaces emploient plusieurs branches parallèles à
+résolutions distinctes. C'est le principe retenu par
+DeepSleepNet~\cite{supratak2017} et que nous reprendrons.
+
+\subsection{La modélisation de la dépendance temporelle}
+
+Un scoreur humain ne juge jamais une époque isolément. Le référentiel AASM impose
+d'ailleurs des règles de continuité : certaines transitions sont interdites, et le
+contexte des époques voisines conditionne l'attribution. Un modèle qui classerait
+chaque fenêtre indépendamment se priverait de cette information.
+
+Les réseaux récurrents à mémoire longue~\cite{hochreiter1997} maintiennent un état
+interne le long de la séquence et apprennent quelles informations conserver ou
+oublier. Leur variante bidirectionnelle parcourt la séquence dans les deux sens, ce
+qui autorise une décision informée par le passé comme par l'avenir — situation
+réaliste ici, puisque l'enregistrement est analysé après coup et non en temps réel.
+
+DeepSleepNet~\cite{supratak2017} combine ainsi une extraction convolutive
+multi-échelle et un LSTM bidirectionnel, architecture devenue la référence du domaine.
+TinySleepNet~\cite{supratak2020} en propose une version considérablement allégée pour
+les dispositifs embarqués. SleepEEGNet~\cite{mousavi2019} traite le problème comme une
+tâche de traduction séquence à séquence.
+
+\subsection{L'attention et les architectures Transformer}
+
+Le mécanisme d'attention~\cite{bahdanau2015} permet à un modèle de pondérer
+dynamiquement les éléments d'une séquence selon leur pertinence pour la décision
+courante. Les architectures Transformer~\cite{vaswani2017} en font leur unique
+primitive de calcul, abandonnant toute récurrence : chaque position peut consulter
+directement toutes les autres, ce qui supprime le goulet d'étranglement de l'état
+récurrent et autorise une parallélisation complète de l'entraînement.
+
+AttnSleep~\cite{eldele2021} associe une extraction multi-résolution à un module
+d'auto-attention. SleepTransformer~\cite{phan2022} construit une architecture
+hiérarchique, à l'échelle intra-époque puis inter-époques, et présente un intérêt
+particulier pour notre problématique : les auteurs y adjoignent une quantification de
+l'incertitude et exploitent les poids d'attention comme support d'interprétation.
+XSleepNet~\cite{phan2021} exploite conjointement la représentation temporelle brute et
+la représentation temps-fréquence. U-Sleep~\cite{perslev2021}, enfin, adopte une
+architecture entièrement convolutive et se distingue moins par sa précision brute que
+par sa robustesse : les auteurs valident le modèle sur une quinzaine de cohortes aux
+montages hétérogènes.
+
+\subsection{Synthèse comparative}
+
+Le tableau~\ref{tab:etat-art-staging} récapitule ces travaux.
+
+% ─────────────────────────────────────────────────────────────────────────────
+% À VÉRIFIER : les exactitudes rapportées ci-dessous doivent être recoupées avec
+% les articles originaux avant le dépôt. Les protocoles d'évaluation diffèrent
+% (jeux de données, nombre de canaux, validation croisée), ce qui interdit toute
+% comparaison directe — le paragraphe qui suit le tableau le précise.
+% ─────────────────────────────────────────────────────────────────────────────
+\begin{table}[H]
+\centering
+\caption{Principaux travaux de classification automatique des stades du sommeil}
+\label{tab:etat-art-staging}
+\small
+\begin{tabular}{@{}L{3.3cm}cL{4.4cm}L{2.2cm}c@{}}
+\toprule
+\textbf{Travail} & \textbf{Année} & \textbf{Approche} & \textbf{Évaluation} &
+\textbf{Exactitude} \\
+\midrule
+Fraiwan \emph{et al.}~\cite{fraiwan2012} & 2012 & Temps-fréquence + forêt aléatoire &
+jeu propriétaire & $\approx$ \SI{83}{\percent} \\
+\addlinespace[2pt]
+Tsinalis \emph{et al.}~\cite{tsinalis2016} & 2016 & CNN sur EEG brut & Sleep-EDF &
+$\approx$ \SI{82}{\percent} \\
+\addlinespace[2pt]
+DeepSleepNet~\cite{supratak2017} & 2017 & CNN multi-échelle + BiLSTM & Sleep-EDF &
+$\approx$ \SI{82}{\percent} \\
+\addlinespace[2pt]
+Chambon \emph{et al.}~\cite{chambon2018} & 2018 & CNN multivarié (EEG, EOG, EMG) &
+MASS & $\approx$ \SI{83}{\percent} \\
+\addlinespace[2pt]
+SleepEEGNet~\cite{mousavi2019} & 2019 & CNN + séquence à séquence & Sleep-EDF &
+$\approx$ \SI{84}{\percent} \\
+\addlinespace[2pt]
+TinySleepNet~\cite{supratak2020} & 2020 & CNN + LSTM allégés & Sleep-EDF &
+$\approx$ \SI{85}{\percent} \\
+\addlinespace[2pt]
+AttnSleep~\cite{eldele2021} & 2021 & Multi-résolution + auto-attention & Sleep-EDF &
+$\approx$ \SI{84}{\percent} \\
+\addlinespace[2pt]
+U-Sleep~\cite{perslev2021} & 2021 & Entièrement convolutif & 15 cohortes &
+F1 macro $\approx$ 0,79 \\
+\addlinespace[2pt]
+SleepTransformer~\cite{phan2022} & 2022 & Transformer hiérarchique & SHHS &
+$\approx$ \SI{88}{\percent} \\
+\addlinespace[2pt]
+XSleepNet~\cite{phan2021} & 2022 & Fusion brut + temps-fréquence & SHHS &
+$\approx$ \SI{89}{\percent} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Ces valeurs appellent une mise en garde. Elles proviennent de protocoles
+d'évaluation différents — jeux de données, nombre de canaux, nombre de classes,
+schéma de validation — et \textbf{ne sont pas directement comparables entre elles}.
+Un modèle évalué sur Sleep-EDF, cohorte de sujets majoritairement sains, n'affronte
+pas la même difficulté qu'un modèle évalué sur SHHS, cohorte âgée et
+pathologique~\cite{quan1997}. Le tableau doit donc se lire comme une cartographie des
+approches, non comme un classement.
+
+Deux constats se dégagent malgré tout. D'une part, les performances plafonnent depuis
+plusieurs années autour de l'accord inter-expert évoqué au
+chapitre~\ref{chap:cadre} : le gain marginal d'une architecture nouvelle se compte
+désormais en fractions de point. D'autre part, aucune famille architecturale ne domine
+uniformément — observation qui motive directement le recours à l'apprentissage
+ensembliste.
+
+% =============================================================================
+\section{L'apprentissage ensembliste}
+% =============================================================================
+
+\subsection{Trois familles de combinaison}
+
+L'idée fondatrice de l'apprentissage ensembliste est qu'un collectif de modèles
+imparfaits peut surpasser le meilleur d'entre eux, à condition que leurs erreurs ne
+soient pas identiques~\cite{dietterich2000}. Trois familles se distinguent par la
+manière dont elles produisent cette diversité.
+
+Le \textbf{bagging}~\cite{breiman1996} entraîne des modèles de même nature sur des
+rééchantillonnages aléatoires du jeu d'apprentissage, puis moyenne leurs prédictions.
+La forêt aléatoire~\cite{breiman2001} y ajoute un tirage aléatoire des variables à
+chaque nœud. La diversité provient donc des données, et l'effet principal est une
+réduction de la variance.
+
+Le \textbf{boosting}~\cite{freund1997} procède séquentiellement : chaque modèle est
+entraîné à corriger les erreurs de ses prédécesseurs. Sa formulation par descente de
+gradient~\cite{friedman2001} a donné les implémentations qui dominent aujourd'hui les
+données tabulaires, XGBoost~\cite{chen2016} et LightGBM~\cite{ke2017}. L'effet
+principal est ici une réduction du biais.
+
+L'\textbf{empilement}, ou \emph{stacking}~\cite{wolpert1992}, diffère des deux
+précédents sur un point essentiel : la diversité ne vient ni des données ni de la
+séquence d'entraînement, mais de l'\emph{hétérogénéité des modèles eux-mêmes}. Des
+architectures de natures différentes sont entraînées indépendamment, et un second
+modèle — le méta-apprenant — apprend à combiner leurs sorties.
+
+\subsection{Le principe de l'empilement}
+
+L'empilement s'organise en deux niveaux, représentés à la
+figure~\ref{fig:stacking-principe}. Au premier niveau, $M$ modèles de base produisent
+chacun un vecteur de probabilités sur les $C$ classes. Ces vecteurs sont concaténés
+pour former un vecteur de méta-caractéristiques de dimension $M \times C$, qui
+constitue l'entrée du second niveau.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    x=1cm,y=1cm,
+    bloc/.style   = {rectangle,rounded corners=2pt,draw=hypnoblue!60,fill=hypnolight,
+                     align=center,font=\small,minimum height=1.0cm,text width=2.5cm},
+    meta/.style   = {rectangle,rounded corners=2pt,draw=hypnored!75,fill=hypnored!8,
+                     align=center,font=\small,minimum height=1.0cm,text width=2.8cm},
+    ent/.style    = {rectangle,rounded corners=2pt,draw=hypnogray!60,fill=white,
+                     align=center,font=\small,minimum height=1.0cm,text width=2.0cm},
+    fl/.style     = {-{Latex[length=2.2mm]},hypnoblue!75,line width=0.8pt},
+    lab/.style    = {font=\scriptsize\itshape,text=hypnogray},
+  ]
+
+  \node[ent]  (x)   at (0,0)      {Époque\\$(5 \times 3000)$};
+
+  \node[bloc] (cnn) at (3.6,2.0)  {CNN};
+  \node[bloc] (lstm)at (3.6,0)    {BiLSTM};
+  \node[bloc] (tr)  at (3.6,-2.0) {Transformer};
+
+  \node[ent]  (cat) at (7.3,0)    {Concaténation\\$(M \times C)$};
+  \node[meta] (ml)  at (10.9,0)   {Méta-apprenant\\\scriptsize régression logistique};
+  \node[ent]  (out) at (14.1,0)   {Stade\\prédit};
+
+  \draw[fl] (x) -- (cnn);
+  \draw[fl] (x) -- (lstm);
+  \draw[fl] (x) -- (tr);
+
+  \draw[fl] (cnn) -- node[lab,above,pos=0.5,yshift=1pt] {$p_1$} (cat);
+  \draw[fl] (lstm)-- node[lab,above,pos=0.5,yshift=1pt] {$p_2$} (cat);
+  \draw[fl] (tr)  -- node[lab,above,pos=0.5,yshift=1pt] {$p_3$} (cat);
+
+  \draw[fl] (cat) -- (ml);
+  \draw[fl] (ml)  -- (out);
+
+  % Bandeaux de niveau
+  \node[lab,anchor=north] at (3.6,-3.05) {Niveau 0 --- modèles de base};
+  \node[lab,anchor=north] at (10.9,-3.05) {Niveau 1 --- méta-apprenant};
+  \draw[hypnogray!45,dashed,line width=0.5pt] (5.6,3.1) -- (5.6,-3.0);
+
+\end{tikzpicture}
+\vspace{0.4cm}
+\caption[Principe de l'empilement de modèles]%
+        {Principe de l'empilement : trois modèles hétérogènes produisent des vecteurs
+         de probabilités, qu'un méta-apprenant apprend à combiner.}
+\label{fig:stacking-principe}
+\end{figure}
+
+\subsection{Conditions d'efficacité et pièges}
+
+L'empilement n'apporte un gain que sous deux conditions, et les ignorer conduit à des
+résultats décevants ou, pire, illusoires.
+
+La première est la \textbf{diversité des erreurs}. Si les modèles de base se trompent
+sur les mêmes exemples, aucune combinaison ne peut les corriger. C'est l'argument qui
+justifie de retenir des familles architecturales franchement distinctes plutôt que
+plusieurs variantes d'un même réseau : un convolutif, un récurrent et un attentionnel
+n'exploitent pas les mêmes régularités du signal, et n'échouent donc pas aux mêmes
+endroits.
+
+La seconde est l'\textbf{absence de fuite d'information vers le méta-apprenant}. Ce
+point, identifié dès les premiers travaux sur le sujet~\cite{ting1999}, est le piège
+classique de la méthode. Si le méta-apprenant est entraîné sur les prédictions que les
+modèles de base produisent sur \emph{leurs propres données d'entraînement}, il apprend
+sur des probabilités anormalement confiantes, puisque les modèles ont mémorisé ces
+exemples. Il en déduit une pondération inadaptée aux données réelles. La parade
+consiste à réserver une partition distincte, jamais vue par les modèles de base, pour
+entraîner le méta-apprenant. C'est le protocole que nous suivrons, et le
+chapitre~\ref{chap:realisation-ia} discutera dans quelle mesure il a effectivement été
+respecté.
+
+Un dernier point mérite attention. L'empilement doit être comparé non seulement au
+meilleur modèle isolé, mais aussi au \textbf{vote moyen}, combinaison triviale qui ne
+requiert aucun apprentissage. Un empilement qui ne bat pas la moyenne arithmétique des
+probabilités n'apporte rien qu'une complexité supplémentaire. Cette comparaison, trop
+souvent omise dans la littérature, figurera systématiquement dans nos résultats.
+
+% =============================================================================
+\section{Le dépistage du syndrome d'apnées obstructives du sommeil}
+% =============================================================================
+
+\subsection{Les instruments cliniques}
+
+Le dépistage de première intention repose historiquement sur des questionnaires. Le
+questionnaire de Berlin~\cite{netzer1999} et le score STOP-BANG~\cite{chung2008}
+combinent des éléments d'anamnèse — ronflement, somnolence diurne, hypertension — et
+des données anthropométriques. Leur profil est caractéristique : une sensibilité
+élevée, qui les rend utiles pour ne pas manquer un patient à risque, mais une
+spécificité faible, qui engendre de nombreux examens inutiles. Ils orientent, ils ne
+concluent pas.
+
+\subsection{Les approches fondées sur les signaux}
+
+Une abondante littérature exploite les signaux enregistrés pendant la nuit. Une revue
+systématique~\cite{mostafa2019} recense les approches par apprentissage profond
+appliquées au flux nasal, aux sangles thoraciques, à l'électrocardiogramme et à
+l'oxymétrie de pouls. Les performances rapportées sont solides.
+
+Ces méthodes partagent cependant une contrainte : elles supposent disponibles les
+capteurs respiratoires ou l'oxymétrie continue. Or ces canaux sont précisément ceux
+qui alourdissent le montage, et ils sont absents des dispositifs d'enregistrement
+allégés. Une méthode qui en dépend hérite de leur disponibilité.
+
+\subsection{L'architecture du sommeil comme marqueur indirect}
+
+Une troisième voie, moins explorée, consiste à exploiter la \emph{déformation de
+l'architecture du sommeil} que produit le syndrome. Nous avons vu au
+chapitre~\ref{chap:cadre} que les micro-éveils répétés fragmentent la nuit,
+suppriment le sommeil profond et raccourcissent les épisodes paradoxaux. Cette
+empreinte est lisible sur l'hypnogramme seul.
+
+L'intérêt de cette voie est double. D'une part, l'hypnogramme est déjà produit par
+l'étage de classification, ce qui rend la prédiction de sévérité gratuite en termes
+d'acquisition. D'autre part, les marqueurs manipulés — efficacité du sommeil, durée
+d'éveil intra-sommeil, index de fragmentation, latences — sont des grandeurs
+cliniques familières au praticien, ce qui facilite considérablement l'explication de
+la prédiction.
+
+Le tableau~\ref{tab:etat-art-osa} situe ces familles d'approches.
+
+\begin{table}[H]
+\centering
+\caption{Approches d'évaluation du risque de SAOS}
+\label{tab:etat-art-osa}
+\small
+\begin{tabular}{@{}L{3.6cm}L{3.8cm}L{3.4cm}L{2.6cm}@{}}
+\toprule
+\textbf{Approche} & \textbf{Entrées} & \textbf{Atouts} & \textbf{Limites} \\
+\midrule
+Questionnaires\newline (Berlin, STOP-BANG) & Anamnèse, anthropométrie &
+Immédiat, sans matériel & Spécificité faible, pas de sévérité \\
+\addlinespace[3pt]
+Oxymétrie nocturne & Saturation en oxygène & Matériel léger, bon dépistage &
+Sévérité imprécise \\
+\addlinespace[3pt]
+Signaux respiratoires\newline et cardiaques & Flux nasal, sangles, ECG &
+Performances élevées & Exige les capteurs respiratoires \\
+\addlinespace[3pt]
+\textbf{Architecture du sommeil}\newline \emph{(voie retenue)} & Hypnogramme, oxymétrie
+sommaire, index d'éveil & Réutilise l'étage de staging ; marqueurs cliniquement
+lisibles & Marqueur indirect \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% =============================================================================
+\section{L'intelligence artificielle explicable}
+% =============================================================================
+
+\subsection{Une taxonomie des méthodes}
+
+Le champ de l'intelligence artificielle explicable s'est structuré rapidement, au
+point de justifier plusieurs synthèses~\cite{adadi2018,doshivelez2017}. Deux axes
+suffisent à en organiser la lecture, et sont représentés à la
+figure~\ref{fig:xai-taxo}.
+
+Le premier axe oppose les méthodes \textbf{spécifiques} à une famille de modèles aux
+méthodes \textbf{agnostiques}, applicables à n'importe quel prédicteur pourvu qu'on
+puisse l'interroger. Le second oppose les explications \textbf{locales}, qui justifient
+une prédiction individuelle, aux explications \textbf{globales}, qui décrivent le
+comportement d'ensemble du modèle.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    x=1cm,y=1cm,
+    racine/.style = {rectangle,rounded corners=2pt,draw=hypnoblue!65,fill=hypnolight,
+                     align=center,font=\small\bfseries,minimum height=0.8cm,text width=3.6cm},
+    branche/.style= {rectangle,rounded corners=2pt,draw=hypnoblue!50,fill=white,
+                     align=center,font=\scriptsize\bfseries,minimum height=0.75cm,text width=3.0cm},
+    feuille/.style= {rectangle,rounded corners=2pt,draw=hypnogray!45,fill=white,
+                     anchor=west,align=left,font=\scriptsize,
+                     minimum height=0.62cm,text width=3.35cm,inner xsep=5pt},
+    ret/.style    = {rectangle,rounded corners=2pt,draw=hypnored!80,fill=hypnored!8,
+                     anchor=west,align=left,font=\scriptsize\bfseries,
+                     minimum height=0.62cm,text width=3.35cm,inner xsep=5pt},
+    li/.style     = {hypnoblue!55,line width=0.7pt},
+    bus/.style    = {hypnogray!55,line width=0.7pt},
+  ]
+
+  % ── Racine et deux branches ───────────────────────────────────────────────
+  \node[racine]  (r)   at (7.4,3.55) {Méthodes d'explication};
+  \node[branche] (spe) at (2.6,2.05) {Spécifiques\\à une architecture};
+  \node[branche] (agn) at (10.4,2.05) {Agnostiques\\au modèle};
+
+  \draw[li] (r.west)  -- ++(-1.2,0) |- (spe.north);
+  \draw[li] (r.east)  -- ++(1.2,0)  |- (agn.north);
+
+  % ── Feuilles : méthodes spécifiques ───────────────────────────────────────
+  \node[feuille] (sal)  at (2.15, 0.95) {Cartes de saillance~\cite{simonyan2014}};
+  \node[feuille] (gcam) at (2.15, 0.15) {Grad-CAM~\cite{selvaraju2017}};
+  \node[feuille] (ig)   at (2.15,-0.65) {Gradients intégrés~\cite{sundararajan2017}};
+  \node[feuille] (att)  at (2.15,-1.45) {Poids d'attention~\cite{bahdanau2015}};
+
+  \draw[bus] (1.75,1.60) -- (1.75,-1.45);
+  \foreach \n in {sal,gcam,ig,att}
+    \draw[bus] (1.75,0 |- \n.west) -- (\n.west);
+  \draw[bus] (1.75,1.60) -- (2.6,1.60) -- (2.6,1.68);
+
+  % ── Feuilles : méthodes agnostiques ───────────────────────────────────────
+  \node[feuille] (lime) at (9.95, 0.95) {LIME~\cite{ribeiro2016}};
+  \node[ret]     (shap) at (9.95, 0.15) {SHAP~\cite{lundberg2017}};
+  \node[feuille] (perm) at (9.95,-0.65) {Importance par permutation};
+  \node[feuille] (pdp)  at (9.95,-1.45) {Dépendance partielle};
+
+  \draw[bus] (9.55,1.60) -- (9.55,-1.45);
+  \foreach \n in {lime,shap,perm,pdp}
+    \draw[bus] (9.55,0 |- \n.west) -- (\n.west);
+  \draw[bus] (9.55,1.60) -- (10.4,1.60) -- (10.4,1.68);
+
+  \node[font=\scriptsize\itshape,text=hypnogray,anchor=north] at (7.0,-2.10)
+       {la méthode encadrée en rouge est celle retenue dans ce travail};
+
+\end{tikzpicture}
+\vspace{0.3cm}
+\caption[Taxonomie des méthodes d'explication]%
+        {Taxonomie des principales méthodes d'explication, selon leur dépendance à
+         l'architecture du modèle.}
+\label{fig:xai-taxo}
+\end{figure}
+
+\subsection{Les méthodes spécifiques aux réseaux profonds}
+
+Les \textbf{cartes de saillance}~\cite{simonyan2014} calculent le gradient de la sortie
+par rapport à l'entrée : elles répondent à la question « quel échantillon du signal,
+s'il changeait légèrement, modifierait le plus la décision ? ».
+\textbf{Grad-CAM}~\cite{selvaraju2017} exploite les cartes d'activation des dernières
+couches convolutives. Les \textbf{gradients intégrés}~\cite{sundararajan2017} corrigent
+une faiblesse du gradient brut — la saturation — en intégrant le long d'un chemin
+depuis une entrée de référence.
+
+Les \textbf{poids d'attention} sont souvent présentés comme une explication native.
+Cette lecture est contestée. Jain et Wallace~\cite{jain2019} montrent qu'il existe
+fréquemment des distributions d'attention très différentes conduisant à la même
+prédiction, ce qui interdit de tenir l'attention pour \emph{l'}explication. Wiegreffe
+et Pinter~\cite{wiegreffe2019} nuancent en distinguant plusieurs acceptions du terme.
+Le débat n'est pas tranché, et la prudence s'impose : les poids d'attention indiquent
+où le modèle regarde, pas nécessairement pourquoi il décide.
+
+\subsection{Les valeurs de Shapley et SHAP}
+
+SHAP~\cite{lundberg2017} transpose à l'apprentissage automatique un concept issu de la
+théorie des jeux coopératifs : la valeur de Shapley~\cite{shapley1953}. Le problème
+originel consiste à répartir équitablement le gain d'une coalition entre ses membres.
+Transposé, il devient : comment répartir l'écart entre la prédiction obtenue et la
+prédiction moyenne, entre les variables d'entrée ?
+
+La valeur de Shapley d'une variable $i$ est sa contribution marginale moyenne, calculée
+sur tous les ordres d'arrivée possibles :
+
+\begin{equation}
+\phi_i = \sum_{S \subseteq F \setminus \{i\}}
+         \frac{|S|!\,\bigl(|F| - |S| - 1\bigr)!}{|F|!}
+         \Bigl[ f_{S \cup \{i\}}(x_{S \cup \{i\}}) - f_S(x_S) \Bigr]
+\label{eq:shapley}
+\end{equation}
+
+\noindent où $F$ est l'ensemble des variables et $f_S$ le modèle restreint au
+sous-ensemble $S$. Le terme entre crochets est l'apport de la variable $i$ lorsqu'elle
+rejoint la coalition $S$ ; le coefficient pondère cet apport par la probabilité de
+l'ordre d'arrivée correspondant.
+
+Cette formulation confère à SHAP trois propriétés que peu de méthodes réunissent.
+L'\textbf{additivité} garantit que la somme des contributions restitue exactement
+l'écart à la valeur de base, ce qui autorise une lecture en cascade
+(figure~\ref{fig:shap-cascade}). La \textbf{cohérence} assure qu'une variable dont
+l'influence augmente dans un modèle modifié ne verra jamais sa contribution diminuer.
+La \textbf{symétrie}, enfin, attribue la même valeur à deux variables strictement
+interchangeables.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    x=1cm,y=1cm,
+    barP/.style = {fill=hypnored!70,draw=hypnored,line width=0.4pt},
+    barN/.style = {fill=hypnoblue!55,draw=hypnoblue,line width=0.4pt},
+    et/.style   = {font=\scriptsize,anchor=east,text=hypnogray},
+    va/.style   = {font=\scriptsize,text=hypnogray},
+  ]
+
+  % Axe de référence
+  \draw[hypnogray!45,dashed,line width=0.6pt] (0,0.5) -- (0,-4.6);
+  \node[font=\scriptsize\itshape,text=hypnogray,anchor=south] at (0,0.55)
+       {valeur de base $E[f(x)]$};
+
+  % Contributions successives
+  \draw[barP] (0,-0.2)   rectangle (3.2,-0.65);
+  \node[et] at (-0.15,-0.42) {index de fragmentation};
+  \node[va,anchor=west] at (3.35,-0.42) {$+$};
+
+  \draw[barP] (3.2,-1.0) rectangle (5.0,-1.45);
+  \node[et] at (-0.15,-1.22) {\% du temps sous \SI{90}{\percent}};
+  \node[va,anchor=west] at (5.15,-1.22) {$+$};
+
+  \draw[barP] (5.0,-1.8) rectangle (6.1,-2.25);
+  \node[et] at (-0.15,-2.02) {indice de masse corporelle};
+  \node[va,anchor=west] at (6.25,-2.02) {$+$};
+
+  \draw[barN] (5.3,-2.6) rectangle (6.1,-3.05);
+  \node[et] at (-0.15,-2.82) {\% de sommeil profond};
+  \node[va,anchor=west] at (6.25,-2.82) {$-$};
+
+  \draw[barN] (4.9,-3.4) rectangle (5.3,-3.85);
+  \node[et] at (-0.15,-3.62) {latence d'endormissement};
+  \node[va,anchor=west] at (6.25,-3.62) {$-$};
+
+  % Prédiction finale
+  \draw[hypnored,line width=1pt,dashed] (4.9,-4.1) -- (4.9,-4.6);
+  \node[font=\scriptsize\bfseries,text=hypnored,anchor=north] at (4.9,-4.65)
+       {prédiction : sévère};
+
+  \node[font=\scriptsize\itshape,text=hypnogray,anchor=west] at (7.0,-1.6)
+       {\begin{minipage}{5.2cm}\raggedright
+        Chaque barre est la contribution $\phi_i$ d'une variable.
+        Les contributions rouges poussent vers une sévérité plus élevée,
+        les bleues vers une sévérité moindre. Leur somme relie exactement
+        la valeur de base à la prédiction.
+        \end{minipage}};
+
+\end{tikzpicture}
+\vspace{0.2cm}
+\caption[Lecture en cascade d'une explication SHAP]%
+        {Lecture en cascade d'une explication SHAP : la propriété d'additivité relie
+         la valeur de base à la prédiction individuelle.}
+\label{fig:shap-cascade}
+\end{figure}
+
+Le calcul exact de l'équation~\eqref{eq:shapley} est exponentiel en le nombre de
+variables et donc impraticable au-delà d'une vingtaine d'entrées. Lundberg
+\emph{et al.}~\cite{lundberg2020} ont levé cet obstacle pour les modèles à base
+d'arbres en proposant TreeSHAP, qui exploite la structure arborescente pour obtenir
+les valeurs exactes en temps polynomial. C'est cette variante que nous emploierons,
+ce qui explique un choix de conception détaillé au
+chapitre~\ref{chap:realisation-ia} : l'explication est calculée sur un modèle à
+arbres, même lorsque la prédiction est rendue par un ensemble hétérogène.
+
+\subsection{Limites et objections}
+
+Deux réserves doivent être formulées, car un mémoire qui présenterait l'explicabilité
+comme une solution acquise manquerait de rigueur.
+
+La première tient à la nature même de ces méthodes : elles expliquent le
+\emph{modèle}, non le \emph{phénomène}. Une contribution SHAP élevée signale une forte
+influence sur la prédiction, en aucun cas un lien de causalité physiologique. La
+confusion est facile et lourde de conséquences en contexte médical.
+
+La seconde est plus radicale. Rudin~\cite{rudin2019} soutient que, pour les décisions
+à fort enjeu, il vaut mieux employer d'emblée un modèle intrinsèquement interprétable
+que d'expliquer après coup une boîte noire — l'explication \emph{a posteriori} étant
+par construction une approximation du comportement réel du modèle. L'argument est
+sérieux et s'applique à notre travail. Nous y répondons par la conception : l'étage de
+prédiction de sévérité repose sur des variables cliniques nommées et directement
+interprétables, ce qui rapproche l'explication du raisonnement médical, et le modèle
+sous-jacent est un ensemble d'arbres pour lequel TreeSHAP fournit des valeurs
+\emph{exactes} et non approchées.
+
+% =============================================================================
+\section{Positionnement de notre contribution}
+% =============================================================================
+
+Le tableau~\ref{tab:positionnement} résume ce que cet état de l'art établit et ce
+qu'il laisse ouvert.
+
+\begin{table}[H]
+\centering
+\caption{Ce que l'état de l'art établit, ce que notre travail ajoute}
+\label{tab:positionnement}
+\small
+\begin{tabular}{@{}L{3.2cm}L{5.3cm}L{5.3cm}@{}}
+\toprule
+\textbf{Domaine} & \textbf{Acquis de la littérature} & \textbf{Apport de ce travail} \\
+\midrule
+Classification\newline des stades &
+Les architectures profondes atteignent l'accord inter-expert ; aucune famille ne
+domine uniformément &
+Évaluation systématique de trois familles sur deux montages et deux granularités,
+sur une même cohorte et un même protocole \\
+\addlinespace[3pt]
+Apprentissage\newline ensembliste &
+L'empilement de modèles hétérogènes réduit conjointement biais et variance &
+Application au staging avec comparaison explicite au vote moyen, trop souvent omise \\
+\addlinespace[3pt]
+Prédiction\newline du SAOS &
+Approches par questionnaire, oxymétrie ou signaux respiratoires &
+Prédiction à quatre classes fondée sur l'architecture du sommeil, sans capteur
+respiratoire \\
+\addlinespace[3pt]
+Explicabilité &
+SHAP fournit des attributions additives et cohérentes &
+Explication portée par des variables cliniques nommées, intégrée au compte rendu remis
+au praticien \\
+\addlinespace[3pt]
+Mise en {\oe}uvre &
+Les travaux publiés s'arrêtent au modèle &
+Chaîne applicative complète : dossier patient, archivage, annotation, collaboration,
+traçabilité \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% =============================================================================
+\section{Conclusion}
+% =============================================================================
+
+Ce chapitre a parcouru les quatre corpus scientifiques mobilisés par le projet. La
+classification automatique des stades est un problème mûr, où les performances
+plafonnent au voisinage de l'accord inter-expert et où aucune famille architecturale
+ne s'impose — constat qui justifie le recours à l'empilement de modèles hétérogènes.
+L'apprentissage ensembliste offre le cadre théorique de cette combinaison, à condition
+d'en respecter les deux exigences : diversité des erreurs et étanchéité entre les
+données d'entraînement des deux niveaux.
+
+Le dépistage du SAOS reste, lui, partagé entre des questionnaires peu spécifiques et
+des méthodes exigeant des capteurs respiratoires. La voie de l'architecture du sommeil
+apparaît sous-exploitée alors qu'elle se greffe naturellement sur un étage de
+classification déjà présent.
+
+Enfin, l'explicabilité dispose avec SHAP d'un socle théorique solide, dont nous avons
+aussi rappelé les limites : ces méthodes expliquent le modèle et non le phénomène, et
+l'objection de Rudin en faveur des modèles intrinsèquement interprétables reste
+recevable. Notre réponse est architecturale plutôt que rhétorique, et se lira dans les
+choix de conception.
+
+Le chapitre suivant quitte l'état de l'art pour formaliser les besoins du système :
+acteurs, exigences fonctionnelles et non fonctionnelles, \emph{Product Backlog} et
+découpage du projet en sprints.

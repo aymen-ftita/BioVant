@@ -1,0 +1,326 @@
+\chapter{Sprint 6 : Collaboration, restitution et industrialisation}
+\label{chap:sprint6}
+
+\sectionsansnum{Introduction}
+
+Ce dernier sprint couvre trois volets complémentaires : le travail à plusieurs, la production
+du document qui sort du système, et l'industrialisation du déploiement.
+
+\section{Objectif du sprint}
+
+L'interprétation d'un enregistrement difficile se fait rarement seul. Le premier objectif
+était donc de permettre à un praticien de \textbf{solliciter un confrère}, en gardant la
+discussion attachée à l'examen concerné.
+
+Le deuxième objectif était la \textbf{restitution}. Un système d'aide au diagnostic dont on ne
+peut rien extraire n'a pas d'usage : il fallait produire un compte rendu composable, adapté au
+destinataire.
+
+Le troisième était l'\textbf{industrialisation} : rendre le déploiement reproductible et
+vérifier automatiquement qu'une modification ne casse rien.
+
+\section{Analyse du sprint 6}
+
+\subsection{Sprint Backlog}
+
+\begin{table}[H]
+\centering\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}c|L{2.5cm}|L{4.6cm}|L{4.6cm}|c@{}}
+\hline
+\ligneentete \entete{ID} & \entete{Module} & \entete{R\'ecit utilisateur} & \entete{T\^aches} & \entete{Estim.} \\
+\hline
+\multirow{3}{*}{US-47\,\`a\,49} & \multirow{3}{=}{Collaboration} & \multirow{3}{=}{En tant que m\'edecin, je veux solliciter un confr\`ere sur un examen pr\'ecis} & Mod\'eliser fils et messages rattach\'es \`a un examen & \multirow{3}{*}{18 pts} \\
+ &  &  & Cr\'eer l'interface de discussion &  \\
+ &  &  & Centraliser les sollicitations re\c{c}ues &  \\
+\hline
+\multirow{3}{*}{US-45, 46, 55} & \multirow{3}{=}{Annotation et normes} & \multirow{3}{=}{En tant que m\'edecin, je veux annoter une \'epoque et situer chaque m\'etrique par rapport aux normes} & Enregistrer les notes horodat\'ees \`a l'\'epoque & \multirow{3}{*}{15 pts} \\
+ &  &  & Synchroniser l'hypnogramme annot\'e &  \\
+ &  &  & Comparer les m\'etriques aux valeurs de r\'ef\'erence &  \\
+\hline
+\multirow{3}{*}{US-21, 54} & \multirow{3}{=}{Restitution} & \multirow{3}{=}{En tant que m\'edecin, je veux composer et exporter mon compte rendu} & S\'electionner les sections \`a inclure & \multirow{3}{*}{13 pts} \\
+ &  &  & Produire le document pagin\'e &  \\
+ &  &  & Afficher le tableau de bord de la patient\`ele &  \\
+\hline
+\multirow{4}{*}{US-56\,\`a\,60} & \multirow{4}{=}{Industrialisation} & \multirow{4}{=}{En tant que d\'eveloppeur, je veux un d\'eploiement reproductible et v\'erifi\'e automatiquement} & Conteneuriser les trois services & \multirow{4}{*}{37 pts} \\
+ &  &  & Orchestrer la pile en une commande &  \\
+ &  &  & Automatiser contr\^oles et construction d'images &  \\
+ &  &  & Traduire l'interface et ajouter le th\`eme sombre &  \\
+\hline
+\end{tabular}
+\caption{Sprint Backlog --- Sprint 6}
+\label{tab:bl-s6}
+\end{table}
+
+\subsection{Diagramme des cas d'utilisation}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    x=1cm,y=1cm,
+    uc/.style     = {ellipse, draw=hypnoblue!60, fill=hypnolight,
+                     align=center, font=\scriptsize, text width=2.7cm,
+                     inner sep=1.5pt, minimum height=1.0cm},
+    ucp/.style    = {ellipse, draw=hypnored!70, fill=hypnored!7,
+                     align=center, font=\scriptsize\bfseries, text width=2.7cm,
+                     inner sep=1.5pt, minimum height=1.0cm},
+    lien/.style   = {hypnogray!75, line width=0.55pt},
+    rel/.style    = {-{Latex[length=2mm]}, hypnoblue!70, line width=0.5pt, dashed},
+    et/.style     = {font=\tiny\itshape, text=hypnoblue!85, fill=white, inner sep=1pt},
+    nomact/.style = {font=\scriptsize\bfseries, align=center, text width=2.2cm},
+  ]
+
+  \tikzset{acteur/.pic={
+      \draw[hypnoblue,line width=0.8pt] (0,0) circle (0.17);
+      \draw[hypnoblue,line width=0.8pt] (0,-0.17) -- (0,-0.66);
+      \draw[hypnoblue,line width=0.8pt] (-0.28,-0.34) -- (0.28,-0.34);
+      \draw[hypnoblue,line width=0.8pt] (0,-0.66) -- (-0.24,-1.04);
+      \draw[hypnoblue,line width=0.8pt] (0,-0.66) -- (0.24,-1.04);}}
+
+  \draw[hypnoblue!55,line width=0.9pt,rounded corners=3pt]
+       (3.9,-4.6) rectangle (12.0,2.4);
+  \node[font=\small\bfseries,text=hypnoblue,anchor=north west] at (4.15,2.25)
+       {Collaboration et restitution};
+
+  \node[ucp] (col) at (6.2, 1.2)  {Solliciter un\\confrère};
+  \node[uc]  (msg) at (10.0, 1.2) {Échanger des\\messages};
+  \node[uc]  (rec) at (10.0,-0.4) {Consulter la boîte\\de réception};
+  \node[uc]  (ann) at (6.2,-1.1)  {Annoter une\\époque};
+  \node[uc]  (nor) at (10.0,-2.0) {Comparer aux\\normes};
+  \node[ucp] (pdf) at (6.2,-3.3)  {Composer le\\compte rendu};
+  \node[uc]  (sec) at (10.0,-3.6) {Choisir les\\sections};
+
+  \pic at (1.6,0.7) {acteur};
+  \node[nomact,anchor=north] at (1.6,0.05) {Médecin};
+
+  \pic at (14.1,0.7) {acteur};
+  \node[nomact,anchor=north] at (14.1,0.05) {Confrère};
+
+  \foreach \c in {col,ann,pdf} \draw[lien] (2.0,0.35) -- (\c.west);
+  \draw[lien] (13.7,0.35) -- (msg.east);
+  \draw[lien] (13.7,0.35) -- (rec.east);
+
+  \draw[rel] (col) -- node[et,pos=0.5] {$\ll$include$\gg$} (msg);
+  \draw[rel] (col) -- node[et,pos=0.6] {$\ll$extend$\gg$} (rec);
+  \draw[rel] (ann) -- node[et,pos=0.6] {$\ll$extend$\gg$} (nor);
+  \draw[rel] (pdf) -- node[et,pos=0.55] {$\ll$include$\gg$} (sec);
+
+\end{tikzpicture}
+\caption{Diagramme des cas d'utilisation du sprint 6 --- collaboration et restitution}
+\label{fig:uc-s6}
+\end{figure}
+
+\subsubsection{Description textuelle des cas d'utilisation}
+
+\begin{casutilisation}{Description textuelle du cas « Solliciter un confrère »}
+Titre & Solliciter un confrère sur un examen \\ \hline
+Acteurs & Médecin demandeur, confrère sollicité \\ \hline
+Description & Ouvrir une discussion rattachée à un examen afin de recueillir un avis, en
+conservant le contexte clinique \\ \hline
+Préconditions & Les deux praticiens sont authentifiés ; l'examen existe \\ \hline
+Scénario de base &
+\begin{minipage}[t]{\linewidth}
+\begin{enumerate}[leftmargin=1.1em,itemsep=1pt,topsep=3pt]
+  \item Le médecin ouvre la fiche du patient et sélectionne l'examen.
+  \item Il demande la liste des confrères disponibles.
+  \item Il sélectionne un confrère et rédige sa demande.
+  \item Le système crée le fil, ou réutilise celui qui existe déjà, et enregistre le message.
+  \item Le confrère consulte sa boîte de réception et répond dans le même fil.
+\end{enumerate}
+\end{minipage} \\ \hline
+Scénario alternatif &
+\begin{minipage}[t]{\linewidth}
+\begin{itemize}[leftmargin=1.1em,itemsep=1pt,topsep=3pt]
+  \item \textbf{4a} --- Un fil existe déjà entre ces deux praticiens sur cet examen : le
+        message y est ajouté plutôt que d'ouvrir un doublon.
+\end{itemize}
+\end{minipage}
+\end{casutilisation}
+
+\section{Réalisation}
+
+\subsection{Consultations confraternelles}
+
+Un fil de discussion est rattaché à un examen et à exactement deux praticiens. L'intérêt de ce
+dispositif est que la discussion reste attachée à l'examen : le correspondant dispose du
+contexte sans qu'il faille le lui transmettre. Une vue centralisée rassemble toutes les
+sollicitations reçues.
+
+\capturefig{consultation}{0.86}{Fil de discussion rattaché à un examen}{fig:consultation}
+
+\subsection{Annotation et comparaison aux normes}
+
+Le praticien peut annoter une époque précise de l'hypnogramme ; ses observations sont
+conservées et peuvent être synchronisées vers le dossier, ce qui archive l'hypnogramme annoté
+aux côtés des autres pièces.
+
+Chaque métrique AASM est par ailleurs accompagnée de sa plage de référence et d'une comparaison
+aux valeurs de la cohorte. Une valeur hors norme est signalée visuellement, et une liste
+d'alertes cliniques reprend en clair les anomalies détectées.
+
+\subsection{Production du compte rendu}
+
+Le compte rendu est produit côté client : les sections retenues sont converties en images par
+capture du rendu, puis assemblées dans un document paginé. Cette approche garantit que le
+document reproduit exactement ce que le praticien a validé à l'écran, sans qu'un moteur de
+rendu distinct puisse introduire un écart.
+
+Le praticien choisit les sections à inclure : hypnogramme, métriques AASM, classe de sévérité,
+facteurs explicatifs, tracés bruts et comparaison aux normes. Cette composition à la carte
+répond à des destinataires différents --- un confrère n'attend pas le même document qu'un
+dossier d'assurance. Le document est ensuite archivé au même titre que les autres pièces.
+
+\capturefig{rapport}{0.78}{Compte rendu clinique généré}{fig:rapport}
+
+\subsection{Multilinguisme et thème sombre}
+
+L'interface est intégralement traduite en français et en anglais, les chaînes étant centralisées
+dans un catalogue unique et la bascule immédiate. Un thème sombre est également disponible,
+adapté à la lecture nocturne --- un praticien qui interprète un enregistrement le fait rarement
+en plein jour.
+
+\capturefig{dark}{0.86}{Tableau de bord du médecin en thème sombre}{fig:dark}
+
+\subsection{Conteneurisation}
+
+La pile est décrite par un fichier d'orchestration unique qui déclare trois services.
+
+\begin{table}[H]
+\centering
+
+\small
+\begin{tabular}{@{}lllL{5.4cm}@{}}
+\toprule
+\textbf{Service} & \textbf{Image de base} & \textbf{Port} & \textbf{Particularité} \\
+\midrule
+Base de données & \texttt{postgres:15-alpine} & 5432 &
+Volume persistant, sonde de disponibilité \\
+\addlinespace[2pt]
+Interface applicative & \texttt{python:3.10-slim} & 8000 &
+PyTorch en version processeur installé en premier \\
+\addlinespace[2pt]
+Serveur web & \texttt{node:20-alpine} puis \texttt{nginx:alpine} & 80 &
+Construction en deux étapes, redirection du routage client \\
+\bottomrule
+\end{tabular}
+\caption{Services de la pile conteneurisée}
+\label{tab:services}
+\end{table}
+
+Le fichier de construction de l'interface applicative comporte une particularité qui mérite
+explication : PyTorch y est installé depuis l'index dédié aux processeurs, \emph{avant} les
+autres dépendances. Sans cette précaution, l'installation télécharge plusieurs gigaoctets de
+bibliothèques inutiles en déploiement --- l'inférence en production s'exécutant sur processeur
+--- et fait échouer la construction sur une machine de développement.
+
+La sonde de disponibilité de la base est également indispensable : sans elle, l'interface
+applicative démarrerait avant que la base n'accepte les connexions et échouerait à créer son
+schéma.
+
+\subsection{Intégration continue}
+
+Une chaîne d'intégration continue s'exécute à chaque livraison sur la branche principale et à
+chaque proposition de fusion.
+
+\begin{table}[H]
+\centering
+
+\small
+\begin{tabular}{@{}lL{10.4cm}@{}}
+\toprule
+\textbf{Travail} & \textbf{Étapes} \\
+\midrule
+Interface applicative &
+Installation des dépendances avec PyTorch en version processeur ; contrôle syntaxique
+de tous les modules ; démarrage d'une instance PostgreSQL de service ; démarrage réel
+de l'application ; vérification du schéma OpenAPI et de la présence des points
+d'entrée attendus ; contrôle du cloisonnement des rôles \\
+\addlinespace[3pt]
+Interface utilisateur &
+Installation reproductible des dépendances ; analyse statique ; construction de
+production ; publication du bundle en tant qu'artefact \\
+\addlinespace[3pt]
+Images de conteneur &
+Construction des deux images avec cache de couches, conditionnée à la réussite des
+deux travaux précédents \\
+\bottomrule
+\end{tabular}
+\caption{Travaux de la chaîne d'intégration continue}
+\label{tab:ci}
+\end{table}
+
+Le travail portant sur l'interface applicative ne se contente pas d'un contrôle syntaxique : il
+\textbf{démarre réellement l'application} contre une base éphémère, puis exerce trois
+vérifications de comportement. Un appel sans jeton doit recevoir un refus d'authentification ;
+une connexion administrateur doit délivrer un jeton ; et ce jeton d'administrateur, présenté au
+registre des patients, doit recevoir un refus d'autorisation. Ces trois assertions couvrent
+l'essentiel du cloisonnement des rôles et échoueraient immédiatement si une dépendance de
+sécurité venait à disparaître au fil d'une modification.
+
+\capturefig{ci}{0.9}{Exécution de la chaîne d'intégration continue}{fig:ci}
+
+\subsection{Validation fonctionnelle}
+
+En complément, une campagne de scénarios fonctionnels a été exécutée manuellement à chaque fin
+de sprint.
+
+\begin{table}[H]
+\centering
+
+\small
+\begin{tabular}{@{}clL{7.2cm}c@{}}
+\toprule
+\textbf{N\textsuperscript{o}} & \textbf{Scénario} & \textbf{Critère de réussite} &
+\textbf{État} \\
+\midrule
+1 & Connexion valide & Jeton délivré, espace de travail ouvert & \checkmark \\
+2 & Connexion refusée & Compte suspendu ou licence expirée rejeté avec message
+    distinct & \checkmark \\
+3 & Cloisonnement des rôles & Un médecin n'atteint aucune route d'administration &
+    \checkmark \\
+4 & Cloisonnement des patients & Un médecin n'accède pas au dossier d'un confrère &
+    \checkmark \\
+5 & Analyse complète & Enregistrement déposé, hypnogramme et métriques affichés &
+    \checkmark \\
+6 & Montage incomplet & Dérivation absente : repli appliqué, analyse aboutie &
+    \checkmark \\
+7 & Fichier invalide & Format non reconnu refusé avec message explicite & \checkmark \\
+8 & Prédiction de sévérité & Classe, probabilités et facteurs restitués & \checkmark \\
+9 & Import de rapport externe & Formulaire prérempli depuis un fichier tabulaire ou
+    balisé & \checkmark \\
+10 & Archivage en arrière-plan & Résultats affichés avant la fin du transfert &
+    \checkmark \\
+11 & Échec d'archivage & Transfert interrompu : examen consultable, erreur signalée &
+    \checkmark \\
+12 & Lien expiré & Lien réutilisé après échéance : accès refusé & \checkmark \\
+13 & Annotation d'époque & Note enregistrée et retrouvée au rechargement & \checkmark \\
+14 & Consultation confraternelle & Message émis par un praticien, reçu par l'autre &
+    \checkmark \\
+15 & Compte rendu & Document produit avec les seules sections sélectionnées &
+    \checkmark \\
+16 & Journal d'audit & Actions sensibles tracées et exportées & \checkmark \\
+17 & Bascule linguistique & Aucune chaîne non traduite sur le parcours principal &
+    \checkmark \\
+18 & Démarrage de la pile & Trois services opérationnels en une commande & \checkmark \\
+\bottomrule
+\end{tabular}
+\caption{Scénarios de validation fonctionnelle}
+\label{tab:tests}
+\end{table}
+
+Il faut reconnaître la limite de cette approche : une campagne manuelle n'est ni reproductible
+ni exhaustive, et elle ne protège pas contre les régressions entre deux exécutions. Les trois
+assertions automatisées constituent un premier filet de sécurité, mais une véritable couverture
+de tests reste à construire.
+
+\sectionsansnum{Conclusion}
+
+Ce dernier sprint a complété la plateforme sur ses trois derniers volets. Les praticiens peuvent
+solliciter un confrère sans quitter le contexte de l'examen, composer un compte rendu adapté à
+son destinataire, et travailler dans la langue et le thème de leur choix.
+
+La pile est entièrement conteneurisée et vérifiée par une chaîne d'intégration continue qui
+démarre réellement l'application et contrôle le cloisonnement des rôles.
+
+Le projet est ainsi complet sur son périmètre fonctionnel. La conclusion générale en dresse le
+bilan et ouvre sur les perspectives.

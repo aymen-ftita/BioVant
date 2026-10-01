@@ -53,6 +53,19 @@ def init_osa_predictor():
         traceback.print_exc()
 
 
+def describe_model():
+    """Libelle lisible du modele reellement utilise pour la prediction."""
+    if stacking_model is None:
+        return "XGBoost"
+    try:
+        bases = "+".join(n.upper() for n, _ in stacking_model.estimators)
+        meta = type(stacking_model.final_estimator_).__name__
+        meta = "LR" if meta == "LogisticRegression" else meta
+        return f"Stacking ({bases}->{meta})"
+    except Exception:
+        return "Stacking"
+
+
 def predict_osa_severity(feature_df):
     """
     Run both models and return prediction + probabilities.

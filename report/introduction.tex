@@ -1,12 +1,48 @@
-\chapter{Introduction générale}
-\label{chap:intro}
+\chapter*{Introduction générale}
+\addcontentsline{toc}{chapter}{Introduction générale}
+\markboth{Introduction générale}{Introduction générale}
 
-Les troubles du sommeil, tels que l’apnée du sommeil, l’insomnie ou la narcolepsie, touchent une part croissante de la population mondiale. Leur diagnostic repose sur l’examen polysomnographique (PSG), un enregistrement nocturne de multiples signaux physiologiques (EEG, EOG, EMG, ECG, etc.). L’analyse manuelle des PSG par des experts est une tâche longue, fastidieuse et sujette à une variabilité inter-évaluateur significative (accord de 70 à 85\%). Face à ce constat, l’automatisation de la classification des stades du sommeil à l’aide de techniques d’apprentissage profond est devenue un axe de recherche majeur.
+Les troubles du sommeil constituent un problème de santé publique dont l'ampleur reste
+largement sous-estimée. Le syndrome d'apnées obstructives du sommeil, à lui seul,
+concernerait près d'un milliard d'adultes dans le monde, dont une large majorité n'a
+jamais été diagnostiquée. Son examen de référence, la polysomnographie, enregistre une
+nuit complète de signaux physiologiques ; son interprétation impose ensuite à un
+technicien qualifié de classer manuellement un millier de fenêtres de trente secondes,
+puis de caractériser les événements respiratoires. Ce goulet d'étranglement humain,
+davantage que la capacité d'enregistrement, limite aujourd'hui l'accès au diagnostic.
 
-Cependant, les modèles de deep learning existants fonctionnent souvent comme des « boîtes noires » : ils fournissent une prédiction sans justifier leur décision. Ce manque de transparence limite leur adoption en milieu clinique, où l’explicabilité est essentielle pour la confiance et la validation médicale.
+L'apprentissage profond a apporté une réponse crédible au premier problème. Depuis
+2017, plusieurs architectures atteignent sur les bases publiques un niveau de
+concordance comparable à celui observé entre deux experts humains. Leur adoption
+clinique demeure pourtant marginale, faute de transparence.
+Un réseau de neurones profond restitue une classe sans énoncer ce qui l'a
+déterminée, alors que le praticien engage sa responsabilité sur le compte rendu qu'il
+signe. Sans justification intelligible, une prédiction ne peut être ni validée ni
+contestée.
 
-Le présent projet de fin d’études, intitulé \textbf{XAI-Sleep} (Explainable AI for Sleep Staging), vise à développer un système intelligent de classification des stades du sommeil qui soit à la fois performant et explicable. Le système repose sur un modèle d’ensemble de type \textit{stacking} combinant CNN, LSTM et Transformer, enrichi d’un lissage contextuel localisé (LCS) pour assurer la cohérence temporelle. Des techniques d’explicabilité (SHAP, cartes de saillie, mécanismes d’attention) sont intégrées pour chaque modèle de base et pour l’ensemble, permettant aux cliniciens de comprendre les facteurs ayant conduit à chaque prédiction.
+Le présent projet de fin d'études, mené au sein du Centre National de l'Informatique,
+répond à cette double exigence de performance et de transparence. Il aboutit à
+\hypnoria{}, une plateforme web d'aide à l'interprétation polysomnographique organisée
+autour de deux étages d'apprentissage. Le premier classe automatiquement les stades du
+sommeil à partir d'un enregistrement brut, en combinant par empilement trois familles
+d'architectures : convolutive, récurrente et attentionnelle. Le second exploite
+l'hypnogramme ainsi produit pour prédire la classe de sévérité du syndrome d'apnées,
+et accompagne chaque prédiction de la décomposition des facteurs qui l'ont déterminée.
+Autour de ces modèles, la plateforme fournit la chaîne applicative complète attendue en
+contexte clinique : dossier patient, archivage sécurisé, annotation, compte rendu
+exportable, collaboration entre praticiens et traçabilité des actions.
 
-Le projet a été réalisé au sein du \textbf{Centre National de l’Informatique (CNI)} à Tunis, sous la tutelle de M. Abdelwaheb Dahmeni et Mme Hajer Dahmeni. Il s’inscrit dans la durée de six mois, de novembre 2024 à avril 2025.
-
-Ce rapport présente l’ensemble des travaux menés. Après une présentation de l’organisme d’accueil (chapitre 1), nous détaillons le contexte médical et la problématique (chapitre 2). Un état de l’art des méthodes existantes est dressé au chapitre 3. Le chapitre 4 décrit la conception et l’architecture du système proposé, tandis que le chapitre 5 expose l’implémentation et les résultats de validation. Enfin, une conclusion générale dresse le bilan et ouvre des perspectives.
+Ce mémoire rend compte de l'ensemble de ces travaux, organisés selon les releases
+successives du produit. Le chapitre~\ref{chap:presentation} pose le cadre du projet :
+l'organisme d'accueil, les notions médicales indispensables, la problématique, l'étude de
+l'existant et la méthodologie Scrum retenue. Le chapitre~\ref{chap:analyse} formalise les
+besoins, présente le \emph{Product Backlog} et l'architecture globale, puis planifie le
+projet en trois releases de deux sprints chacune. Les trois chapitres suivants sont
+consacrés chacun à une release, détaillée sprint par sprint. Le
+chapitre~\ref{chap:release1} livre le moteur de classification des stades, de la
+préparation du corpus à l'entraînement des modèles. Le chapitre~\ref{chap:release2} en
+fait un diagnostic expliqué accessible au praticien, par la combinaison des modèles, la
+prédiction de la sévérité et la construction du poste de travail. Le
+chapitre~\ref{chap:release3} complète la plateforme clinique : dossier patient,
+gouvernance, collaboration, restitution et industrialisation. Une conclusion générale
+dresse enfin le bilan des objectifs atteints et ouvre sur les perspectives.

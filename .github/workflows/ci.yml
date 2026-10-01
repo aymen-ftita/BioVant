@@ -1,0 +1,175 @@
+name: Intégration continue
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  # ───────────────────────────────────────────────────────────────────────────
+  #  Interface applicative : contrôle syntaxique puis démarrage réel
+  # ───────────────────────────────────────────────────────────────────────────
+  backend:
+    name: Backend — contrôle et démarrage
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: hypnoriadb_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Installer Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: pip
+
+      - name: Installer les dépendances
+        working-directory: backend
+        run: |
+          python -m pip install --upgrade pip
+          # Version CPU de PyTorch : évite le téléchargement des bibliothèques CUDA
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -r requirements.txt
+
+      - name: Contrôle syntaxique de tous les modules
+        working-directory: backend
+        run: python -m compileall -q . -x '(models|step2|__pycache__)'
+
+      - name: Démarrer l'API et vérifier qu'elle répond
+        working-directory: backend
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/hypnoriadb_ci
+          SECRET_KEY: cle-de-test-integration-continue
+        run: |
+          uvicorn main:app --host 127.0.0.1 --port 8000 &
+          for i in $(seq 1 45); do
+            if curl -sf http://127.0.0.1:8000/health > /dev/null; then
+              echo "API démarrée après ${i}s"
+              break
+            fi
+            sleep 1
+          done
+          echo "--- /health ---"
+          curl -sf http://127.0.0.1:8000/health
+          echo ""
+          echo "--- schéma OpenAPI ---"
+          curl -sf http://127.0.0.1:8000/openapi.json -o openapi.json
+          python - <<'PY'
+          import json, sys
+          spec = json.load(open("openapi.json"))
+          routes = sorted(spec["paths"])
+          print(f"{len(routes)} points d'entrée exposés")
+          for r in routes:
+              print("  ", r)
+          attendus = ["/token", "/users/me", "/patients", "/analyze",
+                      "/predict_osa", "/health"]
+          manquants = [r for r in attendus if r not in routes]
+          if manquants:
+              sys.exit(f"Points d'entrée manquants : {manquants}")
+          PY
+
+      - name: Vérifier l'authentification et le cloisonnement des rôles
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/hypnoriadb_ci
+        run: |
+          echo "--- accès sans jeton : doit être refusé ---"
+          code=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:8000/patients)
+          test "$code" = "401" || { echo "attendu 401, obtenu $code"; exit 1; }
+          echo "401 confirmé"
+
+          echo "--- connexion administrateur ---"
+          token=$(curl -sf -X POST http://127.0.0.1:8000/token \
+                  -d "username=admin@hypnoria.com&password=admin123" \
+                  | python -c "import sys,json; print(json.load(sys.stdin)['access_token'])")
+          test -n "$token" || { echo "jeton non délivré"; exit 1; }
+          echo "jeton délivré"
+
+          echo "--- un administrateur ne doit pas accéder au registre patients ---"
+          code=$(curl -s -o /dev/null -w "%{http_code}" \
+                 -H "Authorization: Bearer $token" http://127.0.0.1:8000/patients)
+          test "$code" = "403" || { echo "attendu 403, obtenu $code"; exit 1; }
+          echo "403 confirmé — cloisonnement des rôles effectif"
+
+  # ───────────────────────────────────────────────────────────────────────────
+  #  Interface utilisateur : analyse statique puis construction
+  # ───────────────────────────────────────────────────────────────────────────
+  frontend:
+    name: Frontend — analyse et construction
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Installer Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Installer les dépendances
+        working-directory: frontend
+        run: npm ci
+
+      - name: Analyse statique
+        working-directory: frontend
+        run: npm run lint
+
+      - name: Construction de production
+        working-directory: frontend
+        run: npm run build
+
+      - name: Publier le bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: frontend/dist
+          retention-days: 7
+
+  # ───────────────────────────────────────────────────────────────────────────
+  #  Images de conteneur : construction des deux images
+  # ───────────────────────────────────────────────────────────────────────────
+  images:
+    name: Images de conteneur
+    runs-on: ubuntu-latest
+    needs: [backend, frontend]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Préparer Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Construire l'image de l'interface applicative
+        uses: docker/build-push-action@v6
+        with:
+          context: ./backend
+          push: false
+          tags: hypnoria-backend:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Construire l'image du serveur web
+        uses: docker/build-push-action@v6
+        with:
+          context: ./frontend
+          push: false
+          tags: hypnoria-frontend:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

@@ -1,85 +1,791 @@
-\chapter{Implémentation et validation}
-\label{chap:implementation}
+\chapter{Release 3 : Plateforme clinique et industrialisation}
+\label{chap:release3}
 
-\section{Environnement technique}
+\sectionsansnum{Introduction}
 
-\begin{itemize}
-\item Langages : Python 3.10 (backend), TypeScript/React (frontend).
-\item Frameworks : PyTorch, FastAPI, Streamlit (prototypage), React.
-\item Librairies : MNE, Scikit-learn, SHAP, Captum.
-\item Conteneurisation : Docker, Kubernetes (Minikube).
-\end{itemize}
+Ce chapitre présente la troisième et dernière release, menée de la semaine 17 à la
+semaine 24. Elle transforme l'outil d'analyse livré par la release précédente en une
+plateforme clinique complète : dossier patient persistant, archivage sécurisé, gouvernance
+multi-établissements, collaboration entre praticiens, restitution documentaire et
+déploiement reproductible. Comme les précédents, le chapitre présente la release, détaille
+ses deux sprints et en dresse la revue.
 
-\section{Prétraitement des données}
+% ---------------------------------------------------------------------------
+\section{Présentation de la release}
+\label{sec:release3}
+% ---------------------------------------------------------------------------
 
-Le jeu de données \textbf{Sleep-EDF} (version 2018) a été utilisé. Il contient 153 enregistrements PSG de sujets sains et insomniagues. Les étapes :
-\begin{enumerate}
-\item Chargement des fichiers EDF avec MNE.
-\item Sélection des canaux EEG (Fpz-Cz, Pz-Oz) + optionnels EOG, EMG.
-\item Filtrage passe-bande (0.5–35 Hz) et rééchantillonnage à 100 Hz.
-\item Segmentation en épisodes de 30 secondes (3000 points).
-\item Normalisation par épisode (z-score).
-\item Division entraînement / validation / test (70/15/15) au niveau des sujets.
-\end{enumerate}
+\subsection{Objectif de la release}
 
-\section{Entraînement du modèle d’ensemble}
+La troisième release vise à livrer une plateforme prête à être déployée en
+contexte clinique. Les fonctions d'analyse ne changent plus ; ce qui s'ajoute, c'est tout ce
+qui permet de les exploiter durablement, à plusieurs et en confiance. Le sprint~5 dote la
+plateforme d'une mémoire et d'une gouvernance ; le sprint~6 couvre la collaboration, la
+production du compte rendu et l'industrialisation du déploiement.
 
-Chaque modèle de base est entraîné séparément avec une validation croisée. Les hyperparamètres optimisés sont :
+\subsection{Backlog de la release}
 
-\begin{table}[H]
-\centering
-\caption{Hyperparamètres finaux}
-\begin{tabular}{|l|l|}
-\hline
-Modèle & Paramètres \\
-\hline
-CNN & batch size 64, lr=1e-3, dropout 0.3 \\
-LSTM & hidden size 128, 2 couches, lr=1e-3 \\
-Transformer & 4 têtes, 128 dim, lr=1e-4 \\
-Méta-apprenant & 2 couches (128,64), lr=1e-4, fenêtre LCS=5 \\
-\hline
-\end{tabular}
-\end{table}
-
-Le méta-apprenant est entraîné sur les prédictions des modèles de base (probabilités softmax). Le lissage contextuel est appliqué en post-traitement.
-
-\section{Résultats expérimentaux}
-
-\subsection{Performance de classification}
+Avec trente-deux récits et 160 points de complexité, cette release est la plus volumineuse
+du projet (tableau~\ref{tab:rel3}). Elle solde le backlog du produit : à son terme, les
+soixante récits ont été livrés.
 
 \begin{table}[H]
-\centering
-\caption{Précision par modèle (test)}
-\begin{tabular}{|l|c|}
+\centering\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}L{1.4cm}|L{3.0cm}|L{5.4cm}|L{2.7cm}|c@{}}
 \hline
-Modèle & Accuracy (\%) \\
+\ligneentete \entete{Sprint} & \entete{Période} & \entete{Objectif du sprint} &
+\entete{Récits} & \entete{Pts} \\
 \hline
-CNN seul & 87.2 \\
-LSTM seul & 92.4 \\
-Transformer seul & 91.8 \\
-Ensemble (stacking) sans LCS & 93.5 \\
-\textbf{Ensemble avec LCS} & \textbf{94.1} \\
+Sprint 5 & 18 mai -- 14 juin &
+Transformer l'outil d'analyse en plateforme gouvernée et traçable &
+US-30 à 35, 37 à 39, 43 à 51 & 77 \\
+\hline
+Sprint 6 & 15 juin -- 12 juil. &
+Couvrir le travail à plusieurs, la restitution documentaire et la reproductibilité &
+US-24, 25, 36, 41, 42, 52 à 60 & 83 \\
+\hline
+\multicolumn{3}{@{}r|}{\textbf{Total de la release}} & \textbf{32 récits} & \textbf{160} \\
 \hline
 \end{tabular}
+\caption{Backlog de la release 3}
+\label{tab:rel3}
 \end{table}
 
-Le modèle final atteint une précision globale de 94,1\%, un score de Cohen's Kappa de 0,91, dépassant l’objectif des 93\%.
+\noindent
+L'incrément attendu en fin de release est la plateforme complète, conteneurisée et vérifiée
+automatiquement à chaque livraison.
 
-\subsection{Explicabilité : exemples}
+% ---------------------------------------------------------------------------
+\section{Sprint 5 : Dossier patient et gouvernance}
+\label{sec:sprint5}
+% ---------------------------------------------------------------------------
+
+Le sprint précédent a livré un outil d'analyse. Ce cinquième sprint, qui ouvre la release,
+en fait un système d'information clinique : les examens sont rattachés à des patients, les
+fichiers volumineux archivés hors base, et la plateforme ouverte à plusieurs établissements
+sous le contrôle d'un administrateur.
+
+\subsection{Objectif du sprint}
+
+Trois exigences structuraient ce sprint.
+
+La première était la persistance. Une analyse sans dossier n'a pas d'usage
+clinique : il fallait rattacher chaque examen à un patient, conserver l'historique et
+cloisonner les données de chaque praticien.
+
+La deuxième était le traitement des fichiers volumineux. Un enregistrement pèse
+plusieurs centaines de mégaoctets. Le conserver en base aurait dégradé les sauvegardes et
+les temps de réponse sans bénéfice transactionnel.
+
+La troisième était la gouvernance. Ouvrir la plateforme à plusieurs centres
+suppose de pouvoir créer des comptes, en révoquer l'accès sans détruire de données, et
+tracer les actions sensibles.
+
+\subsection{Sprint Backlog}
+
+Le sprint a embarqué dix-huit récits pour 77 points de complexité
+(tableau~\ref{tab:bl-s5}).
+
+\begin{table}[H]
+\centering\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}c|L{2.5cm}|L{4.6cm}|L{4.6cm}|c@{}}
+\hline
+\ligneentete \entete{ID} & \entete{Module} & \entete{R\'ecit utilisateur} & \entete{T\^aches} & \entete{Estim.} \\
+\hline
+\multirow{3}{*}{US-31\,\`a\,35} & \multirow{3}{=}{Dossier patient} & \multirow{3}{=}{En tant que m\'edecin, je veux constituer et suivre mon registre de patients} & Mod\'eliser patients et examens & \multirow{3}{*}{19 pts} \\
+ &  &  & Cr\'eer le registre et l'historique &  \\
+ &  &  & Cloisonner les donn\'ees par praticien &  \\
+\hline
+\multirow{3}{*}{US-37\,\`a\,39} & \multirow{3}{=}{Archivage cloud} & \multirow{3}{=}{En tant que syst\`eme, je veux archiver les fichiers volumineux sans bloquer l'interface} & Int\'egrer le client de stockage objet & \multirow{3}{*}{18 pts} \\
+ &  &  & Transf\'erer en arri\`ere-plan avec suivi &  \\
+ &  &  & D\'elivrer des liens sign\'es \`a dur\'ee limit\'ee &  \\
+\hline
+\multirow{3}{*}{US-43\,\`a\,47} & \multirow{3}{=}{Comptes et licences} & \multirow{3}{=}{En tant qu'administrateur, je veux g\'erer le cycle de vie des comptes m\'edecins} & Cr\'eer et lister les comptes & \multirow{3}{*}{21 pts} \\
+ &  &  & Suspendre, r\'eactiver et fixer l'\'ech\'eance &  \\
+ &  &  & G\'erer les \'etablissements de rattachement &  \\
+\hline
+\multirow{3}{*}{US-30, 48\,\`a\,51} & \multirow{3}{=}{Tra\c{c}abilit\'e} & \multirow{3}{=}{En tant qu'administrateur, je veux tracer et exporter les actions sensibles} & Journaliser auteur, horodatage et adresse & \multirow{3}{*}{19 pts} \\
+ &  &  & Appliquer statut et licence \`a la connexion &  \\
+ &  &  & Exporter le journal au format tabulaire &  \\
+\hline
+\end{tabular}
+\caption{Sprint Backlog --- Sprint 5}
+\label{tab:bl-s5}
+\end{table}
+
+\subsection{Analyse}
+
+\subsubsection{Diagramme des cas d'utilisation}
 
 \begin{figure}[H]
 \centering
-\fbox{\parbox{0.6\textwidth}{\centering \textbf{Exemple de valeurs SHAP pour un épisode REM}}}
-\caption{Attribution SHAP pour un épisode correctement classé REM}
-\label{fig:shap}
+\begin{tikzpicture}[
+    x=1cm,y=1cm,
+    uc/.style     = {ellipse, draw=hypnoblue!60, fill=hypnolight,
+                     align=center, font=\scriptsize, text width=2.7cm,
+                     inner sep=1.5pt, minimum height=1.0cm},
+    ucp/.style    = {ellipse, draw=hypnored!70, fill=hypnored!7,
+                     align=center, font=\scriptsize\bfseries, text width=2.7cm,
+                     inner sep=1.5pt, minimum height=1.0cm},
+    lien/.style   = {hypnogray!75, line width=0.55pt},
+    rel/.style    = {-{Latex[length=2mm]}, hypnoblue!70, line width=0.5pt, dashed},
+    et/.style     = {font=\tiny\itshape, text=hypnoblue!85, fill=white, inner sep=1pt},
+    nomact/.style = {font=\scriptsize\bfseries, align=center, text width=2.2cm},
+  ]
+
+  \tikzset{acteur/.pic={
+      \draw[hypnoblue,line width=0.8pt] (0,0) circle (0.17);
+      \draw[hypnoblue,line width=0.8pt] (0,-0.17) -- (0,-0.66);
+      \draw[hypnoblue,line width=0.8pt] (-0.28,-0.34) -- (0.28,-0.34);
+      \draw[hypnoblue,line width=0.8pt] (0,-0.66) -- (-0.24,-1.04);
+      \draw[hypnoblue,line width=0.8pt] (0,-0.66) -- (0.24,-1.04);}}
+
+  \draw[hypnoblue!55,line width=0.9pt,rounded corners=3pt]
+       (3.9,-5.4) rectangle (11.9,2.4);
+  \node[font=\small\bfseries,text=hypnoblue,anchor=north west] at (4.15,2.25)
+       {Système d'information clinique};
+
+  \node[uc]  (pat) at (6.1, 1.4)  {Gérer ses\\patients};
+  \node[ucp] (exa) at (6.1,-0.3)  {Constituer le\\dossier d'examen};
+  \node[uc]  (arc) at (6.1,-2.2)  {Archiver les\\pièces};
+  \node[uc]  (tab) at (6.1,-4.1)  {Consulter son\\tableau de bord};
+
+  \node[uc]  (com) at (9.9, 1.4)  {Gérer les comptes\\et licences};
+  \node[uc]  (eta) at (9.9,-0.3)  {Gérer les\\établissements};
+  \node[uc]  (aud) at (9.9,-2.2)  {Consulter le\\journal d'audit};
+  \node[uc]  (sta) at (9.9,-4.1)  {Suivre l'activité\\de la plateforme};
+
+  \pic at (1.6,0.9) {acteur};
+  \node[nomact,anchor=north] at (1.6,0.25) {Médecin};
+
+  \pic at (14.0,0.9) {acteur};
+  \node[nomact,anchor=north] at (14.0,0.25) {Administrateur};
+
+  \foreach \c in {pat,exa,arc,tab} \draw[lien] (2.0,0.55) -- (\c.west);
+  \foreach \c in {com,eta,aud,sta} \draw[lien] (13.6,0.55) -- (\c.east);
+
+  \draw[rel] (exa) -- node[et,pos=0.5] {$\ll$include$\gg$} (arc);
+
+\end{tikzpicture}
+\caption{Diagramme des cas d'utilisation du sprint 5 --- dossier patient et gouvernance}
+\label{fig:uc-s5}
 \end{figure}
 
-La figure~\ref{fig:shap} montre que les échantillons autour de 250-500 ms (mouvements oculaires) contribuent positivement à la classe REM. Les cartes de saillie du CNN confirment l’importance de la région occipitale (canal Pz-Oz) pour la détection des ondes lentes.
+\subsubsection{Description textuelle des cas d'utilisation}
 
-\section{Validation par des experts}
+\begin{casutilisation}{Description textuelle du cas « Gérer le cycle de vie d'un compte »}
+Titre & Gérer le cycle de vie d'un compte médecin \\ \hline
+Acteur & Administrateur \\ \hline
+Description & Créer un compte praticien, en suspendre ou réactiver l'accès, fixer son
+échéance de licence et le rattacher à un établissement \\ \hline
+Préconditions & L'administrateur est authentifié \\ \hline
+Scénario de base &
+\begin{minipage}[t]{\linewidth}
+\begin{enumerate}[leftmargin=1.1em,itemsep=1pt,topsep=3pt]
+  \item L'administrateur ouvre le registre des médecins.
+  \item Il crée un compte en renseignant identité, adresse et échéance de licence.
+  \item Le système vérifie l'unicité de l'adresse et hache le mot de passe initial.
+  \item Le système journalise la création.
+  \item L'administrateur peut ensuite suspendre, réactiver ou prolonger le compte.
+\end{enumerate}
+\end{minipage} \\ \hline
+Scénario alternatif &
+\begin{minipage}[t]{\linewidth}
+\begin{itemize}[leftmargin=1.1em,itemsep=1pt,topsep=3pt]
+  \item \textbf{3a} --- L'adresse est déjà enregistrée : la création est refusée.
+  \item \textbf{5a} --- Le praticien a perdu son accès : réinitialisation avec mot de
+        passe temporaire.
+\end{itemize}
+\end{minipage}
+\end{casutilisation}
 
-Un petit panel de trois techniciens du sommeil a évalué 100 épisodes aléatoires avec les explications fournies. Le taux d’accord avec les prédictions a augmenté de 85\% (sans explications) à 92\% (avec explications), démontrant l’utilité clinique de la transparence.
+\subsection{Conception}
 
-\section{Déploiement}
+\subsubsection{Diagramme d'états}
 
-L’application a été conteneurisée et déployée sur un cluster Kubernetes local. Les temps de réponse moyens sont de 1,2 seconde par épisode (inférence complète sur une nuit de 8h en 8 minutes), respectant les exigences.
+Un examen traverse une succession d'états. Cette modélisation explicite un point important :
+un examen reste consultable même si l'archivage échoue, car les résultats d'analyse sont
+stockés en base indépendamment des fichiers.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    x=1cm,y=1cm,
+    st/.style   = {rectangle,rounded corners=5pt,draw=hypnoblue!65,fill=hypnolight,
+                   align=center,font=\scriptsize,minimum height=0.9cm,text width=2.3cm},
+    stf/.style  = {rectangle,rounded corners=5pt,draw=hypnored!70,fill=hypnored!7,
+                   align=center,font=\scriptsize,minimum height=0.9cm,text width=2.3cm},
+    fl/.style   = {-{Latex[length=2mm]},hypnoblue!75,line width=0.7pt},
+    tr/.style   = {font=\tiny\itshape,text=hypnogray,fill=white,inner sep=1.5pt},
+  ]
+
+  \fill[hypnoblue] (0,0) circle (0.14);
+
+  \node[st]  (cre) at (2.5,0)   {Créé};
+  \node[st]  (ana) at (6.0,0)   {Analysé};
+  \node[st]  (arc) at (9.5,0)   {Archivé};
+  \node[stf] (eva) at (13.0,0)  {Évalué};
+  \node[st]  (ann) at (9.5,-2.3){Annoté};
+  \node[stf] (deg) at (6.0,-2.3){Archivage\\en échec};
+
+  \draw[fl] (0.16,0) -- node[tr,above] {dépôt du fichier} (cre);
+  \draw[fl] (cre) -- node[tr,above] {classification} (ana);
+  \draw[fl] (ana) -- node[tr,above] {transfert réussi} (arc);
+  \draw[fl] (arc) -- node[tr,above] {prédiction} (eva);
+  \draw[fl] (arc) -- node[tr,right,pos=0.5] {annotation} (ann);
+  \draw[fl] (ana) -- node[tr,right,pos=0.5] {transfert échoué} (deg);
+  \draw[fl] (deg) -- node[tr,below] {nouvelle tentative} (ann);
+
+  \fill[hypnoblue] (13.0,-2.3) circle (0.19);
+  \fill[white]     (13.0,-2.3) circle (0.135);
+  \fill[hypnoblue] (13.0,-2.3) circle (0.09);
+  \draw[fl] (eva) -- node[tr,right,pos=0.5] {compte rendu} (13.0,-2.11);
+  \draw[fl] (ann) -- node[tr,pos=0.72,below right] {prédiction} (eva.south west);
+
+\end{tikzpicture}
+\vspace{0.3cm}
+\caption[Cycle de vie d'un examen]%
+        {États successifs d'un examen ; l'échec d'archivage ne bloque pas
+         l'exploitation des résultats.}
+\label{fig:etats}
+\end{figure}
+
+\subsection{Réalisation}
+
+\subsubsection{Persistance et cloisonnement}
+
+Le modèle de données repose sur huit tables, présentées au chapitre~\ref{chap:analyse}. Le
+rattachement direct du patient à son praticien référent fonde le cloisonnement : chaque route
+vérifie, après le rôle, que la ressource demandée appartient bien à l'appelant. Un médecin ne
+peut donc pas accéder au dossier d'un confrère, même en devinant un identifiant.
+
+\subsubsection{Archivage sur stockage objet}
+
+Les fichiers volumineux sont confiés à un service de stockage objet compatible avec
+l'interface S3. Chaque objet est rangé dans un préfixe portant le nom du patient et nommé
+selon le motif \texttt{patient\_date\_alea}, ce qui rend l'arborescence lisible depuis la
+console du fournisseur sans consulter la base.
+
+Le point central de cette réalisation est le transfert en arrière-plan. Attendre
+la fin du téléversement avant d'afficher les résultats aurait immobilisé le praticien pendant
+plusieurs minutes. L'enchaînement retenu est donc : l'analyse est exécutée, les résultats sont
+affichés, l'examen est créé en base, puis le transfert démarre sans bloquer l'interface. Une
+vignette flottante affiche la progression et disparaît quelques secondes après son achèvement.
+
+Un échec de transfert n'interrompt rien : il est signalé dans la vignette, et l'examen reste
+pleinement exploitable.
+
+Les liens d'accès aux fichiers sont signés et expirent au bout de vingt-quatre heures.
+Une subtilité a été traitée : les enregistrements et les fichiers tabulaires sont servis avec
+une en-tête forçant le téléchargement, tandis que les images et les comptes rendus restent
+affichables dans le navigateur.
+
+Ces références ne sont jamais transmises telles quelles : les schémas de sortie déclarent un
+validateur qui intercepte toute référence de fichier au moment de composer la réponse et la
+remplace par un lien signé. Aucune route ne peut donc divulguer une
+référence brute par inadvertance, puisque la conversion est appliquée par le schéma et non par
+la route.
+
+\subsubsection{Administration et cycle de vie des licences}
+
+Un compte peut être actif, suspendu ou en attente, et porte une date d'échéance. Ces trois
+conditions sont évaluées à chaque ouverture de session, avec un message distinct pour chacune,
+de sorte que le praticien sache s'il doit contacter son administrateur ou renouveler son
+abonnement.
+
+Ce dispositif permet de révoquer un accès sans détruire de données, ce qui est la
+seule manière acceptable de gérer une fin de contrat sur un système qui héberge des dossiers
+médicaux.
+
+\capturefig{admin-medecins}{0.9}{Registre des médecins et gestion des licences}{fig:adminmed}
+
+\capturefig{admin-hopitaux}{0.9}{Gestion des établissements rattachés}{fig:adminhop}
+
+\subsubsection{Traçabilité}
+
+Chaque action sensible inscrit dans le journal son auteur, son rôle, son horodatage, la nature
+de l'action et l'adresse d'origine. Sont journalisées les connexions, les créations de compte,
+les modifications de statut et les réinitialisations de mot de passe. Le journal est exportable
+au format tabulaire pour un contrôle externe.
+
+La table est délibérément dénormalisée : elle recopie l'adresse et le rôle plutôt que de
+référencer le compte, afin que la trace survive à la disparition de celui-ci.
+
+\capturefig{audit}{0.9}{Journal d'audit : consultation et export}{fig:audit}
+
+\subsubsection{Limites au regard du règlement européen}
+
+Le système n'est pas conforme au règlement général sur la protection des données. Trois
+écarts subsistent.
+
+Les données patient ne sont pas chiffrées au repos : elles reposent sur le chiffrement
+offert par le service de stockage et par le système de fichiers de la base, sans couche
+applicative supplémentaire. Le droit à l'effacement n'est pas outillé : aucune
+procédure n'efface un patient et ses fichiers archivés en une opération. Enfin, aucune
+durée de conservation n'est définie ni appliquée.
+
+Ces trois points relèvent d'un travail de mise en conformité qui dépasse le périmètre d'un
+projet de fin d'études, mais qu'une mise en service réelle imposerait.
+
+\subsection{Revue du sprint}
+
+Ce sprint a doté la plateforme d'une mémoire et d'une gouvernance. Les examens sont désormais
+rattachés à des patients, les fichiers volumineux archivés hors base et accessibles uniquement
+par des liens signés, et l'administrateur dispose des outils nécessaires pour ouvrir la
+plateforme à plusieurs établissements.
+
+Un principe directeur guide ces choix : ne jamais faire attendre le
+praticien, et ne jamais laisser un incident technique compromettre l'exploitation d'un examen.
+
+Le sprint suivant, dernier du projet, couvre le travail à plusieurs, la restitution
+documentaire et l'industrialisation du déploiement.
+
+% ---------------------------------------------------------------------------
+\section{Sprint 6 : Collaboration, restitution et industrialisation}
+\label{sec:sprint6}
+% ---------------------------------------------------------------------------
+
+Ce dernier sprint couvre trois volets complémentaires : le travail à plusieurs, la
+production du document qui sort du système, et l'industrialisation du déploiement.
+
+\subsection{Objectif du sprint}
+
+L'interprétation d'un enregistrement difficile se fait rarement seul. Le premier objectif
+était donc de permettre à un praticien de solliciter un confrère, en gardant la
+discussion attachée à l'examen concerné.
+
+Le deuxième objectif était la restitution. Un système d'aide au diagnostic dont on ne
+peut rien extraire n'a pas d'usage : il fallait produire un compte rendu composable, adapté au
+destinataire.
+
+Le troisième était l'industrialisation : rendre le déploiement reproductible et
+vérifier automatiquement qu'une modification ne casse rien.
+
+\subsection{Sprint Backlog}
+
+Le sprint a embarqué quatorze récits pour 83 points de complexité
+(tableau~\ref{tab:bl-s6}).
+
+\begin{table}[H]
+\centering\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}c|L{2.5cm}|L{4.6cm}|L{4.6cm}|c@{}}
+\hline
+\ligneentete \entete{ID} & \entete{Module} & \entete{R\'ecit utilisateur} & \entete{T\^aches} & \entete{Estim.} \\
+\hline
+\multirow{3}{*}{US-53\,\`a\,55} & \multirow{3}{=}{Collaboration} & \multirow{3}{=}{En tant que m\'edecin, je veux solliciter un confr\`ere sur un examen pr\'ecis} & Mod\'eliser fils et messages rattach\'es \`a un examen & \multirow{3}{*}{18 pts} \\
+ &  &  & Cr\'eer l'interface de discussion &  \\
+ &  &  & Centraliser les sollicitations re\c{c}ues &  \\
+\hline
+\multirow{3}{*}{US-24, 25, 42} & \multirow{3}{=}{Annotation et normes} & \multirow{3}{=}{En tant que m\'edecin, je veux annoter une \'epoque et situer chaque m\'etrique par rapport aux normes} & Enregistrer les notes horodat\'ees \`a l'\'epoque & \multirow{3}{*}{15 pts} \\
+ &  &  & Synchroniser l'hypnogramme annot\'e &  \\
+ &  &  & Comparer les m\'etriques aux valeurs de r\'ef\'erence &  \\
+\hline
+\multirow{3}{*}{US-36, 41} & \multirow{3}{=}{Restitution} & \multirow{3}{=}{En tant que m\'edecin, je veux composer et exporter mon compte rendu} & S\'electionner les sections \`a inclure & \multirow{3}{*}{13 pts} \\
+ &  &  & Produire le document pagin\'e &  \\
+ &  &  & Afficher le tableau de bord de la patient\`ele &  \\
+\hline
+\multirow{5}{*}{US-52, 56\,\`a\,60} & \multirow{5}{=}{Industrialisation} & \multirow{5}{=}{En tant que d\'eveloppeur, je veux un d\'eploiement reproductible et v\'erifi\'e automatiquement} & Conteneuriser les trois services & \multirow{5}{*}{37 pts} \\
+ &  &  & Orchestrer la pile en une commande &  \\
+ &  &  & Automatiser contr\^oles et construction d'images &  \\
+ &  &  & Traduire l'interface et ajouter le th\`eme sombre &  \\
+ &  &  & Visualiser la cha\^ine de traitement des mod\`eles &  \\
+\hline
+\end{tabular}
+\caption{Sprint Backlog --- Sprint 6}
+\label{tab:bl-s6}
+\end{table}
+
+\subsection{Analyse}
+
+\subsubsection{Diagramme des cas d'utilisation}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    x=1cm,y=1cm,
+    uc/.style     = {ellipse, draw=hypnoblue!60, fill=hypnolight,
+                     align=center, font=\scriptsize, text width=2.7cm,
+                     inner sep=1.5pt, minimum height=1.0cm},
+    ucp/.style    = {ellipse, draw=hypnored!70, fill=hypnored!7,
+                     align=center, font=\scriptsize\bfseries, text width=2.7cm,
+                     inner sep=1.5pt, minimum height=1.0cm},
+    lien/.style   = {hypnogray!75, line width=0.55pt},
+    rel/.style    = {-{Latex[length=2mm]}, hypnoblue!70, line width=0.5pt, dashed},
+    et/.style     = {font=\tiny\itshape, text=hypnoblue!85, fill=white, inner sep=1pt},
+    nomact/.style = {font=\scriptsize\bfseries, align=center, text width=2.2cm},
+  ]
+
+  \tikzset{acteur/.pic={
+      \draw[hypnoblue,line width=0.8pt] (0,0) circle (0.17);
+      \draw[hypnoblue,line width=0.8pt] (0,-0.17) -- (0,-0.66);
+      \draw[hypnoblue,line width=0.8pt] (-0.28,-0.34) -- (0.28,-0.34);
+      \draw[hypnoblue,line width=0.8pt] (0,-0.66) -- (-0.24,-1.04);
+      \draw[hypnoblue,line width=0.8pt] (0,-0.66) -- (0.24,-1.04);}}
+
+  \draw[hypnoblue!55,line width=0.9pt,rounded corners=3pt]
+       (3.9,-4.6) rectangle (12.0,2.4);
+  \node[font=\small\bfseries,text=hypnoblue,anchor=north west] at (4.15,2.25)
+       {Collaboration et restitution};
+
+  \node[ucp] (col) at (6.2, 1.2)  {Solliciter un\\confrère};
+  \node[uc]  (msg) at (10.0, 1.2) {Échanger des\\messages};
+  \node[uc]  (rec) at (10.0,-0.4) {Consulter la boîte\\de réception};
+  \node[uc]  (ann) at (6.2,-1.1)  {Annoter une\\époque};
+  \node[uc]  (nor) at (10.0,-2.0) {Comparer aux\\normes};
+  \node[ucp] (pdf) at (6.2,-3.3)  {Composer le\\compte rendu};
+  \node[uc]  (sec) at (10.0,-3.6) {Choisir les\\sections};
+
+  \pic at (1.6,0.7) {acteur};
+  \node[nomact,anchor=north] at (1.6,0.05) {Médecin};
+
+  \pic at (14.1,0.7) {acteur};
+  \node[nomact,anchor=north] at (14.1,0.05) {Confrère};
+
+  \foreach \c in {col,ann,pdf} \draw[lien] (2.0,0.35) -- (\c.west);
+  \draw[lien] (13.7,0.35) -- (msg.east);
+  \draw[lien] (13.7,0.35) -- (rec.east);
+
+  \draw[rel] (col) -- node[et,pos=0.5] {$\ll$include$\gg$} (msg);
+  \draw[rel] (col) -- node[et,pos=0.6] {$\ll$extend$\gg$} (rec);
+  \draw[rel] (ann) -- node[et,pos=0.6] {$\ll$extend$\gg$} (nor);
+  \draw[rel] (pdf) -- node[et,pos=0.55] {$\ll$include$\gg$} (sec);
+
+\end{tikzpicture}
+\caption{Diagramme des cas d'utilisation du sprint 6 --- collaboration et restitution}
+\label{fig:uc-s6}
+\end{figure}
+
+\subsubsection{Description textuelle des cas d'utilisation}
+
+\begin{casutilisation}{Description textuelle du cas « Solliciter un confrère »}
+Titre & Solliciter un confrère sur un examen \\ \hline
+Acteurs & Médecin demandeur, confrère sollicité \\ \hline
+Description & Ouvrir une discussion rattachée à un examen afin de recueillir un avis, en
+conservant le contexte clinique \\ \hline
+Préconditions & Les deux praticiens sont authentifiés ; l'examen existe \\ \hline
+Scénario de base &
+\begin{minipage}[t]{\linewidth}
+\begin{enumerate}[leftmargin=1.1em,itemsep=1pt,topsep=3pt]
+  \item Le médecin ouvre la fiche du patient et sélectionne l'examen.
+  \item Il demande la liste des confrères disponibles.
+  \item Il sélectionne un confrère et rédige sa demande.
+  \item Le système crée le fil, ou réutilise celui qui existe déjà, et enregistre le message.
+  \item Le confrère consulte sa boîte de réception et répond dans le même fil.
+\end{enumerate}
+\end{minipage} \\ \hline
+Scénario alternatif &
+\begin{minipage}[t]{\linewidth}
+\begin{itemize}[leftmargin=1.1em,itemsep=1pt,topsep=3pt]
+  \item \textbf{4a} --- Un fil existe déjà entre ces deux praticiens sur cet examen : le
+        message y est ajouté plutôt que d'ouvrir un doublon.
+\end{itemize}
+\end{minipage}
+\end{casutilisation}
+
+\subsection{Conception}
+
+\subsubsection{Diagramme de séquence objet}
+
+La figure~\ref{fig:seq-s6} détaille la sollicitation d'un confrère. Deux points la
+caractérisent. L'ouverture du fil est idempotente : l'interface applicative recherche
+d'abord une discussion existante entre les deux praticiens sur le même examen, et ne la
+crée qu'à défaut. L'envoi d'un message est ensuite une opération distincte, soumise à la
+vérification que l'appelant participe bien au fil.
+
+\begin{figure}[H]
+\centering
+\resizebox{0.98\textwidth}{!}{%
+\begin{sequencediagram}
+  \newthread[hypnolight]{u}{\scriptsize Médecin}
+  \newinst[1.8]{f}{\scriptsize Client web}
+  \newinst[1.8]{a}{\scriptsize Interface applicative}
+  \newinst[1.8]{d}{\scriptsize Base de données}
+  \newinst[1.8]{c}{\scriptsize Confrère}
+
+  \begin{call}{u}{\scriptsize sollicite un confrère}{f}{}
+  \end{call}
+  \begin{call}{f}{\scriptsize liste des confrères}{a}{\scriptsize praticiens}
+    \begin{call}{a}{\scriptsize recherche}{d}{}
+    \end{call}
+  \end{call}
+  \begin{call}{f}{\scriptsize ouverture du fil}{a}{\scriptsize identifiant du fil}
+    \begin{sdblock}{\scriptsize Contrôle}{\scriptsize fil existant réutilisé, sinon créé}
+      \begin{call}{a}{\scriptsize recherche ou création}{d}{}
+      \end{call}
+    \end{sdblock}
+  \end{call}
+  \begin{call}{f}{\scriptsize envoi du message}{a}{\scriptsize message}
+    \begin{call}{a}{\scriptsize vérifie la participation}{a}{}
+    \end{call}
+    \begin{call}{a}{\scriptsize insertion}{d}{}
+    \end{call}
+  \end{call}
+  \begin{call}{c}{\scriptsize consulte sa boîte de réception}{a}{\scriptsize fils et messages}
+    \begin{call}{a}{\scriptsize fils du praticien}{d}{}
+    \end{call}
+  \end{call}
+  \begin{call}{c}{\scriptsize répond dans le fil}{a}{\scriptsize message}
+    \begin{call}{a}{\scriptsize insertion}{d}{}
+    \end{call}
+  \end{call}
+\end{sequencediagram}}
+\caption{Diagramme de séquence objet du sprint 6 --- sollicitation d'un confrère}
+\label{fig:seq-s6}
+\end{figure}
+
+\subsection{Réalisation}
+
+\subsubsection{Consultations confraternelles}
+
+Un fil de discussion est rattaché à un examen et à exactement deux praticiens. L'intérêt de ce
+dispositif est que la discussion reste attachée à l'examen : le correspondant dispose du
+contexte sans qu'il faille le lui transmettre. Une vue centralisée rassemble toutes les
+sollicitations reçues.
+
+\capturefig{consultation}{0.86}{Fil de discussion rattaché à un examen}{fig:consultation}
+
+\subsubsection{Annotation et comparaison aux normes}
+
+Le praticien peut annoter une époque précise de l'hypnogramme ; ses observations sont
+conservées et peuvent être synchronisées vers le dossier, ce qui archive l'hypnogramme annoté
+aux côtés des autres pièces.
+
+Chaque métrique AASM est par ailleurs accompagnée de sa plage de référence et d'une comparaison
+aux valeurs de la cohorte. Une valeur hors norme est signalée visuellement, et une liste
+d'alertes cliniques reprend en clair les anomalies détectées.
+
+\subsubsection{Production du compte rendu}
+
+Le compte rendu est produit côté client : les sections retenues sont converties en images par
+capture du rendu, puis assemblées dans un document paginé. Cette approche garantit que le
+document reproduit exactement ce que le praticien a validé à l'écran, sans qu'un moteur de
+rendu distinct puisse introduire un écart.
+
+Le praticien choisit les sections à inclure : hypnogramme, métriques AASM, classe de sévérité,
+facteurs explicatifs, tracés bruts et comparaison aux normes. Cette composition à la carte
+répond à des destinataires différents : un confrère n'attend pas le même document qu'un
+dossier d'assurance. Le document est ensuite archivé au même titre que les autres pièces.
+
+\capturefig{rapport}{0.78}{Compte rendu clinique généré}{fig:rapport}
+
+\subsubsection{Multilinguisme et thème sombre}
+
+L'interface est intégralement traduite en français et en anglais, les chaînes étant centralisées
+dans un catalogue unique et la bascule immédiate. Un thème sombre est également disponible,
+adapté à la lecture nocturne : un praticien qui interprète un enregistrement le fait
+rarement en plein jour.
+
+\capturefig{dark}{0.86}{Tableau de bord du médecin en thème sombre}{fig:dark}
+
+\subsubsection{Conteneurisation}
+
+La pile est décrite par un fichier d'orchestration unique qui déclare trois services.
+
+\begin{table}[H]
+\centering
+
+\small
+\begin{tabular}{@{}lllL{5.4cm}@{}}
+\toprule
+\textbf{Service} & \textbf{Image de base} & \textbf{Port} & \textbf{Particularité} \\
+\midrule
+Base de données & \texttt{postgres:15-alpine} & 5432 &
+Volume persistant, sonde de disponibilité \\
+\addlinespace[2pt]
+Interface applicative & \texttt{python:3.10-slim} & 8000 &
+PyTorch en version processeur installé en premier \\
+\addlinespace[2pt]
+Serveur web & \texttt{node:20-alpine} puis \texttt{nginx:alpine} & 80 &
+Construction en deux étapes, redirection du routage client \\
+\bottomrule
+\end{tabular}
+\caption{Services de la pile conteneurisée}
+\label{tab:services}
+\end{table}
+
+Le fichier de construction de l'interface applicative comporte une particularité :
+PyTorch y est installé depuis l'index dédié aux processeurs, \emph{avant} les
+autres dépendances. Sans cette précaution, l'installation télécharge plusieurs gigaoctets de
+bibliothèques inutiles en déploiement (l'inférence en production s'exécutant sur processeur)
+et fait échouer la construction sur une machine de développement.
+
+La sonde de disponibilité de la base est également indispensable : sans elle, l'interface
+applicative démarrerait avant que la base n'accepte les connexions et échouerait à créer son
+schéma.
+
+\subsubsection{Intégration continue}
+
+Une chaîne d'intégration continue s'exécute à chaque livraison sur la branche principale et à
+chaque proposition de fusion.
+
+\begin{table}[H]
+\centering
+
+\small
+\begin{tabular}{@{}lL{10.4cm}@{}}
+\toprule
+\textbf{Travail} & \textbf{Étapes} \\
+\midrule
+Interface applicative &
+Installation des dépendances avec PyTorch en version processeur ; contrôle syntaxique
+de tous les modules ; démarrage d'une instance PostgreSQL de service ; démarrage réel
+de l'application ; vérification du schéma OpenAPI et de la présence des points
+d'entrée attendus ; contrôle du cloisonnement des rôles \\
+\addlinespace[3pt]
+Interface utilisateur &
+Installation reproductible des dépendances ; analyse statique ; construction de
+production ; publication du bundle en tant qu'artefact \\
+\addlinespace[3pt]
+Images de conteneur &
+Construction des deux images avec cache de couches, conditionnée à la réussite des
+deux travaux précédents \\
+\bottomrule
+\end{tabular}
+\caption{Travaux de la chaîne d'intégration continue}
+\label{tab:ci}
+\end{table}
+
+Le travail portant sur l'interface applicative va au-delà du contrôle syntaxique : il
+démarre réellement l'application contre une base éphémère, puis exerce trois
+vérifications de comportement. Un appel sans jeton doit recevoir un refus d'authentification ;
+une connexion administrateur doit délivrer un jeton ; et ce jeton d'administrateur, présenté au
+registre des patients, doit recevoir un refus d'autorisation. Ces trois assertions couvrent
+l'essentiel du cloisonnement des rôles et échoueraient immédiatement si une dépendance de
+sécurité venait à disparaître au fil d'une modification.
+
+\capturefig{ci}{0.9}{Exécution de la chaîne d'intégration continue}{fig:ci}
+
+\subsection{Revue du sprint}
+
+Ce dernier sprint a complété la plateforme sur ses trois derniers volets. Les praticiens peuvent
+solliciter un confrère sans quitter le contexte de l'examen, composer un compte rendu adapté à
+son destinataire, et travailler dans la langue et le thème de leur choix.
+
+La pile est entièrement conteneurisée et vérifiée par une chaîne d'intégration continue qui
+démarre réellement l'application et contrôle le cloisonnement des rôles.
+
+% ---------------------------------------------------------------------------
+\section{Revue de la release 3}
+\label{sec:revue-release3}
+% ---------------------------------------------------------------------------
+
+\subsection{Incrément livré}
+
+La release a livré ses 160 points en deux sprints, portant le total livré à 358 points sur
+les six sprints du projet (tableau~\ref{tab:revue-r3}).
+
+\begin{table}[H]
+\centering\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}L{3.6cm}|L{9.4cm}|c@{}}
+\hline
+\ligneentete \entete{Élément attendu} & \entete{Réalisation} & \entete{État} \\
+\hline
+Dossier patient & Registre des patients, historique des examens, cloisonnement des
+données par praticien & \checkmark \\
+\hline
+Archivage & Stockage objet, transfert en arrière-plan, liens signés valables vingt-quatre
+heures & \checkmark \\
+\hline
+Gouvernance & Cycle de vie des comptes et des licences, établissements, journal d'audit
+exportable & \checkmark \\
+\hline
+Collaboration et restitution & Fils de discussion rattachés aux examens, annotation,
+compte rendu composable & \checkmark \\
+\hline
+Industrialisation & Pile de trois conteneurs, intégration continue, interface bilingue et
+thème sombre & \checkmark \\
+\hline
+\end{tabular}
+\caption{Revue de la release 3 : incrément attendu et incrément livré}
+\label{tab:revue-r3}
+\end{table}
+
+\subsection{Validation fonctionnelle}
+\label{sec:validation}
+
+En complément de la chaîne d'intégration continue, une campagne de scénarios fonctionnels
+a été exécutée manuellement à chaque fin de sprint. Le tableau~\ref{tab:tests} en présente
+l'état sur la version livrée au terme de la release.
+
+\begin{table}[H]
+\centering
+
+\small
+\begin{tabular}{@{}clL{7.2cm}c@{}}
+\toprule
+\textbf{N\textsuperscript{o}} & \textbf{Scénario} & \textbf{Critère de réussite} &
+\textbf{État} \\
+\midrule
+1 & Connexion valide & Jeton délivré, espace de travail ouvert & \checkmark \\
+2 & Connexion refusée & Compte suspendu ou licence expirée rejeté avec message
+    distinct & \checkmark \\
+3 & Cloisonnement des rôles & Un médecin n'atteint aucune route d'administration &
+    \checkmark \\
+4 & Cloisonnement des patients & Un médecin n'accède pas au dossier d'un confrère &
+    \checkmark \\
+5 & Analyse complète & Enregistrement déposé, hypnogramme et métriques affichés &
+    \checkmark \\
+6 & Montage incomplet & Dérivation absente : repli appliqué, analyse aboutie &
+    \checkmark \\
+7 & Fichier invalide & Format non reconnu refusé avec message explicite & \checkmark \\
+8 & Prédiction de sévérité & Classe, probabilités et facteurs restitués & \checkmark \\
+9 & Import de rapport externe & Formulaire prérempli depuis un fichier tabulaire ou
+    balisé & \checkmark \\
+10 & Archivage en arrière-plan & Résultats affichés avant la fin du transfert &
+    \checkmark \\
+11 & Échec d'archivage & Transfert interrompu : examen consultable, erreur signalée &
+    \checkmark \\
+12 & Lien expiré & Lien réutilisé après échéance : accès refusé & \checkmark \\
+13 & Annotation d'époque & Note enregistrée et retrouvée au rechargement & \checkmark \\
+14 & Consultation confraternelle & Message émis par un praticien, reçu par l'autre &
+    \checkmark \\
+15 & Compte rendu & Document produit avec les seules sections sélectionnées &
+    \checkmark \\
+16 & Journal d'audit & Actions sensibles tracées et exportées & \checkmark \\
+17 & Bascule linguistique & Aucune chaîne non traduite sur le parcours principal &
+    \checkmark \\
+18 & Démarrage de la pile & Trois services opérationnels en une commande & \checkmark \\
+\bottomrule
+\end{tabular}
+\caption{Scénarios de validation fonctionnelle}
+\label{tab:tests}
+\end{table}
+
+Cette approche a une limite : une campagne manuelle n'est ni reproductible
+ni exhaustive, et elle ne protège pas contre les régressions entre deux exécutions. Les trois
+assertions automatisées constituent un premier filet de sécurité, mais une véritable couverture
+de tests reste à construire.
+
+\subsection{Rétrospective}
+
+La rétrospective de la dernière release porte autant sur ce qu'elle a livré que sur ce
+qu'il resterait à faire avant une mise en service.
+
+\subparagraph{Ne jamais faire attendre le praticien.} Le principe directeur de la release
+(afficher les résultats avant la fin de l'archivage, et ne jamais laisser un incident
+technique compromettre l'exploitation d'un examen) s'est révélé structurant, du
+transfert en arrière-plan jusqu'au cycle de vie de l'examen.
+
+\subparagraph{Assumer les écarts réglementaires.} Le chiffrement applicatif des données au
+repos, le droit à l'effacement et les durées de conservation ne sont pas couverts. Ces
+écarts, documentés au sprint~5, dépassent le périmètre du projet mais conditionnent toute
+mise en service réelle.
+
+\subparagraph{Construire une couverture de tests.} La campagne de validation reste
+manuelle, donc ni reproductible ni exhaustive. Les assertions de sécurité de la chaîne
+d'intégration continue en constituent l'amorce.
+
+\sectionsansnum{Conclusion}
+
+Cette dernière release a complété \hypnoria{} sur l'ensemble de son périmètre fonctionnel.
+Les examens sont rattachés à des patients et archivés hors base, l'administrateur gouverne
+l'ouverture de la plateforme à plusieurs établissements, les praticiens peuvent solliciter
+un confrère et composer un compte rendu adapté à son destinataire, et la pile se déploie en
+une commande sous le contrôle d'une chaîne d'intégration continue.
+
+Au terme des trois releases, les soixante récits du backlog (358 points de complexité)
+ont été livrés. La conclusion générale en dresse le bilan et ouvre sur les perspectives.

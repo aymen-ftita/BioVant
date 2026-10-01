@@ -1,0 +1,382 @@
+\chapter{Sprint 1 : Préparation des données et amorçage}
+\label{chap:sprint1}
+
+\sectionsansnum{Introduction}
+
+Ce chapitre rend compte du premier sprint, consacré à la constitution du corpus
+d'apprentissage. Aucun modèle ne vaut mieux que les données qui l'alimentent : avant
+toute architecture, il fallait transformer des enregistrements bruts hétérogènes en un
+corpus homogène et étiqueté. Le sprint s'est heurté à une contrainte externe --- le
+délai d'instruction de la demande d'accès aux cohortes cliniques --- que nous avons
+choisi d'occuper plutôt que de subir.
+
+\section{Objectif du sprint}
+
+L'objectif était double. Il s'agissait d'abord de \textbf{construire la chaîne de
+préparation du signal} : lire un fichier au format EDF quel que soit son constructeur,
+en extraire les cinq dérivations utiles, uniformiser la fréquence d'échantillonnage,
+découper le signal en fenêtres conformes au référentiel AASM et neutraliser les écarts
+d'amplitude entre sujets.
+
+Il s'agissait ensuite de \textbf{valider cette chaîne de bout en bout} sans attendre
+l'autorisation d'accès aux cohortes du \emph{National Sleep Research
+Resource}~\cite{zhang2018nsrr}, dont l'instruction prend plusieurs semaines. Le jeu
+public Sleep-EDF~\cite{kemp2000}, diffusé par PhysioNet~\cite{goldberger2000} et
+immédiatement téléchargeable, a servi de banc d'essai.
+
+Ce choix mérite d'être explicité, car il constitue le principal arbitrage de gestion de
+projet du stage. Attendre l'autorisation aurait immobilisé quatre semaines. Travailler
+sur un jeu public de substitution permettait de valider la lecture des fichiers, la
+résolution des dérivations, la segmentation et la boucle d'entraînement avant même de
+disposer des données définitives. Lorsque l'autorisation est arrivée en semaine 5, la
+chaîne était éprouvée et il n'a plus été question que de la rejouer à plus grande
+échelle.
+
+\section{Analyse du sprint 1}
+
+\subsection{Sprint Backlog}
+
+Le sprint a embarqué quatre récits utilisateur pour un total de 29 points de
+complexité, détaillés au tableau~\ref{tab:bl-s1}.
+
+\begin{table}[H]
+\centering\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}c|L{2.5cm}|L{4.6cm}|L{4.6cm}|c@{}}
+\hline
+\ligneentete \entete{ID} & \entete{Module} & \entete{R\'ecit utilisateur} & \entete{T\^aches} & \entete{Estim.} \\
+\hline
+\multirow{3}{*}{US-22} & \multirow{3}{=}{Lecture des enregistrements} & \multirow{3}{=}{En tant que syst\`eme, je veux lire un fichier EDF et en extraire les d\'erivations physiologiques} & Int\'egrer la biblioth\`eque de lecture des formats physiologiques & \multirow{3}{*}{8 pts} \\
+ &  &  & Inventorier les d\'erivations et la fr\'equence native &  \\
+ &  &  & G\'erer les fichiers tronqu\'es ou illisibles &  \\
+\hline
+\multirow{3}{*}{US-23} & \multirow{3}{=}{R\'esolution des canaux} & \multirow{3}{=}{En tant que syst\`eme, je veux r\'esoudre les canaux malgr\'e l'h\'et\'erog\'en\'eit\'e des conventions de nommage} & Construire la table d'alias des cinq emplacements logiques & \multirow{3}{*}{5 pts} \\
+ &  &  & D\'efinir la strat\'egie de repli sur l'EEG principal &  \\
+ &  &  & Exiger le montage complet \`a l'entra\^inement &  \\
+\hline
+\multirow{4}{*}{US-24} & \multirow{4}{=}{Normalisation du signal} & \multirow{4}{=}{En tant que syst\`eme, je veux r\'e\'echantillonner, segmenter en \'epoques de 30 s et normaliser} & R\'e\'echantillonner \`a 100\,Hz par m\'ethode de Fourier & \multirow{4}{*}{8 pts} \\
+ &  &  & D\'ecouper en fen\^etres de 3\,000 \'echantillons &  \\
+ &  &  & Centrer et r\'eduire chaque fen\^etre &  \\
+ &  &  & S\'erialiser en tenseurs par sujet &  \\
+\hline
+\multirow{3}{*}{US-25} & \multirow{3}{=}{Amor\c{c}age} & \multirow{3}{=}{En tant qu'ing\'enieur, je veux valider la cha\^ine sur un jeu public avant l'acc\`es aux cohortes cliniques} & T\'el\'echarger et pr\'eparer le jeu public & \multirow{3}{*}{8 pts} \\
+ &  &  & Entra\^iner un mod\`ele de faisabilit\'e &  \\
+ &  &  & V\'erifier la boucle compl\`ete de bout en bout &  \\
+\hline
+\end{tabular}
+\caption{Sprint Backlog --- Sprint 1}
+\label{tab:bl-s1}
+\end{table}
+
+\subsection{Diagramme des cas d'utilisation}
+
+Ce sprint ne produit pas de fonctionnalité directement visible par le praticien : il
+construit le socle sur lequel reposeront tous les suivants. Le cas d'utilisation
+principal est donc porté par le moteur d'inférence, acteur secondaire du système
+(figure~\ref{fig:uc-s1}).
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    x=1cm,y=1cm,
+    uc/.style     = {ellipse, draw=hypnoblue!60, fill=hypnolight,
+                     align=center, font=\scriptsize, text width=2.6cm,
+                     inner sep=1.5pt, minimum height=1.0cm},
+    ucp/.style    = {ellipse, draw=hypnored!70, fill=hypnored!7,
+                     align=center, font=\scriptsize\bfseries, text width=2.6cm,
+                     inner sep=1.5pt, minimum height=1.0cm},
+    lien/.style   = {hypnogray!75, line width=0.55pt},
+    rel/.style    = {-{Latex[length=2mm]}, hypnoblue!70, line width=0.5pt, dashed},
+    et/.style     = {font=\tiny\itshape, text=hypnoblue!85, fill=white, inner sep=1pt},
+    nomact/.style = {font=\scriptsize\bfseries, align=center, text width=2.2cm},
+  ]
+
+  \tikzset{acteur/.pic={
+      \draw[hypnoblue,line width=0.8pt] (0,0) circle (0.17);
+      \draw[hypnoblue,line width=0.8pt] (0,-0.17) -- (0,-0.66);
+      \draw[hypnoblue,line width=0.8pt] (-0.28,-0.34) -- (0.28,-0.34);
+      \draw[hypnoblue,line width=0.8pt] (0,-0.66) -- (-0.24,-1.04);
+      \draw[hypnoblue,line width=0.8pt] (0,-0.66) -- (0.24,-1.04);}}
+
+  % Frontiere du systeme
+  \draw[hypnoblue!55,line width=0.9pt,rounded corners=3pt]
+       (3.1,-6.0) rectangle (12.5,2.4);
+  \node[font=\small\bfseries,text=hypnoblue,anchor=north west] at (3.35,2.25)
+       {Module de préparation des données};
+
+  % Cas principal et cas terminal, colonne de gauche
+  \node[ucp] (prep) at (5.1, 0.9)  {Préparer un\\enregistrement};
+  \node[uc]  (ser)  at (5.1,-4.3)  {Sérialiser le\\corpus};
+
+  % Sous-cas inclus, colonne de droite
+  \node[uc]  (lire) at (10.0, 1.2) {Décoder le\\fichier EDF};
+  \node[uc]  (res)  at (10.0,-0.3) {Résoudre les\\dérivations};
+  \node[uc]  (ree)  at (10.0,-1.8) {Rééchantillonner\\à 100\,Hz};
+  \node[uc]  (seg)  at (10.0,-3.3) {Segmenter en\\époques de 30\,s};
+  \node[uc]  (nor)  at (10.0,-4.8) {Normaliser\\chaque époque};
+
+  % Acteur
+  \pic at (1.3,0.6) {acteur};
+  \node[nomact,anchor=north] at (1.3,-0.05) {Moteur\\d'inférence};
+
+  \draw[lien] (1.7,0.25) -- (prep.west);
+  \draw[lien] (1.7,0.25) -- (ser.west);
+
+  \draw[rel] (prep) -- node[et,pos=0.62] {$\ll$include$\gg$} (lire);
+  \draw[rel] (prep) -- node[et,pos=0.62] {$\ll$include$\gg$} (res);
+  \draw[rel] (prep) -- node[et,pos=0.62] {$\ll$include$\gg$} (ree);
+  \draw[rel] (prep) -- node[et,pos=0.66] {$\ll$include$\gg$} (seg);
+  \draw[rel] (prep) -- node[et,pos=0.70] {$\ll$include$\gg$} (nor);
+
+\end{tikzpicture}
+\caption{Diagramme des cas d'utilisation du sprint 1 --- préparation des données}
+\label{fig:uc-s1}
+\end{figure}
+
+\subsubsection{Description textuelle des cas d'utilisation}
+
+\begin{casutilisation}{Description textuelle du cas « Préparer un enregistrement »}
+Titre & Préparer un enregistrement \\ \hline
+Acteur & Moteur d'inférence \\ \hline
+Description & Transformer un enregistrement polysomnographique brut en un ensemble de
+fenêtres normalisées, directement exploitables par un modèle de classification \\ \hline
+Préconditions & Un fichier au format EDF est disponible et lisible \\ \hline
+Scénario de base &
+\begin{minipage}[t]{\linewidth}
+\begin{enumerate}[leftmargin=1.1em,itemsep=1pt,topsep=3pt]
+  \item Le système décode le fichier et inventorie ses dérivations.
+  \item Il apparie chaque dérivation attendue à son équivalent dans le fichier.
+  \item Il ramène l'ensemble des signaux à \SI{100}{\hertz}.
+  \item Il découpe le signal en fenêtres de \num{3000} échantillons.
+  \item Il centre et réduit chaque fenêtre indépendamment.
+  \item Il sérialise le résultat sous forme de tenseur accompagné de ses étiquettes.
+\end{enumerate}
+\end{minipage} \\ \hline
+Scénario alternatif &
+\begin{minipage}[t]{\linewidth}
+\begin{itemize}[leftmargin=1.1em,itemsep=1pt,topsep=3pt]
+  \item \textbf{2a} --- Une dérivation est absente : en production, repli documenté sur
+        l'EEG principal ; à l'entraînement, le sujet est écarté du corpus.
+  \item \textbf{4a} --- L'enregistrement est plus court qu'une époque : le traitement
+        s'interrompt avec un message explicite.
+  \item \textbf{6a} --- L'hypnogramme de référence est absent : le sujet est écarté.
+\end{itemize}
+\end{minipage}
+\end{casutilisation}
+
+\subsection{Diagramme de séquence objet}
+
+La figure~\ref{fig:seq-s1} détaille l'enchaînement des traitements appliqués à un
+enregistrement.
+
+\begin{figure}[H]
+\centering
+\resizebox{0.96\textwidth}{!}{%
+\begin{sequencediagram}
+  \newthread[hypnolight]{p}{\scriptsize Script de préparation}
+  \newinst[2.0]{l}{\scriptsize Lecteur EDF}
+  \newinst[2.0]{a}{\scriptsize Résolveur de canaux}
+  \newinst[2.0]{s}{\scriptsize Traitement du signal}
+  \newinst[2.0]{x}{\scriptsize Analyseur XML}
+  \newinst[2.0]{f}{\scriptsize Corpus sérialisé}
+
+  \begin{call}{p}{\scriptsize ouvrir l'enregistrement}{l}{\scriptsize dérivations, fréquence}
+  \end{call}
+  \begin{call}{p}{\scriptsize apparier les dérivations}{a}{\scriptsize table de correspondance}
+  \end{call}
+  \begin{sdblock}{\scriptsize Contrôle}{\scriptsize montage complet exigé}
+    \begin{call}{p}{\scriptsize écarter le sujet si incomplet}{p}{}
+    \end{call}
+  \end{sdblock}
+  \begin{call}{p}{\scriptsize rééchantillonner}{s}{\scriptsize signal à 100\,Hz}
+  \end{call}
+  \begin{call}{p}{\scriptsize lire l'hypnogramme}{x}{\scriptsize séquence de stades}
+  \end{call}
+  \begin{call}{p}{\scriptsize segmenter et normaliser}{s}{\scriptsize tenseur d'époques}
+  \end{call}
+  \begin{call}{p}{\scriptsize sérialiser}{f}{\scriptsize fichier par sujet}
+  \end{call}
+\end{sequencediagram}}
+\caption{Diagramme de séquence objet du sprint 1 --- préparation d'un enregistrement}
+\label{fig:seq-s1}
+\end{figure}
+
+\section{Réalisation}
+
+\subsection{La chaîne de préparation}
+
+La chaîne réalisée comporte six étapes, chacune répondant à une source de variabilité
+identifiée (figure~\ref{fig:chaine}).
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    x=1cm,y=1cm,
+    et/.style  = {rectangle,rounded corners=2pt,draw=hypnoblue!60,fill=hypnolight,
+                  align=center,font=\scriptsize,minimum height=1.25cm,
+                  text width=2.15cm},
+    fl/.style  = {-{Latex[length=2mm]},hypnoblue!75,line width=0.8pt},
+    note/.style= {font=\tiny\itshape,text=hypnogray,align=center,text width=2.3cm},
+  ]
+
+  \node[et] (a) at (0.0,0)  {Décodage\\du fichier};
+  \node[et] (b) at (2.75,0) {Résolution\\des dérivations};
+  \node[et] (c) at (5.5,0)  {Rééchantillonnage\\à 100\,Hz};
+  \node[et] (d) at (8.25,0) {Segmentation\\en époques};
+  \node[et] (e) at (11.0,0) {Normalisation\\par époque};
+  \node[et] (f) at (13.75,0){Tenseur\\$(N, C, 3000)$};
+
+  \foreach \x/\y in {a/b,b/c,c/d,d/e,e/f} \draw[fl] (\x) -- (\y);
+
+  \node[note,anchor=north] at (0.0,-0.78)  {format\\constructeur};
+  \node[note,anchor=north] at (2.75,-0.78) {conventions de\\nommage};
+  \node[note,anchor=north] at (5.5,-0.78)  {fréquences\\d'acquisition};
+  \node[note,anchor=north] at (8.25,-0.78) {convention\\AASM 30\,s};
+  \node[note,anchor=north] at (11.0,-0.78) {amplitudes\\inter-sujets};
+  \node[note,anchor=north] at (13.75,-0.78){entrée des\\modèles};
+
+  \node[font=\tiny\bfseries,text=hypnored,anchor=east] at (-1.05,-1.35)
+       {variabilité traitée :};
+
+\end{tikzpicture}
+\vspace{0.3cm}
+\caption[Chaîne de traitement du signal]%
+        {Chaîne de préparation : chaque étape neutralise une source de variabilité.}
+\label{fig:chaine}
+\end{figure}
+
+Quatre décisions de traitement méritent d'être explicitées.
+
+\paragraph{Sélection stricte des dérivations.} À l'entraînement, les cinq dérivations
+sont exigées sous leur dénomination exacte et tout écart écarte le sujet. En production,
+au contraire, une table d'alias couvre les conventions de nommage des différents
+constructeurs et replie sur l'EEG principal une dérivation absente. Cette asymétrie est
+voulue : sélectivité pour la pureté du corpus d'apprentissage, tolérance pour
+l'interopérabilité clinique. C'est un des rares endroits du système où une même fonction
+est délibérément implémentée deux fois différemment.
+
+\paragraph{Fusion des anciens stades 3 et 4.} Les annotations des cohortes suivent
+encore la nomenclature de Rechtschaffen et Kales~\cite{rechtschaffen1968}. Le stade 4
+est fusionné dans le N3, conformément à la révision AASM de 2007.
+
+\paragraph{Comblement des époques non scorées.} Les fenêtres sans stade attribué
+reçoivent le dernier stade valide observé ; celles qui précèdent le premier stade scoré
+sont considérées comme de l'éveil. Cette dernière convention est une hypothèse ---
+l'enregistrement débute avant l'extinction des lumières --- et non une donnée.
+
+\paragraph{Normalisation locale.} La statistique de centrage et de réduction est
+calculée sur chaque fenêtre isolément, et non sur le corpus. Ce choix neutralise les
+écarts d'amplitude liés à l'impédance des électrodes, au gain de l'amplificateur et à la
+morphologie du sujet, ainsi que la dérive lente au cours de la nuit. Il a surtout une
+conséquence méthodologique : \textbf{aucune statistique globale n'étant estimée, aucune
+information ne peut fuir de l'ensemble d'entraînement vers l'ensemble de test par la
+normalisation}. En contrepartie, l'information d'amplitude absolue est perdue, alors
+qu'elle caractérise partiellement le sommeil profond.
+
+\subsection{Le corpus produit}
+
+La préparation est assurée par un script exécuté une seule fois, dont le produit
+alimentera les douze entraînements du sprint suivant. Chaque enregistrement est apparié
+à son fichier d'annotations, ses cinq dérivations sont extraites, le signal est ramené à
+\SI{100}{\hertz}, découpé en fenêtres de \num{3000} échantillons et centré-réduit fenêtre
+par fenêtre. Le résultat est sérialisé sous forme d'un tenseur en simple précision
+accompagné d'un vecteur d'étiquettes en entier court, soit environ \SI{60}{\mega\octet}
+par nuit.
+
+Le script est \textbf{relançable} : un sujet déjà converti est ignoré, ce qui permet
+d'étaler la campagne de préparation sur plusieurs sessions. Détail d'ingénierie modeste,
+mais c'est exactement ce qui rend une expérience reproductible.
+
+Cent quatre-vingt-seize enregistrements de la cohorte SHHS1~\cite{quan1997} ont été
+retenus, pour un total de \num{195130} époques de 30 secondes. Il faut souligner que le
+corpus est \textbf{filtré et non échantillonné} : un sujet est écarté s'il lui manque une
+des cinq dérivations requises ou son fichier d'annotations. Les sujets retenus sont donc
+les premiers de la cohorte à satisfaire le montage complet, ce qui introduit un biais de
+sélection dont nous discuterons la portée.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+
+  \def\W{11.4}
+
+  % ── Barre 5 classes ───────────────────────────────────────────────────────
+  \node[font=\scriptsize\bfseries,text=hypnogray,anchor=east] at (-0.25,1.55)
+       {5 classes};
+  \foreach \a/\b/\col/\lab/\pct in {
+      0/30.70/stWake/W/30{,}7,
+      30.70/33.96/stN1/N1/3{,}3,
+      33.96/74.13/stN2/N2/40{,}2,
+      74.13/87.09/stN3/N3/13{,}0,
+      87.09/100/stREM/REM/12{,}9}
+  {
+    \pgfmathsetmacro{\xa}{\a*\W/100}
+    \pgfmathsetmacro{\xb}{\b*\W/100}
+    \pgfmathsetmacro{\xm}{(\xa+\xb)/2}
+    \fill[\col!75] (\xa,1.15) rectangle (\xb,1.95);
+    \draw[white,line width=0.8pt] (\xb,1.15) -- (\xb,1.95);
+    \node[font=\tiny\bfseries,text=white] at (\xm,1.68) {\lab};
+    \node[font=\tiny,text=white] at (\xm,1.40) {\pct\,\%};
+  }
+
+  % ── Barre 3 classes ───────────────────────────────────────────────────────
+  \node[font=\scriptsize\bfseries,text=hypnogray,anchor=east] at (-0.25,0.35)
+       {3 classes};
+  \foreach \a/\b/\col/\lab/\pct in {
+      0/30.70/stWake/Wake/30{,}7,
+      30.70/87.09/stN2/NREM/56{,}4,
+      87.09/100/stREM/REM/12{,}9}
+  {
+    \pgfmathsetmacro{\xa}{\a*\W/100}
+    \pgfmathsetmacro{\xb}{\b*\W/100}
+    \pgfmathsetmacro{\xm}{(\xa+\xb)/2}
+    \fill[\col!75] (\xa,-0.05) rectangle (\xb,0.75);
+    \draw[white,line width=0.8pt] (\xb,-0.05) -- (\xb,0.75);
+    \node[font=\tiny\bfseries,text=white] at (\xm,0.48) {\lab};
+    \node[font=\tiny,text=white] at (\xm,0.20) {\pct\,\%};
+  }
+
+  % ── Annotation ────────────────────────────────────────────────────────────
+  \draw[hypnored,line width=0.7pt] (3.50,2.10) -- (3.50,2.45) -- (4.30,2.45);
+  \node[font=\scriptsize,text=hypnored,anchor=west] at (4.35,2.45)
+       {le N1 ne représente que \num{6361} époques sur \num{195130}};
+
+  \node[font=\tiny\itshape,text=hypnogray,anchor=north] at (5.7,-0.35)
+       {corpus SHHS1 --- 196 enregistrements, \num{195130} époques de 30 secondes};
+
+\end{tikzpicture}
+\vspace{0.35cm}
+\caption[Distribution des stades dans le corpus SHHS1]%
+        {Distribution des stades dans le corpus d'entraînement, aux deux granularités.}
+\label{fig:distribution}
+\end{figure}
+
+Le déséquilibre est frappant et conditionne tout le sprint suivant. Le N2 occupe à lui
+seul \SI{40,2}{\percent} des époques, tandis que le \textbf{N1 n'en représente que
+\SI{3,3}{\percent}}, soit \num{6361} exemples. Un modèle qui ignorerait purement et
+simplement cette classe perdrait à peine trois points d'exactitude globale : c'est
+exactement le comportement que la pondération des classes devra empêcher.
+
+\subsection{Découpage et pondération}
+
+Le corpus est découpé en trois parts stratifiées sur la classe, dans les proportions
+\num{80} / \num{10} / \num{10}, soit \num{156104} époques d'entraînement et \num{19513}
+pour chacun des ensembles de validation et de test. La pondération des classes est fixée
+à l'inverse de leur fréquence, puis renormalisée : le REM se voit attribuer un poids
+\num{4,4} fois supérieur à celui du NREM en trois classes, et le N1 un poids \num{12,3}
+fois supérieur à celui du N2 en cinq classes.
+
+\sectionsansnum{Conclusion}
+
+Ce premier sprint a produit le socle de tout le projet : une chaîne de préparation
+opérationnelle et un corpus de \num{195130} époques étiquetées, issues de 196
+enregistrements cliniques.
+
+L'arbitrage de départ --- travailler sur un jeu public pendant l'instruction de la
+demande d'accès --- s'est révélé payant : lorsque les données définitives sont arrivées,
+la chaîne était éprouvée et il n'a suffi que de la rejouer à plus grande échelle.
+
+Deux constats issus de ce sprint pèseront sur les suivants : le corpus est fortement
+déséquilibré, avec un stade N1 marginal, et il résulte d'un filtrage sur la complétude
+du montage plutôt que d'un tirage aléatoire. Le sprint suivant exploite ce corpus pour
+entraîner les trois familles d'architectures de classification.

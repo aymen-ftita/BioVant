@@ -1,0 +1,454 @@
+\chapter{Sprint 4 : Service d'inférence et poste de travail}
+\label{chap:sprint4}
+
+\sectionsansnum{Introduction}
+
+Les trois premiers sprints ont produit des modèles. Ce quatrième sprint les rend
+utilisables : il expose une interface applicative sécurisée et construit le poste de
+travail du praticien, depuis le dépôt d'un enregistrement jusqu'au rapport de sévérité
+expliqué.
+
+\section{Objectif du sprint}
+
+L'objectif était de franchir le pas du \emph{carnet d'expérimentation} vers le
+\emph{service}. Trois exigences le structuraient.
+
+La première était la \textbf{disponibilité des modèles}. Chargés naïvement à chaque
+requête, les modèles imposeraient plusieurs secondes de latence : ils devaient donc être
+conservés en mémoire entre deux appels.
+
+La deuxième était la \textbf{sécurisation des accès}. Une plateforme manipulant des
+données de santé ne peut être ouverte : authentification, jetons signés et cloisonnement
+des rôles devaient être posés dès ce sprint.
+
+La troisième était l'\textbf{ergonomie du parcours}. Une analyse dure plusieurs dizaines
+de secondes ; l'interface devait guider le praticien et le tenir informé sans jamais le
+laisser devant un écran muet.
+
+\section{Analyse du sprint 4}
+
+\subsection{Sprint Backlog}
+
+Le sprint a embarqué seize récits pour 80 points, le plus chargé du projet.
+
+\begin{table}[H]
+\centering\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}c|L{2.5cm}|L{4.6cm}|L{4.6cm}|c@{}}
+\hline
+\ligneentete \entete{ID} & \entete{Module} & \entete{R\'ecit utilisateur} & \entete{T\^aches} & \entete{Estim.} \\
+\hline
+\multirow{3}{*}{US-01\,\`a\,04} & \multirow{3}{=}{Authentification} & \multirow{3}{=}{En tant qu'utilisateur, je veux me connecter et acc\'eder aux fonctions de mon r\^ole} & Hacher les mots de passe avec sel al\'eatoire & \multirow{3}{*}{15 pts} \\
+ &  &  & D\'elivrer un jeton sign\'e \`a expiration &  \\
+ &  &  & V\'erifier le r\^ole sur chaque route prot\'eg\'ee &  \\
+\hline
+\multirow{3}{*}{US-30\,\`a\,33} & \multirow{3}{=}{Service d'inf\'erence} & \multirow{3}{=}{En tant que m\'edecin, je veux lancer une analyse en choisissant la configuration adapt\'ee \`a mon montage} & Exposer les routes d'analyse et d'inspection & \multirow{3}{*}{19 pts} \\
+ &  &  & Mettre les mod\`eles en cache m\'emoire &  \\
+ &  &  & Calculer les m\'etriques AASM &  \\
+\hline
+\multirow{3}{*}{US-38\,\`a\,41} & \multirow{3}{=}{Rapport de s\'ev\'erit\'e} & \multirow{3}{=}{En tant que m\'edecin, je veux saisir les donn\'ees cliniques et obtenir un rapport expliqu\'e} & Cr\'eer le formulaire clinique & \multirow{3}{*}{23 pts} \\
+ &  &  & Analyser les rapports externes import\'es &  \\
+ &  &  & Produire l'interpr\'etation automatique &  \\
+\hline
+\multirow{3}{*}{US-42\,\`a\,44} & \multirow{3}{=}{Visualisation} & \multirow{3}{=}{En tant que m\'edecin, je veux visualiser l'hypnogramme et suivre la progression de l'analyse} & Tracer l'hypnogramme interactif & \multirow{3}{*}{18 pts} \\
+ &  &  & Superposer saturation et densit\'e d'\'ev\'enements &  \\
+ &  &  & Afficher l'\'ecran de progression &  \\
+\hline
+\multirow{1}{*}{US-53} & \multirow{1}{=}{Export} & \multirow{1}{=}{En tant que m\'edecin, je veux exporter les marqueurs calcul\'es} & Produire les exports tabulaire et balis\'e & \multirow{1}{*}{5 pts} \\
+\hline
+\end{tabular}
+\caption{Sprint Backlog --- Sprint 4}
+\label{tab:bl-s4}
+\end{table}
+
+\subsection{Diagramme des cas d'utilisation}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    x=1cm,y=1cm,
+    uc/.style     = {ellipse, draw=hypnoblue!60, fill=hypnolight,
+                     align=center, font=\scriptsize, text width=2.7cm,
+                     inner sep=1.5pt, minimum height=1.0cm},
+    ucp/.style    = {ellipse, draw=hypnored!70, fill=hypnored!7,
+                     align=center, font=\scriptsize\bfseries, text width=2.7cm,
+                     inner sep=1.5pt, minimum height=1.0cm},
+    lien/.style   = {hypnogray!75, line width=0.55pt},
+    rel/.style    = {-{Latex[length=2mm]}, hypnoblue!70, line width=0.5pt, dashed},
+    et/.style     = {font=\tiny\itshape, text=hypnoblue!85, fill=white, inner sep=1pt},
+    nomact/.style = {font=\scriptsize\bfseries, align=center, text width=2.2cm},
+  ]
+
+  \tikzset{acteur/.pic={
+      \draw[hypnoblue,line width=0.8pt] (0,0) circle (0.17);
+      \draw[hypnoblue,line width=0.8pt] (0,-0.17) -- (0,-0.66);
+      \draw[hypnoblue,line width=0.8pt] (-0.28,-0.34) -- (0.28,-0.34);
+      \draw[hypnoblue,line width=0.8pt] (0,-0.66) -- (-0.24,-1.04);
+      \draw[hypnoblue,line width=0.8pt] (0,-0.66) -- (0.24,-1.04);}}
+
+  \draw[hypnoblue!55,line width=0.9pt,rounded corners=3pt]
+       (3.6,-5.4) rectangle (12.6,2.4);
+  \node[font=\small\bfseries,text=hypnoblue,anchor=north west] at (3.85,2.25)
+       {Poste de travail du médecin};
+
+  \node[uc]  (auth) at (5.8, 1.4)  {S'authentifier};
+  \node[ucp] (ana)  at (5.8,-0.6)  {Analyser un\\enregistrement};
+  \node[uc]  (exp)  at (5.8,-3.9)  {Exporter les\\marqueurs};
+
+  \node[uc]  (cfg)  at (10.3, 1.3) {Choisir montage\\et granularité};
+  \node[uc]  (vis)  at (10.3,-0.2) {Visualiser\\l'hypnogramme};
+  \node[uc]  (met)  at (10.3,-1.7) {Consulter les\\métriques AASM};
+  \node[uc]  (sev)  at (10.3,-3.2) {Obtenir le rapport\\de sévérité};
+  \node[uc]  (imp)  at (10.3,-4.7) {Importer un\\rapport externe};
+
+  \pic at (1.5,0.9) {acteur};
+  \node[nomact,anchor=north] at (1.5,0.25) {Médecin};
+
+  \draw[lien] (1.9,0.55) -- (auth.west);
+  \draw[lien] (1.9,0.55) -- (ana.west);
+  \draw[lien] (1.9,0.55) -- (exp.west);
+
+  \draw[rel] (ana) -- node[et,pos=0.58] {$\ll$include$\gg$} (cfg);
+  \draw[rel] (ana) -- node[et,pos=0.6]  {$\ll$include$\gg$} (vis);
+  \draw[rel] (ana) -- node[et,pos=0.6]  {$\ll$include$\gg$} (met);
+  \draw[rel] (sev) -- node[et,pos=0.5,above]  {$\ll$extend$\gg$} (met);
+  \draw[rel] (imp) -- node[et,pos=0.5,below]  {$\ll$extend$\gg$} (sev);
+  \draw[rel] (ana) -- node[et,pos=0.55] {$\ll$include$\gg$} (auth);
+
+\end{tikzpicture}
+\caption{Diagramme des cas d'utilisation du sprint 4 --- poste de travail du médecin}
+\label{fig:uc-s4}
+\end{figure}
+
+\subsubsection{Description textuelle des cas d'utilisation}
+
+\begin{casutilisation}{Description textuelle du cas « Analyser un enregistrement »}
+Titre & Analyser un enregistrement \\ \hline
+Acteurs & Médecin du sommeil, moteur d'inférence \\ \hline
+Description & Produire l'hypnogramme et les métriques d'une nuit à partir d'un fichier
+d'enregistrement brut \\ \hline
+Préconditions & Le médecin est authentifié ; sa licence est valide ; il dispose d'un
+fichier au format EDF \\ \hline
+Scénario de base &
+\begin{minipage}[t]{\linewidth}
+\begin{enumerate}[leftmargin=1.1em,itemsep=1pt,topsep=3pt]
+  \item Le médecin choisit le montage disponible, à deux ou cinq dérivations.
+  \item Il choisit la granularité de classification, à trois ou cinq stades.
+  \item Il dépose le fichier d'enregistrement.
+  \item Le système décode le fichier, résout les dérivations et prétraite le signal.
+  \item Le moteur classe chaque époque et le système calcule les métriques.
+  \item Le système affiche l'hypnogramme, les métriques et les alertes cliniques.
+\end{enumerate}
+\end{minipage} \\ \hline
+Scénario alternatif &
+\begin{minipage}[t]{\linewidth}
+\begin{itemize}[leftmargin=1.1em,itemsep=1pt,topsep=3pt]
+  \item \textbf{3a} --- Le fichier n'est pas au format attendu : le dépôt est refusé.
+  \item \textbf{4a} --- Une dérivation est absente : repli documenté, l'analyse aboutit.
+  \item \textbf{4b} --- L'enregistrement est trop court : interruption avec message.
+\end{itemize}
+\end{minipage}
+\end{casutilisation}
+
+\subsection{Diagramme de séquence objet}
+
+\begin{figure}[H]
+\centering
+\resizebox{0.98\textwidth}{!}{%
+\begin{sequencediagram}
+  \newthread[hypnolight]{u}{\scriptsize Praticien}
+  \newinst[2.2]{f}{\scriptsize Client web}
+  \newinst[2.2]{a}{\scriptsize Interface applicative}
+  \newinst[2.2]{d}{\scriptsize Base de données}
+
+  \begin{call}{u}{\scriptsize saisit ses identifiants}{f}{}
+  \end{call}
+  \begin{call}{f}{\scriptsize demande de jeton}{a}{\scriptsize jeton et profil}
+    \begin{call}{a}{\scriptsize recherche du compte}{d}{\scriptsize empreinte}
+    \end{call}
+    \begin{sdblock}{\scriptsize Vérifications}{\scriptsize mot de passe, statut, licence}
+      \begin{call}{a}{\scriptsize horodate la connexion}{d}{}
+      \end{call}
+      \begin{call}{a}{\scriptsize journalise l'accès}{d}{}
+      \end{call}
+    \end{sdblock}
+  \end{call}
+  \begin{call}{f}{\scriptsize conserve le jeton}{f}{}
+  \end{call}
+  \begin{call}{f}{\scriptsize ouvre l'espace de travail}{u}{}
+  \end{call}
+\end{sequencediagram}}
+\caption[Séquence d'authentification]%
+        {Ouverture de session et délivrance du jeton.}
+\label{fig:seq-auth}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\resizebox{0.98\textwidth}{!}{%
+\begin{sequencediagram}
+  \newthread[hypnolight]{u}{\scriptsize Praticien}
+  \newinst[1.8]{f}{\scriptsize Client web}
+  \newinst[1.8]{a}{\scriptsize Interface applicative}
+  \newinst[1.8]{m}{\scriptsize Moteur d'inférence}
+  \newinst[1.8]{d}{\scriptsize Base de données}
+  \newinst[1.8]{s}{\scriptsize Stockage objet}
+
+  \begin{call}{u}{\scriptsize dépose le fichier}{f}{}
+  \end{call}
+  \begin{call}{f}{\scriptsize demande d'analyse}{a}{\scriptsize stades et métriques}
+    \begin{call}{a}{\scriptsize prétraitement}{m}{\scriptsize tenseur d'époques}
+    \end{call}
+    \begin{call}{a}{\scriptsize classification}{m}{\scriptsize séquence de stades}
+    \end{call}
+    \begin{call}{a}{\scriptsize métriques AASM}{m}{\scriptsize indicateurs}
+    \end{call}
+  \end{call}
+  \begin{call}{f}{\scriptsize affiche l'hypnogramme}{u}{}
+  \end{call}
+  \begin{call}{f}{\scriptsize enregistre l'examen}{a}{\scriptsize identifiant}
+    \begin{call}{a}{\scriptsize insertion}{d}{}
+    \end{call}
+  \end{call}
+  \begin{sdblock}{\scriptsize Arrière-plan}{\scriptsize sans blocage de l'interface}
+    \begin{call}{f}{\scriptsize transfert du fichier}{a}{\scriptsize référence}
+      \begin{call}{a}{\scriptsize dépôt}{s}{\scriptsize clé d'objet}
+      \end{call}
+      \begin{call}{a}{\scriptsize mise à jour}{d}{}
+      \end{call}
+    \end{call}
+  \end{sdblock}
+\end{sequencediagram}}
+\caption[Séquence d'analyse d'un enregistrement]%
+        {Analyse d'un enregistrement : les résultats précèdent l'archivage.}
+\label{fig:seq-analyse}
+\end{figure}
+
+La particularité de cet enchaînement tient à l'ordre des opérations : les résultats sont
+affichés au praticien \emph{avant} que l'archivage du fichier, mis en place au sprint
+suivant, ne soit terminé.
+
+\section{Réalisation}
+
+\subsection{Organisation de l'interface applicative}
+
+L'interface applicative est bâtie sur FastAPI, choisi pour son modèle asynchrone, sa
+validation déclarative des données et la génération automatique de sa documentation. Le
+code est réparti en modules à responsabilité unique.
+
+\begin{table}[H]
+\centering
+
+\small
+\begin{tabular}{@{}lrL{8.3cm}@{}}
+\toprule
+\textbf{Module} & \textbf{Lignes} & \textbf{Responsabilité} \\
+\midrule
+\texttt{main.py}          & 695 & Point d'entrée, routes métier et d'administration,
+                                  migration au démarrage, journalisation \\
+\texttt{ml\_routes.py}    & 984 & Routes d'inférence : analyse, extraction de
+                                  marqueurs, prédiction de sévérité, lecture de
+                                  fichiers externes \\
+\texttt{ml\_models.py}    & 117 & Définition des trois architectures de réseaux \\
+\texttt{preprocessing.py} & 199 & Décodage EDF, résolution des dérivations, calcul
+                                  des métriques AASM \\
+\texttt{osa\_predictor.py}& 113 & Chargement des modèles de sévérité, prédiction et
+                                  attribution des contributions \\
+\texttt{db\_models.py}    & 113 & Modèle de données et relations \\
+\texttt{schemas.py}       & 163 & Schémas de validation des entrées et sorties \\
+\texttt{auth.py}          &  51 & Jetons, empreintes de mots de passe, dépendance
+                                  d'authentification \\
+\texttt{b2\_storage.py}   & 121 & Client de stockage objet, dépôt et signature des
+                                  liens \\
+\texttt{database.py}      &  19 & Connexion et session \\
+\bottomrule
+\end{tabular}
+\caption{Modules de l'interface applicative}
+\label{tab:modules}
+\end{table}
+
+Deux mécanismes transversaux méritent d'être signalés. Le premier est la \textbf{migration
+au démarrage} : le schéma ayant évolué au fil des sprints, l'application exécute à son
+lancement une série d'ajouts de colonnes conditionnels, ce qui permet de déployer une
+nouvelle version sur une base existante sans intervention manuelle. Le second est la
+\textbf{signature des liens à la sérialisation}, développée au sprint suivant.
+
+\subsection{Points d'entrée}
+
+\begin{table}[H]
+\centering
+
+\small
+\begin{tabular}{@{}lL{6.6cm}cL{2.6cm}@{}}
+\toprule
+\textbf{Méthode} & \textbf{Chemin} & \textbf{Accès} & \textbf{Domaine} \\
+\midrule
+POST & \texttt{/token}                        & public   & \multirow{2}{*}{Authentification} \\
+GET  & \texttt{/users/me}                     & connecté & \\
+\midrule
+POST & \texttt{/admin/doctors}                & admin & \multirow{8}{*}{Administration} \\
+GET  & \texttt{/admin/doctors}                & admin & \\
+PUT  & \texttt{/admin/doctors/\{id\}/lifecycle}      & admin & \\
+POST & \texttt{/admin/doctors/\{id\}/reset-password} & admin & \\
+POST & \texttt{/admin/hospitals}              & admin & \\
+GET  & \texttt{/admin/hospitals}              & admin & \\
+GET  & \texttt{/admin/dashboard-stats}        & admin & \\
+GET  & \texttt{/admin/audit-logs}             & admin & \\
+GET  & \texttt{/admin/audit-logs/export}      & admin & \\
+\midrule
+POST & \texttt{/patients}                     & médecin & \multirow{4}{*}{Patients} \\
+GET  & \texttt{/patients}                     & médecin & \\
+GET  & \texttt{/patients/\{id\}}              & médecin & \\
+GET  & \texttt{/doctor/stats}                 & médecin & \\
+\midrule
+POST & \texttt{/patients/\{id\}/psgs}         & médecin & \multirow{8}{*}{Examens} \\
+PUT  & \texttt{/psgs/\{id\}}                  & médecin & \\
+POST & \texttt{/psgs/\{id\}/upload\_edf}      & médecin & \\
+POST & \texttt{/psgs/\{id\}/upload\_hypnogram} & médecin & \\
+POST & \texttt{/psgs/\{id\}/upload\_hypnogram\_annotated} & médecin & \\
+POST & \texttt{/psgs/\{id\}/upload\_osa\_report} & médecin & \\
+POST & \texttt{/psgs/\{id\}/annotations}      & médecin & \\
+GET  & \texttt{/psgs/\{id\}/annotations}      & médecin & \\
+\midrule
+GET  & \texttt{/doctors}                      & médecin & \multirow{5}{*}{Collaboration} \\
+POST & \texttt{/conversations}                & médecin & \\
+GET  & \texttt{/conversations}                & médecin & \\
+GET  & \texttt{/conversations/psg/\{id\}}     & médecin & \\
+GET  & \texttt{/conversations/\{id\}/messages} & médecin & \\
+POST & \texttt{/conversations/\{id\}/messages} & médecin & \\
+\midrule
+GET  & \texttt{/health}                       & public & \multirow{7}{*}{Inférence} \\
+POST & \texttt{/channels}                     & public & \\
+POST & \texttt{/analyze}                      & public & \\
+POST & \texttt{/extract\_features}            & public & \\
+POST & \texttt{/predict\_osa}                 & public & \\
+POST & \texttt{/predict\_osa\_custom}         & public & \\
+POST & \texttt{/parse\_features\_file}        & public & \\
+\bottomrule
+\end{tabular}
+\caption{Points d'entrée de l'interface applicative}
+\label{tab:endpoints}
+\end{table}
+
+Il faut relever ici une \textbf{faiblesse de la version livrée} : les routes d'inférence
+ne sont pas protégées par le contrôle d'accès. Ce choix, initialement fait pour faciliter
+les essais pendant la mise au point, n'a pas été rétabli. Un appelant non authentifié peut
+donc soumettre un enregistrement à l'analyse. Aucune donnée patient n'est exposée --- ces
+routes ne lisent ni n'écrivent en base --- mais elles consomment des ressources de calcul.
+L'ajout de la dépendance d'authentification, qui tient en une ligne par route, figure parmi
+les corrections à apporter avant toute mise en service réelle.
+
+\capturefig{swagger}{0.9}{Documentation OpenAPI générée automatiquement}{fig:swagger}
+
+\subsection{Sécurité des accès}
+
+\begin{table}[H]
+\centering
+
+\small
+\begin{tabular}{@{}L{3.2cm}L{5.3cm}L{5.5cm}@{}}
+\toprule
+\textbf{Mécanisme} & \textbf{Principe} & \textbf{Menace couverte} \\
+\midrule
+Empreintes de mots de passe &
+Fonction de dérivation lente avec sel aléatoire par compte &
+Compromission de la base : les mots de passe restent inexploitables \\
+\addlinespace[3pt]
+Jetons signés &
+Jeton porteur signé, transmis à chaque appel, contenant l'identité et le rôle &
+Usurpation : toute altération invalide la signature \\
+\addlinespace[3pt]
+Contrôle d'accès par rôle &
+Vérification du rôle et de la propriété de la ressource sur chaque route protégée &
+Élévation de privilège et accès aux patients d'un confrère \\
+\addlinespace[3pt]
+Liens d'accès signés &
+Les références de fichiers sont converties en URL signées valables 24 heures &
+Fuite de données : aucun objet n'est accessible sans signature valide \\
+\bottomrule
+\end{tabular}
+\caption{Mécanismes de sécurité et menaces couvertes}
+\label{tab:secu}
+\end{table}
+
+Les \textbf{mots de passe} sont hachés par bcrypt, dont le sel aléatoire par compte
+interdit les tables précalculées. Les \textbf{jetons} sont signés en HMAC-SHA256 et portent
+l'adresse de l'utilisateur, son rôle et une date d'expiration fixée à sept jours. Le
+\textbf{contrôle d'accès} superpose deux niveaux : le rôle est vérifié en tête de route, la
+propriété de la ressource l'est ensuite.
+
+\subsection{Poste de travail du praticien}
+
+L'interface est une application monopage React, construite par Vite, organisée en
+composants regroupés par domaine fonctionnel.
+
+\begin{table}[H]
+\centering
+
+\small
+\begin{tabular}{@{}lrL{8.0cm}@{}}
+\toprule
+\textbf{Composant} & \textbf{Lignes} & \textbf{Rôle} \\
+\midrule
+\texttt{AnalysisResults} & 1134 & Restitution complète : hypnogramme, métriques,
+                                  marqueurs, formulaire clinique, rapport de sévérité \\
+\texttt{PatientList}     &  993 & Registre des patients, historique des examens,
+                                  documents archivés \\
+\texttt{CustomOSA}       &  658 & Prédiction à partir d'une saisie manuelle ou d'un
+                                  rapport importé \\
+\texttt{Hypnogram}       &  552 & Tracé interactif de l'hypnogramme, de la saturation
+                                  et de la densité d'événements \\
+\texttt{DoctorList}      &  539 & Administration des comptes et des licences \\
+\texttt{DeveloperPipeline} & 497 & Visualisation de la chaîne de traitement \\
+\texttt{LandingPage}     &  406 & Page publique et authentification \\
+\texttt{AnalysisWizard}  &  428 & Assistant d'analyse en quatre étapes \\
+\texttt{HospitalsDashboard} & 233 & Gestion des établissements \\
+\texttt{ConsultationsView}  & 198 & Boîte de réception des sollicitations \\
+\texttt{AuditLogsDashboard} & 194 & Consultation et export du journal \\
+\texttt{CollaborationChat}  & 171 & Fil de discussion rattaché à un examen \\
+\bottomrule
+\end{tabular}
+\caption{Principaux composants de l'interface}
+\label{tab:composants}
+\end{table}
+
+Le parcours principal se déroule en quatre étapes : le praticien déclare le montage
+disponible, puis la granularité souhaitée, dépose le fichier, et consulte les résultats.
+Chaque étape n'expose qu'une seule décision, assortie d'une recommandation par défaut.
+
+\capturefig{wizard-1}{0.86}{Assistant d'analyse, étape 1 : déclaration du montage}{fig:wizard1}
+
+\capturefig{wizard-2}{0.86}{Assistant d'analyse, étape 2 : granularité de classification}{fig:wizard2}
+
+Pendant le traitement, un écran de progression affiche les tracés physiologiques et
+détaille les cinq étapes du pipeline. Ce retour visuel n'est pas décoratif : une interface
+muette pendant plusieurs dizaines de secondes laisserait croire à un blocage.
+
+\capturefig{progression}{0.86}{Écran de progression du traitement}{fig:progression}
+
+La page de résultats superpose sur un même axe temporel l'hypnogramme prédit, la courbe de
+saturation et la densité d'événements respiratoires. Cette superposition est le choix de
+visualisation le plus utile de l'interface : elle permet de constater directement qu'une
+désaturation coïncide avec une sortie de sommeil paradoxal, ce que trois graphiques séparés
+ne montreraient pas.
+
+\capturefig{resultats}{0.92}{Restitution des résultats d'analyse}{fig:resultats}
+
+Un second parcours permet une prédiction sans enregistrement, à partir d'une saisie manuelle
+ou d'un rapport externe importé. Cette voie répond à un usage réel : disposer d'un compte
+rendu produit par un autre laboratoire sans avoir accès au signal brut.
+
+\capturefig{custom-osa}{0.86}{Prédiction de sévérité à partir d'une saisie manuelle}{fig:customosa}
+
+\sectionsansnum{Conclusion}
+
+Ce sprint a transformé des modèles de laboratoire en un service utilisable. L'interface
+applicative expose les routes d'inférence, conserve les modèles en mémoire et protège les
+routes métier par un double contrôle de rôle et de propriété. Le poste de travail guide
+l'analyse en quatre décisions et restitue les résultats sur un axe temporel unique.
+
+Une faiblesse a été identifiée et documentée : les routes d'inférence ne sont pas
+authentifiées.
+
+Le sprint suivant dote la plateforme d'une mémoire : dossier patient, archivage des fichiers
+volumineux et administration multi-établissements.

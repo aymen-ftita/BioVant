@@ -1,51 +1,204 @@
 \babel@toc {french}{}\relax 
-\contentsline {chapter}{Remerciements}{1}{chapter*.1}%
-\contentsline {chapter}{\numberline {1}Introduction générale}{5}{chapter.1}%
-\contentsline {chapter}{\numberline {2}Présentation de l’organisme d’accueil : CNI}{6}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Le Centre National de l’Informatique (CNI)}{6}{section.2.1}%
-\contentsline {subsection}{\numberline {2.1.1}Missions}{6}{subsection.2.1.1}%
-\contentsline {subsection}{\numberline {2.1.2}Historique}{7}{subsection.2.1.2}%
-\contentsline {subsection}{\numberline {2.1.3}Intégration du projet au sein du CNI}{7}{subsection.2.1.3}%
-\contentsline {section}{\numberline {2.2}Organisation du stage}{7}{section.2.2}%
-\contentsline {chapter}{\numberline {3}Contexte médical et problématique}{8}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Le sommeil et ses stades}{8}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Problématique de l’automatisation}{8}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Objectifs du projet}{8}{section.3.3}%
-\contentsline {chapter}{\numberline {4}État de l’art}{10}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Classification automatique des stades du sommeil}{10}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}Modèles séquentiels : LSTM, CNN, Transformers}{10}{subsection.4.1.1}%
-\contentsline {subsection}{\numberline {4.1.2}Modèles d’ensemble}{10}{subsection.4.1.2}%
-\contentsline {section}{\numberline {4.2}Explicabilité en IA (XAI)}{10}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}SHAP (SHapley Additive exPlanations)}{10}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Mécanismes d’attention}{11}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Cartes de saillie}{11}{subsection.4.2.3}%
-\contentsline {subsection}{\numberline {4.2.4}Application au sommeil}{11}{subsection.4.2.4}%
-\contentsline {chapter}{\numberline {5}Conception et architecture du système}{12}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Gestion du projet (Méthodologie Agile)}{12}{section.5.1}%
-\contentsline {subsection}{\numberline {5.1.1}Product Backlog}{12}{subsection.5.1.1}%
-\contentsline {subsection}{\numberline {5.1.2}Planification des Sprints}{13}{subsection.5.1.2}%
-\contentsline {subsubsection}{\numberline {5.1.2.1}Sprint 1 : Préparation des données}{13}{subsubsection.5.1.2.1}%
-\contentsline {subsubsection}{\numberline {5.1.2.2}Sprint 2 : Modélisation}{13}{subsubsection.5.1.2.2}%
-\contentsline {subsubsection}{\numberline {5.1.2.3}Sprint 3 : Amélioration et Explicabilité}{14}{subsubsection.5.1.2.3}%
-\contentsline {subsubsection}{\numberline {5.1.2.4}Sprint 4 : Interface utilisateur}{14}{subsubsection.5.1.2.4}%
-\contentsline {subsubsection}{\numberline {5.1.2.5}Sprint 5 : Intégration et Tests}{14}{subsubsection.5.1.2.5}%
-\contentsline {subsection}{\numberline {5.1.3}Avantages de l'approche Agile}{14}{subsection.5.1.3}%
-\contentsline {section}{\numberline {5.2}Vue d’ensemble}{14}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Modèle d’ensemble (stacking)}{16}{section.5.3}%
-\contentsline {subsection}{\numberline {5.3.1}Modèles de base}{16}{subsection.5.3.1}%
-\contentsline {subsection}{\numberline {5.3.2}Méta-apprenant avec LCS}{16}{subsection.5.3.2}%
-\contentsline {section}{\numberline {5.4}Moteur d’explicabilité}{16}{section.5.4}%
-\contentsline {section}{\numberline {5.5}Interface utilisateur}{17}{section.5.5}%
-\contentsline {section}{\numberline {5.6}Automatisation du déploiement}{17}{section.5.6}%
-\contentsline {chapter}{\numberline {6}Implémentation et validation}{18}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Environnement technique}{18}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Prétraitement des données}{18}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Modèles entraînés}{19}{section.6.3}%
-\contentsline {section}{\numberline {6.4}Résultats expérimentaux}{19}{section.6.4}%
-\contentsline {subsection}{\numberline {6.4.1}Performances globales}{19}{subsection.6.4.1}%
-\contentsline {subsection}{\numberline {6.4.2}Analyse détaillée du meilleur modèle}{20}{subsection.6.4.2}%
-\contentsline {subsection}{\numberline {6.4.3}Comparaison des architectures}{21}{subsection.6.4.3}%
-\contentsline {section}{\numberline {6.5}Explicabilité : exemples avec SHAP}{22}{section.6.5}%
-\contentsline {section}{\numberline {6.6}Validation croisée et robustesse}{22}{section.6.6}%
-\contentsline {section}{\numberline {6.7}Déploiement et performances temporelles}{23}{section.6.7}%
-\contentsline {section}{\numberline {6.8}Synthèse des résultats}{23}{section.6.8}%
+\contentsline {chapter}{Dédicaces}{3}{chapter*.2}%
+\contentsline {chapter}{Remerciements}{4}{chapter*.3}%
+\contentsline {chapter}{Liste des acronymes}{13}{chapter*.7}%
+\contentsline {chapter}{Introduction générale}{15}{chapter*.8}%
+\contentsline {chapter}{\numberline {1}Présentation générale}{16}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Cadre général du stage}{16}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Présentation de l'organisme d'accueil}{16}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Le Centre National de l'Informatique}{16}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.2.2}Services proposés par le CNI}{17}{subsection.1.2.2}%
+\contentsline {subsection}{\numberline {1.2.3}Intégration du projet au sein du CNI}{17}{subsection.1.2.3}%
+\contentsline {section}{\numberline {1.3}Présentation du projet}{17}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}Le sommeil et sa structure}{17}{subsection.1.3.1}%
+\contentsline {subsection}{\numberline {1.3.2}La polysomnographie}{19}{subsection.1.3.2}%
+\contentsline {subsection}{\numberline {1.3.3}Le syndrome d'apnées obstructives du sommeil}{20}{subsection.1.3.3}%
+\contentsline {subsection}{\numberline {1.3.4}Objectif général du projet}{20}{subsection.1.3.4}%
+\contentsline {subsection}{\numberline {1.3.5}Problématique}{20}{subsection.1.3.5}%
+\contentsline {subsubsection}{\numberline {1.3.5.1}Le coût du scorage manuel}{20}{subsubsection.1.3.5.1}%
+\contentsline {subsubsection}{\numberline {1.3.5.2}La variabilité inter-scoreur}{21}{subsubsection.1.3.5.2}%
+\contentsline {subsubsection}{\numberline {1.3.5.3}L'opacité des modèles d'apprentissage profond}{21}{subsubsection.1.3.5.3}%
+\contentsline {section}{\numberline {1.4}Étude préalable}{21}{section.1.4}%
+\contentsline {subsection}{\numberline {1.4.1}Étude de l'existant}{21}{subsection.1.4.1}%
+\contentsline {subsubsection}{\numberline {1.4.1.1}Les solutions commerciales}{21}{subsubsection.1.4.1.1}%
+\contentsline {subsubsection}{\numberline {1.4.1.2}Les travaux académiques}{22}{subsubsection.1.4.1.2}%
+\contentsline {subsection}{\numberline {1.4.2}Critique de l'existant}{23}{subsection.1.4.2}%
+\contentsline {subsection}{\numberline {1.4.3}Solution proposée}{24}{subsection.1.4.3}%
+\contentsline {section}{\numberline {1.5}Méthodologie de travail}{24}{section.1.5}%
+\contentsline {subsection}{\numberline {1.5.1}Choix du cadre Scrum}{24}{subsection.1.5.1}%
+\contentsline {subsection}{\numberline {1.5.2}Les rôles dans la méthodologie Scrum}{24}{subsection.1.5.2}%
+\contentsline {subsection}{\numberline {1.5.3}Adaptation au projet}{24}{subsection.1.5.3}%
+\contentsline {subsection}{\numberline {1.5.4}Organisation en releases}{24}{subsection.1.5.4}%
+\contentsline {chapter}{\numberline {2}Analyse et spécification des besoins}{26}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Identification des acteurs}{26}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Étude des besoins}{27}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Les besoins fonctionnels}{27}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Les besoins non fonctionnels}{27}{subsection.2.2.2}%
+\contentsline {section}{\numberline {2.3}Diagramme de cas d'utilisation global}{28}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Backlog du produit}{32}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Diagramme de classes}{35}{section.2.5}%
+\contentsline {section}{\numberline {2.6}Environnement de travail}{36}{section.2.6}%
+\contentsline {subsection}{\numberline {2.6.1}Frameworks et langages utilisés}{36}{subsection.2.6.1}%
+\contentsline {subsection}{\numberline {2.6.2}Environnement logiciel}{37}{subsection.2.6.2}%
+\contentsline {subsection}{\numberline {2.6.3}Environnement matériel}{38}{subsection.2.6.3}%
+\contentsline {section}{\numberline {2.7}Architecture globale}{38}{section.2.7}%
+\contentsline {subsection}{\numberline {2.7.1}Architecture logique}{38}{subsection.2.7.1}%
+\contentsline {subsection}{\numberline {2.7.2}Architecture fonctionnelle du pipeline d'analyse}{39}{subsection.2.7.2}%
+\contentsline {subsection}{\numberline {2.7.3}Architecture physique}{40}{subsection.2.7.3}%
+\contentsline {section}{\numberline {2.8}Planification des releases}{41}{section.2.8}%
+\contentsline {subsection}{\numberline {2.8.1}Découpage en releases}{41}{subsection.2.8.1}%
+\contentsline {subsection}{\numberline {2.8.2}Découpage en sprints}{42}{subsection.2.8.2}%
+\contentsline {subsection}{\numberline {2.8.3}Vélocité}{43}{subsection.2.8.3}%
+\contentsline {subsection}{\numberline {2.8.4}Planning}{44}{subsection.2.8.4}%
+\contentsline {chapter}{\numberline {3}Release 1 : Moteur de classification des stades}{46}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Présentation de la release}{46}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Objectif de la release}{46}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Backlog de la release}{46}{subsection.3.1.2}%
+\contentsline {section}{\numberline {3.2}Sprint 1 : Préparation des données et amorçage}{47}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Objectif du sprint}{47}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Sprint Backlog}{47}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Analyse}{48}{subsection.3.2.3}%
+\contentsline {subsubsection}{\numberline {3.2.3.1}Diagramme des cas d'utilisation}{48}{subsubsection.3.2.3.1}%
+\contentsline {subsubsection}{\numberline {3.2.3.2}Description textuelle des cas d'utilisation}{50}{subsubsection.3.2.3.2}%
+\contentsline {subsection}{\numberline {3.2.4}Conception}{50}{subsection.3.2.4}%
+\contentsline {subsubsection}{\numberline {3.2.4.1}Diagramme de séquence objet}{50}{subsubsection.3.2.4.1}%
+\contentsline {subsection}{\numberline {3.2.5}Réalisation}{51}{subsection.3.2.5}%
+\contentsline {subsubsection}{\numberline {3.2.5.1}La chaîne de préparation}{51}{subsubsection.3.2.5.1}%
+\contentsline {subparagraph}{Sélection stricte des dérivations.}{51}{subparagraph*.45}%
+\contentsline {subparagraph}{Fusion des anciens stades 3 et 4.}{51}{subparagraph*.46}%
+\contentsline {subparagraph}{Comblement des époques non scorées.}{51}{subparagraph*.47}%
+\contentsline {subparagraph}{Normalisation locale par z-score.}{51}{subparagraph*.48}%
+\contentsline {subsubsection}{\numberline {3.2.5.2}Le corpus produit}{52}{subsubsection.3.2.5.2}%
+\contentsline {subsubsection}{\numberline {3.2.5.3}Découpage et pondération}{53}{subsubsection.3.2.5.3}%
+\contentsline {subsection}{\numberline {3.2.6}Revue du sprint}{53}{subsection.3.2.6}%
+\contentsline {section}{\numberline {3.3}Sprint 2 : Modèles de classification des stades}{53}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Objectif du sprint}{53}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Sprint Backlog}{53}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Analyse}{54}{subsection.3.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.3.1}Diagramme des cas d'utilisation}{54}{subsubsection.3.3.3.1}%
+\contentsline {subsubsection}{\numberline {3.3.3.2}Description textuelle des cas d'utilisation}{55}{subsubsection.3.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.4}Conception}{56}{subsection.3.3.4}%
+\contentsline {subsubsection}{\numberline {3.3.4.1}Diagramme de séquence objet}{56}{subsubsection.3.3.4.1}%
+\contentsline {subsubsection}{\numberline {3.3.4.2}Réseau convolutif multi-échelle}{56}{subsubsection.3.3.4.2}%
+\contentsline {subsubsection}{\numberline {3.3.4.3}Réseau récurrent à pooling attentionnel}{57}{subsubsection.3.3.4.3}%
+\contentsline {subsubsection}{\numberline {3.3.4.4}Réseau attentionnel par patchs}{57}{subsubsection.3.3.4.4}%
+\contentsline {subsection}{\numberline {3.3.5}Réalisation}{58}{subsection.3.3.5}%
+\contentsline {subsubsection}{\numberline {3.3.5.1}Stratégie d'entraînement sous contrainte matérielle}{58}{subsubsection.3.3.5.1}%
+\contentsline {paragraph}{Dimensionnement du problème}{58}{paragraph*.57}%
+\contentsline {paragraph}{Trois stratégies de résidence des données}{59}{paragraph*.59}%
+\contentsline {paragraph}{Portée de la contrainte}{59}{paragraph*.61}%
+\contentsline {paragraph}{Réglages d'entraînement}{59}{paragraph*.62}%
+\contentsline {subsubsection}{\numberline {3.3.5.2}Résultats}{60}{subsubsection.3.3.5.2}%
+\contentsline {paragraph}{Les douze modèles}{60}{paragraph*.64}%
+\contentsline {subparagraph}{L'apport des dérivations oculaires et musculaires est net.}{60}{subparagraph*.66}%
+\contentsline {subparagraph}{Le passage à cinq stades coûte cher.}{61}{subparagraph*.67}%
+\contentsline {subparagraph}{Le convolutif domine, mais de peu.}{61}{subparagraph*.68}%
+\contentsline {paragraph}{Le problème du stade N1}{61}{paragraph*.70}%
+\contentsline {subsection}{\numberline {3.3.6}Revue du sprint}{62}{subsection.3.3.6}%
+\contentsline {section}{\numberline {3.4}Revue de la release 1}{62}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Incrément livré}{62}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Rétrospective}{63}{subsection.3.4.2}%
+\contentsline {subparagraph}{Occuper les délais externes plutôt que les subir.}{63}{subparagraph*.74}%
+\contentsline {subparagraph}{Assumer la contrainte matérielle.}{63}{subparagraph*.75}%
+\contentsline {subparagraph}{Tirer parti de la complémentarité des erreurs.}{63}{subparagraph*.76}%
+\contentsline {chapter}{\numberline {4}Release 2 : Diagnostic expliqué et poste de travail}{64}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Présentation de la release}{64}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Objectif de la release}{64}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Backlog de la release}{64}{subsection.4.1.2}%
+\contentsline {section}{\numberline {4.2}Sprint 3 : Ensembles et prédiction de la sévérité}{65}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Objectif du sprint}{65}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Sprint Backlog}{65}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Analyse}{67}{subsection.4.2.3}%
+\contentsline {subsubsection}{\numberline {4.2.3.1}Diagramme des cas d'utilisation}{67}{subsubsection.4.2.3.1}%
+\contentsline {subsubsection}{\numberline {4.2.3.2}Description textuelle des cas d'utilisation}{68}{subsubsection.4.2.3.2}%
+\contentsline {subsection}{\numberline {4.2.4}Conception}{69}{subsection.4.2.4}%
+\contentsline {subsubsection}{\numberline {4.2.4.1}Diagramme de séquence objet}{69}{subsubsection.4.2.4.1}%
+\contentsline {subsection}{\numberline {4.2.5}Réalisation}{69}{subsection.4.2.5}%
+\contentsline {subsubsection}{\numberline {4.2.5.1}Combinaison des modèles par empilement}{69}{subsubsection.4.2.5.1}%
+\contentsline {paragraph}{Principe}{69}{paragraph*.82}%
+\contentsline {paragraph}{Résultats}{70}{paragraph*.84}%
+\contentsline {subsubsection}{\numberline {4.2.5.2}Prédiction de la sévérité du syndrome d'apnées}{71}{subsubsection.4.2.5.2}%
+\contentsline {paragraph}{Positionnement}{71}{paragraph*.88}%
+\contentsline {paragraph}{Construction de la matrice de variables}{72}{paragraph*.90}%
+\contentsline {paragraph}{Comparaison des classifieurs}{73}{paragraph*.93}%
+\contentsline {paragraph}{Résultats sur le jeu de test}{74}{paragraph*.95}%
+\contentsline {subparagraph}{L'empilement n'apporte rien ici.}{74}{subparagraph*.97}%
+\contentsline {subparagraph}{La tâche est intrinsèquement difficile.}{74}{subparagraph*.98}%
+\contentsline {subparagraph}{L'erreur est presque toujours de faible amplitude.}{74}{subparagraph*.99}%
+\contentsline {subsubsection}{\numberline {4.2.5.3}Explicabilité des prédictions}{75}{subsubsection.4.2.5.3}%
+\contentsline {paragraph}{Choix de la méthode}{75}{paragraph*.102}%
+\contentsline {paragraph}{Mise en œuvre et résultats}{76}{paragraph*.105}%
+\contentsline {subsubsection}{\numberline {4.2.5.4}Synthèse méthodologique}{77}{subsubsection.4.2.5.4}%
+\contentsline {subparagraph}{Un découpage au niveau des époques.}{77}{subparagraph*.107}%
+\contentsline {subparagraph}{Deux protocoles non comparables.}{77}{subparagraph*.108}%
+\contentsline {subparagraph}{Un corpus restreint et filtré.}{78}{subparagraph*.109}%
+\contentsline {subsection}{\numberline {4.2.6}Revue du sprint}{78}{subsection.4.2.6}%
+\contentsline {section}{\numberline {4.3}Sprint 4 : Service d'inférence et poste de travail}{78}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Objectif du sprint}{78}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Sprint Backlog}{78}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Analyse}{80}{subsection.4.3.3}%
+\contentsline {subsubsection}{\numberline {4.3.3.1}Diagramme des cas d'utilisation}{80}{subsubsection.4.3.3.1}%
+\contentsline {subsubsection}{\numberline {4.3.3.2}Description textuelle des cas d'utilisation}{81}{subsubsection.4.3.3.2}%
+\contentsline {subsection}{\numberline {4.3.4}Conception}{81}{subsection.4.3.4}%
+\contentsline {subsubsection}{\numberline {4.3.4.1}Diagrammes de séquence objet}{81}{subsubsection.4.3.4.1}%
+\contentsline {subsection}{\numberline {4.3.5}Réalisation}{83}{subsection.4.3.5}%
+\contentsline {subsubsection}{\numberline {4.3.5.1}Organisation de l'interface applicative}{83}{subsubsection.4.3.5.1}%
+\contentsline {subsubsection}{\numberline {4.3.5.2}Points d'entrée}{84}{subsubsection.4.3.5.2}%
+\contentsline {subsubsection}{\numberline {4.3.5.3}Sécurité des accès}{85}{subsubsection.4.3.5.3}%
+\contentsline {subsubsection}{\numberline {4.3.5.4}Poste de travail du praticien}{85}{subsubsection.4.3.5.4}%
+\contentsline {subsection}{\numberline {4.3.6}Revue du sprint}{88}{subsection.4.3.6}%
+\contentsline {section}{\numberline {4.4}Revue de la release 2}{88}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Incrément livré}{88}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Rétrospective}{88}{subsection.4.4.2}%
+\contentsline {subparagraph}{Comparer à la bonne référence.}{88}{subparagraph*.125}%
+\contentsline {subparagraph}{Unifier les protocoles d'évaluation.}{89}{subparagraph*.126}%
+\contentsline {subparagraph}{Documenter la dette technique.}{89}{subparagraph*.127}%
+\contentsline {chapter}{\numberline {5}Release 3 : Plateforme clinique et industrialisation}{90}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Présentation de la release}{90}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Objectif de la release}{90}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Backlog de la release}{90}{subsection.5.1.2}%
+\contentsline {section}{\numberline {5.2}Sprint 5 : Dossier patient et gouvernance}{90}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Objectif du sprint}{91}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Sprint Backlog}{91}{subsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.2.3}Analyse}{92}{subsection.5.2.3}%
+\contentsline {subsubsection}{\numberline {5.2.3.1}Diagramme des cas d'utilisation}{92}{subsubsection.5.2.3.1}%
+\contentsline {subsubsection}{\numberline {5.2.3.2}Description textuelle des cas d'utilisation}{93}{subsubsection.5.2.3.2}%
+\contentsline {subsection}{\numberline {5.2.4}Conception}{93}{subsection.5.2.4}%
+\contentsline {subsubsection}{\numberline {5.2.4.1}Diagramme d'états}{93}{subsubsection.5.2.4.1}%
+\contentsline {subsection}{\numberline {5.2.5}Réalisation}{94}{subsection.5.2.5}%
+\contentsline {subsubsection}{\numberline {5.2.5.1}Persistance et cloisonnement}{94}{subsubsection.5.2.5.1}%
+\contentsline {subsubsection}{\numberline {5.2.5.2}Archivage sur stockage objet}{94}{subsubsection.5.2.5.2}%
+\contentsline {subsubsection}{\numberline {5.2.5.3}Administration et cycle de vie des licences}{94}{subsubsection.5.2.5.3}%
+\contentsline {subsubsection}{\numberline {5.2.5.4}Traçabilité}{95}{subsubsection.5.2.5.4}%
+\contentsline {subsubsection}{\numberline {5.2.5.5}Limites au regard du règlement européen}{95}{subsubsection.5.2.5.5}%
+\contentsline {subsection}{\numberline {5.2.6}Revue du sprint}{95}{subsection.5.2.6}%
+\contentsline {section}{\numberline {5.3}Sprint 6 : Collaboration, restitution et industrialisation}{96}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Objectif du sprint}{96}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Sprint Backlog}{96}{subsection.5.3.2}%
+\contentsline {subsection}{\numberline {5.3.3}Analyse}{98}{subsection.5.3.3}%
+\contentsline {subsubsection}{\numberline {5.3.3.1}Diagramme des cas d'utilisation}{98}{subsubsection.5.3.3.1}%
+\contentsline {subsubsection}{\numberline {5.3.3.2}Description textuelle des cas d'utilisation}{98}{subsubsection.5.3.3.2}%
+\contentsline {subsection}{\numberline {5.3.4}Conception}{99}{subsection.5.3.4}%
+\contentsline {subsubsection}{\numberline {5.3.4.1}Diagramme de séquence objet}{99}{subsubsection.5.3.4.1}%
+\contentsline {subsection}{\numberline {5.3.5}Réalisation}{99}{subsection.5.3.5}%
+\contentsline {subsubsection}{\numberline {5.3.5.1}Consultations confraternelles}{99}{subsubsection.5.3.5.1}%
+\contentsline {subsubsection}{\numberline {5.3.5.2}Annotation et comparaison aux normes}{100}{subsubsection.5.3.5.2}%
+\contentsline {subsubsection}{\numberline {5.3.5.3}Production du compte rendu}{100}{subsubsection.5.3.5.3}%
+\contentsline {subsubsection}{\numberline {5.3.5.4}Multilinguisme et thème sombre}{100}{subsubsection.5.3.5.4}%
+\contentsline {subsubsection}{\numberline {5.3.5.5}Conteneurisation}{101}{subsubsection.5.3.5.5}%
+\contentsline {subsubsection}{\numberline {5.3.5.6}Intégration continue}{101}{subsubsection.5.3.5.6}%
+\contentsline {subsection}{\numberline {5.3.6}Revue du sprint}{102}{subsection.5.3.6}%
+\contentsline {section}{\numberline {5.4}Revue de la release 3}{102}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}Incrément livré}{102}{subsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.4.2}Validation fonctionnelle}{103}{subsection.5.4.2}%
+\contentsline {subsection}{\numberline {5.4.3}Rétrospective}{104}{subsection.5.4.3}%
+\contentsline {subparagraph}{Ne jamais faire attendre le praticien.}{104}{subparagraph*.148}%
+\contentsline {subparagraph}{Assumer les écarts réglementaires.}{105}{subparagraph*.149}%
+\contentsline {subparagraph}{Construire une couverture de tests.}{105}{subparagraph*.150}%
+\contentsline {chapter}{Conclusion générale et perspectives}{106}{chapter*.151}%
+\contentsline {section}{Bilan du travail}{106}{section*.152}%
+\contentsline {section}{Apports du projet}{107}{table.caption.153}%
+\contentsline {section}{Limites}{107}{table.caption.153}%
+\contentsline {section}{Perspectives}{107}{table.caption.153}%
+\contentsline {section}{Mot de la fin}{108}{table.caption.153}%
+\contentsline {chapter}{Bibliographie}{109}{section*.154}%

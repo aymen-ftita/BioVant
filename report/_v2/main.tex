@@ -1,0 +1,233 @@
+\documentclass[12pt,a4paper,oneside]{report}
+
+% ---------------------------------------------------------------------------
+%  Encodage, police, langue
+% ---------------------------------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{times}
+\usepackage[french]{babel}
+\usepackage{csquotes}
+
+% ---------------------------------------------------------------------------
+%  Mise en page
+% ---------------------------------------------------------------------------
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=3.2cm,bottom=3.0cm}
+\usepackage{setspace}
+\setstretch{1.15}
+\usepackage{microtype}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{chngcntr}
+\usepackage{eso-pic}
+\usepackage{indentfirst}
+\setlength{\parindent}{1.2em}
+
+% ---------------------------------------------------------------------------
+%  Figures et tableaux
+% ---------------------------------------------------------------------------
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{colortbl}
+\usepackage{tabularx}
+\usepackage{enumitem}
+
+% ---------------------------------------------------------------------------
+%  Mathematiques et unites
+% ---------------------------------------------------------------------------
+\usepackage{amsmath,amssymb}
+\usepackage{siunitx}
+\sisetup{
+  output-decimal-marker = {,},
+  group-separator       = {\,},
+  group-minimum-digits  = 4,
+  detect-weight         = true,
+  detect-family         = true,
+}
+\DeclareSIUnit{\octet}{o}
+
+% ---------------------------------------------------------------------------
+%  Dessins
+% ---------------------------------------------------------------------------
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,arrows.meta,positioning,calc,fit,backgrounds,
+                decorations.pathmorphing}
+\usepackage{pgfgantt}
+\usepackage{pgf-umlsd}
+
+% ---------------------------------------------------------------------------
+%  Code source
+% ---------------------------------------------------------------------------
+\usepackage{listings}
+
+% ---------------------------------------------------------------------------
+%  Acronymes et bibliographie
+% ---------------------------------------------------------------------------
+\usepackage[nohyperlinks]{acronym}
+\usepackage[backend=biber,style=numeric-comp,sorting=none,maxbibnames=3,
+            giveninits=true]{biblatex}
+\addbibresource{references.bib}
+
+% ---------------------------------------------------------------------------
+%  Hyperliens (a charger en dernier)
+% ---------------------------------------------------------------------------
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks = true,
+  linkcolor  = black,
+  citecolor  = teal,
+  urlcolor   = teal,
+  pdftitle   = {Systeme intelligent de classification des stades du sommeil avec IA explicable},
+  pdfauthor  = {Aymen Ftita},
+}
+
+% ===========================================================================
+%  Palette de travail (schemas techniques)
+% ===========================================================================
+\definecolor{hypnoblue}{HTML}{2B4C7E}
+\definecolor{hypnored}{HTML}{B3382C}
+\definecolor{hypnogray}{HTML}{5A5A6E}
+\definecolor{hypnolight}{HTML}{EFEFF5}
+\definecolor{stWake}{HTML}{C0392B}
+\definecolor{stN1}{HTML}{D68910}
+\definecolor{stN2}{HTML}{2E86C1}
+\definecolor{stN3}{HTML}{6C3483}
+\definecolor{stREM}{HTML}{148F77}
+
+% -- Style des listings -----------------------------------------------------
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.96,0.96,0.94}
+\lstdefinestyle{mystyle}{
+    backgroundcolor  = \color{backcolour},
+    commentstyle     = \color{codegreen},
+    keywordstyle     = \color{hypnored},
+    numberstyle      = \tiny\color{codegray},
+    stringstyle      = \color{codepurple},
+    basicstyle       = \ttfamily\footnotesize,
+    breaklines       = true,
+    captionpos       = b,
+    keepspaces       = true,
+    numbers          = left,
+    numbersep        = 5pt,
+    showstringspaces = false,
+    frame            = single,
+    rulecolor        = \color{codegray!40},
+    tabsize          = 2,
+}
+\lstset{style=mystyle}
+
+% -- Raccourcis -------------------------------------------------------------
+\newcommand{\hypnoria}{\textsc{Hypnoria}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+% -- Capture d'ecran : inseree si le fichier existe, cadre d'attente sinon ---
+\newcommand{\capturefig}[4]{%
+  \begin{figure}[H]
+  \centering
+  \IfFileExists{images/captures/#1.png}%
+    {\includegraphics[width=#2\textwidth]{images/captures/#1.png}}%
+    {\setlength{\fboxrule}{0.8pt}\setlength{\fboxsep}{0pt}%
+     \textcolor{hypnogray!45}{\fbox{\parbox[c][4.6cm][c]{#2\textwidth}{\centering
+       \color{hypnogray}\small\itshape Capture d'\'ecran \`a ins\'erer\\[5pt]
+       \ttfamily\footnotesize images/captures/#1.png\\[9pt]
+       \upshape\rmfamily\scriptsize
+       \parbox{0.78\linewidth}{\centering #3}}}}}%
+  \caption{#3}
+  \label{#4}
+  \end{figure}}
+
+% -- Habillage graphique ESPRIT ---------------------------------------------
+\input{esprit-style}
+
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{3}
+\frenchbsetup{StandardLayout=true}
+
+% -- En-tetes et pieds de page ----------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[R]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[R]{\thepage}%
+  \renewcommand{\headrulewidth}{0pt}}
+
+% ===========================================================================
+\begin{document}
+
+% ---------------------------------------------------------------------------
+%  Page de garde
+% ---------------------------------------------------------------------------
+\espritPageDeGarde
+  {2025 -- 2026}
+  {G\'enie Logiciel}
+  {\hypnoria{}}
+  {Syst\`eme intelligent de classification des stades du sommeil avec IA
+   explicable, appliqu\'e \`a la pr\'ediction expliqu\'ee de la s\'ev\'erit\'e du
+   syndrome d'apn\'ees obstructives du sommeil}
+  {Aymen Ftita}
+  {M\textsuperscript{me} Ines Chouchane}
+  {M. Abdelouaheb Dahmeni et M\textsuperscript{me} Hajer Dahmeni}
+
+% A partir d'ici, toutes les pages portent l'habillage graphique
+\espritHabillage
+
+% ---------------------------------------------------------------------------
+%  Pages liminaires
+% ---------------------------------------------------------------------------
+\pagenumbering{arabic}
+\setcounter{page}{2}
+
+\include{validation}
+\include{dedicaces}
+\include{remerciements}
+
+\tableofcontents
+\clearpage
+
+\listoffigures
+\clearpage
+
+\listoftables
+\clearpage
+
+\include{acronymes}
+
+% ---------------------------------------------------------------------------
+%  Corps du memoire
+% ---------------------------------------------------------------------------
+\include{introduction}
+
+\include{chapitre1}    % Presentation generale
+\include{chapitre2}    % Analyse et specification des besoins
+\include{chapitre3}    % Sprint 1
+\include{chapitre4}    % Sprint 2
+\include{chapitre5}    % Sprint 3
+\include{chapitre6}    % Sprint 4
+\include{chapitre7}    % Sprint 5
+\include{chapitre8}    % Sprint 6
+
+\include{conclusion}
+
+% ---------------------------------------------------------------------------
+%  Bibliographie et annexes
+% ---------------------------------------------------------------------------
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{Bibliographie}
+\printbibliography[title={Bibliographie}]
+
+\include{annexes}
+
+\end{document}

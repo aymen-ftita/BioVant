@@ -1,31 +1,1340 @@
-\chapter{Contexte médical et problématique}
-\label{chap:contexte}
+\chapter{Analyse et spécification des besoins}
+\label{chap:analyse}
 
-\section{Le sommeil et ses stades}
+\sectionsansnum{Introduction}
 
-Le sommeil humain est un état physiologique cyclique composé de plusieurs stades, définis selon les critères de l’American Academy of Sleep Medicine (AASM) :
+Le chapitre précédent a établi ce qu'il fallait construire et pourquoi. Celui-ci
+formalise la commande. Nous identifions d'abord les acteurs du système et leurs
+responsabilités, puis nous exprimons les besoins fonctionnels et non fonctionnels. Ces
+besoins sont ensuite traduits en un \emph{Product Backlog} de soixante récits
+utilisateur, priorisés et estimés. Nous présentons enfin le modèle de données,
+l'environnement de travail, l'architecture globale et la planification du backlog en trois
+releases de deux sprints chacune, qui structure les trois chapitres suivants.
 
-\begin{itemize}
-\item \textbf{Stade W (éveil)} : activité alpha/bêta, tonus musculaire élevé.
-\item \textbf{Stade N1 (sommeil léger)} : ralentissement du rythme cérébral, disparition des fuseaux.
-\item \textbf{Stade N2 (sommeil lent léger)} : présence de fuseaux et complexes K.
-\item \textbf{Stade N3 (sommeil lent profond)} : ondes lentes de haute amplitude.
-\item \textbf{Stade REM (paradoxal)} : mouvements oculaires rapides, atonie musculaire.
-\end{itemize}
+\section{Identification des acteurs}
 
-La classification manuelle des stades sur des enregistrements polysomnographiques (PSG) de 8 heures représente environ 6 à 8 heures de travail par patient, avec un accord inter-expert variant de 70 à 85\%.
+Un acteur désigne toute entité qui interagit avec le système sans en faire partie. On
+distingue les acteurs \emph{principaux}, qui déclenchent les cas d'utilisation pour en
+retirer une valeur, des acteurs \emph{secondaires}, sollicités par le système pour
+mener une opération à bien. Le tableau~\ref{tab:acteurs} recense les quatre acteurs de
+\hypnoria{}.
 
-\section{Problématique de l’automatisation}
+\begin{table}[H]
+\centering
 
-L’apprentissage profond a permis d’atteindre des performances élevées (précision > 90\%) sur des bases publiques comme Sleep-EDF. Cependant, les modèles souffrent d’un manque d’explicabilité : ils ne fournissent pas de justification de leurs décisions, ce qui freine leur adoption clinique. Les médecins ont besoin de comprendre \textit{pourquoi} un modèle a classé un épisode en N1 plutôt qu’en REM.
+\small
+\begin{tabular}{@{}L{3.0cm}cL{8.2cm}@{}}
+\toprule
+\textbf{Acteur} & \textbf{Type} & \textbf{Responsabilités} \\
+\midrule
+Médecin du sommeil & principal &
+Constituer et suivre son registre de patients, lancer l'analyse d'un enregistrement,
+interpréter l'hypnogramme et la prédiction de sévérité, annoter, produire le compte
+rendu, solliciter un confrère \\
+\addlinespace[3pt]
+Administrateur & principal &
+Créer et administrer les comptes médecins, gérer les échéances de licence, rattacher
+les praticiens à un établissement, superviser l'activité et consulter le journal
+d'audit \\
+\addlinespace[3pt]
+Moteur d'inférence & secondaire &
+Charger les modèles, prétraiter le signal, produire la séquence de stades, calculer
+les métriques et les attributions d'explication \\
+\addlinespace[3pt]
+Service de stockage & secondaire &
+Recevoir les fichiers volumineux, les conserver de façon durable et délivrer des liens
+d'accès temporaires \\
+\bottomrule
+\end{tabular}
+\caption{Acteurs du système et leurs responsabilités}
+\label{tab:acteurs}
+\end{table}
 
-\section{Objectifs du projet}
+Deux remarques sur ce découpage. Le moteur d'inférence est modélisé comme un
+acteur distinct bien qu'il réside dans le même processus que l'interface applicative :
+ce choix matérialise le fait qu'il pourrait être déporté sur une machine dédiée sans
+modifier les cas d'utilisation. Le service de stockage, lui, est réellement
+externe.
 
-Le projet vise à répondre à cette double exigence :
+\section{Étude des besoins}
 
-\begin{enumerate}
-\item \textbf{Performance} : atteindre une précision d’au moins 90\% sur le jeu de données Sleep-EDF.
-\item \textbf{Explicabilité} : fournir des explications locales et globales via SHAP, les cartes de saillie et les mécanismes d’attention.
+\subsection{Les besoins fonctionnels}
+
+Les besoins fonctionnels ont été organisés en neuf \emph{épics}, regroupements
+thématiques de fonctionnalités partageant un même objectif métier. Cette structure,
+présentée au tableau~\ref{tab:epics}, sert de colonne vertébrale au backlog. Les épics
+y sont rangés dans l'ordre où ils ont été traités : les deux étages d'apprentissage
+d'abord, puis la restitution au praticien, et enfin la plateforme, sa gouvernance et son
+déploiement.
+
+\begin{table}[H]
+\centering
+
+\small
+\begin{tabular}{@{}clL{7.4cm}cc@{}}
+\toprule
+\textbf{Épic} & \textbf{Intitulé} & \textbf{Portée} & \textbf{Récits} &
+\textbf{Points} \\
+\midrule
+E1 & Classification & Lecture EDF, prétraitement, modèles de base, métriques AASM
+& 12 & 95 \\
+\addlinespace[2pt]
+E2 & Sévérité du SAOS & Empilement, extraction de marqueurs, prédiction, explications
+& 8 & 65 \\
+\addlinespace[2pt]
+E3 & Visualisation & Hypnogramme, oxymétrie, annotation, normes de référence & 5 & 28 \\
+\addlinespace[2pt]
+E4 & Authentification & Connexion, jetons, hachage, contrôle des rôles, application des
+licences & 5 & 18 \\
+\addlinespace[2pt]
+E5 & Dossier patient & Registre des patients, examens, historique, tableau de bord
+& 6 & 24 \\
+\addlinespace[2pt]
+E6 & Archivage et export & Stockage cloud, liens signés, compte rendu, exports
+& 6 & 36 \\
+\addlinespace[2pt]
+E7 & Administration & Comptes médecins, cycle de vie, établissements, audit,
+statistiques & 10 & 45 \\
+\addlinespace[2pt]
+E8 & Collaboration & Discussions rattachées à un examen, boîte de réception & 3 & 18 \\
+\addlinespace[2pt]
+E9 & Industrialisation & Conteneurisation, intégration continue, déploiement,
+multilinguisme & 5 & 29 \\
+\midrule
+\multicolumn{3}{@{}r}{\textbf{Total}} & \textbf{60} & \textbf{358} \\
+\bottomrule
+\end{tabular}
+\caption{Regroupement des besoins fonctionnels en épics}
+\label{tab:epics}
+\end{table}
+
+\subsection{Les besoins non fonctionnels}
+
+Les exigences non fonctionnelles conditionnent l'acceptabilité du système autant que
+ses fonctions. Elles sont d'autant plus contraignantes ici que le domaine, la donnée
+de santé, impose des obligations propres. Le tableau~\ref{tab:bnf} les énonce avec,
+pour chacune, le moyen de vérification retenu : un besoin non fonctionnel qu'on ne sait
+pas vérifier n'est qu'une intention.
+
+\begin{table}[H]
+\centering
+
+\small
+\begin{tabular}{@{}L{2.7cm}L{5.6cm}L{5.6cm}@{}}
+\toprule
+\textbf{Critère} & \textbf{Exigence} & \textbf{Vérification} \\
+\midrule
+Sécurité &
+Aucun accès sans jeton valide ; mots de passe jamais stockés en clair ; cloisonnement
+strict entre rôles &
+Revue des dépendances de sécurité sur chaque route ; tentative d'accès croisé entre
+comptes \\
+\addlinespace[3pt]
+Confidentialité &
+Aucun fichier patient accessible par une URL publique ou devinable &
+Vérification que tout lien délivré est signé et expire \\
+\addlinespace[3pt]
+Traçabilité &
+Toute action sensible horodatée avec son auteur, journal exportable &
+Inspection du journal après un scénario complet \\
+\addlinespace[3pt]
+Performance &
+Analyse d'une nuit complète en quelques minutes ; interface non bloquée pendant les
+transferts &
+Chronométrage sur enregistrements réels ; transfert en arrière-plan observable \\
+\addlinespace[3pt]
+Interopérabilité &
+Accepter les fichiers EDF quel que soit le constructeur ; importer et exporter en
+formats ouverts &
+Résolution des canaux sur des enregistrements de provenances différentes \\
+\addlinespace[3pt]
+Ergonomie &
+Parcours d'analyse guidé, sans formation préalable ; retour visuel sur les traitements
+longs &
+Passage d'un utilisateur non initié sur le parcours complet \\
+\addlinespace[3pt]
+Multilinguisme &
+Interface intégralement disponible en français et en anglais &
+Revue de l'absence de chaînes non traduites \\
+\addlinespace[3pt]
+Portabilité &
+Déploiement complet sur une machine vierge sans configuration manuelle &
+Démarrage de la pile sur un poste neuf en une commande \\
+\addlinespace[3pt]
+Maintenabilité &
+Séparation nette des responsabilités ; ajout d'un modèle sans toucher au reste &
+Ajout d'une variante de modèle à titre d'essai \\
+\bottomrule
+\end{tabular}
+\caption{Besoins non fonctionnels et moyens de vérification}
+\label{tab:bnf}
+\end{table}
+
+\section{Diagramme de cas d'utilisation global}
+
+La figure~\ref{fig:uc-global} présente la vue d'ensemble des interactions entre les
+acteurs et le système.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    x=1cm,y=1cm,
+    uc/.style      = {ellipse, draw=hypnoblue!60, fill=hypnolight,
+                      align=center, font=\scriptsize, text width=2.45cm,
+                      inner sep=1.5pt, minimum height=0.92cm},
+    lien/.style    = {hypnogray!75, line width=0.5pt},
+    nomact/.style  = {font=\scriptsize\bfseries, align=center, text width=2.2cm},
+  ]
+
+  % ── Pictogramme d'acteur ────────────────────────────────────────────────
+  \tikzset{acteur/.pic={
+      \draw[hypnoblue,line width=0.8pt] (0,0) circle (0.17);
+      \draw[hypnoblue,line width=0.8pt] (0,-0.17) -- (0,-0.66);
+      \draw[hypnoblue,line width=0.8pt] (-0.28,-0.34) -- (0.28,-0.34);
+      \draw[hypnoblue,line width=0.8pt] (0,-0.66) -- (-0.24,-1.04);
+      \draw[hypnoblue,line width=0.8pt] (0,-0.66) -- (0.24,-1.04);}}
+
+  % ── Frontière du système ────────────────────────────────────────────────
+  \draw[hypnoblue!55,line width=0.9pt,rounded corners=3pt]
+       (3.45,-6.40) rectangle (11.05,2.55);
+  \node[font=\small\bfseries,text=hypnoblue,anchor=north] at (7.25,2.42)
+       {Système \hypnoria{}};
+
+  % ── Cas d'utilisation ───────────────────────────────────────────────────
+  \node[uc] (auth)  at (7.25, 1.20) {S'authentifier};
+
+  \node[uc] (pat)   at (5.35,-0.40) {Gérer ses patients};
+  \node[uc] (ana)   at (5.35,-1.70) {Analyser un\\enregistrement};
+  \node[uc] (osa)   at (5.35,-3.00) {Prédire la\\sévérité du SAOS};
+  \node[uc] (annot) at (5.35,-4.30) {Annoter et\\exporter};
+  \node[uc] (colab) at (5.35,-5.60) {Solliciter un\\confrère};
+
+  \node[uc] (comp)  at (9.15,-0.40) {Gérer les comptes\\et licences};
+  \node[uc] (etab)  at (9.15,-1.70) {Gérer les\\établissements};
+  \node[uc] (audit) at (9.15,-3.00) {Consulter le\\journal d'audit};
+  \node[uc] (stats) at (9.15,-4.30) {Suivre l'activité\\de la plateforme};
+
+  % ── Acteurs principaux : libellé au-dessus, liaisons vers la droite ─────
+  \pic at (1.15,0.00) {acteur};
+  \node[nomact,anchor=south] at (1.15,0.42) {Médecin\\du sommeil};
+
+  \pic at (13.35,0.00) {acteur};
+  \node[nomact,anchor=south] at (13.35,0.42) {Administrateur};
+
+  \foreach \c in {auth,pat,ana,osa,annot,colab}
+    \draw[lien] (1.50,-0.20) -- (\c.west);
+
+  \foreach \c in {auth,comp,etab,audit,stats}
+    \draw[lien] (13.00,-0.20) -- (\c.east);
+
+  % ── Acteurs secondaires : libellé en dessous ────────────────────────────
+  \pic at (7.25,-7.55) {acteur};
+  \node[nomact,anchor=north] at (7.25,-8.72) {Moteur\\d'inférence};
+
+  \pic at (10.35,-7.55) {acteur};
+  \node[nomact,anchor=north] at (10.35,-8.72) {Service de\\stockage};
+
+  \draw[lien] (7.25,-7.28) -- (ana.east);
+  \draw[lien] (7.25,-7.28) -- (osa.east);
+  \draw[lien] (10.35,-7.28) -- (annot.east);
+
+\end{tikzpicture}
+\vspace{0.2cm}
+\caption[Diagramme de cas d'utilisation global]%
+        {Vue d'ensemble des cas d'utilisation de \hypnoria{}.}
+\label{fig:uc-global}
+\end{figure}
+
+Le cas « Analyser un enregistrement » constitue le c\oe ur fonctionnel du système. La
+figure~\ref{fig:uc-analyse} le décompose et fait apparaître les relations d'inclusion
+(sous-cas systématiquement exécutés) et d'extension (comportements optionnels).
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    x=1cm,y=1cm,
+    uc/.style      = {ellipse, draw=hypnoblue!60, fill=hypnolight,
+                      align=center, font=\scriptsize, text width=2.5cm,
+                      inner sep=1.5pt, minimum height=0.92cm},
+    ucp/.style     = {ellipse, draw=hypnored!75, fill=hypnored!8,
+                      align=center, font=\scriptsize\bfseries, text width=2.5cm,
+                      inner sep=1.5pt, minimum height=0.92cm},
+    lien/.style    = {hypnogray!75, line width=0.5pt},
+    incl/.style    = {-{Latex[length=2mm]}, hypnoblue!75, line width=0.5pt, dashed},
+    ext/.style     = {-{Latex[length=2mm]}, hypnored!70, line width=0.5pt, dashed},
+    et/.style      = {font=\tiny\itshape, fill=white, inner sep=1.2pt},
+    nomact/.style  = {font=\scriptsize\bfseries, align=center, text width=1.8cm},
+  ]
+
+  \tikzset{acteur/.pic={
+      \draw[hypnoblue,line width=0.8pt] (0,0) circle (0.17);
+      \draw[hypnoblue,line width=0.8pt] (0,-0.17) -- (0,-0.66);
+      \draw[hypnoblue,line width=0.8pt] (-0.28,-0.34) -- (0.28,-0.34);
+      \draw[hypnoblue,line width=0.8pt] (0,-0.66) -- (-0.24,-1.04);
+      \draw[hypnoblue,line width=0.8pt] (0,-0.66) -- (0.24,-1.04);}}
+
+  % ── Frontière ───────────────────────────────────────────────────────────
+  \draw[hypnoblue!55,line width=0.9pt,rounded corners=3pt]
+       (2.75,-4.55) rectangle (12.60,3.15);
+  \node[font=\small\bfseries,text=hypnoblue,anchor=north] at (7.65,3.02)
+       {Module d'analyse};
+
+  % ── Cas central et cas déclenchés par le médecin ────────────────────────
+  \node[ucp] (ana) at (4.75, 0.75) {Analyser un\\enregistrement};
+  \node[uc]  (exp) at (4.75,-2.20) {Exporter les\\marqueurs};
+  \node[uc]  (pdf) at (4.75,-3.65) {Produire le\\compte rendu};
+
+  % ── Sous-cas inclus ─────────────────────────────────────────────────────
+  \node[uc] (chn) at (10.30, 2.10) {Choisir le montage\\et la granularité};
+  \node[uc] (pre) at (10.30, 0.85) {Prétraiter\\le signal};
+  \node[uc] (cls) at (10.30,-0.40) {Classer les époques};
+  \node[uc] (met) at (10.30,-1.75) {Calculer les\\métriques AASM};
+
+  % ── Cas étendu ──────────────────────────────────────────────────────────
+  \node[uc] (osa) at (10.30,-3.65) {Prédire la\\sévérité};
+
+  % ── Acteur ──────────────────────────────────────────────────────────────
+  \pic at (1.05,0.55) {acteur};
+  \node[nomact,anchor=south] at (1.05,0.97) {Médecin};
+
+  \draw[lien] (1.40,0.35) -- (ana.west);
+  \draw[lien] (1.40,0.35) -- (exp.west);
+  \draw[lien] (1.40,0.35) -- (pdf.west);
+
+  % ── Relations d'inclusion (libellés étagés le long du faisceau) ──────────
+  \draw[incl] (ana) -- node[et,text=hypnoblue!85,pos=0.30] {$\ll$include$\gg$} (chn);
+  \draw[incl] (ana) -- node[et,text=hypnoblue!85,pos=0.44] {$\ll$include$\gg$} (pre);
+  \draw[incl] (ana) -- node[et,text=hypnoblue!85,pos=0.58] {$\ll$include$\gg$} (cls);
+  \draw[incl] (ana) -- node[et,text=hypnoblue!85,pos=0.72] {$\ll$include$\gg$} (met);
+
+  % ── Relations d'extension ───────────────────────────────────────────────
+  \draw[ext] (osa) -- node[et,text=hypnored!85,pos=0.5] {$\ll$extend$\gg$} (met);
+  \draw[ext] (pdf) -- node[et,text=hypnored!85,pos=0.5] {$\ll$extend$\gg$} (exp);
+
+\end{tikzpicture}
+\vspace{0.2cm}
+\caption[Raffinement du cas « Analyser un enregistrement »]%
+        {Décomposition du cas d'utilisation central en sous-cas inclus et étendus.}
+\label{fig:uc-analyse}
+\end{figure}
+
+Les tableaux~\ref{tab:desc-analyse} et~\ref{tab:desc-osa} décrivent textuellement les
+deux cas les plus critiques. Un diagramme montre en effet la structure des interactions,
+mais pas leur déroulement.
+
+\begin{table}[H]
+\centering
+
+\small
+\begin{tabular}{@{}L{3.0cm}L{11.4cm}@{}}
+\toprule
+\textbf{Identifiant} & UC-03 \\
+\textbf{Acteur principal} & Médecin du sommeil \\
+\textbf{Acteurs secondaires} & Moteur d'inférence, service de stockage \\
+\textbf{Préconditions} & Le médecin est authentifié ; sa licence est valide ; il
+dispose d'un fichier d'enregistrement au format EDF \\
+\textbf{Postconditions} & Un examen est créé dans le dossier du patient, la séquence
+de stades et les métriques sont enregistrées, le fichier brut est archivé \\
+\midrule
+\textbf{Scénario nominal} &
+\begin{minipage}[t]{11.2cm}
+\begin{enumerate}[leftmargin=1.1em,itemsep=1pt,topsep=2pt]
+  \item Le médecin sélectionne le patient concerné.
+  \item Il choisit le montage disponible, à deux ou cinq dérivations.
+  \item Il choisit la granularité de classification, à trois ou cinq stades.
+  \item Il dépose le fichier d'enregistrement.
+  \item Le système décode le fichier, résout les dérivations et prétraite le signal.
+  \item Le moteur d'inférence classe chaque époque et le système calcule les métriques.
+  \item Le système affiche l'hypnogramme, les métriques et les alertes cliniques.
+  \item Le système crée l'examen et lance l'archivage du fichier en arrière-plan.
 \end{enumerate}
+\end{minipage} \\
+\midrule
+\textbf{Scénarios alternatifs} &
+\begin{minipage}[t]{11.2cm}
+\begin{itemize}[leftmargin=1.1em,itemsep=1pt,topsep=2pt]
+  \item \textbf{4a} --- Le fichier n'est pas au format attendu : le système refuse le
+        dépôt et le signale.
+  \item \textbf{5a} --- Une dérivation est absente : le système applique son repli
+        documenté et poursuit.
+  \item \textbf{5b} --- L'enregistrement est plus court qu'une époque : le traitement
+        s'interrompt avec un message explicite.
+  \item \textbf{8a} --- L'archivage échoue : les résultats restent consultables et le
+        transfert est signalé en erreur.
+\end{itemize}
+\end{minipage} \\
+\bottomrule
+\end{tabular}
+\caption{Description textuelle du cas « Analyser un enregistrement »}
+\label{tab:desc-analyse}
+\end{table}
 
-Le système devra être déployé sous forme d’une application web interactive, permettant aux cliniciens de télécharger un fichier EDF, d’obtenir un hypnogramme et des explications visuelles.
+\begin{table}[H]
+\centering
+
+\small
+\begin{tabular}{@{}L{3.0cm}L{11.4cm}@{}}
+\toprule
+\textbf{Identifiant} & UC-04 \\
+\textbf{Acteur principal} & Médecin du sommeil \\
+\textbf{Acteur secondaire} & Moteur d'inférence \\
+\textbf{Préconditions} & Une séquence de stades est disponible, issue d'une analyse ou
+d'une saisie manuelle \\
+\textbf{Postconditions} & Une classe de sévérité, ses probabilités et la décomposition
+des facteurs sont associées à l'examen \\
+\midrule
+\textbf{Scénario nominal} &
+\begin{minipage}[t]{11.2cm}
+\begin{enumerate}[leftmargin=1.1em,itemsep=1pt,topsep=2pt]
+  \item Le système extrait les marqueurs d'architecture depuis l'hypnogramme.
+  \item Le médecin complète les données démographiques et oxymétriques.
+  \item Il déclenche l'évaluation du risque.
+  \item Le système construit le vecteur de variables et comble les valeurs absentes.
+  \item Le moteur produit la classe de sévérité et ses probabilités.
+  \item Le système calcule les contributions de chaque variable.
+  \item Le système affiche la sévérité, les facteurs aggravants et protecteurs, et
+        l'interprétation clinique.
+\end{enumerate}
+\end{minipage} \\
+\midrule
+\textbf{Scénarios alternatifs} &
+\begin{minipage}[t]{11.2cm}
+\begin{itemize}[leftmargin=1.1em,itemsep=1pt,topsep=2pt]
+  \item \textbf{2a} --- Le médecin importe un rapport externe : le système en extrait
+        les valeurs et préremplit le formulaire.
+  \item \textbf{4a} --- Des variables cliniques manquent : le système applique la
+        valeur médiane de la population d'apprentissage et le signale.
+  \item \textbf{5a} --- Les modèles ne sont pas chargés : l'opération est refusée avec
+        un message explicite.
+\end{itemize}
+\end{minipage} \\
+\bottomrule
+\end{tabular}
+\caption{Description textuelle du cas « Prédire la sévérité du SAOS »}
+\label{tab:desc-osa}
+\end{table}
+
+\section{Backlog du produit}
+
+Le \emph{Product Backlog} est la liste ordonnée de tout ce que le produit doit offrir.
+Chaque élément prend la forme d'un récit utilisateur suivant la formulation canonique :
+\emph{en tant que} \dots, \emph{je veux} \dots, \emph{afin de} \dots. Cette
+formulation force à énoncer le bénéficiaire et la finalité, et non seulement la
+fonction.
+
+Deux attributs complètent chaque récit. La priorité suit la méthode MoSCoW :
+\emph{Must have} pour ce sans quoi le produit n'a pas de sens, \emph{Should have} pour
+ce qui lui donne sa valeur, \emph{Could have} pour ce qui l'améliore sans le
+conditionner. L'estimation s'exprime en points de complexité sur la suite de
+Fibonacci, échelle relative qui compare les récits entre eux plutôt que de prétendre
+prédire une durée.
+
+L'ordre de la liste suit celui de la réalisation. Les récits d'apprentissage
+automatique viennent en tête : la classification des stades, puis la prédiction de la
+sévérité, parce que c'est d'eux que dépend la valeur de tout le reste et que leur
+résultat était le plus incertain. Le développement de la plateforme, sa gouvernance et
+son déploiement ferment la liste.
+
+\begin{longtable}{@{}p{1.25cm}L{9.1cm}cp{0.75cm}p{0.9cm}@{}}
+\caption{Product Backlog --- 60 récits utilisateur, 358 points}
+\label{tab:backlog}\\
+\toprule
+\textbf{ID} & \textbf{Récit utilisateur} & \textbf{Prio.} & \textbf{Pts} &
+\textbf{Spr.} \\
+\midrule
+\endfirsthead
+
+\multicolumn{5}{@{}l}{\small\itshape Tableau~\ref{tab:backlog} --- suite}\\
+\toprule
+\textbf{ID} & \textbf{Récit utilisateur} & \textbf{Prio.} & \textbf{Pts} &
+\textbf{Spr.} \\
+\midrule
+\endhead
+
+\midrule
+\multicolumn{5}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+
+\bottomrule
+\endlastfoot
+
+\multicolumn{5}{@{}l}{\cellcolor{hypnolight}\textbf{E1 --- Classification automatique des stades}}\\
+\midrule
+\small
+US-01 & Lire un fichier EDF et en extraire les dérivations physiologiques & M & 8 & S1 \\
+US-02 & Résoudre les canaux malgré l'hétérogénéité des conventions de nommage
+& M & 5 & S1 \\
+US-03 & Rééchantillonner, segmenter en époques de 30 s et normaliser & M & 8 & S1 \\
+US-04 & Valider la chaîne sur un jeu public en attendant l'accès aux cohortes
+& M & 8 & S1 \\
+US-05 & Prétraiter les enregistrements de la cohorte clinique à l'échelle & M & 8 & S2 \\
+US-06 & Classer chaque époque avec un réseau convolutif multi-échelle & M & 13 & S2 \\
+US-07 & Classer chaque époque avec un réseau récurrent à pooling attentionnel
+& M & 13 & S2 \\
+US-08 & Classer chaque époque avec un Transformer par patchs & M & 13 & S2 \\
+US-09 & Choisir la configuration d'analyse selon le montage disponible & S & 5 & S4 \\
+US-10 & Inspecter les canaux d'un fichier avant de lancer l'analyse & S & 3 & S4 \\
+US-11 & Calculer les métriques AASM de l'enregistrement & M & 8 & S4 \\
+US-12 & Conserver les modèles en mémoire entre deux requêtes & S & 3 & S4 \\
+
+\epictitre{E2 --- Ensemble et prédiction de la sévérité}
+US-13 & Combiner les trois modèles par un méta-apprenant & M & 13 & S3 \\
+US-14 & Extraire les marqueurs d'architecture du sommeil depuis l'hypnogramme
+& M & 8 & S3 \\
+US-15 & Prédire la sévérité du SAOS en quatre classes & M & 13 & S3 \\
+US-16 & Exposer les facteurs aggravants et protecteurs de la prédiction & M & 8 & S3 \\
+US-17 & Saisir les données oxymétriques et les index d'éveil & M & 5 & S4 \\
+US-18 & Lancer une prédiction sans fichier, à partir d'une saisie manuelle & S & 8 & S4 \\
+US-19 & Importer un rapport externe pour préremplir le formulaire clinique
+& S & 5 & S4 \\
+US-20 & Lire une interprétation clinique automatique des anomalies détectées
+& S & 5 & S4 \\
+
+\epictitre{E3 --- Visualisation, annotation et normes}
+US-21 & Visualiser l'hypnogramme de façon interactive & M & 8 & S4 \\
+US-22 & Voir la saturation et la densité d'événements sur le même axe temporel
+& S & 5 & S4 \\
+US-23 & Suivre la progression de l'analyse en cours & C & 5 & S4 \\
+US-24 & Annoter une époque précise pour consigner une observation & S & 5 & S6 \\
+US-25 & Situer chaque métrique par rapport aux normes de référence & S & 5 & S6 \\
+
+\epictitre{E4 --- Authentification et contrôle d'accès}
+US-26 & Me connecter avec mon adresse et mon mot de passe pour accéder à la plateforme
+& M & 5 & S4 \\
+US-27 & Consulter mon profil pour vérifier mon rôle et mon rattachement & M & 2 & S4 \\
+US-28 & Stocker les mots de passe hachés pour qu'aucun ne soit lisible en base
+& M & 3 & S4 \\
+US-29 & Vérifier le rôle sur chaque route pour cloisonner médecins et administrateurs
+& M & 5 & S4 \\
+US-30 & Refuser la connexion d'un compte suspendu ou dont la licence a expiré
+& M & 3 & S5 \\
+
+\epictitre{E5 --- Dossier patient et examens}
+US-31 & Enregistrer un patient avec son âge, son IMC et son sexe & M & 3 & S5 \\
+US-32 & Lister mes patients avec leur historique d'examens & M & 5 & S5 \\
+US-33 & Consulter la fiche détaillée d'un patient et tous ses examens & M & 3 & S5 \\
+US-34 & Créer un examen rattaché à un patient pour y associer les résultats
+& M & 5 & S5 \\
+US-35 & Mettre à jour la sévérité et les résultats d'un examen & M & 3 & S5 \\
+US-36 & Voir la répartition des risques d'apnée de ma patientèle & S & 5 & S6 \\
+
+\epictitre{E6 --- Archivage et exports}
+US-37 & Archiver le fichier brut sans bloquer l'interface & M & 8 & S5 \\
+US-38 & Archiver l'hypnogramme et le compte rendu clinique & S & 5 & S5 \\
+US-39 & Délivrer des liens d'accès à durée limitée & M & 5 & S5 \\
+US-40 & Exporter les marqueurs calculés pour un autre outil & S & 5 & S4 \\
+US-41 & Composer le compte rendu en choisissant les sections à inclure & M & 8 & S6 \\
+US-42 & Synchroniser l'hypnogramme annoté vers le dossier & S & 5 & S6 \\
+
+\epictitre{E7 --- Administration de la plateforme}
+US-43 & Créer un compte médecin pour ouvrir l'accès à un nouveau praticien & M & 5 & S5 \\
+US-44 & Lister les médecins avec leur statut et leur échéance de licence & M & 3 & S5 \\
+US-45 & Suspendre ou réactiver un compte et fixer sa date d'expiration & M & 5 & S5 \\
+US-46 & Réinitialiser le mot de passe d'un médecin pour débloquer un accès perdu
+& S & 3 & S5 \\
+US-47 & Créer des établissements et y rattacher des médecins & S & 5 & S5 \\
+US-48 & Journaliser chaque action sensible avec son auteur et son horodatage
+& M & 5 & S5 \\
+US-49 & Consulter le journal d'audit pour enquêter sur un incident & M & 5 & S5 \\
+US-50 & Exporter le journal d'audit pour un contrôle de conformité & S & 3 & S5 \\
+US-51 & Consulter les statistiques globales pour suivre l'adoption & S & 3 & S5 \\
+US-52 & Visualiser la chaîne de traitement des modèles & C & 8 & S6 \\
+
+\epictitre{E8 --- Collaboration entre praticiens}
+US-53 & Ouvrir une discussion sur un examen avec un confrère & S & 8 & S6 \\
+US-54 & Échanger des messages dans un fil rattaché à l'examen & S & 5 & S6 \\
+US-55 & Consulter une boîte de réception centralisée & S & 5 & S6 \\
+
+\epictitre{E9 --- Industrialisation et déploiement}
+US-56 & Conteneuriser les trois services pour un déploiement reproductible
+& M & 8 & S6 \\
+US-57 & Orchestrer la pile en une seule commande & M & 5 & S6 \\
+US-58 & Automatiser tests et construction d'images à chaque livraison & S & 8 & S6 \\
+US-59 & Basculer l'interface entre français et anglais & S & 5 & S6 \\
+US-60 & Basculer en thème sombre pour la lecture nocturne & C & 3 & S6 \\
+\end{longtable}
+
+\noindent
+La formulation complète a été abrégée dans le tableau pour tenir sur une ligne ; le
+bénéficiaire se déduit de l'épic.
+
+\section{Diagramme de classes}
+
+Le modèle métier s'organise autour de huit entités (figure~\ref{fig:classes}).
+L'entité centrale est l'\emph{examen}, qui matérialise une nuit d'enregistrement : elle
+porte les références vers les fichiers archivés, la classe de sévérité prédite et le
+document de résultats. Autour d'elle gravitent le patient qui l'a subie, les annotations
+que le praticien y a portées et les discussions qu'elle a suscitées.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    x=1cm,y=1cm,
+    cls/.style  = {rectangle,draw=hypnoblue!65,fill=white,align=left,anchor=north,
+                   font=\tiny,inner sep=0pt,text width=4.35cm},
+    ent/.style  = {rectangle,draw=hypnored!70,fill=hypnored!6,align=left,anchor=north,
+                   font=\tiny,inner sep=0pt,text width=4.35cm},
+    rel/.style  = {hypnogray!85,line width=0.6pt},
+    card/.style = {font=\tiny,text=hypnogray,inner sep=1.6pt,fill=white},
+    note/.style = {font=\tiny\itshape,text=hypnogray,align=center,text width=4.2cm},
+  ]
+
+  \newcommand{\classe}[3]{%
+    \begin{tabular}{@{\hspace{3pt}}>{\raggedright\arraybackslash
+                             \hyphenpenalty=10000\exhyphenpenalty=10000}p{4.15cm}@{}}
+      \rowcolor{hypnolight}\textbf{#1}\\[1pt]
+      \hline
+      \rule{0pt}{7pt}#2\\[1pt]
+      \hline
+      \rule{0pt}{7pt}#3\\[1pt]
+    \end{tabular}}
+
+  % ── Rangée 1 ────────────────────────────────────────────────────────────
+  \node[cls] (hop) at (2.45, 6.30) {\classe{Hospital}{%
+       $-$~id : int\newline
+       $-$~name : str\newline
+       $-$~b2\_bucket : str\newline
+       $-$~billing\_tier : str\newline
+       $-$~created\_at : datetime}{%
+       + create\_hospital(name : str) : Hospital\newline
+       + get\_hospitals() : list[Hospital]}};
+
+  \node[cls] (usr) at (7.95, 6.30) {\classe{User}{%
+       $-$~id : int\newline
+       $-$~email : str\newline
+       $-$~hashed\_password : str\newline
+       $-$~role : str\newline
+       $-$~first\_name : str\newline
+       $-$~last\_name : str\newline
+       $-$~status : str\newline
+       $-$~license\_expiry : datetime\newline
+       $-$~last\_login : datetime\newline
+       $-$~hospital\_id : int}{%
+       + verify\_password(plain : str) : bool\newline
+       + create\_access\_token(ttl : timedelta) : str\newline
+       + update\_lifecycle(status : str, expiry : datetime) : User\newline
+       + reset\_password(new : str) : bool}};
+
+  \node[cls] (pat) at (13.45, 6.30) {\classe{Patient}{%
+       $-$~id : int\newline
+       $-$~first\_name : str\newline
+       $-$~last\_name : str\newline
+       $-$~age : int\newline
+       $-$~imc : float\newline
+       $-$~gender : str\newline
+       $-$~doctor\_id : int}{%
+       + create\_patient() : Patient\newline
+       + get\_patients() : list[Patient]\newline
+       + get\_doctor\_stats() : dict}};
+
+  % ── Rangée 2 ────────────────────────────────────────────────────────────
+  \node[cls] (log)  at (2.45, 0.55) {\classe{AuditLog}{%
+       $-$~id : int\newline
+       $-$~timestamp : datetime\newline
+       $-$~user\_email : str\newline
+       $-$~user\_role : str\newline
+       $-$~action : str\newline
+       $-$~ip\_address : str}{%
+       + log\_audit(action : str) : None\newline
+       + get\_audit\_logs(limit : int) : list[AuditLog]\newline
+       + export\_csv() : StreamingResponse}};
+
+  \node[cls] (conv) at (7.95, 0.55) {\classe{FileConversation}{%
+       $-$~id : int\newline
+       $-$~psg\_id : int\newline
+       $-$~file\_type : str\newline
+       $-$~doctor\_one\_id : int\newline
+       $-$~doctor\_two\_id : int\newline
+       $-$~created\_at : datetime}{%
+       + get\_or\_create() : FileConversation\newline
+       + get\_my\_conversations() : list[FileConversation]\newline
+       + get\_messages() : list[FileMessage]}};
+
+  \node[ent] (psg)  at (13.45, 0.55) {\classe{PSG}{%
+       $-$~id : int\newline
+       $-$~patient\_id : int\newline
+       $-$~date : datetime\newline
+       $-$~severity : str\newline
+       $-$~report\_data : str\newline
+       $-$~edf\_url : str\newline
+       $-$~hypnogram\_url : str\newline
+       $-$~hypnogram\_annotated\_url : str\newline
+       $-$~csv\_url : str\newline
+       $-$~osa\_report\_url : str}{%
+       + add\_psg\_record() : PSG\newline
+       + update\_psg\_record() : PSG\newline
+       + upload\_edf(file : UploadFile) : str\newline
+       + analyze(channels : str, classes : str) : dict\newline
+       + predict\_osa(features : dict) : dict}};
+
+  % ── Rangée 3 ────────────────────────────────────────────────────────────
+  \node[cls] (msg) at (7.95, -5.55) {\classe{FileMessage}{%
+       $-$~id : int\newline
+       $-$~conversation\_id : int\newline
+       $-$~sender\_id : int\newline
+       $-$~content : str\newline
+       $-$~timestamp : datetime}{%
+       + send\_message(content : str) : FileMessage}};
+
+  \node[cls] (ann) at (13.45,-5.55) {\classe{PSGAnnotation}{%
+       $-$~id : int\newline
+       $-$~psg\_id : int\newline
+       $-$~epoch\_index : int\newline
+       $-$~note : str\newline
+       $-$~created\_at : datetime}{%
+       + add\_annotation(epoch : int, note : str) : PSGAnnotation\newline
+       + get\_annotations() : list[PSGAnnotation]}};
+
+  \node[note,anchor=north] at (2.45,-3.35)
+       {table volontairement dénormalisée :\\aucune clé étrangère, afin que la
+        trace survive à la suppression du compte};
+
+  % ── Associations ────────────────────────────────────────────────────────
+  \draw[rel] (hop.east) -- node[card,pos=0.12] {1}
+                           node[card,pos=0.88] {0..*} (usr.west);
+  \draw[rel] (usr.east) -- node[card,pos=0.12] {1}
+                           node[card,pos=0.88] {0..*} (pat.west);
+
+  \draw[rel] (pat.south) -- node[card,pos=0.13] {1}
+                            node[card,pos=0.87] {0..*} (psg.north);
+  \draw[rel] (psg.south) -- node[card,pos=0.13] {1}
+                            node[card,pos=0.87] {0..*} (ann.north);
+
+  \draw[rel] (psg.west) -- node[card,pos=0.13] {1}
+                           node[card,pos=0.87] {0..*} (conv.east);
+  \draw[rel] (conv.south) -- node[card,pos=0.13] {1}
+                             node[card,pos=0.87] {0..*} (msg.north);
+
+  \draw[rel] (usr.south) -- node[card,pos=0.13] {2}
+                            node[card,pos=0.88] {0..*} (conv.north);
+
+  % Auteur d'un message : contournement par la gauche
+  \draw[rel] (usr.west) -- ++(-0.55,0)
+             node[card,pos=0.55] {1}
+             |- node[card,pos=0.93] {0..*} (msg.west);
+
+\end{tikzpicture}
+\vspace{0.2cm}
+\caption[Diagramme de classes du modèle métier]%
+        {Modèle métier : l'examen est l'entité pivot du système. Chaque classe porte
+         ses attributs et ses opérations avec leurs types.}
+\label{fig:classes}
+\end{figure}
+
+Le passage au modèle relationnel donne les huit tables de la
+figure~\ref{fig:schema}.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+
+  \node[rectangle,rounded corners=3pt,draw=hypnoblue!55,fill=hypnolight,
+        inner sep=9pt,text width=14.4cm,align=left,font=\footnotesize\ttfamily]
+       (sch) at (0,0) {%
+    hospitals (\underline{id}, name, b2\_bucket, billing\_tier, created\_at)\\[2pt]
+    users (\underline{id}, email, hashed\_password, role, first\_name, last\_name,
+           last\_login, status, license\_expiry, \#hospital\_id)\\[2pt]
+    patients (\underline{id}, first\_name, last\_name, age, imc, gender,
+           \#doctor\_id)\\[2pt]
+    psgs (\underline{id}, \#patient\_id, date, severity, report\_data, edf\_url,
+           hypnogram\_url, hypnogram\_annotated\_url, csv\_url, osa\_report\_url)\\[2pt]
+    psg\_annotations (\underline{id}, \#psg\_id, epoch\_index, note, created\_at)\\[2pt]
+    audit\_logs (\underline{id}, timestamp, user\_email, user\_role, action,
+           ip\_address)\\[2pt]
+    file\_conversations (\underline{id}, \#psg\_id, file\_type, \#doctor\_one\_id,
+           \#doctor\_two\_id, created\_at)\\[2pt]
+    file\_messages (\underline{id}, \#conversation\_id, \#sender\_id, content,
+           timestamp)};
+
+  \node[anchor=north west,font=\scriptsize\itshape,text=hypnogray,text width=14.4cm]
+       at ([yshift=-4pt]sch.south west)
+       {clé primaire soulignée, clé étrangère précédée d'un dièse};
+
+\end{tikzpicture}
+\vspace{0.25cm}
+\caption[Schéma relationnel de la base]%
+        {Schéma relationnel : huit tables issues du modèle métier.}
+\label{fig:schema}
+\end{figure}
+
+La table \texttt{users} sert les deux rôles sans se dédoubler : c'est la colonne
+\texttt{role} qui les sépare, et le couple \texttt{status} et \texttt{license\_expiry}
+est évalué à chaque connexion. Le rattachement d'un patient à son praticien par
+\texttt{doctor\_id} fonde à lui seul le cloisonnement des données. Les annotations et les
+messages disparaissent en cascade avec l'examen ou la discussion qui les porte. Un fil de
+discussion, enfin, référence exactement deux praticiens, \texttt{doctor\_one\_id} et
+\texttt{doctor\_two\_id}, plutôt qu'une table d'association : la collaboration a été
+conçue de confrère à confrère.
+
+Deux choix méritent un commentaire. Le journal d'audit est dénormalisé : il
+recopie l'adresse et le rôle de l'auteur au lieu de référencer son compte. C'est
+délibéré, car une trace de conformité doit rester lisible même après la suppression du
+compte concerné, et une clé étrangère l'en empêcherait. Les références de
+fichiers, quant à elles, ne sont jamais transmises telles quelles : elles sont
+converties en liens signés à durée limitée au moment de la sérialisation de la réponse.
+
+\section{Environnement de travail}
+
+\subsection{Frameworks et langages utilisés}
+
+Le tableau~\ref{tab:techno} récapitule les technologies retenues et la raison de leur
+choix.
+
+\begin{table}[H]
+\centering\small
+\begin{tabular}{@{}lL{4.0cm}L{6.6cm}@{}}
+\hline
+\ligneentete \entete{Couche} & \entete{Technologie} & \entete{Motif du choix} \\
+\hline
+Interface utilisateur & React 19 et Vite &
+Composition par composants et rechargement instantané pendant le développement \\
+Visualisation & Recharts &
+Tracés interactifs superposables sur un axe temporel commun \\
+Multilinguisme & react-i18next &
+Bascule immédiate sans rechargement de l'application \\
+Interface applicative & FastAPI &
+Validation déclarative des données et documentation OpenAPI générée automatiquement \\
+Apprentissage profond & PyTorch &
+Écriture naturelle des architectures et accélération graphique \\
+Apprentissage classique & scikit-learn, XGBoost, LightGBM &
+Implémentations de référence et interface homogène pour la comparaison \\
+Explicabilité & SHAP &
+Attributions exactes en temps polynomial sur les modèles à arbres \\
+Traitement du signal & MNE-Python, SciPy &
+Lecture des formats physiologiques standards et rééchantillonnage \\
+Persistance & PostgreSQL et SQLAlchemy &
+Intégrité référentielle et correspondance objet-relationnel \\
+Stockage des fichiers & Service objet compatible S3 &
+Fichiers volumineux hors base, liens signés à durée limitée \\
+Conteneurisation & Docker et Docker Compose &
+Déploiement reproductible en une commande \\
+\hline
+\end{tabular}
+\caption{Technologies retenues et motifs de choix}
+\label{tab:techno}
+\end{table}
+
+\subsection{Environnement logiciel}
+
+\begin{table}[H]
+\centering
+
+\small
+\begin{tabular}{@{}lL{9.6cm}@{}}
+\toprule
+\textbf{Domaine} & \textbf{Outils} \\
+\midrule
+Langage & Python 3.10 \\
+Traitement du signal & MNE-Python~\cite{gramfort2013}, SciPy, NumPy \\
+Apprentissage profond & PyTorch~\cite{paszke2019} avec accélération CUDA \\
+Apprentissage classique & scikit-learn~\cite{pedregosa2011},
+XGBoost~\cite{chen2016}, LightGBM~\cite{ke2017} \\
+Explicabilité & SHAP~\cite{lundberg2017,lundberg2020} \\
+Expérimentation & Jupyter, matplotlib, seaborn \\
+\bottomrule
+\end{tabular}
+\caption{Environnement logiciel}
+\label{tab:environnement}
+\end{table}
+
+Le suivi de version s'appuie sur Git, la modélisation sur des diagrammes produits
+directement dans la chaîne de composition du mémoire, et l'expérimentation sur des
+carnets Jupyter conservés dans le dépôt à titre de trace reproductible.
+
+\subsection{Environnement matériel}
+
+Les entraînements ont été menés sur une station équipée d'un processeur graphique
+NVIDIA GeForce RTX 4060 pour portable, disposant de \SI{8,6}{\giga\octet} de mémoire
+vidéo, et de \SI{32}{\giga\octet} de mémoire vive. Une seconde station, équipée d'une
+RTX 3060, a servi à la construction des ensembles.
+
+Ce dimensionnement a imposé un arbitrage sur la quantité de données exploitable,
+développé à la section~\ref{sec:strategie}.
+
+\section{Architecture globale}
+
+\subsection{Architecture logique}
+
+\hypnoria{} suit une architecture client-serveur à trois couches
+(figure~\ref{fig:archi3t}). La couche de présentation est une application monopage
+exécutée dans le navigateur du praticien. La couche applicative expose une interface de
+programmation sans état, qui porte à la fois la logique métier et le moteur
+d'inférence. La couche de persistance sépare délibérément deux natures de données : les
+métadonnées cliniques, structurées et interrogeables, vont dans une base relationnelle ;
+les fichiers volumineux partent vers un stockage objet.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    x=1cm,y=1cm,
+    couche/.style = {rectangle,rounded corners=3pt,draw=hypnoblue!45,
+                     fill=hypnolight!60,minimum width=13.6cm},
+    mod/.style    = {rectangle,rounded corners=2pt,draw=hypnoblue!65,fill=white,
+                     align=center,font=\scriptsize,minimum height=0.95cm,
+                     text width=2.45cm},
+    modml/.style  = {rectangle,rounded corners=2pt,draw=hypnored!70,fill=hypnored!7,
+                     align=center,font=\scriptsize,minimum height=0.95cm,
+                     text width=2.45cm},
+    ext/.style    = {rectangle,rounded corners=2pt,draw=hypnogray!60,fill=white,
+                     align=center,font=\scriptsize,minimum height=0.95cm,
+                     text width=2.9cm},
+    titre/.style  = {font=\scriptsize\bfseries,text=hypnoblue,anchor=west},
+    fl/.style     = {{Latex[length=2mm]}-{Latex[length=2mm]},hypnoblue!70,
+                     line width=0.8pt},
+    lab/.style    = {font=\tiny\itshape,text=hypnogray,fill=white,inner sep=1.5pt},
+  ]
+
+  % ── Couche présentation ─────────────────────────────────────────────────
+  \node[couche,minimum height=1.5cm] (c1) at (7.0,4.4) {};
+  \node[titre] at (0.25,5.02) {Présentation};
+  \node[mod] at (3.3,4.25) {Assistant\\d'analyse};
+  \node[mod] at (6.0,4.25) {Registre\\patients};
+  \node[mod] at (8.7,4.25) {Console\\d'administration};
+  \node[mod] at (11.4,4.25) {Consultations};
+
+  % ── Couche application ──────────────────────────────────────────────────
+  \node[couche,minimum height=2.7cm] (c2) at (7.0,1.35) {};
+  \node[titre] at (0.25,2.45) {Application};
+  \node[mod]   at (3.3,1.75) {Authentification\\et rôles};
+  \node[mod]   at (6.0,1.75) {Gestion\\métier};
+  \node[mod]   at (8.7,1.75) {Archivage};
+  \node[mod]   at (11.4,1.75) {Journalisation};
+  \node[modml] at (4.65,0.45) {Prétraitement\\du signal};
+  \node[modml] at (7.35,0.45) {Classification\\des stades};
+  \node[modml] at (10.05,0.45) {Sévérité\\et explication};
+  \node[font=\tiny\itshape,text=hypnored,anchor=east] at (3.30,0.45) {moteur d'inférence};
+
+  % ── Couche persistance ──────────────────────────────────────────────────
+  \node[couche,minimum height=1.5cm] (c3) at (7.0,-1.75) {};
+  \node[titre] at (0.25,-1.13) {Persistance};
+  \node[ext] at (4.6,-1.9) {Base relationnelle\\\tiny métadonnées cliniques};
+  \node[ext] at (9.4,-1.9) {Stockage objet\\\tiny fichiers volumineux};
+
+  % ── Flux ────────────────────────────────────────────────────────────────
+  \draw[fl] (7.0,3.62) -- node[lab] {interface applicative sur HTTP} (7.0,2.75);
+  \draw[fl] (4.6,-0.02) -- node[lab] {requêtes} (4.6,-1.12);
+  \draw[fl] (9.4,-0.02) -- node[lab] {liens signés} (9.4,-1.12);
+
+\end{tikzpicture}
+\vspace{0.3cm}
+\caption[Architecture générale du système]%
+        {Architecture en trois couches. Les modules encadrés en rouge constituent le
+         moteur d'inférence.}
+\label{fig:archi3t}
+\end{figure}
+
+Le tableau~\ref{tab:choix} récapitule quatre décisions structurantes, avec
+l'alternative écartée et le motif du choix.
+
+\begin{table}[H]
+\centering
+
+\small
+\begin{tabular}{@{}L{3.2cm}L{5.2cm}L{5.6cm}@{}}
+\toprule
+\textbf{Décision} & \textbf{Alternative écartée} & \textbf{Motif} \\
+\midrule
+Application monopage découplée de l'interface applicative &
+Application web à rendu serveur &
+L'analyse d'un enregistrement dure plusieurs dizaines de secondes ; un client
+autonome peut afficher la progression, poursuivre les transferts en arrière-plan et
+recomposer les visualisations sans rechargement \\
+\addlinespace[3pt]
+Moteur d'inférence hébergé dans le même processus que l'interface applicative &
+Service d'inférence séparé &
+Les modèles pèsent plusieurs centaines de mégaoctets en mémoire ; les charger une
+seule fois et les conserver en cache évite un coût de démarrage à chaque requête. La
+frontière logique reste posée pour une séparation ultérieure \\
+\addlinespace[3pt]
+Séparation métadonnées / fichiers volumineux &
+Stockage des fichiers en base &
+Un enregistrement pèse plusieurs centaines de mégaoctets. Le conserver en base
+dégraderait les sauvegardes et les temps de réponse, sans bénéfice transactionnel \\
+\addlinespace[3pt]
+Authentification par jeton signé, sans session serveur &
+Session en mémoire ou en base &
+L'absence d'état côté serveur autorise la réplication horizontale sans mécanisme de
+partage de session \\
+\bottomrule
+\end{tabular}
+\caption{Décisions d'architecture et leur justification}
+\label{tab:choix}
+\end{table}
+
+\subsection{Architecture fonctionnelle du pipeline d'analyse}
+
+La figure~\ref{fig:pipeline} suit un enregistrement depuis le dépôt du fichier EDF
+jusqu'au tableau de bord du médecin. Le traitement se déroule en trois étapes.
+
+La première étape est le moteur de classification des stades. Trois réseaux reçoivent
+le même signal et le lisent chacun à une échelle différente : le réseau convolutif
+extrait des motifs locaux dans les ondes brutes, le réseau récurrent tient compte de
+l'ordre temporel des échantillons, et le Transformer relie par auto-attention des
+portions éloignées de l'enregistrement. Une couche d'empilement combine leurs sorties
+et produit l'hypnogramme.
+
+La deuxième étape exploite cet hypnogramme. On en calcule les indicateurs cliniques
+(temps de sommeil total, éveils après endormissement, latence du sommeil paradoxal),
+puis des modèles d'apprentissage automatique classiques (XGBoost, forêt aléatoire,
+SVM) estiment le risque pathologique. Le résultat alimente le compte rendu clinique.
+
+La troisième étape rend ces décisions lisibles. SHAP indique quels facteurs ont pesé
+dans l'estimation du risque, et Grad-CAM montre les zones du signal EEG sur lesquelles
+les réseaux se sont appuyés. Les deux sorties sont affichées dans le tableau de bord
+final.
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=0.78\textheight,keepaspectratio]{images/architecture.jpeg}
+\caption[Architecture fonctionnelle du pipeline d'analyse]%
+        {Pipeline d'analyse en trois étapes : classification des stades, analyse
+         clinique et explication des décisions.}
+\label{fig:pipeline}
+\end{figure}
+
+\subsection{Architecture physique}
+
+La figure~\ref{fig:deploiement} décrit la topologie d'exécution. Chaque service est
+conteneurisé et l'ensemble démarre par une commande unique. Le service de stockage est
+le seul élément externe à l'infrastructure.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    x=1cm,y=1cm,
+    noeud/.style  = {rectangle,rounded corners=3pt,draw=hypnoblue!55,fill=white,
+                     align=center,font=\scriptsize,minimum height=1.5cm,
+                     text width=3.2cm},
+    hote/.style   = {rectangle,rounded corners=3pt,draw=hypnogray!55,dashed,
+                     fill=hypnolight!35},
+    cloud/.style  = {rectangle,rounded corners=8pt,draw=hypnogray!65,fill=white,
+                     align=center,font=\scriptsize,minimum height=1.5cm,
+                     text width=3.0cm},
+    fl/.style     = {-{Latex[length=2mm]},hypnoblue!75,line width=0.8pt},
+    lab/.style    = {font=\tiny\itshape,text=hypnogray,fill=white,inner sep=1.5pt},
+  ]
+
+  \node[hote,minimum width=11.4cm,minimum height=2.5cm] at (5.7,0) {};
+  \node[font=\scriptsize\bfseries,text=hypnogray,anchor=north west] at (0.15,1.15)
+       {Hôte de déploiement --- orchestration de conteneurs};
+
+  \node[noeud] (front) at (2.1,-0.2)  {\textbf{Serveur web}\\\tiny Nginx\\\tiny
+                                        application compilée};
+  \node[noeud] (back)  at (5.7,-0.2)  {\textbf{Interface applicative}\\\tiny Uvicorn
+                                        et FastAPI\\\tiny modèles en mémoire};
+  \node[noeud] (db)    at (9.3,-0.2)  {\textbf{Base de données}\\\tiny PostgreSQL\\
+                                        \tiny volume persistant};
+
+  \node[cloud] (b2)    at (13.6,-0.2) {\textbf{Stockage objet}\\\tiny service externe\\
+                                        \tiny interface S3};
+
+  \node[font=\scriptsize\bfseries,align=center,text width=2.2cm] (nav) at (2.1,2.35)
+       {Navigateur\\du praticien};
+
+  \draw[fl] (nav) -- node[lab] {HTTPS} (front);
+  \draw[fl] (front) -- node[lab] {mandataire} (back);
+  \draw[fl] (back) -- node[lab] {SQL} (db);
+  \draw[fl] (back) -- node[lab] {S3} (b2);
+
+\end{tikzpicture}
+\vspace{0.3cm}
+\caption[Vue de déploiement]%
+        {Topologie d'exécution : trois conteneurs sur un hôte, un service de stockage
+         externe.}
+\label{fig:deploiement}
+\end{figure}
+
+\section{Planification des releases}
+\label{sec:planification}
+
+\subsection{Découpage en releases}
+
+Une release est une version livrable du produit : elle regroupe plusieurs sprints autour
+d'un objectif de valeur commun et se clôt par une revue au cours de laquelle l'incrément est
+démontré dans son ensemble. Le backlog du produit a été ordonnancé en trois releases de deux
+sprints chacune, présentées au tableau~\ref{tab:releases} et à la figure~\ref{fig:releases}.
+
+\begin{table}[H]
+\centering
+
+\small
+\begin{tabular}{@{}L{2.5cm}L{2.2cm}L{4.5cm}L{3.8cm}c@{}}
+\toprule
+\textbf{Release} & \textbf{Sprints} & \textbf{Objectif} & \textbf{Incrément livrable} &
+\textbf{Pts} \\
+\midrule
+\textbf{R1}\newline Moteur de classification & S1 et S2\newline du 26 jan.\newline au 22 mars &
+Constituer le corpus et entraîner les modèles de classification des stades &
+Corpus étiqueté et douze modèles de base évalués & 76 \\
+\addlinespace[3pt]
+\textbf{R2}\newline Diagnostic expliqué & S3 et S4\newline du 23 mars\newline au 17 mai &
+Livrer au praticien un diagnostic expliqué à partir d'un enregistrement brut &
+Ensembles, modèle de sévérité expliqué, interface applicative et poste de travail & 122 \\
+\addlinespace[3pt]
+\textbf{R3}\newline Plateforme clinique & S5 et S6\newline du 18 mai\newline au 12 juil. &
+Faire de l'outil d'analyse une plateforme gouvernée, collaborative et déployable &
+Dossier patient, archivage, administration, collaboration, compte rendu, pile
+conteneurisée & 160 \\
+\bottomrule
+\end{tabular}
+\caption{Planification du projet en trois releases}
+\label{tab:releases}
+\end{table}
+
+L'ordre des releases découle des dépendances entre récits et de la répartition de
+l'incertitude. La première traite en priorité ce qui était à la fois le plus incertain et le
+plus structurant : le moteur de classification, dont dépend tout le reste. La deuxième livre
+le plus petit incrément porteur de la valeur centrale du projet, un diagnostic expliqué
+accessible au praticien. La troisième ajoute ce qui rend cet outil exploitable durablement
+et à plusieurs : dossier patient, gouvernance, collaboration et déploiement reproductible.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    x=1cm,y=1cm,
+    rel/.style = {rectangle,rounded corners=3pt,draw=hypnoblue!55,fill=hypnolight,
+                  minimum width=4.9cm,minimum height=2.9cm},
+    spr/.style = {rectangle,rounded corners=2pt,draw=hypnoblue!70,fill=white,
+                  align=center,font=\scriptsize,minimum height=1.05cm,text width=1.85cm},
+    tit/.style = {font=\scriptsize,text=hypnoblue,align=center,text width=4.6cm},
+    liv/.style = {font=\scriptsize\itshape,text=hypnogray,align=center,text width=4.7cm},
+    jal/.style = {diamond,fill=hypnored,draw=hypnored!85,inner sep=1.8pt},
+    sem/.style = {font=\tiny,text=hypnogray},
+    axe/.style = {-{Latex[length=2.2mm]},hypnogray!70,line width=0.8pt},
+  ]
+
+  % Axe du temps et livraisons
+  \draw[axe] (0,1.95) -- (15.85,1.95);
+  \node[sem,anchor=south west] at (0,2.05)    {semaine 1};
+  \node[jal] at (4.9,1.95)  {};
+  \node[sem,anchor=south] at (4.9,2.08)       {semaine 8};
+  \node[jal] at (10.3,1.95) {};
+  \node[sem,anchor=south] at (10.3,2.08)      {semaine 16};
+  \node[jal] at (15.7,1.95) {};
+  \node[sem,anchor=south east] at (15.8,2.08) {semaine 24};
+
+  % Release 1
+  \node[rel] at (2.45,0) {};
+  \node[tit,anchor=north] at (2.45,1.35) {\textbf{Release 1}\\ moteur de classification};
+  \node[spr] at (1.3,-0.45)  {\textbf{Sprint 1}\\ préparation\\ des données\\ 29 pts};
+  \node[spr] at (3.6,-0.45)  {\textbf{Sprint 2}\\ modèles de\\ classification\\ 47 pts};
+  \node[liv,anchor=north] at (2.45,-1.6) {corpus étiqueté et douze modèles évalués};
+
+  % Release 2
+  \node[rel] at (7.85,0) {};
+  \node[tit,anchor=north] at (7.85,1.35) {\textbf{Release 2}\\ diagnostic expliqué};
+  \node[spr] at (6.7,-0.45)  {\textbf{Sprint 3}\\ ensembles et\\ sévérité\\ 42 pts};
+  \node[spr] at (9.0,-0.45)  {\textbf{Sprint 4}\\ service et\\ interface\\ 80 pts};
+  \node[liv,anchor=north] at (7.85,-1.6) {premier diagnostic expliqué\\ accessible au praticien};
+
+  % Release 3
+  \node[rel] at (13.25,0) {};
+  \node[tit,anchor=north] at (13.25,1.35) {\textbf{Release 3}\\ plateforme clinique};
+  \node[spr] at (12.1,-0.45) {\textbf{Sprint 5}\\ dossier et\\ gouvernance\\ 77 pts};
+  \node[spr] at (14.4,-0.45) {\textbf{Sprint 6}\\ collaboration,\\ déploiement\\ 83 pts};
+  \node[liv,anchor=north] at (13.25,-1.6) {plateforme complète et conteneurisée};
+
+\end{tikzpicture}
+\vspace{0.2cm}
+\caption[Feuille de route des releases]%
+        {Feuille de route du projet : trois releases de deux sprints, chacune close par la
+         livraison d'un incrément.}
+\label{fig:releases}
+\end{figure}
+
+\subsection{Découpage en sprints}
+
+Les vingt-six semaines du stage ont été découpées en six sprints de quatre semaines, suivis
+de deux semaines consacrées à la rédaction et à la préparation de la soutenance. Le
+tableau~\ref{tab:sprints} présente l'objectif et le livrable de chacun, regroupés par
+release.
+
+\begin{table}[H]
+\centering
+
+\small
+\begin{tabular}{@{}L{1.5cm}L{2.5cm}L{5.0cm}L{4.4cm}c@{}}
+\toprule
+\textbf{Sprint} & \textbf{Période} & \textbf{Objectif} & \textbf{Livrable} &
+\textbf{Pts} \\
+\midrule
+\multicolumn{5}{@{}l}{\cellcolor{hypnolight}\textbf{Release 1 --- Moteur de classification des stades}}\\
+\midrule
+S1 & 26 jan.\newline 22 fév. &
+Cadrer le projet, lancer la demande d'accès aux cohortes et prouver la faisabilité de
+la chaîne sans attendre l'autorisation &
+Chaîne de prétraitement opérationnelle et premiers modèles de faisabilité & 29 \\
+\addlinespace[3pt]
+S2 & 23 fév.\newline 22 mars &
+Passer du jeu d'amorçage à la cohorte clinique et couvrir les trois familles
+d'architectures &
+Douze modèles de base entraînés et évalués & 47 \\
+\epictitre{Release 2 --- Diagnostic expliqué et poste de travail}
+S3 & 23 mars\newline 19 avr. &
+Faire coopérer les architectures, puis franchir le pas du staging vers le diagnostic
+expliqué &
+Quatre ensembles et le modèle de sévérité avec ses explications & 42 \\
+\addlinespace[3pt]
+S4 & 20 avr.\newline 17 mai &
+Rendre les modèles consommables et donner au praticien un parcours guidé &
+API documentée et parcours complet du dépôt au compte rendu & 80 \\
+\epictitre{Release 3 --- Plateforme clinique et industrialisation}
+S5 & 18 mai\newline 14 juin &
+Transformer l'outil d'analyse en plateforme gouvernée et traçable &
+Dossier patient persistant, archivage cloud, espace d'administration & 77 \\
+\addlinespace[3pt]
+S6 & 15 juin\newline 12 juil. &
+Couvrir le travail à plusieurs, la restitution documentaire et la reproductibilité &
+Collaboration, compte rendu exportable, pile conteneurisée & 83 \\
+\bottomrule
+\end{tabular}
+\caption{Découpage des releases en sprints}
+\label{tab:sprints}
+\end{table}
+
+\subsection{Vélocité}
+
+La vélocité mesure le nombre de points effectivement livrés par sprint. Sa progression,
+représentée à la figure~\ref{fig:velocite}, ne décrit pas un plateau régulier, ce qui
+correspond à la réalité du travail : les deux premiers sprints sont absorbés par la
+montée en compétence sur le cadre d'apprentissage profond et par des temps
+d'entraînement incompressibles.
+
+Regroupée par release, la vélocité moyenne passe de 38 points par sprint pour la
+première à 61 pour la deuxième et 80 pour la troisième. Ce profil reflète la nature des
+releases : la première est dominée par la modélisation, les suivantes par le
+développement applicatif, moins exposé aux temps de calcul.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+
+  % Axe des ordonnées
+  \draw[hypnogray!60,line width=0.6pt] (0,0) -- (0,4.6);
+  \foreach \v/\y in {0/0, 20/1.0, 40/2.0, 60/3.0, 80/4.0} {
+    \draw[hypnogray!60] (-0.1,\y) -- (0,\y);
+    \node[left,font=\scriptsize,text=hypnogray] at (-0.12,\y) {\v};
+    \draw[hypnogray!18,line width=0.4pt] (0,\y) -- (10.6,\y);
+  }
+  \node[rotate=90,font=\scriptsize,text=hypnogray] at (-1.0,2.3) {points livrés};
+
+  % Barres
+  \foreach \i/\lab/\pts/\col in {0/S1/29/hypnoblue!40, 1/S2/47/hypnoblue!40,
+      2/S3/42/hypnoblue!65, 3/S4/80/hypnoblue!65, 4/S5/77/hypnoblue!90, 5/S6/83/hypnoblue!90} {
+    \pgfmathsetmacro{\xa}{0.55 + \i*1.65}
+    \pgfmathsetmacro{\xb}{\xa + 1.1}
+    \pgfmathsetmacro{\hh}{\pts/20}
+    \fill[\col] (\xa,0) rectangle (\xb,\hh);
+    \draw[hypnoblue] (\xa,0) rectangle (\xb,\hh);
+    \node[font=\scriptsize\bfseries,text=hypnoblue,anchor=south]
+         at ({(\xa+\xb)/2},\hh+0.04) {\pts};
+    \node[font=\scriptsize,text=hypnogray,anchor=north]
+         at ({(\xa+\xb)/2},-0.06) {\lab};
+  }
+
+  % Axe des abscisses
+  \draw[hypnogray!60,line width=0.6pt] (0,0) -- (10.6,0);
+
+  % Regroupement par release
+  \foreach \r/\xa/\xb in {1/0.55/3.30, 2/3.85/6.60, 3/7.15/9.90} {
+    \draw[hypnogray!70,line width=0.5pt] (\xa,-0.42) -- (\xa,-0.52) -- (\xb,-0.52)
+          -- (\xb,-0.42);
+    \node[font=\scriptsize\bfseries,text=hypnoblue,anchor=north]
+         at ({(\xa+\xb)/2},-0.56) {Release \r};
+  }
+
+  % Vélocité moyenne
+  \draw[hypnored,dashed,line width=0.8pt] (0,2.983) -- (10.6,2.983);
+  \node[font=\scriptsize\itshape,text=hypnored,anchor=west] at (10.65,2.983)
+       {moyenne : 60};
+
+\end{tikzpicture}
+\vspace{0.3cm}
+\caption[Vélocité par sprint]%
+        {Points de complexité livrés par sprint, regroupés par release.}
+\label{fig:velocite}
+\end{figure}
+
+\subsection{Planning}
+
+La figure~\ref{fig:gantt} confronte la planification aux travaux réellement menés. Le
+jalon le plus structurant est l'obtention de l'accès aux cohortes en semaine 5. Le
+recouvrement volontaire entre la demande d'accès et les travaux d'amorçage sur un jeu
+public traduit une décision assumée : occuper le délai administratif au lieu de le
+subir.
+
+\begin{figure}[H]
+\centering
+\begin{ganttchart}[
+    x unit                  = 0.375cm,
+    y unit title            = 0.52cm,
+    y unit chart            = 0.44cm,
+    hgrid                   = {draw=hypnogray!18},
+    vgrid                   = {*1{draw=hypnogray!18}},
+    title/.append style     = {draw=hypnoblue!45, fill=hypnolight},
+    title label font        = \tiny,
+    title height            = 1,
+    bar/.append style       = {draw=hypnoblue!85, fill=hypnoblue!55,
+                               rounded corners=1pt},
+    bar height              = 0.58,
+    bar label font          = \scriptsize,
+    bar label node/.append style = {text=hypnoblue!95},
+    milestone/.append style = {fill=hypnored, draw=hypnored!85},
+    milestone label font    = \scriptsize\itshape,
+    milestone label node/.append style = {text=hypnored},
+    milestone height        = 0.42,
+  ]{1}{26}
+
+  \gantttitle{Release 1}{8}
+  \gantttitle{Release 2}{8}
+  \gantttitle{Release 3}{8}
+  \gantttitle{}{2} \\
+  \gantttitle{Sprint 1}{4}
+  \gantttitle{Sprint 2}{4}
+  \gantttitle{Sprint 3}{4}
+  \gantttitle{Sprint 4}{4}
+  \gantttitle{Sprint 5}{4}
+  \gantttitle{Sprint 6}{4}
+  \gantttitle{Clôture}{2} \\
+  \gantttitlelist{1,...,26}{1} \\
+
+  \ganttbar{Étude bibliographique}{1}{3} \\
+  \ganttbar{Demande d'accès NSRR}{1}{5} \\
+  \ganttbar{Chaîne de prétraitement}{2}{4} \\
+  \ganttbar{Amorçage sur jeu public}{3}{4} \\
+  \ganttmilestone{Accès aux cohortes obtenu}{5} \\
+  \ganttbar{Préparation de la cohorte}{5}{6} \\
+  \ganttbar{Modèles de base}{6}{9} \\
+  \ganttmilestone{12 modèles entraînés}{9} \\
+  \ganttbar{Ensembles par empilement}{9}{10} \\
+  \ganttbar{Modèle de sévérité}{10}{12} \\
+  \ganttbar{Service d'inférence}{13}{15} \\
+  \ganttbar{Interface d'analyse}{14}{17} \\
+  \ganttbar{Base de données, archivage}{17}{19} \\
+  \ganttbar{Administration, audit}{19}{20} \\
+  \ganttbar{Collaboration, annotation}{21}{22} \\
+  \ganttbar{Compte rendu, multilinguisme}{22}{23} \\
+  \ganttmilestone{Plateforme complète}{22} \\
+  \ganttbar{Conteneurisation, intégration}{23}{24} \\
+  \ganttbar{Rédaction du mémoire}{21}{26} \\
+  \ganttmilestone{Soutenance}{26}
+
+\end{ganttchart}
+\vspace{0.3cm}
+\caption[Diagramme de Gantt du projet]%
+        {Déroulement du projet sur les vingt-six semaines du stage.}
+\label{fig:gantt}
+\end{figure}
+
+\sectionsansnum{Conclusion}
+
+Ce chapitre a traduit les intentions du chapitre précédent en une commande vérifiable.
+Quatre acteurs ont été identifiés, les besoins fonctionnels regroupés en neuf épics et
+déclinés en soixante récits utilisateur, et les besoins non fonctionnels énoncés avec
+leur moyen de vérification. Le modèle de données, l'environnement de travail et
+l'architecture globale ont été présentés.
+
+L'ordonnancement du backlog a produit trois releases de deux sprints de quatre semaines.
+Les trois chapitres suivants leur sont consacrés. Chacun suit la même trame : présentation
+de la release et de son backlog ; pour chaque sprint, backlog, analyse, conception,
+réalisation et revue ; enfin, revue de la release.

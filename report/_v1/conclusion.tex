@@ -1,0 +1,221 @@
+\chapter*{Conclusion générale et perspectives}
+\addcontentsline{toc}{chapter}{Conclusion générale et perspectives}
+\markboth{Conclusion générale}{Conclusion générale}
+
+% =============================================================================
+\section*{Bilan du travail}
+\addcontentsline{toc}{section}{Bilan du travail}
+% =============================================================================
+
+Ce projet est parti d'un constat en trois volets. L'interprétation d'un enregistrement
+polysomnographique mobilise plusieurs heures d'expertise par patient, ce qui limite
+l'accès au diagnostic bien davantage que la capacité d'enregistrement. Cette
+interprétation n'est pas parfaitement reproductible, l'accord entre scoreurs
+plafonnant autour de \SI{83}{\percent}. Et les modèles d'apprentissage profond qui
+pourraient absorber ce volume restent opaques, ce qui interdit au praticien d'engager
+sa responsabilité sur une prédiction dont il ignore les motifs.
+
+\hypnoria{} répond à ces trois exigences par une plateforme organisée en deux étages
+d'apprentissage. Le premier classe automatiquement les stades du sommeil à partir d'un
+enregistrement brut ; le second exploite l'hypnogramme produit pour estimer la sévérité
+d'un syndrome d'apnées obstructives, en exposant les facteurs qui déterminent chaque
+prédiction. Autour de ces modèles, la plateforme fournit la chaîne applicative attendue
+en contexte clinique : dossier patient, archivage sécurisé, annotation, compte rendu
+composable, collaboration entre praticiens et traçabilité des actions.
+
+Les objectifs fixés au chapitre~\ref{chap:cadre} ont été atteints dans les proportions
+que résume le tableau ci-dessous.
+
+\begin{table}[H]
+\centering
+\caption*{\textbf{Bilan au regard des objectifs}}
+\small
+\begin{tabular}{@{}L{4.2cm}L{7.6cm}c@{}}
+\toprule
+\textbf{Objectif} & \textbf{Réalisation} & \textbf{État} \\
+\midrule
+Automatiser le scorage des stades &
+Douze modèles entraînés et quatre ensembles construits ; meilleure exactitude de
+\SI{91,66}{\percent} pour un $\kappa$ de \num{0,853} &
+atteint \\
+\addlinespace[3pt]
+Prédire la sévérité du SAOS &
+Modèle à quatre classes sur 53 variables ; \SI{57,0}{\percent} d'exactitude et plus de
+\SI{95}{\percent} des prédictions à un cran près &
+atteint \\
+\addlinespace[3pt]
+Expliquer chaque prédiction &
+Attributions par valeurs de Shapley sur le modèle de sévérité, restituées en facteurs
+aggravants et protecteurs &
+partiellement \\
+\addlinespace[3pt]
+Fournir la chaîne applicative &
+Trente points d'entrée, deux rôles, archivage cloud, collaboration, journal d'audit,
+interface bilingue, pile conteneurisée &
+atteint \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+L'objectif d'explicabilité n'est que partiellement atteint, et il faut le dire
+clairement : les explications produites portent sur la prédiction de sévérité, non sur
+la classification des stades. Les cartes de saillance et les poids d'attention
+initialement envisagés pour les modèles profonds n'ont pas été exposés dans
+l'interface. Le mécanisme d'attention existe pourtant dans l'architecture récurrente,
+et ses poids sont calculés à chaque inférence : les rendre visibles relève d'un travail
+de restitution, non de modélisation.
+
+% =============================================================================
+\section*{Apports du projet}
+\addcontentsline{toc}{section}{Apports du projet}
+% =============================================================================
+
+Sur le plan \textbf{scientifique}, ce travail apporte une comparaison systématique de
+trois familles d'architectures sur quatre configurations de montage et de granularité,
+là où la littérature compare le plus souvent un modèle à des résultats publiés dans des
+conditions différentes. Il apporte surtout deux résultats nuancés que la pratique
+courante tend à masquer. D'une part, l'empilement dépasse le meilleur modèle isolé sur
+les quatre configurations de classification, mais ne dépasse le vote moyen que sur trois
+d'entre elles : la comparaison au vote moyen, rarement rapportée, révèle que l'apport
+du méta-apprentissage est réel mais modeste et conditionné au désaccord entre les
+modèles combinés. D'autre part, sur la prédiction de sévérité, l'empilement
+\emph{dégrade} légèrement la meilleure ligne de base, ce que nous avons rattaché à un
+défaut de diversité entre trois modèles tous fondés sur des arbres. Un résultat négatif
+correctement analysé instruit davantage qu'un gain non expliqué.
+
+Sur le plan \textbf{technique}, la contribution tient moins aux modèles qu'à
+l'intégration. Peu de travaux académiques livrent la chaîne complète permettant à un
+praticien d'exploiter un modèle : de la lecture d'un fichier hétérogène jusqu'au compte
+rendu archivé, en passant par la gestion des comptes, le cloisonnement des données et
+la traçabilité. Deux décisions d'ingénierie méritent d'être retenues : l'arbitrage de
+résidence des données en mémoire, qui a préservé la qualité de convergence au prix du
+volume, et l'archivage en arrière-plan, qui affiche les résultats avant la fin du
+transfert.
+
+Sur le plan \textbf{personnel}, ce projet aura été l'occasion de mener un cycle complet
+— de la revue de littérature à la conteneurisation — et surtout d'apprendre à
+distinguer un résultat d'un artefact de protocole. La découverte, en rédigeant le
+chapitre~\ref{chap:realisation-ia}, que les matrices de confusion produites par le
+pipeline de sévérité portaient des étiquettes permutées, a été plus formatrice que bien
+des succès : elle rappelle qu'un chiffre n'a de valeur que si l'on sait exactement ce
+qu'il mesure.
+
+% =============================================================================
+\section*{Limites}
+\addcontentsline{toc}{section}{Limites}
+% =============================================================================
+
+Quatre limites bornent la portée de ce travail. Elles ont été analysées en détail dans
+les chapitres correspondants ; nous les rassemblons ici.
+
+La première est \textbf{méthodologique}. Les modèles de base ont été évalués sur un
+découpage au niveau des époques et non des sujets. Chaque patient contribuant environ un
+millier de fenêtres, le modèle a vu — pour presque chaque époque de test — d'autres
+époques du même patient et de la même nuit. Les métriques rapportées mesurent donc la
+classification d'une époque inconnue chez un patient connu, et surestiment
+vraisemblablement la performance en situation clinique. S'y ajoute le fait que les
+ensembles ont été évalués selon un protocole différent, ce qui rend les deux séries de
+chiffres non comparables entre elles.
+
+La deuxième tient au \textbf{corpus}. Les 196 enregistrements retenus représentent
+\SI{3,4}{\percent} de la cohorte disponible, et ils ont été sélectionnés par filtrage
+sur la complétude du montage plutôt que par tirage aléatoire. La diversité des
+morphologies et des conditions d'enregistrement y est moindre que dans la cohorte
+complète.
+
+La troisième concerne l'\textbf{explicabilité}, incomplète comme indiqué plus haut, et
+dont il faut rappeler la nature : les attributions expliquent le comportement du
+modèle, non le phénomène physiologique. Une contribution élevée signale une influence
+sur la prédiction, jamais un lien de causalité.
+
+La quatrième est \textbf{applicative}. Les routes d'inférence ne sont pas protégées par
+le contrôle d'accès, la conformité au règlement européen reste incomplète sur le
+chiffrement au repos, le droit à l'effacement et les durées de conservation, et la
+validation repose sur une campagne manuelle plutôt que sur une couverture de tests
+automatisés.
+
+% =============================================================================
+\section*{Perspectives}
+\addcontentsline{toc}{section}{Perspectives}
+% =============================================================================
+
+Les travaux à mener se hiérarchisent naturellement selon qu'ils conditionnent la
+validité des résultats, la mise en service ou l'extension du système.
+
+\subsection*{Consolider la validité des résultats}
+
+La \textbf{ré-évaluation complète sur un découpage par sujets} est la priorité absolue.
+Il s'agit d'appliquer un protocole unique — tirage aléatoire des sujets, séparation
+stricte entre entraînement, validation et test — aux douze modèles de base comme aux
+quatre ensembles. Aucune modification d'architecture n'est nécessaire : seul le
+découpage change. Les chiffres obtenus seront probablement inférieurs à ceux rapportés
+ici, mais ils seront comparables entre eux et transposables à la pratique clinique.
+
+La \textbf{validation externe sur la cohorte MESA}, dont l'accès a été obtenu mais qui
+n'a pas été exploitée, constituerait la seconde étape : elle mesurerait la capacité du
+système à généraliser à une population et à un protocole d'acquisition différents.
+
+L'\textbf{élargissement du corpus} suit naturellement. Il suppose de renoncer à la
+résidence intégrale en mémoire, donc de concevoir un chargement par blocs qui n'affame
+pas le processeur graphique — par exemple en préchargeant le bloc suivant pendant le
+traitement du bloc courant.
+
+\subsection*{Préparer la mise en service}
+
+L'\textbf{authentification des routes d'inférence} est une correction d'une ligne par
+route, à appliquer de part et d'autre. La \textbf{mise en conformité réglementaire}
+demande davantage : chiffrement applicatif des données au repos, procédure d'effacement
+d'un patient et de ses fichiers en une opération, définition et application de durées de
+conservation.
+
+La \textbf{couverture de tests automatisés} doit être construite à trois niveaux :
+unitaire sur la chaîne de traitement du signal, d'intégration sur les points d'entrée,
+et de bout en bout sur le parcours d'analyse. Les trois assertions de sécurité déjà
+présentes dans la chaîne d'intégration continue en constituent l'amorce.
+
+La \textbf{validation clinique} enfin : aucun praticien n'a évalué le système en
+conditions réelles. Une étude de concordance entre le scorage automatique et celui d'un
+technicien expérimenté, sur un échantillon d'enregistrements, mesurerait ce que les
+métriques ne disent pas — la confiance qu'un professionnel accorde à l'outil.
+
+\subsection*{Étendre le système}
+
+Deux extensions relèvent des promesses initiales du cahier des charges et restent
+pertinentes.
+
+Le \textbf{lissage contextuel des transitions} exploiterait le fait qu'un hypnogramme
+n'est pas une suite d'époques indépendantes : certaines transitions sont
+physiologiquement improbables, et une fenêtre glissante sur les probabilités
+prédites corrigerait les aberrations isolées. L'implémentation est simple et le gain
+attendu porte précisément sur l'indice de fragmentation, qui alimente le modèle de
+sévérité.
+
+L'\textbf{explicabilité des modèles de classification} compléterait celle déjà en place
+sur la sévérité. Les poids d'attention du modèle récurrent sont calculés à chaque
+inférence sans être exploités ; les exposer indiquerait au praticien quels instants de
+l'époque ont déterminé la décision. Des cartes de saillance sur le modèle convolutif
+apporteraient une information complémentaire. Les réserves formulées au
+chapitre~\ref{chap:etat-art} sur la valeur explicative de l'attention devront
+toutefois être rappelées dans l'interface.
+
+Enfin, le \textbf{passage à l'échelle} suppose de séparer le moteur d'inférence de
+l'interface applicative, afin de dimensionner indépendamment les ressources de calcul
+et celles de service, et de remplacer les migrations au démarrage par un outil de
+migration versionnée.
+
+% =============================================================================
+\section*{Mot de la fin}
+\addcontentsline{toc}{section}{Mot de la fin}
+% =============================================================================
+
+Ce projet ne prétend pas remplacer l'expertise humaine, et la question ne se pose
+d'ailleurs pas dans ces termes. Un modèle qui atteint le niveau d'accord observé entre
+deux experts ne fait pas mieux qu'un expert : il fait la même chose, plus vite et de
+manière parfaitement reproductible. C'est déjà considérable dans un domaine où le
+temps d'expertise disponible constitue le facteur limitant.
+
+L'apport décisif n'est donc pas la performance brute, mais la transparence. Un système
+qui expose les facteurs de sa décision permet au praticien de la valider, de la
+contester, et surtout de conserver la responsabilité du diagnostic. C'est à cette
+condition, et à elle seule, que l'intelligence artificielle a sa place au chevet du
+patient.

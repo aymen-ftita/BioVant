@@ -696,7 +696,7 @@ def predict_osa(data: dict = Body(...)):
             interpretation.append({"type": "warning", "text": "WASO élevé (>60 min) — réveils nocturnes fréquents"})
         
         # Model info
-        model_used = "Stacking (XGB+LGBM+MLP→LR)" if osa_predictor.stacking_model else "XGBoost"
+        model_used = osa_predictor.describe_model()
         
         return {
             "severity": pred_label,
@@ -917,7 +917,7 @@ def predict_osa_custom(data: dict = Body(...)):
         from osa_predictor import predict_osa_severity
         pred_label, proba_dict, feature_impacts = predict_osa_severity(X)
         
-        model_used = "Stacking (XGB+LGBM+MLP→LR)" if osa_predictor.stacking_model else "XGBoost"
+        model_used = osa_predictor.describe_model()
         
         return {
             "severity": pred_label,

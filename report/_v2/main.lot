@@ -1,0 +1,62 @@
+\babel@toc {french}{}\relax 
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {1}{\ignorespaces Les cinq états de vigilance définis par le référentiel AASM}}{8}{table.caption.6}%
+\contentsline {table}{\numberline {2}{\ignorespaces Dérivations minimales d'un montage polysomnographique de scorage}}{9}{table.caption.8}%
+\contentsline {table}{\numberline {3}{\ignorespaces Classes de sévérité du SAOS selon l'index d'apnées-hypopnées}}{10}{table.caption.9}%
+\contentsline {table}{\numberline {4}{\ignorespaces Principaux travaux de classification automatique des stades du sommeil}}{13}{table.caption.10}%
+\contentsline {table}{\numberline {5}{\ignorespaces Positionnement de \textsc {Hypnoria}{} face aux solutions existantes}}{14}{table.caption.11}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {6}{\ignorespaces Acteurs du système et leurs responsabilités}}{17}{table.caption.13}%
+\contentsline {table}{\numberline {7}{\ignorespaces Regroupement des besoins fonctionnels en épics}}{18}{table.caption.14}%
+\contentsline {table}{\numberline {8}{\ignorespaces Besoins non fonctionnels et moyens de vérification}}{19}{table.caption.15}%
+\contentsline {table}{\numberline {9}{\ignorespaces Description textuelle du cas « Analyser un enregistrement »}}{22}{table.caption.18}%
+\contentsline {table}{\numberline {10}{\ignorespaces Description textuelle du cas « Prédire la sévérité du SAOS »}}{23}{table.caption.19}%
+\contentsline {table}{\numberline {11}{\ignorespaces Product Backlog --- 60 récits utilisateur, 358 points}}{24}{table.2.11}%
+\contentsline {table}{\numberline {12}{\ignorespaces Tables du schéma relationnel}}{28}{table.caption.21}%
+\contentsline {table}{\numberline {13}{\ignorespaces Technologies retenues et motifs de choix}}{29}{table.caption.22}%
+\contentsline {table}{\numberline {14}{\ignorespaces Environnement logiciel}}{29}{table.caption.23}%
+\contentsline {table}{\numberline {15}{\ignorespaces Décisions d'architecture et leur justification}}{31}{table.caption.25}%
+\contentsline {table}{\numberline {16}{\ignorespaces Découpage du projet en six sprints}}{32}{table.caption.27}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {17}{\ignorespaces Sprint Backlog --- Sprint 1}}{36}{table.caption.30}%
+\contentsline {table}{\numberline {18}{\ignorespaces Description textuelle du cas « Préparer un enregistrement »}}{38}{table.caption.32}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {19}{\ignorespaces Sprint Backlog --- Sprint 2}}{43}{table.caption.36}%
+\contentsline {table}{\numberline {20}{\ignorespaces Description textuelle du cas « Classer une époque »}}{44}{table.caption.38}%
+\contentsline {table}{\numberline {21}{\ignorespaces Empreinte du corpus d'entraînement en simple précision}}{47}{table.caption.43}%
+\contentsline {table}{\numberline {22}{\ignorespaces Stratégies de résidence des données pendant l'entraînement}}{48}{table.caption.44}%
+\contentsline {table}{\numberline {23}{\ignorespaces Réglages d'entraînement}}{49}{table.caption.45}%
+\contentsline {table}{\numberline {24}{\ignorespaces Performances des douze modèles de base sur le jeu de test}}{51}{table.caption.47}%
+\contentsline {table}{\numberline {25}{\ignorespaces Performances par classe --- configuration à cinq dérivations}}{52}{table.caption.49}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {26}{\ignorespaces Sprint Backlog --- Sprint 3}}{56}{table.caption.51}%
+\contentsline {table}{\numberline {27}{\ignorespaces Description textuelle du cas « Prédire la sévérité du SAOS »}}{58}{table.caption.53}%
+\contentsline {table}{\numberline {28}{\ignorespaces Ensembles par empilement, comparés aux modèles de base et au vote moyen}}{60}{table.caption.56}%
+\contentsline {table}{\numberline {29}{\ignorespaces Approches d'évaluation du risque de SAOS}}{62}{table.caption.59}%
+\contentsline {table}{\numberline {30}{\ignorespaces Prédiction de la sévérité --- résultats sur les 530 sujets de test}}{65}{table.caption.63}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {31}{\ignorespaces Sprint Backlog --- Sprint 4}}{72}{table.caption.69}%
+\contentsline {table}{\numberline {32}{\ignorespaces Description textuelle du cas « Analyser un enregistrement »}}{74}{table.caption.71}%
+\contentsline {table}{\numberline {33}{\ignorespaces Modules de l'interface applicative}}{77}{table.caption.74}%
+\contentsline {table}{\numberline {34}{\ignorespaces Points d'entrée de l'interface applicative}}{78}{table.caption.75}%
+\contentsline {table}{\numberline {35}{\ignorespaces Mécanismes de sécurité et menaces couvertes}}{79}{table.caption.77}%
+\contentsline {table}{\numberline {36}{\ignorespaces Principaux composants de l'interface}}{80}{table.caption.78}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {37}{\ignorespaces Sprint Backlog --- Sprint 5}}{84}{table.caption.84}%
+\contentsline {table}{\numberline {38}{\ignorespaces Description textuelle du cas « Gérer le cycle de vie d'un compte »}}{86}{table.caption.86}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {39}{\ignorespaces Sprint Backlog --- Sprint 6}}{91}{table.caption.91}%
+\contentsline {table}{\numberline {40}{\ignorespaces Description textuelle du cas « Solliciter un confrère »}}{92}{table.caption.93}%
+\contentsline {table}{\numberline {41}{\ignorespaces Services de la pile conteneurisée}}{94}{table.caption.97}%
+\contentsline {table}{\numberline {42}{\ignorespaces Travaux de la chaîne d'intégration continue}}{95}{table.caption.98}%
+\contentsline {table}{\numberline {43}{\ignorespaces Scénarios de validation fonctionnelle}}{96}{table.caption.100}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {44}{\ignorespaces Précision, rappel et F1 par classe --- classification en trois stades}}{114}{table.caption.111}%
+\contentsline {table}{\numberline {45}{\ignorespaces F1 par classe --- classification en cinq stades}}{114}{table.caption.112}%
+\contentsline {table}{\numberline {46}{\ignorespaces Rapports de classification des quatre ensembles}}{114}{table.caption.113}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {47}{\ignorespaces Les 53 variables du modèle de sévérité}}{115}{table.caption.114}%
+\contentsline {table}{\numberline {48}{\ignorespaces F1 macro en validation croisée à cinq plis}}{116}{table.caption.116}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {49}{\ignorespaces Relations entre les tables}}{121}{table.caption.125}%
+\addvspace {10\p@ }

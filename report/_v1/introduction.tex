@@ -1,0 +1,48 @@
+\chapter*{Introduction générale}
+\addcontentsline{toc}{chapter}{Introduction générale}
+\markboth{Introduction générale}{Introduction générale}
+
+Les troubles du sommeil constituent un problème de santé publique dont l'ampleur reste
+largement sous-estimée. Le syndrome d'apnées obstructives du sommeil, à lui seul,
+concernerait près d'un milliard d'adultes dans le monde, dont une large majorité n'a
+jamais été diagnostiquée. Son examen de référence, la polysomnographie, enregistre une
+nuit complète de signaux physiologiques ; son interprétation impose ensuite à un
+technicien qualifié de classer manuellement un millier de fenêtres de trente secondes,
+puis de caractériser les événements respiratoires. Ce goulet d'étranglement humain,
+davantage que la capacité d'enregistrement, limite aujourd'hui l'accès au diagnostic.
+
+L'apprentissage profond a apporté une réponse crédible au premier problème. Depuis
+2017, plusieurs architectures atteignent sur les bases publiques un niveau de
+concordance comparable à celui observé entre deux experts humains. Leur adoption
+clinique demeure pourtant marginale, et la raison n'est plus la performance : c'est
+l'opacité. Un réseau de neurones profond restitue une classe sans énoncer ce qui l'a
+déterminée, alors que le praticien engage sa responsabilité sur le compte rendu qu'il
+signe. Sans justification intelligible, une prédiction ne peut être ni validée ni
+contestée.
+
+Le présent projet de fin d'études, mené au sein du Centre National de l'Informatique,
+répond à cette double exigence de performance et de transparence. Il aboutit à
+\hypnoria{}, une plateforme web d'aide à l'interprétation polysomnographique organisée
+autour de deux étages d'apprentissage. Le premier classe automatiquement les stades du
+sommeil à partir d'un enregistrement brut, en combinant par empilement trois familles
+d'architectures — convolutive, récurrente et attentionnelle. Le second exploite
+l'hypnogramme ainsi produit pour prédire la classe de sévérité du syndrome d'apnées,
+et accompagne chaque prédiction de la décomposition des facteurs qui l'ont déterminée.
+Autour de ces modèles, la plateforme fournit la chaîne applicative complète attendue en
+contexte clinique : dossier patient, archivage sécurisé, annotation, compte rendu
+exportable, collaboration entre praticiens et traçabilité des actions.
+
+Ce mémoire rend compte de l'ensemble de ces travaux. Le
+chapitre~\ref{chap:cadre} pose le cadre du projet : l'organisme d'accueil, les notions
+médicales indispensables, la problématique et l'étude de l'existant. Le
+chapitre~\ref{chap:etat-art} dresse l'état de l'art des méthodes de classification
+automatique des stades, des techniques d'apprentissage ensembliste et des approches
+d'intelligence artificielle explicable. Le chapitre~\ref{chap:analyse} formalise les
+besoins, présente le \emph{Product Backlog} et le découpage du projet en six sprints.
+Le chapitre~\ref{chap:conception} détaille la conception du système, de l'architecture
+logicielle jusqu'aux architectures de réseaux. Le chapitre~\ref{chap:realisation-ia}
+expose la réalisation du pipeline d'apprentissage, la stratégie d'entraînement retenue
+sous contrainte matérielle et l'ensemble des résultats expérimentaux. Le
+chapitre~\ref{chap:realisation-plateforme} décrit la plateforme clinique et son
+déploiement. Une conclusion générale dresse enfin le bilan des objectifs atteints et
+ouvre sur les perspectives.

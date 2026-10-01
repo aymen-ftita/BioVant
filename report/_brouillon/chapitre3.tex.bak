@@ -1,0 +1,32 @@
+\chapter{État de l’art}
+\label{chap:etat_art}
+
+\section{Classification automatique des stades du sommeil}
+
+Les premières approches utilisaient des caractéristiques extraites manuellement (spectre de puissance, entropie, etc.) et des classifieurs classiques (SVM, forêts aléatoires). Depuis 2016, les réseaux de neurones profonds dominent le domaine.
+
+\subsection{Modèles séquentiels : LSTM, CNN, Transformers}
+\begin{itemize}
+\item Les \textbf{CNN} sont efficaces pour extraire des motifs temporels locaux (fuseaux, ondes lentes).
+\item Les \textbf{LSTM} (ou BiLSTM) modélisent les dépendances à long terme entre épisodes successifs.
+\item Les \textbf{Transformers} utilisent des mécanismes d’auto-attention pour capturer des relations globales.
+\end{itemize}
+Plusieurs travaux combinent CNN et LSTM (DeepSleepNet, TinySleepNet) pour atteindre une précision > 85\%. Les Transformers récents (e.g., SleepTransformer) obtiennent des performances supérieures à 90\% sur Sleep-EDF.
+
+\subsection{Modèles d’ensemble}
+
+Le \textit{stacking} consiste à combiner plusieurs modèles de base via un méta-apprenant. Il permet de réduire la variance et le biais. Des études ont montré que l’empilement de CNN, LSTM et Transformer améliore la robustesse.
+
+\section{Explicabilité en IA (XAI)}
+
+\subsection{SHAP (SHapley Additive exPlanations)}
+Basé sur la théorie des jeux, SHAP attribue à chaque caractéristique une contribution à la prédiction. Il est applicable à tout modèle.
+
+\subsection{Mécanismes d’attention}
+Les poids d’attention dans les LSTM ou Transformers indiquent quels instants temporels sont les plus importants.
+
+\subsection{Cartes de saillie}
+Pour les CNN, les cartes de saillie (saliency maps) mettent en évidence les zones du signal les plus influentes.
+
+\subsection{Application au sommeil}
+Peu de travaux intègrent l’explicabilité dans la classification des stades du sommeil. Le projet XAI-Sleep se positionne comme une contribution originale en combinant stacking et explications multi-méthodes.

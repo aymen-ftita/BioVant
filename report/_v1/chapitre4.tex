@@ -1,0 +1,869 @@
+\chapter{Conception du système}
+\label{chap:conception}
+
+Ce chapitre traduit la spécification en architecture. Nous présentons d'abord la
+structure d'ensemble et les choix qui la fondent, puis la vue statique du système :
+composants, déploiement et modèle de données. Vient ensuite la conception des deux
+étages d'apprentissage — la chaîne de traitement du signal et les trois architectures
+de réseaux, puis le pipeline de prédiction de sévérité. Nous décrivons enfin la vue
+dynamique, à travers les enchaînements d'interactions et le cycle de vie d'un examen,
+avant d'exposer la conception de la sécurité.
+
+% =============================================================================
+\section{Architecture générale}
+% =============================================================================
+
+\subsection{Une architecture en trois couches}
+
+\hypnoria{} suit une architecture client-serveur à trois couches, dont la
+figure~\ref{fig:archi3t} donne la vue d'ensemble. La couche de présentation est une
+application monopage exécutée dans le navigateur du praticien. La couche applicative
+expose une interface de programmation sans état, qui porte à la fois la logique métier
+et le moteur d'inférence. La couche de persistance sépare délibérément deux natures de
+données : les métadonnées cliniques, structurées et interrogeables, vont dans une base
+relationnelle ; les fichiers volumineux — enregistrements bruts, images, comptes
+rendus — partent vers un stockage objet.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    x=1cm,y=1cm,
+    couche/.style = {rectangle,rounded corners=3pt,draw=hypnoblue!45,
+                     fill=hypnolight!60,minimum width=13.6cm},
+    mod/.style    = {rectangle,rounded corners=2pt,draw=hypnoblue!65,fill=white,
+                     align=center,font=\scriptsize,minimum height=0.95cm,
+                     text width=2.45cm},
+    modml/.style  = {rectangle,rounded corners=2pt,draw=hypnored!70,fill=hypnored!7,
+                     align=center,font=\scriptsize,minimum height=0.95cm,
+                     text width=2.45cm},
+    ext/.style    = {rectangle,rounded corners=2pt,draw=hypnogray!60,fill=white,
+                     align=center,font=\scriptsize,minimum height=0.95cm,
+                     text width=2.9cm},
+    titre/.style  = {font=\scriptsize\bfseries,text=hypnoblue,anchor=west},
+    fl/.style     = {{Latex[length=2mm]}-{Latex[length=2mm]},hypnoblue!70,
+                     line width=0.8pt},
+    lab/.style    = {font=\tiny\itshape,text=hypnogray,fill=white,inner sep=1.5pt},
+  ]
+
+  % ── Couche présentation ─────────────────────────────────────────────────
+  \node[couche,minimum height=1.5cm] (c1) at (7.0,4.4) {};
+  \node[titre] at (0.25,5.02) {Présentation};
+  \node[mod] at (3.3,4.25) {Assistant\\d'analyse};
+  \node[mod] at (6.0,4.25) {Registre\\patients};
+  \node[mod] at (8.7,4.25) {Console\\d'administration};
+  \node[mod] at (11.4,4.25) {Consultations};
+
+  % ── Couche application ──────────────────────────────────────────────────
+  \node[couche,minimum height=2.7cm] (c2) at (7.0,1.35) {};
+  \node[titre] at (0.25,2.45) {Application};
+  \node[mod]   at (3.3,1.75) {Authentification\\et rôles};
+  \node[mod]   at (6.0,1.75) {Gestion\\métier};
+  \node[mod]   at (8.7,1.75) {Archivage};
+  \node[mod]   at (11.4,1.75) {Journalisation};
+  \node[modml] at (4.65,0.45) {Prétraitement\\du signal};
+  \node[modml] at (7.35,0.45) {Classification\\des stades};
+  \node[modml] at (10.05,0.45) {Sévérité\\et explication};
+  \node[font=\tiny\itshape,text=hypnored,anchor=east] at (3.30,0.45) {moteur d'inférence};
+
+  % ── Couche persistance ──────────────────────────────────────────────────
+  \node[couche,minimum height=1.5cm] (c3) at (7.0,-1.75) {};
+  \node[titre] at (0.25,-1.13) {Persistance};
+  \node[ext] at (4.6,-1.9) {Base relationnelle\\\tiny métadonnées cliniques};
+  \node[ext] at (9.4,-1.9) {Stockage objet\\\tiny fichiers volumineux};
+
+  % ── Flux ────────────────────────────────────────────────────────────────
+  \draw[fl] (7.0,3.62) -- node[lab] {interface applicative sur HTTP} (7.0,2.75);
+  \draw[fl] (4.6,-0.02) -- node[lab] {requêtes} (4.6,-1.12);
+  \draw[fl] (9.4,-0.02) -- node[lab] {liens signés} (9.4,-1.12);
+
+\end{tikzpicture}
+\vspace{0.3cm}
+\caption[Architecture générale du système]%
+        {Architecture en trois couches. Les modules encadrés en rouge constituent le
+         moteur d'inférence.}
+\label{fig:archi3t}
+\end{figure}
+
+\subsection{Justification des choix structurants}
+
+Quatre décisions méritent d'être argumentées, car elles engagent le reste de la
+conception. Le tableau~\ref{tab:choix} les récapitule.
+
+\begin{table}[H]
+\centering
+\caption{Décisions d'architecture et leur justification}
+\label{tab:choix}
+\small
+\begin{tabular}{@{}L{3.2cm}L{5.2cm}L{5.6cm}@{}}
+\toprule
+\textbf{Décision} & \textbf{Alternative écartée} & \textbf{Motif} \\
+\midrule
+Application monopage découplée de l'interface applicative &
+Application web à rendu serveur &
+L'analyse d'un enregistrement dure plusieurs dizaines de secondes ; un client
+autonome peut afficher la progression, poursuivre les transferts en arrière-plan et
+recomposer les visualisations sans rechargement \\
+\addlinespace[3pt]
+Moteur d'inférence hébergé dans le même processus que l'interface applicative &
+Service d'inférence séparé &
+Les modèles pèsent plusieurs centaines de mégaoctets en mémoire ; les charger une
+seule fois et les conserver en cache évite un coût de démarrage à chaque requête. La
+frontière logique reste posée pour une séparation ultérieure \\
+\addlinespace[3pt]
+Séparation métadonnées / fichiers volumineux &
+Stockage des fichiers en base &
+Un enregistrement pèse plusieurs centaines de mégaoctets. Le conserver en base
+dégraderait les sauvegardes et les temps de réponse, sans bénéfice transactionnel \\
+\addlinespace[3pt]
+Authentification par jeton signé, sans session serveur &
+Session en mémoire ou en base &
+L'absence d'état côté serveur autorise la réplication horizontale sans mécanisme de
+partage de session \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Vue de déploiement}
+
+La figure~\ref{fig:deploiement} décrit la topologie d'exécution. Chaque service est
+conteneurisé et l'ensemble démarre par une commande unique. Le service de stockage
+est le seul élément externe à l'infrastructure.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    x=1cm,y=1cm,
+    noeud/.style  = {rectangle,rounded corners=3pt,draw=hypnoblue!55,fill=white,
+                     align=center,font=\scriptsize,minimum height=1.5cm,
+                     text width=3.2cm},
+    hote/.style   = {rectangle,rounded corners=3pt,draw=hypnogray!55,dashed,
+                     fill=hypnolight!35},
+    cloud/.style  = {rectangle,rounded corners=8pt,draw=hypnogray!65,fill=white,
+                     align=center,font=\scriptsize,minimum height=1.5cm,
+                     text width=3.0cm},
+    fl/.style     = {-{Latex[length=2mm]},hypnoblue!75,line width=0.8pt},
+    lab/.style    = {font=\tiny\itshape,text=hypnogray,fill=white,inner sep=1.5pt},
+  ]
+
+  \node[hote,minimum width=11.4cm,minimum height=2.5cm] at (5.7,0) {};
+  \node[font=\scriptsize\bfseries,text=hypnogray,anchor=north west] at (0.15,1.15)
+       {Hôte de déploiement --- orchestration de conteneurs};
+
+  \node[noeud] (front) at (2.1,-0.2)  {\textbf{Serveur web}\\\tiny Nginx\\\tiny
+                                        application compilée};
+  \node[noeud] (back)  at (5.7,-0.2)  {\textbf{Interface applicative}\\\tiny Uvicorn
+                                        et FastAPI\\\tiny modèles en mémoire};
+  \node[noeud] (db)    at (9.3,-0.2)  {\textbf{Base de données}\\\tiny PostgreSQL\\
+                                        \tiny volume persistant};
+
+  \node[cloud] (b2)    at (13.6,-0.2) {\textbf{Stockage objet}\\\tiny service externe\\
+                                        \tiny interface S3};
+
+  \node[font=\scriptsize\bfseries,align=center,text width=2.2cm] (nav) at (2.1,2.35)
+       {Navigateur\\du praticien};
+
+  \draw[fl] (nav) -- node[lab] {HTTPS} (front);
+  \draw[fl] (front) -- node[lab] {mandataire} (back);
+  \draw[fl] (back) -- node[lab] {SQL} (db);
+  \draw[fl] (back) -- node[lab] {S3} (b2);
+
+\end{tikzpicture}
+\vspace{0.3cm}
+\caption[Vue de déploiement]%
+        {Topologie d'exécution : trois conteneurs sur un hôte, un service de stockage
+         externe.}
+\label{fig:deploiement}
+\end{figure}
+
+% =============================================================================
+\section{Conception de la base de données}
+% =============================================================================
+
+\subsection{Diagramme de classes}
+
+Le modèle métier s'organise autour de huit entités
+(figure~\ref{fig:classes}). L'entité centrale est l'\emph{examen}, qui matérialise une
+nuit d'enregistrement : elle porte les références vers les fichiers archivés, la
+classe de sévérité prédite et le document de résultats. Autour d'elle gravitent le
+patient qui l'a subie, les annotations que le praticien y a portées et les
+discussions qu'elle a suscitées.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    x=1cm,y=1cm,
+    cls/.style  = {rectangle,draw=hypnoblue!65,fill=white,align=left,anchor=north,
+                   font=\tiny,inner sep=0pt,text width=3.5cm},
+    ent/.style  = {rectangle,draw=hypnored!70,fill=hypnored!6,align=left,anchor=north,
+                   font=\tiny,inner sep=0pt,text width=3.5cm},
+    rel/.style  = {hypnogray!85,line width=0.6pt},
+    card/.style = {font=\tiny,text=hypnogray,inner sep=1.6pt,fill=white},
+    note/.style = {font=\tiny\itshape,text=hypnogray,align=center,text width=3.5cm},
+  ]
+
+  \newcommand{\classe}[3]{%
+    \begin{tabular}{@{\hspace{3pt}}p{3.3cm}@{}}
+      \rowcolor{hypnolight}\textbf{#1}\\[1pt]
+      \hline
+      \rule{0pt}{7pt}#2\\[1pt]
+      \hline
+      \rule{0pt}{7pt}\textit{#3}\\[1pt]
+    \end{tabular}}
+
+  % ── Rangée 1 ────────────────────────────────────────────────────────────
+  \node[cls] (hop) at (2.0, 4.40) {\classe{Hospital}{id, name, billing\_tier,
+       b2\_bucket, created\_at}{--}};
+  \node[cls] (usr) at (7.0, 4.40) {\classe{User}{id, email, hashed\_password, role,
+       first\_name, last\_name, status, license\_expiry, last\_login}{login(),
+       logout()}};
+  \node[cls] (pat) at (12.0, 4.40) {\classe{Patient}{id, first\_name, last\_name,
+       age, imc, gender}{--}};
+
+  % ── Rangée 2 ────────────────────────────────────────────────────────────
+  \node[cls] (log)  at (2.0, 0.55) {\classe{AuditLog}{id, timestamp, user\_email,
+       user\_role, action, ip\_address}{--}};
+  \node[cls] (conv) at (7.0, 0.55) {\classe{FileConversation}{id, file\_type,
+       created\_at}{--}};
+  \node[ent] (psg)  at (12.0, 0.55) {\classe{PSG}{id, date, severity, report\_data,
+       edf\_url, hypnogram\_url, hypnogram\_annotated\_url, csv\_url,
+       osa\_report\_url}{--}};
+
+  % ── Rangée 3 ────────────────────────────────────────────────────────────
+  \node[cls] (msg) at (7.0, -3.35) {\classe{FileMessage}{id, content, timestamp}{--}};
+  \node[cls] (ann) at (12.0,-3.35) {\classe{PSGAnnotation}{id, epoch\_index, note,
+       created\_at}{--}};
+
+  \node[note,anchor=north] at (2.0,-1.05)
+       {table volontairement dénormalisée :\\aucune clé étrangère, afin que la
+        trace survive à la suppression du compte};
+
+  % ── Associations ────────────────────────────────────────────────────────
+  \draw[rel] (hop.east) -- node[card,pos=0.12] {1}
+                           node[card,pos=0.88] {0..*} (usr.west);
+  \draw[rel] (usr.east) -- node[card,pos=0.12] {1}
+                           node[card,pos=0.88] {0..*} (pat.west);
+
+  \draw[rel] (pat.south) -- node[card,pos=0.13] {1}
+                            node[card,pos=0.87] {0..*} (psg.north);
+  \draw[rel] (psg.south) -- node[card,pos=0.13] {1}
+                            node[card,pos=0.87] {0..*} (ann.north);
+
+  \draw[rel] (psg.west) -- node[card,pos=0.13] {1}
+                           node[card,pos=0.87] {0..*} (conv.east);
+  \draw[rel] (conv.south) -- node[card,pos=0.13] {1}
+                             node[card,pos=0.87] {0..*} (msg.north);
+
+  \draw[rel] (usr.south) -- node[card,pos=0.13] {2}
+                            node[card,pos=0.88] {0..*} (conv.north);
+
+  % Auteur d'un message : contournement par la gauche
+  \draw[rel] (usr.west) -- ++(-0.55,0)
+             node[card,pos=0.55] {1}
+             |- node[card,pos=0.93] {0..*} (msg.west);
+
+\end{tikzpicture}
+\vspace{0.2cm}
+\caption[Diagramme de classes du modèle métier]%
+        {Modèle métier : l'examen est l'entité pivot du système.}
+\label{fig:classes}
+\end{figure}
+
+\subsection{Dictionnaire de données}
+
+Le tableau~\ref{tab:dico} décrit les tables et leurs particularités. Le dictionnaire
+complet, colonne par colonne, figure en annexe.
+
+\begin{table}[H]
+\centering
+\caption{Tables du schéma relationnel}
+\label{tab:dico}
+\small
+\begin{tabular}{@{}lcL{8.5cm}@{}}
+\toprule
+\textbf{Table} & \textbf{Clés étrangères} & \textbf{Rôle et particularités} \\
+\midrule
+\texttt{hospitals} & --- &
+Établissements de rattachement ; prévoit un compartiment de stockage propre à chaque
+structure \\
+\addlinespace[2pt]
+\texttt{users} & \texttt{hospital\_id} &
+Comptes unifiés pour les deux rôles ; porte le statut et l'échéance de licence,
+tous deux évalués à la connexion \\
+\addlinespace[2pt]
+\texttt{patients} & \texttt{doctor\_id} &
+Rattachement direct au praticien, qui fonde le cloisonnement des données \\
+\addlinespace[2pt]
+\texttt{psgs} & \texttt{patient\_id} &
+Entité pivot ; ne stocke que des références vers les fichiers, jamais leur contenu \\
+\addlinespace[2pt]
+\texttt{psg\_annotations} & \texttt{psg\_id} &
+Observations horodatées à l'époque ; suppression en cascade avec l'examen \\
+\addlinespace[2pt]
+\texttt{audit\_logs} & --- &
+Journal volontairement dénormalisé : l'adresse électronique et le rôle sont recopiés,
+afin que la trace survive à la suppression du compte \\
+\addlinespace[2pt]
+\texttt{file\_conversations} & \texttt{psg\_id}, deux \texttt{user\_id} &
+Fil de discussion rattaché à un examen et à exactement deux praticiens \\
+\addlinespace[2pt]
+\texttt{file\_messages} & \texttt{conversation\_id}, \texttt{sender\_id} &
+Messages horodatés ; suppression en cascade avec la discussion \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Deux choix méritent un commentaire. Le \textbf{journal d'audit est dénormalisé} : il
+recopie l'adresse et le rôle de l'auteur au lieu de référencer son compte. C'est
+délibéré — une trace de conformité doit rester lisible même après la suppression du
+compte concerné, et une clé étrangère l'en empêcherait.
+
+Les \textbf{références de fichiers sont stockées en clair} dans la table des examens,
+mais ne sont jamais transmises telles quelles : elles sont converties en liens signés
+à durée limitée au moment de la sérialisation de la réponse. Ce point est développé à
+la section~\ref{sec:securite}.
+
+% =============================================================================
+\section{Conception de la chaîne de classification}
+% =============================================================================
+
+\subsection{Traitement du signal}
+
+Avant toute inférence, le signal brut doit être ramené à une forme normalisée. La
+figure~\ref{fig:chaine} décrit cette chaîne, dont chaque étape répond à une source de
+variabilité identifiée.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    x=1cm,y=1cm,
+    et/.style  = {rectangle,rounded corners=2pt,draw=hypnoblue!60,fill=hypnolight,
+                  align=center,font=\scriptsize,minimum height=1.25cm,
+                  text width=2.15cm},
+    fl/.style  = {-{Latex[length=2mm]},hypnoblue!75,line width=0.8pt},
+    note/.style= {font=\tiny\itshape,text=hypnogray,align=center,text width=2.3cm},
+  ]
+
+  \node[et] (a) at (0.0,0)  {Décodage\\du fichier};
+  \node[et] (b) at (2.75,0) {Résolution\\des dérivations};
+  \node[et] (c) at (5.5,0)  {Rééchantillonnage\\à 100\,Hz};
+  \node[et] (d) at (8.25,0) {Segmentation\\en époques};
+  \node[et] (e) at (11.0,0) {Normalisation\\par époque};
+  \node[et] (f) at (13.75,0){Tenseur\\$(N, C, 3000)$};
+
+  \foreach \x/\y in {a/b,b/c,c/d,d/e,e/f} \draw[fl] (\x) -- (\y);
+
+  \node[note,anchor=north] at (0.0,-0.78)  {format\\constructeur};
+  \node[note,anchor=north] at (2.75,-0.78) {conventions de\\nommage};
+  \node[note,anchor=north] at (5.5,-0.78)  {fréquences\\d'acquisition};
+  \node[note,anchor=north] at (8.25,-0.78) {convention\\AASM 30\,s};
+  \node[note,anchor=north] at (11.0,-0.78) {amplitudes\\inter-sujets};
+  \node[note,anchor=north] at (13.75,-0.78){entrée des\\modèles};
+
+  \node[font=\tiny\bfseries,text=hypnored,anchor=east] at (-1.05,-1.35)
+       {variabilité traitée :};
+
+\end{tikzpicture}
+\vspace{0.3cm}
+\caption[Chaîne de traitement du signal]%
+        {Chaîne de préparation : chaque étape neutralise une source de variabilité.}
+\label{fig:chaine}
+\end{figure}
+
+L'étape de \textbf{normalisation} appelle une justification particulière, car elle
+conditionne la validité de l'évaluation. La statistique de centrage et de réduction
+est calculée sur chaque segment isolément, et non sur le corpus. Ce choix neutralise
+les écarts d'amplitude liés à l'impédance des électrodes, au gain de l'amplificateur
+et à la morphologie du sujet, ainsi que la dérive lente au cours de la nuit. Il a
+surtout une conséquence méthodologique : \textbf{aucune statistique globale n'étant
+estimée, aucune information ne peut fuir de l'ensemble d'entraînement vers l'ensemble
+de test par la normalisation}. En contrepartie, l'information d'amplitude absolue est
+perdue, alors qu'elle caractérise partiellement le sommeil profond ; c'est la forme et
+la fréquence des oscillations qui devront porter cette discrimination.
+
+\subsection{Architecture convolutive}
+
+Le premier modèle de base exploite l'observation formulée au
+chapitre~\ref{chap:etat-art} : les éléments graphiques du référentiel AASM vivent à
+des échelles temporelles différentes. Un fuseau du sommeil dure environ une demi-seconde
+et oscille autour de 12 à 14 hertz ; une onde lente s'étale sur plus d'une seconde.
+Un noyau de convolution unique ne peut capter les deux.
+
+L'architecture retenue (figure~\ref{fig:cnn}) comporte donc deux branches parallèles
+appliquées au même signal. La branche fine emploie un noyau de 50 échantillons — une
+demi-seconde — et la branche grossière un noyau de 200 échantillons, soit deux
+secondes. Leurs représentations sont concaténées avant classification.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    x=1cm,y=1cm,
+    bl/.style   = {rectangle,rounded corners=2pt,draw=hypnoblue!60,fill=hypnolight,
+                   align=center,font=\tiny,minimum height=0.95cm,text width=2.0cm},
+    blf/.style  = {rectangle,rounded corners=2pt,draw=hypnored!65,fill=hypnored!7,
+                   align=center,font=\tiny,minimum height=0.95cm,text width=2.0cm},
+    io/.style   = {rectangle,rounded corners=2pt,draw=hypnogray!60,fill=white,
+                   align=center,font=\tiny,minimum height=0.95cm,text width=1.9cm},
+    fl/.style   = {-{Latex[length=1.8mm]},hypnoblue!75,line width=0.7pt},
+    tag/.style  = {font=\tiny\itshape,text=hypnogray},
+  ]
+
+  \node[io] (in) at (0,0) {Entrée\\$(C, 3000)$};
+
+  \node[bl] (f1) at (3.0, 1.35) {Conv 1D\\noyau 50, pas 6};
+  \node[bl] (f2) at (5.6, 1.35) {Sous-échant.\\$\times 4$};
+  \node[bl] (f3) at (8.2, 1.35) {Conv 1D\\noyau 8};
+  \node[bl] (f4) at (10.8,1.35) {Moyennage\\adaptatif $\to 16$};
+
+  \node[bl] (g1) at (3.0,-1.35) {Conv 1D\\noyau 200, pas 25};
+  \node[bl] (g2) at (5.6,-1.35) {Sous-échant.\\$\times 4$};
+  \node[bl] (g3) at (8.2,-1.35) {Conv 1D\\noyau 8};
+  \node[bl] (g4) at (10.8,-1.35) {Moyennage\\adaptatif $\to 16$};
+
+  \node[blf] (cat) at (13.3,0) {Concaténation\\$4096$};
+  \node[io]  (out) at (13.3,-2.1) {Logits\\$(K)$};
+
+  \foreach \a/\b in {f1/f2,f2/f3,f3/f4,g1/g2,g2/g3,g3/g4} \draw[fl] (\a) -- (\b);
+  \draw[fl] (in) |- (f1);
+  \draw[fl] (in) |- (g1);
+  \draw[fl] (f4) -| (cat);
+  \draw[fl] (g4) -| (cat);
+  \draw[fl] (cat) -- node[tag,right,pos=0.5] {\ 3 couches denses} (out);
+
+  \node[tag,anchor=west] at (1.35, 1.95) {branche fine --- 0,5\,s};
+  \node[tag,anchor=west] at (1.35,-1.95) {branche grossière --- 2\,s};
+
+\end{tikzpicture}
+\vspace{0.3cm}
+\caption[Architecture du réseau convolutif]%
+        {Réseau convolutif à deux branches d'échelles temporelles distinctes.}
+\label{fig:cnn}
+\end{figure}
+
+\subsection{Architecture récurrente à pooling attentionnel}
+
+Le deuxième modèle traite l'époque comme une séquence de 3\,000 pas, chacun décrit par
+les $C$ dérivations. Un réseau récurrent bidirectionnel à mémoire longue, de deux
+couches de 128 unités, en produit une représentation contextualisée dans les deux sens
+du temps.
+
+Se pose alors la question de la réduction : comment condenser 3\,000 états en un
+vecteur unique ? Prendre le dernier état privilégierait la fin de la fenêtre ; en
+faire la moyenne diluerait un événement bref dans le reste. Nous employons un
+\textbf{pooling attentionnel} : un petit réseau apprend à attribuer à chaque pas un
+poids, dont la somme vaut un, et la représentation finale est la moyenne pondérée des
+états (figure~\ref{fig:lstm}). Le modèle apprend ainsi \emph{où regarder}, ce qui
+convient à un signal où l'information discriminante est localisée.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    x=1cm,y=1cm,
+    bl/.style   = {rectangle,rounded corners=2pt,draw=hypnoblue!60,fill=hypnolight,
+                   align=center,font=\tiny,minimum height=1.0cm,text width=2.3cm},
+    blf/.style  = {rectangle,rounded corners=2pt,draw=hypnored!65,fill=hypnored!7,
+                   align=center,font=\tiny,minimum height=1.0cm,text width=2.3cm},
+    io/.style   = {rectangle,rounded corners=2pt,draw=hypnogray!60,fill=white,
+                   align=center,font=\tiny,minimum height=1.0cm,text width=2.0cm},
+    fl/.style   = {-{Latex[length=1.8mm]},hypnoblue!75,line width=0.7pt},
+    tag/.style  = {font=\tiny\itshape,text=hypnogray,align=center},
+  ]
+
+  \node[io] (in)  at (0,0)    {Séquence\\$(3000, C)$};
+  \node[bl] (l1)  at (3.1,0)  {LSTM bidirectionnel\\2 couches $\times$ 128};
+  \node[bl] (st)  at (6.4,0)  {États contextualisés\\$(3000, 256)$};
+  \node[blf](at)  at (9.7,0)  {Pooling attentionnel\\$\sum_t \alpha_t h_t$};
+  \node[bl] (fc)  at (12.9,0) {Couches denses\\$256 \to 64 \to K$};
+
+  \foreach \a/\b in {in/l1,l1/st,st/at,at/fc} \draw[fl] (\a) -- (\b);
+
+  \node[bl,minimum height=0.75cm,text width=2.3cm] (sc) at (9.7,-1.9)
+       {Scores $\alpha_t$\\\tiny normalisés, de somme 1};
+  \draw[fl] (st) |- (sc);
+  \draw[fl] (sc) -- (at);
+
+  \node[tag,anchor=north,text width=6.5cm] at (6.4,-2.35)
+       {les poids d'attention indiquent les instants retenus};
+
+\end{tikzpicture}
+\vspace{0.3cm}
+\caption[Architecture du réseau récurrent]%
+        {Réseau récurrent bidirectionnel à pooling attentionnel.}
+\label{fig:lstm}
+\end{figure}
+
+\subsection{Architecture attentionnelle}
+
+Le troisième modèle abandonne la récurrence. L'époque est découpée en 60 fragments
+consécutifs de 50 échantillons, chacun projeté linéairement dans un espace de
+dimension 128. Un jeton de synthèse est ajouté en tête de séquence, et un encodage
+positionnel sinusoïdal réinjecte l'ordre temporel que l'auto-attention, par
+construction, ignore. Quatre couches d'encodeur à huit têtes traitent l'ensemble ; la
+classification s'opère sur le seul jeton de synthèse
+(figure~\ref{fig:transformer}).
+
+Le découpage en fragments est ce qui rend l'approche viable. L'auto-attention a un
+coût quadratique en la longueur de séquence : l'appliquer aux 3\,000 échantillons bruts
+demanderait neuf millions de coefficients par tête et par époque. Ramenée à 61 jetons,
+la même opération en demande moins de quatre mille.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    x=1cm,y=1cm,
+    bl/.style   = {rectangle,rounded corners=2pt,draw=hypnoblue!60,fill=hypnolight,
+                   align=center,font=\tiny,minimum height=1.0cm,text width=2.25cm},
+    blf/.style  = {rectangle,rounded corners=2pt,draw=hypnored!65,fill=hypnored!7,
+                   align=center,font=\tiny,minimum height=1.0cm,text width=2.25cm},
+    io/.style   = {rectangle,rounded corners=2pt,draw=hypnogray!60,fill=white,
+                   align=center,font=\tiny,minimum height=1.0cm,text width=1.95cm},
+    fl/.style   = {-{Latex[length=1.8mm]},hypnoblue!75,line width=0.7pt},
+    tag/.style  = {font=\tiny\itshape,text=hypnogray,align=center},
+  ]
+
+  \node[io]  (in)  at (0,0)    {Entrée\\$(C, 3000)$};
+  \node[bl]  (pa)  at (2.9,0)  {Découpage\\60 fragments de 50};
+  \node[bl]  (pe)  at (5.9,0)  {Projection linéaire\\$\to 128$};
+  \node[blf] (cls) at (8.9,0)  {Jeton de synthèse\\et encodage positionnel};
+  \node[bl]  (tr)  at (11.9,0) {Encodeur\\4 couches, 8 têtes};
+  \node[io]  (out) at (11.9,-2.0) {Logits\\$(K)$};
+
+  \foreach \a/\b in {in/pa,pa/pe,pe/cls,cls/tr} \draw[fl] (\a) -- (\b);
+  \draw[fl] (tr) -- node[tag,right,pos=0.5,text width=2.4cm]
+                    {\ classification sur le jeton de synthèse} (out);
+
+  \node[tag,anchor=north,text width=5.0cm] at (4.4,-1.05)
+       {coût quadratique ramené de $3000^2$ à $61^2$};
+
+\end{tikzpicture}
+\vspace{0.3cm}
+\caption[Architecture du modèle attentionnel]%
+        {Modèle attentionnel : l'époque est traitée comme une suite de fragments.}
+\label{fig:transformer}
+\end{figure}
+
+\subsection{Combinaison par empilement}
+
+Les trois modèles sont ensuite combinés selon le principe exposé à la
+figure~\ref{fig:stacking-principe}. Chacun produit un vecteur de probabilités sur les
+$K$ classes ; les trois vecteurs sont concaténés en $3K$ méta-caractéristiques qui
+alimentent une régression logistique équilibrée. Le choix d'un modèle linéaire pour le
+second niveau n'est pas un défaut d'ambition : le méta-apprenant dispose de peu de
+variables et doit avant tout produire des probabilités calibrées, ce qu'un modèle
+simple fait mieux qu'un réseau supplémentaire.
+
+Quatre ensembles sont construits, un par configuration de montage et de granularité.
+
+% =============================================================================
+\section{Conception du pipeline de sévérité}
+% =============================================================================
+
+Le second étage part de l'hypnogramme produit et non du signal. La
+figure~\ref{fig:pipeline-osa} en décrit l'enchaînement.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    x=1cm,y=1cm,
+    et/.style   = {rectangle,rounded corners=2pt,draw=hypnoblue!60,fill=hypnolight,
+                   align=center,font=\tiny,minimum height=1.15cm,text width=2.3cm},
+    etf/.style  = {rectangle,rounded corners=2pt,draw=hypnored!65,fill=hypnored!7,
+                   align=center,font=\tiny,minimum height=1.15cm,text width=2.3cm},
+    io/.style   = {rectangle,rounded corners=2pt,draw=hypnogray!60,fill=white,
+                   align=center,font=\tiny,minimum height=1.15cm,text width=2.1cm},
+    fl/.style   = {-{Latex[length=1.8mm]},hypnoblue!75,line width=0.7pt},
+    tag/.style  = {font=\tiny\itshape,text=hypnogray,align=center},
+  ]
+
+  \node[io] (hyp) at (0,0.8)   {Hypnogramme};
+  \node[io] (cli) at (0,-0.9)  {Données\\cliniques};
+
+  \node[et] (mrq) at (3.1,0.8)  {25 marqueurs\\d'architecture};
+  \node[et] (fus) at (6.2,0)    {Fusion et\\8 interactions};
+  \node[et] (imp) at (9.3,0)    {Imputation par\\la médiane};
+  \node[etf](mod) at (12.4,0)   {Ensemble\\par empilement};
+
+  \node[etf](shp) at (12.4,-2.3) {Attribution des\\contributions};
+  \node[io] (res) at (8.6,-2.3)  {Classe, probabilités\\et facteurs};
+
+  \draw[fl] (hyp) -- (mrq);
+  \draw[fl] (mrq) -- (fus);
+  \draw[fl] (cli) -| (fus);
+  \draw[fl] (fus) -- (imp);
+  \draw[fl] (imp) -- (mod);
+  \draw[fl] (mod) -- (shp);
+  \draw[fl] (shp) -- (res);
+
+  \node[tag,anchor=north,text width=3.6cm] at (6.2,-1.05)
+       {53 variables au total};
+
+\end{tikzpicture}
+\vspace{0.3cm}
+\caption[Pipeline de prédiction de la sévérité]%
+        {Chaîne de prédiction de la sévérité, de l'hypnogramme à l'explication.}
+\label{fig:pipeline-osa}
+\end{figure}
+
+Trois décisions de conception structurent cette chaîne.
+
+La première concerne le \textbf{choix des variables}. Les index de perturbation
+respiratoire disponibles dans la cohorte ont été délibérément exclus : ils mesurent
+directement les événements que l'on cherche à prédire, et les inclure aurait produit
+un modèle excellent mais sans valeur. Ce point est développé au
+chapitre~\ref{chap:realisation-ia}.
+
+La deuxième concerne les \textbf{valeurs manquantes}. Toutes les variables cliniques
+ne sont pas systématiquement disponibles en pratique. Plutôt que de refuser la
+prédiction, le système comble les absences par la médiane observée sur la population
+d'apprentissage, et signale au praticien quelles variables ont été imputées.
+
+La troisième concerne l'\textbf{explication}. La prédiction est rendue par un ensemble
+hétérogène, mais l'explication est calculée sur un modèle à arbres entraîné sur les
+mêmes données. Ce dédoublement est assumé : il permet d'obtenir des attributions
+\emph{exactes} en temps polynomial, là où expliquer directement l'ensemble aurait
+imposé une approximation par échantillonnage. Sa limite doit être énoncée dans le
+compte rendu — l'explication décrit un modèle très proche du modèle décisionnel, non
+ce modèle lui-même.
+
+% =============================================================================
+\section{Vue dynamique}
+% =============================================================================
+
+\subsection{Authentification}
+
+La figure~\ref{fig:seq-auth} décrit l'ouverture de session. Trois vérifications
+successives conditionnent la délivrance du jeton : la validité du mot de passe, le
+statut du compte et l'échéance de la licence.
+
+\begin{figure}[H]
+\centering
+\resizebox{0.98\textwidth}{!}{%
+\begin{sequencediagram}
+  \newthread[hypnolight]{u}{\scriptsize Praticien}
+  \newinst[2.2]{f}{\scriptsize Client web}
+  \newinst[2.2]{a}{\scriptsize Interface applicative}
+  \newinst[2.2]{d}{\scriptsize Base de données}
+
+  \begin{call}{u}{\scriptsize saisit ses identifiants}{f}{}
+  \end{call}
+  \begin{call}{f}{\scriptsize demande de jeton}{a}{\scriptsize jeton et profil}
+    \begin{call}{a}{\scriptsize recherche du compte}{d}{\scriptsize empreinte}
+    \end{call}
+    \begin{sdblock}{\scriptsize Vérifications}{\scriptsize mot de passe, statut, licence}
+      \begin{call}{a}{\scriptsize horodate la connexion}{d}{}
+      \end{call}
+      \begin{call}{a}{\scriptsize journalise l'accès}{d}{}
+      \end{call}
+    \end{sdblock}
+  \end{call}
+  \begin{call}{f}{\scriptsize conserve le jeton}{f}{}
+  \end{call}
+  \begin{call}{f}{\scriptsize ouvre l'espace de travail}{u}{}
+  \end{call}
+\end{sequencediagram}}
+\caption[Séquence d'authentification]%
+        {Ouverture de session et délivrance du jeton.}
+\label{fig:seq-auth}
+\end{figure}
+
+\subsection{Analyse d'un enregistrement}
+
+L'enchaînement le plus caractéristique du système est celui de l'analyse
+(figure~\ref{fig:seq-analyse}). Sa particularité tient à l'ordre des opérations :
+les résultats sont affichés au praticien \emph{avant} que l'archivage du fichier ne
+soit terminé. L'enregistrement pèse plusieurs centaines de mégaoctets et son transfert
+vers le stockage prend un temps que le médecin n'a aucune raison d'attendre.
+
+\begin{figure}[H]
+\centering
+\resizebox{0.98\textwidth}{!}{%
+\begin{sequencediagram}
+  \newthread[hypnolight]{u}{\scriptsize Praticien}
+  \newinst[1.8]{f}{\scriptsize Client web}
+  \newinst[1.8]{a}{\scriptsize Interface applicative}
+  \newinst[1.8]{m}{\scriptsize Moteur d'inférence}
+  \newinst[1.8]{d}{\scriptsize Base de données}
+  \newinst[1.8]{s}{\scriptsize Stockage objet}
+
+  \begin{call}{u}{\scriptsize dépose le fichier}{f}{}
+  \end{call}
+  \begin{call}{f}{\scriptsize demande d'analyse}{a}{\scriptsize stades et métriques}
+    \begin{call}{a}{\scriptsize prétraitement}{m}{\scriptsize tenseur d'époques}
+    \end{call}
+    \begin{call}{a}{\scriptsize classification}{m}{\scriptsize séquence de stades}
+    \end{call}
+    \begin{call}{a}{\scriptsize métriques AASM}{m}{\scriptsize indicateurs}
+    \end{call}
+  \end{call}
+  \begin{call}{f}{\scriptsize affiche l'hypnogramme}{u}{}
+  \end{call}
+  \begin{call}{f}{\scriptsize enregistre l'examen}{a}{\scriptsize identifiant}
+    \begin{call}{a}{\scriptsize insertion}{d}{}
+    \end{call}
+  \end{call}
+  \begin{sdblock}{\scriptsize Arrière-plan}{\scriptsize sans blocage de l'interface}
+    \begin{call}{f}{\scriptsize transfert du fichier}{a}{\scriptsize référence}
+      \begin{call}{a}{\scriptsize dépôt}{s}{\scriptsize clé d'objet}
+      \end{call}
+      \begin{call}{a}{\scriptsize mise à jour}{d}{}
+      \end{call}
+    \end{call}
+  \end{sdblock}
+\end{sequencediagram}}
+\caption[Séquence d'analyse d'un enregistrement]%
+        {Analyse d'un enregistrement : les résultats précèdent l'archivage.}
+\label{fig:seq-analyse}
+\end{figure}
+
+\subsection{Prédiction de la sévérité}
+
+La figure~\ref{fig:seq-osa} décrit la seconde phase, déclenchée depuis les résultats
+d'analyse.
+
+\begin{figure}[H]
+\centering
+\resizebox{0.93\textwidth}{!}{%
+\begin{sequencediagram}
+  \newthread[hypnolight]{u}{\scriptsize Praticien}
+  \newinst[2.2]{f}{\scriptsize Client web}
+  \newinst[2.2]{a}{\scriptsize Interface applicative}
+  \newinst[2.2]{m}{\scriptsize Moteur d'inférence}
+
+  \begin{call}{u}{\scriptsize saisit les données cliniques}{f}{}
+  \end{call}
+  \begin{call}{f}{\scriptsize demande d'évaluation}{a}{\scriptsize sévérité et facteurs}
+    \begin{call}{a}{\scriptsize extraction des marqueurs}{a}{}
+    \end{call}
+    \begin{call}{a}{\scriptsize imputation et alignement}{a}{}
+    \end{call}
+    \begin{call}{a}{\scriptsize prédiction}{m}{\scriptsize classe et probabilités}
+    \end{call}
+    \begin{call}{a}{\scriptsize attribution des contributions}{m}{\scriptsize facteurs}
+    \end{call}
+  \end{call}
+  \begin{call}{f}{\scriptsize affiche le rapport expliqué}{u}{}
+  \end{call}
+\end{sequencediagram}}
+\caption[Séquence de prédiction de la sévérité]%
+        {Prédiction de la sévérité et production des facteurs explicatifs.}
+\label{fig:seq-osa}
+\end{figure}
+
+\subsection{Cycle de vie d'un examen}
+
+Un examen traverse une succession d'états, décrits à la
+figure~\ref{fig:etats}. Cette modélisation explicite un point important : un examen
+reste consultable même si l'archivage échoue, car les résultats d'analyse sont
+stockés en base indépendamment des fichiers.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    x=1cm,y=1cm,
+    st/.style   = {rectangle,rounded corners=5pt,draw=hypnoblue!65,fill=hypnolight,
+                   align=center,font=\scriptsize,minimum height=0.9cm,text width=2.3cm},
+    stf/.style  = {rectangle,rounded corners=5pt,draw=hypnored!70,fill=hypnored!7,
+                   align=center,font=\scriptsize,minimum height=0.9cm,text width=2.3cm},
+    fl/.style   = {-{Latex[length=2mm]},hypnoblue!75,line width=0.7pt},
+    tr/.style   = {font=\tiny\itshape,text=hypnogray,fill=white,inner sep=1.5pt},
+  ]
+
+  \fill[hypnoblue] (0,0) circle (0.14);
+
+  \node[st]  (cre) at (2.5,0)   {Créé};
+  \node[st]  (ana) at (6.0,0)   {Analysé};
+  \node[st]  (arc) at (9.5,0)   {Archivé};
+  \node[stf] (eva) at (13.0,0)  {Évalué};
+  \node[st]  (ann) at (9.5,-2.3){Annoté};
+  \node[stf] (deg) at (6.0,-2.3){Archivage\\en échec};
+
+  \draw[fl] (0.16,0) -- node[tr,above] {dépôt du fichier} (cre);
+  \draw[fl] (cre) -- node[tr,above] {classification} (ana);
+  \draw[fl] (ana) -- node[tr,above] {transfert réussi} (arc);
+  \draw[fl] (arc) -- node[tr,above] {prédiction} (eva);
+  \draw[fl] (arc) -- node[tr,right,pos=0.5] {annotation} (ann);
+  \draw[fl] (ana) -- node[tr,right,pos=0.5] {transfert échoué} (deg);
+  \draw[fl] (deg) -- node[tr,below] {nouvelle tentative} (ann);
+
+  \fill[hypnoblue] (13.0,-2.3) circle (0.19);
+  \fill[white]     (13.0,-2.3) circle (0.135);
+  \fill[hypnoblue] (13.0,-2.3) circle (0.09);
+  \draw[fl] (eva) -- node[tr,right,pos=0.5] {compte rendu} (13.0,-2.11);
+  \draw[fl] (ann) -- node[tr,pos=0.72,below right] {prédiction} (eva.south west);
+
+\end{tikzpicture}
+\vspace{0.3cm}
+\caption[Cycle de vie d'un examen]%
+        {États successifs d'un examen ; l'échec d'archivage ne bloque pas
+         l'exploitation des résultats.}
+\label{fig:etats}
+\end{figure}
+
+% =============================================================================
+\section{Conception de la sécurité}
+\label{sec:securite}
+% =============================================================================
+
+La sécurité repose sur quatre mécanismes complémentaires, résumés au
+tableau~\ref{tab:secu}.
+
+\begin{table}[H]
+\centering
+\caption{Mécanismes de sécurité et menaces couvertes}
+\label{tab:secu}
+\small
+\begin{tabular}{@{}L{3.2cm}L{5.3cm}L{5.5cm}@{}}
+\toprule
+\textbf{Mécanisme} & \textbf{Principe} & \textbf{Menace couverte} \\
+\midrule
+Empreintes de mots de passe &
+Fonction de dérivation lente avec sel aléatoire par compte &
+Compromission de la base : les mots de passe restent inexploitables \\
+\addlinespace[3pt]
+Jetons signés &
+Jeton porteur signé, transmis à chaque appel, contenant l'identité et le rôle &
+Usurpation : toute altération invalide la signature \\
+\addlinespace[3pt]
+Contrôle d'accès par rôle &
+Vérification du rôle et de la propriété de la ressource sur chaque route protégée &
+Élévation de privilège et accès aux patients d'un confrère \\
+\addlinespace[3pt]
+Liens d'accès signés &
+Les références de fichiers sont converties en URL signées valables 24 heures &
+Fuite de données : aucun objet n'est accessible sans signature valide \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Le \textbf{cycle de vie des licences} constitue un cinquième niveau, propre au contexte
+clinique. Un compte peut être actif, suspendu ou en attente, et porte une date
+d'échéance. Ces trois conditions sont évaluées à chaque ouverture de session, ce qui
+permet de révoquer un accès sans supprimer le compte ni ses données.
+
+Le \textbf{journal d'audit} complète le dispositif par la traçabilité. Chaque action
+sensible y inscrit son auteur, son horodatage, sa nature et l'adresse d'origine. Le
+choix de dénormalisation évoqué plus haut prend ici tout son sens : la trace doit
+survivre à la disparition de ce qu'elle référence.
+
+% =============================================================================
+\section{Conclusion}
+% =============================================================================
+
+Ce chapitre a défini l'architecture du système et les structures qui la composent.
+L'organisation en trois couches sépare la présentation, la logique métier et la
+persistance, cette dernière distinguant elle-même les métadonnées interrogeables des
+fichiers volumineux. Le modèle de données s'articule autour de l'examen, entité pivot
+qui ne stocke que des références vers les fichiers archivés.
+
+La conception des deux étages d'apprentissage a été guidée par des considérations
+explicites : les échelles temporelles des éléments du référentiel AASM pour
+l'architecture convolutive, la localisation de l'information discriminante pour le
+pooling attentionnel, le coût quadratique de l'auto-attention pour le découpage en
+fragments, et la prévention des fuites de la variable cible pour le pipeline de
+sévérité.
+
+La vue dynamique a mis en évidence un choix d'enchaînement caractéristique — afficher
+les résultats avant la fin de l'archivage — et un principe de robustesse : l'échec
+d'un transfert ne compromet pas l'exploitation d'un examen.
+
+Le chapitre suivant passe à la réalisation de ces modèles : préparation des données,
+stratégie d'entraînement sous contrainte matérielle et résultats expérimentaux.

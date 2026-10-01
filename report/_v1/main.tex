@@ -1,0 +1,285 @@
+\documentclass[12pt,a4paper,oneside]{report}
+
+% ─────────────────────────────────────────────────────────────────────────────
+%  Encodage, police, langue
+% ─────────────────────────────────────────────────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{times}
+\usepackage[french]{babel}
+\usepackage{csquotes}
+
+% ─────────────────────────────────────────────────────────────────────────────
+%  Mise en page
+% ─────────────────────────────────────────────────────────────────────────────
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+\usepackage{setspace}
+\setstretch{1.15}
+\usepackage{microtype}
+\usepackage{fancyhdr}
+\setlength{\headheight}{15pt}
+
+% ─────────────────────────────────────────────────────────────────────────────
+%  Figures et tableaux
+% ─────────────────────────────────────────────────────────────────────────────
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{colortbl}
+\usepackage{tabularx}
+\usepackage{enumitem}
+
+% ─────────────────────────────────────────────────────────────────────────────
+%  Mathématiques et unités
+% ─────────────────────────────────────────────────────────────────────────────
+\usepackage{amsmath,amssymb}
+\usepackage{siunitx}
+\sisetup{
+  output-decimal-marker = {,},
+  group-separator       = {\,},
+  group-minimum-digits  = 4,
+  detect-weight         = true,
+  detect-family         = true,
+}
+
+\DeclareSIUnit{\octet}{o}
+\DeclareSIUnit{\hertz}{Hz}
+
+% ─────────────────────────────────────────────────────────────────────────────
+%  Dessins
+% ─────────────────────────────────────────────────────────────────────────────
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,arrows.meta,positioning,calc,fit,backgrounds,decorations.pathmorphing}
+\usepackage{pgfgantt}
+\usepackage{pgf-umlsd}
+
+% ─────────────────────────────────────────────────────────────────────────────
+%  Code source
+% ─────────────────────────────────────────────────────────────────────────────
+\usepackage{listings}
+
+% ─────────────────────────────────────────────────────────────────────────────
+%  Acronymes et bibliographie
+% ─────────────────────────────────────────────────────────────────────────────
+\usepackage[nohyperlinks]{acronym}
+\usepackage[backend=biber,style=numeric-comp,sorting=none,maxbibnames=3,giveninits=true]{biblatex}
+\addbibresource{references.bib}
+
+% ─────────────────────────────────────────────────────────────────────────────
+%  Hyperliens (à charger en dernier)
+% ─────────────────────────────────────────────────────────────────────────────
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks = true,
+  linkcolor  = black,
+  citecolor  = teal,
+  urlcolor   = teal,
+  pdftitle   = {Système intelligent de classification des stades du sommeil avec IA explicable},
+  pdfauthor  = {Aymen Ftita},
+}
+
+% ═════════════════════════════════════════════════════════════════════════════
+%  Charte visuelle du document
+% ═════════════════════════════════════════════════════════════════════════════
+\definecolor{hypnoblue}{HTML}{2B4C7E}
+\definecolor{hypnored}{HTML}{B3382C}
+\definecolor{hypnogray}{HTML}{5A5A6E}
+\definecolor{hypnolight}{HTML}{EFEFF5}
+
+% Couleurs des stades du sommeil (réutilisées dans tous les schémas)
+\definecolor{stWake}{HTML}{C0392B}
+\definecolor{stN1}{HTML}{D68910}
+\definecolor{stN2}{HTML}{2E86C1}
+\definecolor{stN3}{HTML}{6C3483}
+\definecolor{stREM}{HTML}{148F77}
+
+% ── En-têtes et pieds de page ────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize\nouppercase{\leftmark}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyfoot[C]{\thepage}%
+  \renewcommand{\headrulewidth}{0pt}%
+}
+
+% ── Numérotation ─────────────────────────────────────────────────────────────
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{2}
+
+% ── Légendes ─────────────────────────────────────────────────────────────────
+\captionsetup{
+  font       = small,
+  labelfont  = {bf,color=hypnoblue},
+  labelsep   = period,
+  justification = centering,
+}
+
+% ── Style des listings ───────────────────────────────────────────────────────
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.96,0.96,0.94}
+\lstdefinestyle{mystyle}{
+    backgroundcolor  = \color{backcolour},
+    commentstyle     = \color{codegreen},
+    keywordstyle     = \color{hypnored},
+    numberstyle      = \tiny\color{codegray},
+    stringstyle      = \color{codepurple},
+    basicstyle       = \ttfamily\footnotesize,
+    breakatwhitespace= false,
+    breaklines       = true,
+    captionpos       = b,
+    keepspaces       = true,
+    numbers          = left,
+    numbersep        = 5pt,
+    showspaces       = false,
+    showstringspaces = false,
+    showtabs         = false,
+    frame            = single,
+    rulecolor        = \color{codegray!40},
+    tabsize          = 2,
+}
+\lstset{style=mystyle}
+
+% ── Raccourcis ───────────────────────────────────────────────────────────────
+\newcommand{\hypnoria}{\textsc{Hypnoria}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+% -- Capture d'ecran : inseree si le fichier existe, cadre d'attente sinon ----
+%    Usage : \capturefig{nom}{largeur}{legende}{label}
+%    Fichier attendu : images/captures/<nom>.png
+\newcommand{\capturefig}[4]{%
+  \begin{figure}[H]
+  \centering
+  \IfFileExists{images/captures/#1.png}%
+    {\includegraphics[width=#2\textwidth]{images/captures/#1.png}}%
+    {\setlength{\fboxrule}{0.8pt}\setlength{\fboxsep}{0pt}%
+     \textcolor{hypnogray!45}{\fbox{\parbox[c][4.6cm][c]{#2\textwidth}{\centering
+       \color{hypnogray}\small\itshape Capture d'\'ecran \`a ins\'erer\\[5pt]
+       \ttfamily\footnotesize images/captures/#1.png\\[9pt]
+       \upshape\rmfamily\scriptsize
+       \parbox{0.78\linewidth}{\centering #3}}}}}%
+  \caption{#3}
+  \label{#4}
+  \end{figure}}
+
+
+\frenchbsetup{StandardLayout=true}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\begin{document}
+
+% ─────────────────────────────────────────────────────────────────────────────
+%  Page de garde
+% ─────────────────────────────────────────────────────────────────────────────
+\begin{titlepage}
+\centering
+\thispagestyle{empty}
+
+\begin{minipage}{0.42\textwidth}
+  \centering
+  \includegraphics[width=0.85\textwidth]{images/logo_esprit.png}
+\end{minipage}
+\hfill
+\begin{minipage}{0.42\textwidth}
+  \centering
+  \includegraphics[width=0.7\textwidth]{images/cni_logo.jpg}
+\end{minipage}
+
+\vspace{0.9cm}
+{\normalsize Ministère de l'Enseignement Supérieur et de la Recherche Scientifique}\\[0.2cm]
+{\normalsize École Supérieure Privée d'Ingénierie et de Technologies --- ESPRIT}\\[1.2cm]
+
+{\Large\bfseries Rapport de Projet de Fin d'Études}\\[0.35cm]
+{\normalsize Présenté en vue de l'obtention du}\\[0.15cm]
+{\normalsize\itshape Diplôme National d'Ingénieur en Informatique}\\[1.4cm]
+
+{\color{hypnoblue}\rule{0.85\textwidth}{1.2pt}}\\[0.7cm]
+{\LARGE\bfseries Système intelligent de classification\\[0.25cm]
+ des stades du sommeil avec IA explicable}\\[0.6cm]
+{\large\itshape Application à la prédiction expliquée de la sévérité\\
+ du syndrome d'apnées obstructives du sommeil}\\[0.5cm]
+{\color{hypnoblue}\rule{0.85\textwidth}{1.2pt}}\\[1.4cm]
+
+\begin{minipage}{0.46\textwidth}
+  \raggedright
+  \textbf{Réalisé par :}\\[0.15cm]
+  Aymen \textsc{Ftita}
+\end{minipage}
+\hfill
+\begin{minipage}{0.46\textwidth}
+  \raggedleft
+  \textbf{Encadré par :}\\[0.15cm]
+  M\textsuperscript{me} Ines \textsc{Chouchane} \emph{(ESPRIT)}\\[0.1cm]
+  M. Abdelouaheb \textsc{Dahmeni} \emph{(CNI)}\\[0.1cm]
+  M\textsuperscript{me} Hajer \textsc{Dahmeni} \emph{(CNI, co-encadrement)}
+\end{minipage}
+
+\vspace{1.6cm}
+\textbf{Organisme d'accueil :} Centre National de l'Informatique (CNI)\\[0.2cm]
+\textbf{Période du stage :} 26 janvier 2026 --- 26 juillet 2026
+
+\vfill
+{\normalsize Année universitaire 2025 --- 2026}
+\end{titlepage}
+
+% ─────────────────────────────────────────────────────────────────────────────
+%  Pages liminaires
+% ─────────────────────────────────────────────────────────────────────────────
+\pagenumbering{roman}
+\setcounter{page}{1}
+
+\include{remerciements}
+
+\tableofcontents
+\cleardoublepage
+
+\listoffigures
+\cleardoublepage
+
+\listoftables
+\cleardoublepage
+
+\include{acronymes}
+
+% ─────────────────────────────────────────────────────────────────────────────
+%  Corps du mémoire
+% ─────────────────────────────────────────────────────────────────────────────
+\cleardoublepage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\include{introduction}
+
+\include{chapitre1}
+\include{chapitre2}
+\include{chapitre3}
+\include{chapitre4}
+\include{chapitre5}
+\include{chapitre6}
+
+\include{conclusion}
+
+% ─────────────────────────────────────────────────────────────────────────────
+%  Bibliographie et annexes
+% ─────────────────────────────────────────────────────────────────────────────
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Bibliographie}
+\printbibliography[title={Bibliographie}]
+
+\include{annexes}
+
+\end{document}

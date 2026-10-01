@@ -1,0 +1,5322 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.8.19)  21 SEP 2026 12:29
+entering extended mode
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**e:/PFE/sleep/report/_v2/main.tex
+(e:/PFE/sleep/report/_v2/main.tex
+LaTeX2e <2026-06-01>
+L3 programming layer <2026-06-18>
+(C:\Program Files\MiKTeX\tex/latex/base\report.cls
+Document Class: report 2025/01/22 v1.4n Standard LaTeX document class
+(C:\Program Files\MiKTeX\tex/latex/base\size12.clo
+File: size12.clo 2025/01/22 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count276
+\c@chapter=\count277
+\c@section=\count278
+\c@subsection=\count279
+\c@subsubsection=\count280
+\c@paragraph=\count281
+\c@subparagraph=\count282
+\c@figure=\count283
+\c@table=\count284
+\abovecaptionskip=\skip49
+\belowcaptionskip=\skip50
+\bibindent=\dimen150
+) (C:\Program Files\MiKTeX\tex/latex/base\inputenc.sty
+Package: inputenc 2024/02/08 v1.3d Input encoding file
+\inpenc@prehook=\toks17
+\inpenc@posthook=\toks18
+) (C:\Program Files\MiKTeX\tex/latex/base\fontenc.sty
+Package: fontenc 2025/07/18 v2.1d Standard LaTeX package
+) (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/psnfss\times.sty
+Package: times 2020/03/25 PSNFSS-v9.3 (SPQR) 
+) (C:\Program Files\MiKTeX\tex/generic/babel\babel.sty
+Package: babel 2026/06/14 v26.9 The multilingual framework for LuaLaTeX, pdfLaTeX and XeLaTeX
+\babel@savecnt=\count285
+LaTeX Encoding Info:    Redeclaring text command \ij (encoding OT1) on input line 2084.
+LaTeX Encoding Info:    Redeclaring text command \IJ (encoding OT1) on input line 2086.
+LaTeX Encoding Info:    Redeclaring text command \ij (encoding T1) on input line 2088.
+LaTeX Encoding Info:    Redeclaring text command \IJ (encoding T1) on input line 2089.
+LaTeX Encoding Info:    Ignoring declaration for text command \ij (encoding ?) on input line 2090.
+LaTeX Encoding Info:    Ignoring declaration for text command \IJ (encoding ?) on input line 2092.
+LaTeX Encoding Info:    Ignoring declaration for text command \SS (encoding ?) on input line 2117.
+\U@D=\dimen151
+\l@unhyphenated=\language79
+ (C:\Program Files\MiKTeX\tex/generic/babel\txtbabel.def)
+\bbl@readstream=\read2
+\bbl@dirlevel=\count286
+Package babel Info: Configuration files are deprecated, as
+(babel)             they can break document portability.
+(babel)             Reported on input line 4252.
+
+*************************************
+* Local config file bblopts.cfg used
+*
+(C:\Program Files\MiKTeX\tex/latex/arabi\bblopts.cfg
+File: bblopts.cfg 2005/09/08 v0.1 add Arabic and Farsi to "declared" options of babel
+) (C:\Program Files\MiKTeX\tex/generic/babel/locale/fr\babel-french.tex)
+Package babel Info: Importing font and identification data for 'french'
+(babel)             from babel-fr.ini. Reported on input line 4380.
+ (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/generic/babel-french\french.ldf
+Language: french 2026-06-06 v4.1a French support from the babel system
+ (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/generic/babel-french\french3.ldf
+Language: french 2026-06-06 v3.7f French support from the babel system
+\FB@stdchar=\count287
+Package babel Info: Making : an active character on input line 266.
+Package babel Info: Making ; an active character on input line 267.
+Package babel Info: Making ! an active character on input line 268.
+Package babel Info: Making ? an active character on input line 269.
+\FBguill@level=\count288
+\FBold@everypar=\toks19
+\FB@Mht=\dimen152
+\mc@charclass=\count289
+\mc@charfam=\count290
+\mc@charslot=\count291
+\std@mcc=\count292
+\dec@mcc=\count293
+\listindentFB=\dimen153
+\descindentFB=\dimen154
+\labelwidthFB=\dimen155
+\labelfullwidthFB=\dimen156
+\FB@pardim=\dimen157
+\parindentFFN=\dimen158
+\FBfnindent=\dimen159
+))) (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/carlisle\scalefnt.sty) (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/csquotes\csquotes.sty
+Package: csquotes 2026-05-19 v5.2p context-sensitive quotations (JAW)
+ (C:\Program Files\MiKTeX\tex/latex/etoolbox\etoolbox.sty
+Package: etoolbox 2025/10/02 v2.5m e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count294
+) (C:\Program Files\MiKTeX\tex/latex/graphics\keyval.sty
+Package: keyval 2026-05-17 v1.15 key=value parser (DPC)
+\KV@toks@=\toks20
+)
+\csq@reset=\count295
+\csq@gtype=\count296
+\csq@glevel=\count297
+\csq@qlevel=\count298
+\csq@maxlvl=\count299
+\csq@tshold=\count300
+\csq@ltx@everypar=\toks21
+ (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/csquotes\csquotes.def
+File: csquotes.def 2026-05-19 v5.2p csquotes generic definitions (JAW)
+)
+Package csquotes Info: Trying to load configuration file 'csquotes.cfg'...
+Package csquotes Info: ... configuration file loaded successfully.
+ (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/csquotes\csquotes.cfg
+File: csquotes.cfg 
+)) (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/geometry\geometry.sty
+Package: geometry 2026/03/07 v6.0 Page Geometry
+ (C:\Program Files\MiKTeX\tex/generic/iftex\ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+ (C:\Program Files\MiKTeX\tex/generic/iftex\iftex.sty
+Package: iftex 2024/12/12 v1.0g TeX engine tests
+))
+\Gm@cnth=\count301
+\Gm@cntv=\count302
+\c@Gm@tempcnt=\count303
+\Gm@bindingoffset=\dimen160
+\Gm@wd@mp=\dimen161
+\Gm@odd@mp=\dimen162
+\Gm@even@mp=\dimen163
+\Gm@layoutwidth=\dimen164
+\Gm@layoutheight=\dimen165
+\Gm@layouthoffset=\dimen166
+\Gm@layoutvoffset=\dimen167
+\Gm@dimlist=\toks22
+ (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/geometry\geometry.cfg)) (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/setspace\setspace.sty
+Package: setspace 2022/12/04 v6.7b set line spacing
+) (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/microtype\microtype.sty
+Package: microtype 2026/03/01 v3.2d Micro-typographical refinements (RS)
+\MT@toks=\toks23
+\MT@tempbox=\box53
+\MT@count=\count304
+LaTeX Info: Redefining \noprotrusionifhmode on input line 1084.
+LaTeX Info: Redefining \leftprotrusion on input line 1085.
+\MT@prot@toks=\toks24
+LaTeX Info: Redefining \rightprotrusion on input line 1104.
+LaTeX Info: Redefining \textls on input line 1449.
+\MT@outer@kern=\dimen168
+LaTeX Info: Redefining \microtypecontext on input line 2053.
+LaTeX Info: Redefining \textmicrotypecontext on input line 2070.
+\MT@listname@count=\count305
+ (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/microtype\microtype-pdftex.def
+File: microtype-pdftex.def 2026/03/01 v3.2d Definitions specific to pdftex (RS)
+LaTeX Info: Redefining \lsstyle on input line 944.
+LaTeX Info: Redefining \lslig on input line 944.
+\MT@outer@space=\skip51
+)
+Package microtype Info: Loading configuration file microtype.cfg.
+ (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/microtype\microtype.cfg
+File: microtype.cfg 2026/03/01 v3.2d microtype main configuration file (RS)
+)
+LaTeX Info: Redefining \microtypesetup on input line 3065.
+) (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/fancyhdr\fancyhdr.sty
+Package: fancyhdr 2025/02/07 v5.2 Extensive control of page headers and footers
+\f@nch@headwidth=\skip52
+\f@nch@offset@elh=\skip53
+\f@nch@offset@erh=\skip54
+\f@nch@offset@olh=\skip55
+\f@nch@offset@orh=\skip56
+\f@nch@offset@elf=\skip57
+\f@nch@offset@erf=\skip58
+\f@nch@offset@olf=\skip59
+\f@nch@offset@orf=\skip60
+\f@nch@height=\skip61
+\f@nch@footalignment=\skip62
+\f@nch@widthL=\skip63
+\f@nch@widthC=\skip64
+\f@nch@widthR=\skip65
+\@temptokenb=\toks25
+) (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/titlesec\titlesec.sty
+Package: titlesec 2025/01/04 v2.17 Sectioning titles
+\ttl@box=\box54
+\beforetitleunit=\skip66
+\aftertitleunit=\skip67
+\ttl@plus=\dimen169
+\ttl@minus=\dimen170
+\ttl@toksa=\toks26
+\titlewidth=\dimen171
+\titlewidthlast=\dimen172
+\titlewidthfirst=\dimen173
+) (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/chngcntr\chngcntr.sty
+Package: chngcntr 2018/04/09 v1.1a change counter resetting
+Package chngcntr Info: \counterwithout already defined.
+(chngcntr)             Quitting chngcntr on input line 21.
+) (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/eso-pic\eso-pic.sty
+Package: eso-pic 2026/05/31 v3.0e eso-pic (RN)
+\ESO@tempdima=\dimen174
+\ESO@tempdimb=\dimen175
+ (C:\Program Files\MiKTeX\tex/latex/xcolor\xcolor.sty
+Package: xcolor 2024/09/29 v3.02 LaTeX color extensions (UK)
+ (C:\Program Files\MiKTeX\tex/latex/graphics-cfg\color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 274.
+ (C:\Program Files\MiKTeX\tex/latex/graphics-def\pdftex.def
+File: pdftex.def 2025/09/29 v1.2d Graphics/color driver for pdftex
+) (C:\Program Files\MiKTeX\tex/latex/graphics\mathcolor.ltx)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1349.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1353.
+Package xcolor Info: Model `RGB' extended on input line 1365.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1367.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1370.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1371.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1372.
+)) (C:\Program Files\MiKTeX\tex/latex/tools\indentfirst.sty
+Package: indentfirst 2023/07/02 v1.03 Indent first paragraph (DPC)
+) (C:\Program Files\MiKTeX\tex/latex/graphics\graphicx.sty
+Package: graphicx 2026-05-17 v1.2e Enhanced LaTeX Graphics (DPC,SPQR)
+ (C:\Program Files\MiKTeX\tex/latex/graphics\graphics.sty
+Package: graphics 2026-05-17 v1.4h Standard LaTeX Graphics (DPC,SPQR)
+ (C:\Program Files\MiKTeX\tex/latex/graphics\trig.sty
+Package: trig 2023/12/02 v1.11 sin cos tan (DPC)
+) (C:\Program Files\MiKTeX\tex/latex/graphics-cfg\graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 106.
+)
+\Gin@req@height=\dimen176
+\Gin@req@width=\dimen177
+) (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/float\float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count306
+\float@exts=\toks27
+\float@box=\box55
+\@float@everytoks=\toks28
+\@floatcapt=\box56
+) (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/caption\caption.sty
+Package: caption 2023/08/05 v3.6o Customizing captions (AR)
+ (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/caption\caption3.sty
+Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
+\caption@tempdima=\dimen178
+\captionmargin=\dimen179
+\caption@leftmargin=\dimen180
+\caption@rightmargin=\dimen181
+\caption@width=\dimen182
+\caption@indent=\dimen183
+\caption@parindent=\dimen184
+\caption@hangindent=\dimen185
+Package caption Info: Standard document class detected.
+Package caption Info: french babel package is loaded.
+)
+\c@caption@flags=\count307
+\c@continuedfloat=\count308
+Package caption Info: float package is loaded.
+) (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/caption\subcaption.sty
+Package: subcaption 2023/07/28 v1.6b Sub-captions (AR)
+Package caption Info: New subtype `subfigure' on input line 238.
+\c@subfigure=\count309
+Package caption Info: New subtype `subtable' on input line 238.
+\c@subtable=\count310
+) (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/booktabs\booktabs.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen186
+\lightrulewidth=\dimen187
+\cmidrulewidth=\dimen188
+\belowrulesep=\dimen189
+\belowbottomsep=\dimen190
+\aboverulesep=\dimen191
+\abovetopsep=\dimen192
+\cmidrulesep=\dimen193
+\cmidrulekern=\dimen194
+\defaultaddspace=\dimen195
+\@cmidla=\count311
+\@cmidlb=\count312
+\@aboverulesep=\dimen196
+\@belowrulesep=\dimen197
+\@thisruleclass=\count313
+\@lastruleclass=\count314
+\@thisrulewidth=\dimen198
+) (C:\Program Files\MiKTeX\tex/latex/tools\array.sty
+Package: array 2026/02/24 v2.7b Tabular extension package (FMi)
+\col@sep=\dimen199
+\ar@mcellbox=\box57
+\extrarowheight=\dimen256
+\NC@list=\toks29
+\extratabsurround=\skip68
+\backup@length=\skip69
+\ar@cellbox=\box58
+) (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/multirow\multirow.sty
+Package: multirow 2024/11/12 v2.9 Span multiple rows of a table
+\multirow@colwidth=\skip70
+\multirow@cntb=\count315
+\multirow@dima=\skip71
+\bigstrutjot=\dimen257
+) (C:\Program Files\MiKTeX\tex/latex/tools\longtable.sty
+Package: longtable 2026-01-28 v4.27 Multi-page Table package (DPC)
+\LTleft=\skip72
+\LTright=\skip73
+\LTpre=\skip74
+\LTpost=\skip75
+\LTchunksize=\count316
+\LTcapwidth=\dimen258
+\LT@head=\box59
+\LT@firsthead=\box60
+\LT@foot=\box61
+\LT@lastfoot=\box62
+\LT@gbox=\box63
+\LT@cols=\count317
+\LT@rows=\count318
+\c@LT@tables=\count319
+\c@LT@chunks=\count320
+\LT@p@ftn=\toks30
+) (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/colortbl\colortbl.sty
+Package: colortbl 2026/05/01 v1.0l Color table columns (DPC)
+
+new hooks used!!
+\minrowclearance=\skip76
+\rownum=\count321
+) (C:\Program Files\MiKTeX\tex/latex/tools\tabularx.sty
+Package: tabularx 2023/12/11 v2.12a `tabularx' package (DPC)
+\TX@col@width=\dimen259
+\TX@old@table=\dimen260
+\TX@old@col=\dimen261
+\TX@target=\dimen262
+\TX@delta=\dimen263
+\TX@cols=\count322
+\TX@ftn=\toks31
+) (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/enumitem\enumitem.sty
+Package: enumitem 2025/02/06 v3.11 Customized lists
+\labelindent=\skip77
+\enit@outerparindent=\dimen264
+\enit@toks=\toks32
+\enit@inbox=\box64
+\enit@count@id=\count323
+\enitdp@description=\count324
+) (C:\Program Files\MiKTeX\tex/latex/amsmath\amsmath.sty
+Package: amsmath 2026/05/19 v2.18d AMS math features
+\@mathmargin=\skip78
+
+For additional information on amsmath, use the `?' option.
+(C:\Program Files\MiKTeX\tex/latex/amsmath\amstext.sty
+Package: amstext 2024/11/17 v2.01 AMS text
+ (C:\Program Files\MiKTeX\tex/latex/amsmath\amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks33
+\ex@=\dimen265
+)) (C:\Program Files\MiKTeX\tex/latex/amsmath\amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen266
+) (C:\Program Files\MiKTeX\tex/latex/amsmath\amsopn.sty
+Package: amsopn 2022/04/08 v2.04 operator names
+)
+\inf@bad=\count325
+LaTeX Info: Redefining \frac on input line 233.
+\uproot@=\count326
+\leftroot@=\count327
+LaTeX Info: Redefining \overline on input line 398.
+LaTeX Info: Redefining \colon on input line 409.
+\classnum@=\count328
+\DOTSCASE@=\count329
+LaTeX Info: Redefining \ldots on input line 495.
+LaTeX Info: Redefining \dots on input line 498.
+LaTeX Info: Redefining \cdots on input line 619.
+\Mathstrutbox@=\box65
+\strutbox@=\box66
+LaTeX Info: Redefining \big on input line 721.
+LaTeX Info: Redefining \Big on input line 722.
+LaTeX Info: Redefining \bigg on input line 723.
+LaTeX Info: Redefining \Bigg on input line 724.
+\big@size=\dimen267
+LaTeX Font Info:    Redeclaring font encoding OML on input line 742.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 743.
+\macc@depth=\count330
+LaTeX Info: Redefining \bmod on input line 904.
+LaTeX Info: Redefining \pmod on input line 909.
+LaTeX Info: Redefining \smash on input line 939.
+LaTeX Info: Redefining \relbar on input line 969.
+LaTeX Info: Redefining \Relbar on input line 970.
+\c@MaxMatrixCols=\count331
+\dotsspace@=\muskip17
+\c@parentequation=\count332
+\dspbrk@lvl=\count333
+\tag@help=\toks34
+\row@=\count334
+\column@=\count335
+\maxfields@=\count336
+\andhelp@=\toks35
+\eqnshift@=\dimen268
+\alignsep@=\dimen269
+\tagshift@=\dimen270
+\tagwidth@=\dimen271
+\totwidth@=\dimen272
+\lineht@=\dimen273
+\@envbody=\toks36
+\multlinegap=\skip79
+\multlinetaggap=\skip80
+\mathdisplay@stack=\toks37
+LaTeX Info: Redefining \[ on input line 2965.
+LaTeX Info: Redefining \] on input line 2966.
+) (C:\Program Files\MiKTeX\tex/latex/amsfonts\amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+ (C:\Program Files\MiKTeX\tex/latex/amsfonts\amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+)) (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/siunitx\siunitx.sty
+Package: siunitx 2026-05-15 v3.5.5 A comprehensive (SI) units package
+\l__siunitx_number_uncert_offset_int=\count337
+\l__siunitx_number_exponent_fixed_int=\count338
+\l__siunitx_number_min_decimal_int=\count339
+\l__siunitx_number_min_integer_int=\count340
+\l__siunitx_number_round_precision_int=\count341
+\l__siunitx_number_lower_threshold_int=\count342
+\l__siunitx_number_upper_threshold_int=\count343
+\l__siunitx_number_group_first_int=\count344
+\l__siunitx_number_group_size_int=\count345
+\l__siunitx_number_group_min_int=\count346
+\l__siunitx_number_group_minimum_int=\count347
+\l__siunitx_compound_count_int=\count348
+ (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/translations\translations.sty
+Package: translations 2022/02/05 v1.12 internationalization of LaTeX2e packages (CN)
+ (C:\Program Files\MiKTeX\tex/generic/pdftexcmds\pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO)
+ (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/generic/infwarerr\infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+) (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty
+Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+))
+\l__siunitx_table_tmp_box=\box67
+\l__siunitx_table_tmp_dim=\dimen274
+\l__siunitx_table_column_width_dim=\dimen275
+\l__siunitx_table_integer_box=\box68
+\l__siunitx_table_decimal_box=\box69
+\l__siunitx_table_uncert_box=\box70
+\l__siunitx_table_before_box=\box71
+\l__siunitx_table_after_box=\box72
+\l__siunitx_table_before_dim=\dimen276
+\l__siunitx_table_carry_dim=\dimen277
+\l__siunitx_unit_tmp_int=\count349
+\l__siunitx_unit_position_int=\count350
+\l__siunitx_unit_total_int=\count351
+\l__siunitx_sexagesimal_tmp_dim=\dimen278
+\l__siunitx_sexagesimal_marker_box=\box73
+\l__siunitx_sexagesimal_unit_box=\box74
+)
+
+Package siunitx Info: Option "detect-weight" has been deprecated in this
+(siunitx)             release.
+(siunitx)             
+(siunitx)             Use "reset-text-series = false, text-series-to-math =
+(siunitx)             true" as a replacement.
+
+
+Package siunitx Info: Option "detect-family" has been deprecated in this
+(siunitx)             release.
+(siunitx)             
+(siunitx)             Use "reset-text-family = false, text-family-to-math =
+(siunitx)             true" as a replacement.
+
+ (C:\Program Files\MiKTeX\tex/latex/pgf/frontendlayer\tikz.sty (C:\Program Files\MiKTeX\tex/latex/pgf/basiclayer\pgf.sty (C:\Program Files\MiKTeX\tex/latex/pgf/utilities\pgfrcs.sty (C:\Program Files\MiKTeX\tex/generic/pgf/utilities\pgfutil-common.tex
+\pgfutil@everybye=\toks38
+\pgfutil@tempdima=\dimen279
+\pgfutil@tempdimb=\dimen280
+) (C:\Program Files\MiKTeX\tex/generic/pgf/utilities\pgfutil-latex.def
+\pgfutil@abb=\box75
+) (C:\Program Files\MiKTeX\tex/generic/pgf/utilities\pgfrcs.code.tex (C:\Program Files\MiKTeX\tex/generic/pgf\pgf.revision.tex)
+Package: pgfrcs 2025-08-29 v3.1.11a (3.1.11a)
+))
+Package: pgf 2025-08-29 v3.1.11a (3.1.11a)
+ (C:\Program Files\MiKTeX\tex/latex/pgf/basiclayer\pgfcore.sty (C:\Program Files\MiKTeX\tex/latex/pgf/systemlayer\pgfsys.sty (C:\Program Files\MiKTeX\tex/generic/pgf/systemlayer\pgfsys.code.tex
+Package: pgfsys 2025-08-29 v3.1.11a (3.1.11a)
+ (C:\Program Files\MiKTeX\tex/generic/pgf/utilities\pgfkeys.code.tex
+\pgfkeys@pathtoks=\toks39
+\pgfkeys@temptoks=\toks40
+ (C:\Program Files\MiKTeX\tex/generic/pgf/utilities\pgfkeyslibraryfiltered.code.tex
+\pgfkeys@tmptoks=\toks41
+))
+\pgf@x=\dimen281
+\pgf@y=\dimen282
+\pgf@xa=\dimen283
+\pgf@ya=\dimen284
+\pgf@xb=\dimen285
+\pgf@yb=\dimen286
+\pgf@xc=\dimen287
+\pgf@yc=\dimen288
+\pgf@xd=\dimen289
+\pgf@yd=\dimen290
+\w@pgf@writea=\write3
+\r@pgf@reada=\read3
+\c@pgf@counta=\count352
+\c@pgf@countb=\count353
+\c@pgf@countc=\count354
+\c@pgf@countd=\count355
+\t@pgf@toka=\toks42
+\t@pgf@tokb=\toks43
+\t@pgf@tokc=\toks44
+\pgf@sys@id@count=\count356
+ (C:\Program Files\MiKTeX\tex/generic/pgf/systemlayer\pgf.cfg
+File: pgf.cfg 2025-08-29 v3.1.11a (3.1.11a)
+)
+Driver file for pgf: pgfsys-pdftex.def
+ (C:\Program Files\MiKTeX\tex/generic/pgf/systemlayer\pgfsys-pdftex.def
+File: pgfsys-pdftex.def 2025-08-29 v3.1.11a (3.1.11a)
+ (C:\Program Files\MiKTeX\tex/generic/pgf/systemlayer\pgfsys-common-pdf.def
+File: pgfsys-common-pdf.def 2025-08-29 v3.1.11a (3.1.11a)
+))) (C:\Program Files\MiKTeX\tex/generic/pgf/systemlayer\pgfsyssoftpath.code.tex
+File: pgfsyssoftpath.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfsyssoftpath@smallbuffer@items=\count357
+\pgfsyssoftpath@bigbuffer@items=\count358
+) (C:\Program Files\MiKTeX\tex/generic/pgf/systemlayer\pgfsysprotocol.code.tex
+File: pgfsysprotocol.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)) (C:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcore.code.tex
+Package: pgfcore 2025-08-29 v3.1.11a (3.1.11a)
+ (C:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmath.code.tex (C:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathutil.code.tex) (C:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathparser.code.tex
+\pgfmath@dimen=\dimen291
+\pgfmath@count=\count359
+\pgfmath@box=\box76
+\pgfmath@toks=\toks45
+\pgfmath@stack@operand=\toks46
+\pgfmath@stack@operation=\toks47
+) (C:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.code.tex) (C:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.basic.code.tex) (C:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.trigonometric.code.tex) (C:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.random.code.tex) (C:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.comparison.code.tex) (C:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.base.code.tex) (C:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.round.code.tex) (C:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.misc.code.tex) (C:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.integerarithmetics.code.tex) (C:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathcalc.code.tex) (C:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfloat.code.tex
+\c@pgfmathroundto@lastzeros=\count360
+)) (C:\Program Files\MiKTeX\tex/generic/pgf/math\pgfint.code.tex) (C:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepoints.code.tex
+File: pgfcorepoints.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@picminx=\dimen292
+\pgf@picmaxx=\dimen293
+\pgf@picminy=\dimen294
+\pgf@picmaxy=\dimen295
+\pgf@pathminx=\dimen296
+\pgf@pathmaxx=\dimen297
+\pgf@pathminy=\dimen298
+\pgf@pathmaxy=\dimen299
+\pgf@xx=\dimen300
+\pgf@xy=\dimen301
+\pgf@yx=\dimen302
+\pgf@yy=\dimen303
+\pgf@zx=\dimen304
+\pgf@zy=\dimen305
+) (C:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepathconstruct.code.tex
+File: pgfcorepathconstruct.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@path@lastx=\dimen306
+\pgf@path@lasty=\dimen307
+) (C:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepathusage.code.tex
+File: pgfcorepathusage.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@shorten@end@additional=\dimen308
+\pgf@shorten@start@additional=\dimen309
+) (C:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorescopes.code.tex
+File: pgfcorescopes.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfpic=\box77
+\pgf@hbox=\box78
+\pgf@layerbox@main=\box79
+\pgf@picture@serial@count=\count361
+) (C:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcoregraphicstate.code.tex
+File: pgfcoregraphicstate.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgflinewidth=\dimen310
+) (C:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcoretransformations.code.tex
+File: pgfcoretransformations.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@pt@x=\dimen311
+\pgf@pt@y=\dimen312
+\pgf@pt@temp=\dimen313
+) (C:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorequick.code.tex
+File: pgfcorequick.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+) (C:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcoreobjects.code.tex
+File: pgfcoreobjects.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+) (C:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepathprocessing.code.tex
+File: pgfcorepathprocessing.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+) (C:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorearrows.code.tex
+File: pgfcorearrows.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfarrowsep=\dimen314
+) (C:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcoreshade.code.tex
+File: pgfcoreshade.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@max=\dimen315
+\pgf@sys@shading@range@num=\count362
+\pgf@shadingcount=\count363
+) (C:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcoreimage.code.tex
+File: pgfcoreimage.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+) (C:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcoreexternal.code.tex
+File: pgfcoreexternal.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfexternal@startupbox=\box80
+) (C:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorelayers.code.tex
+File: pgfcorelayers.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+) (C:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcoretransparency.code.tex
+File: pgfcoretransparency.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+) (C:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepatterns.code.tex
+File: pgfcorepatterns.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+) (C:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorerdf.code.tex
+File: pgfcorerdf.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+))) (C:\Program Files\MiKTeX\tex/generic/pgf/modules\pgfmoduleshapes.code.tex
+File: pgfmoduleshapes.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfnodeparttextbox=\box81
+) (C:\Program Files\MiKTeX\tex/generic/pgf/modules\pgfmoduleplot.code.tex
+File: pgfmoduleplot.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+) (C:\Program Files\MiKTeX\tex/latex/pgf/compatibility\pgfcomp-version-0-65.sty
+Package: pgfcomp-version-0-65 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@nodesepstart=\dimen316
+\pgf@nodesepend=\dimen317
+) (C:\Program Files\MiKTeX\tex/latex/pgf/compatibility\pgfcomp-version-1-18.sty
+Package: pgfcomp-version-1-18 2025-08-29 v3.1.11a (3.1.11a)
+)) (C:\Program Files\MiKTeX\tex/latex/pgf/utilities\pgffor.sty (C:\Program Files\MiKTeX\tex/latex/pgf/utilities\pgfkeys.sty (C:\Program Files\MiKTeX\tex/generic/pgf/utilities\pgfkeys.code.tex)) (C:\Program Files\MiKTeX\tex/latex/pgf/math\pgfmath.sty (C:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmath.code.tex)) (C:\Program Files\MiKTeX\tex/generic/pgf/utilities\pgffor.code.tex
+Package: pgffor 2025-08-29 v3.1.11a (3.1.11a)
+\pgffor@iter=\dimen318
+\pgffor@skip=\dimen319
+\pgffor@stack=\toks48
+\pgffor@toks=\toks49
+)) (C:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz\tikz.code.tex
+Package: tikz 2025-08-29 v3.1.11a (3.1.11a)
+ (C:\Program Files\MiKTeX\tex/generic/pgf/libraries\pgflibraryplothandlers.code.tex
+File: pgflibraryplothandlers.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@plot@mark@count=\count364
+\pgfplotmarksize=\dimen320
+)
+\tikz@lastx=\dimen321
+\tikz@lasty=\dimen322
+\tikz@lastxsaved=\dimen323
+\tikz@lastysaved=\dimen324
+\tikz@lastmovetox=\dimen325
+\tikz@lastmovetoy=\dimen326
+\tikzleveldistance=\dimen327
+\tikzsiblingdistance=\dimen328
+\tikz@figbox=\box82
+\tikz@figbox@bg=\box83
+\tikz@tempbox=\box84
+\tikz@tempbox@bg=\box85
+\tikztreelevel=\count365
+\tikznumberofchildren=\count366
+\tikznumberofcurrentchild=\count367
+\tikz@fig@count=\count368
+ (C:\Program Files\MiKTeX\tex/generic/pgf/modules\pgfmodulematrix.code.tex
+File: pgfmodulematrix.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfmatrixcurrentrow=\count369
+\pgfmatrixcurrentcolumn=\count370
+\pgf@matrix@numberofcolumns=\count371
+)
+\tikz@expandcount=\count372
+ (C:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibrarytopaths.code.tex
+File: tikzlibrarytopaths.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+))) (C:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibraryshapes.code.tex
+File: tikzlibraryshapes.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+ (C:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibraryshapes.geometric.code.tex
+File: tikzlibraryshapes.geometric.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+ (C:\Program Files\MiKTeX\tex/generic/pgf/libraries/shapes\pgflibraryshapes.geometric.code.tex
+File: pgflibraryshapes.geometric.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)) (C:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibraryshapes.misc.code.tex
+File: tikzlibraryshapes.misc.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+ (C:\Program Files\MiKTeX\tex/generic/pgf/libraries/shapes\pgflibraryshapes.misc.code.tex
+File: pgflibraryshapes.misc.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)) (C:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibraryshapes.symbols.code.tex
+File: tikzlibraryshapes.symbols.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+ (C:\Program Files\MiKTeX\tex/generic/pgf/libraries/shapes\pgflibraryshapes.symbols.code.tex
+File: pgflibraryshapes.symbols.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)) (C:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibraryshapes.arrows.code.tex
+File: tikzlibraryshapes.arrows.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+ (C:\Program Files\MiKTeX\tex/generic/pgf/libraries/shapes\pgflibraryshapes.arrows.code.tex
+File: pgflibraryshapes.arrows.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)) (C:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibraryshapes.callouts.code.tex (C:\Program Files\MiKTeX\tex/generic/pgf/libraries/shapes\pgflibraryshapes.callouts.code.tex)) (C:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibraryshapes.multipart.code.tex
+File: tikzlibraryshapes.multipart.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+ (C:\Program Files\MiKTeX\tex/generic/pgf/libraries/shapes\pgflibraryshapes.multipart.code.tex
+File: pgflibraryshapes.multipart.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfnodepartlowerbox=\box86
+\pgfnodeparttwobox=\box87
+\pgfnodepartthreebox=\box88
+\pgfnodepartfourbox=\box89
+\pgfnodeparttwentybox=\box90
+\pgfnodepartnineteenbox=\box91
+\pgfnodeparteighteenbox=\box92
+\pgfnodepartseventeenbox=\box93
+\pgfnodepartsixteenbox=\box94
+\pgfnodepartfifteenbox=\box95
+\pgfnodepartfourteenbox=\box96
+\pgfnodepartthirteenbox=\box97
+\pgfnodeparttwelvebox=\box98
+\pgfnodepartelevenbox=\box99
+\pgfnodeparttenbox=\box100
+\pgfnodepartninebox=\box101
+\pgfnodeparteightbox=\box102
+\pgfnodepartsevenbox=\box103
+\pgfnodepartsixbox=\box104
+\pgfnodepartfivebox=\box105
+))) (C:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibraryarrows.code.tex
+File: tikzlibraryarrows.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+ (C:\Program Files\MiKTeX\tex/generic/pgf/libraries\pgflibraryarrows.code.tex
+File: pgflibraryarrows.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\arrowsize=\dimen329
+)) (C:\Program Files\MiKTeX\tex/generic/pgf/libraries\pgflibraryarrows.meta.code.tex
+File: pgflibraryarrows.meta.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfarrowinset=\dimen330
+\pgfarrowlength=\dimen331
+\pgfarrowwidth=\dimen332
+\pgfarrowlinewidth=\dimen333
+) (C:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibrarypositioning.code.tex
+File: tikzlibrarypositioning.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+) (C:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibrarycalc.code.tex
+File: tikzlibrarycalc.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+) (C:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibraryfit.code.tex
+File: tikzlibraryfit.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+) (C:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibrarybackgrounds.code.tex
+File: tikzlibrarybackgrounds.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@layerbox@background=\box106
+\pgf@layerboxsaved@background=\box107
+) (C:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibrarydecorations.pathmorphing.code.tex (C:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibrarydecorations.code.tex (C:\Program Files\MiKTeX\tex/generic/pgf/modules\pgfmoduledecorations.code.tex
+\pgfdecoratedcompleteddistance=\dimen334
+\pgfdecoratedremainingdistance=\dimen335
+\pgfdecoratedinputsegmentcompleteddistance=\dimen336
+\pgfdecoratedinputsegmentremainingdistance=\dimen337
+\pgf@decorate@distancetomove=\dimen338
+\pgf@decorate@repeatstate=\count373
+\pgfdecorationsegmentamplitude=\dimen339
+\pgfdecorationsegmentlength=\dimen340
+)
+\tikz@lib@dec@box=\box108
+) (C:\Program Files\MiKTeX\tex/generic/pgf/libraries/decorations\pgflibrarydecorations.pathmorphing.code.tex)) (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/pgfgantt\pgfgantt.sty
+Package: pgfgantt 2024/06/19 v5.0a Draw Gantt diagrams with TikZ
+ (C:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibrarypatterns.code.tex
+File: tikzlibrarypatterns.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+ (C:\Program Files\MiKTeX\tex/generic/pgf/libraries\pgflibrarypatterns.code.tex
+File: pgflibrarypatterns.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)) (C:\Program Files\MiKTeX\tex/latex/pgf/utilities\pgfcalendar.sty (C:\Program Files\MiKTeX\tex/generic/pgf/utilities\pgfcalendar.code.tex
+File: pgfcalendar.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfcalendarcurrentjulian=\count374
+\pgf@cal@easter@Y=\count375
+\pgf@cal@easter@G=\count376
+\pgf@cal@easter@C=\count377
+\pgf@cal@easter@X=\count378
+\pgf@cal@easter@Z=\count379
+\pgf@cal@easter@D=\count380
+\pgf@cal@easter@E=\count381
+\pgf@cal@easter@N=\count382
+\pgf@cal@easter@M=\count383
+\pgf@cal@easter@julianday=\count384
+))
+\gtt@currentline=\count385
+\gtt@lasttitleline=\count386
+\gtt@currgrid=\count387
+\gtt@chartwidth=\count388
+\gtt@lasttitleslot=\count389
+\gtt@elementid=\count390
+\gtt@today@slot=\count391
+\gtt@startjulian=\count392
+\gtt@endjulian=\count393
+\gtt@chartid=\count394
+\gtt@vrule@slot=\count395
+\gtt@calendar@slots=\count396
+\gtt@calendar@weeknumber=\count397
+\gtt@calendar@startofweek=\count398
+\gtt@left@slot=\count399
+\gtt@right@slot=\count400
+) (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/pgf-umlsd\pgf-umlsd.sty
+Package: pgf-umlsd 2011/07/27 v0.6 Some LaTeX macros for UML Sequence Diagrams.
+ (C:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibraryshadows.code.tex
+File: tikzlibraryshadows.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+ (C:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibraryfadings.code.tex
+File: tikzlibraryfadings.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+ (C:\Program Files\MiKTeX\tex/generic/pgf/libraries\pgflibraryfadings.code.tex
+File: pgflibraryfadings.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+))) (C:\Program Files\MiKTeX\tex/latex/base\ifthen.sty
+Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
+)
+\c@preinst=\count401
+\c@instnum=\count402
+\c@threadnum=\count403
+\c@seqlevel=\count404
+\c@callevel=\count405
+\c@callselflevel=\count406
+\c@blocklevel=\count407
+) (C:\Program Files\MiKTeX\tex/latex/listings\listings.sty
+\lst@mode=\count408
+\lst@gtempboxa=\box109
+\lst@token=\toks50
+\lst@length=\count409
+\lst@currlwidth=\dimen341
+\lst@column=\count410
+\lst@pos=\count411
+\lst@lostspace=\dimen342
+\lst@width=\dimen343
+\lst@newlines=\count412
+\lst@lineno=\count413
+\lst@maxwidth=\dimen344
+ (C:\Program Files\MiKTeX\tex/latex/listings\lstpatch.sty
+File: lstpatch.sty 2025/11/14 1.11b (Carsten Heinz)
+) (C:\Program Files\MiKTeX\tex/latex/listings\lstmisc.sty
+File: lstmisc.sty 2025/11/14 1.11b (Carsten Heinz)
+\c@lstnumber=\count414
+\lst@skipnumbers=\count415
+\lst@framebox=\box110
+) (C:\Program Files\MiKTeX\tex/latex/listings\listings.cfg
+File: listings.cfg 2025/11/14 1.11b listings configuration
+))
+Package: listings 2025/11/14 1.11b (Carsten Heinz)
+ (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/acronym\acronym.sty
+Package: acronym 2025/01/17 v1.50 Support for acronyms (Tobias Oetiker)
+ (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/bigfoot\suffix.sty
+Package: suffix 2006/07/15 1.5a Variant command support
+) (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/xstring\xstring.sty (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/generic/xstring\xstring.tex
+\xs_counta=\count416
+\xs_countb=\count417
+)
+Package: xstring 2023/08/22 v1.86 String manipulations (CT)
+)
+\AC@clearlist=\toks51
+) (C:\Program Files\MiKTeX\tex/latex/biblatex\biblatex.sty
+Package: biblatex 2025/07/10 v3.21 programmable bibliographies (PK/MW)
+ (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/kvoptions\kvoptions.sty
+Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
+ (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.sty
+Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
+)) (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/logreq\logreq.sty
+Package: logreq 2010/08/04 v1.0 xml request logger
+\lrq@indent=\count418
+ (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/logreq\logreq.def
+File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
+)) (C:\Program Files\MiKTeX\tex/latex/url\url.sty
+\Urlmuskip=\muskip18
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+\c@tabx@nest=\count419
+\c@listtotal=\count420
+\c@listcount=\count421
+\c@liststart=\count422
+\c@liststop=\count423
+\c@citecount=\count424
+\c@citetotal=\count425
+\c@multicitecount=\count426
+\c@multicitetotal=\count427
+\c@instcount=\count428
+\c@maxnames=\count429
+\c@minnames=\count430
+\c@maxitems=\count431
+\c@minitems=\count432
+\c@citecounter=\count433
+\c@maxcitecounter=\count434
+\c@savedcitecounter=\count435
+\c@uniquelist=\count436
+\c@uniquename=\count437
+\c@refsection=\count438
+\c@refsegment=\count439
+\c@maxextratitle=\count440
+\c@maxextratitleyear=\count441
+\c@maxextraname=\count442
+\c@maxextradate=\count443
+\c@maxextraalpha=\count444
+\c@abbrvpenalty=\count445
+\c@highnamepenalty=\count446
+\c@lownamepenalty=\count447
+\c@maxparens=\count448
+\c@parenlevel=\count449
+\blx@tempcnta=\count450
+\blx@tempcntb=\count451
+\blx@tempcntc=\count452
+\c@blx@maxsection=\count453
+\blx@maxsegment@0=\count454
+\blx@notetype=\count455
+\blx@parenlevel@text=\count456
+\blx@parenlevel@foot=\count457
+\blx@sectionciteorder@0=\count458
+\blx@sectionciteorderinternal@0=\count459
+\blx@entrysetcounter=\count460
+\blx@biblioinstance=\count461
+\labelnumberwidth=\skip81
+\labelalphawidth=\skip82
+\biblabelsep=\skip83
+\bibitemsep=\skip84
+\bibnamesep=\skip85
+\bibinitsep=\skip86
+\bibparsep=\skip87
+\bibhang=\skip88
+\blx@bcfin=\read4
+\blx@bcfout=\write4
+\blx@langwohyphens=\language80
+\c@mincomprange=\count462
+\c@maxcomprange=\count463
+\c@mincompwidth=\count464
+Package biblatex Info: Trying to load biblatex default data model...
+Package biblatex Info: ... file 'blx-dm.def' found.
+ (C:\Program Files\MiKTeX\tex/latex/biblatex\blx-dm.def
+File: blx-dm.def 2025/07/10 v3.21 biblatex datamodel (PK/MW)
+)
+Package biblatex Info: Trying to load biblatex style data model...
+Package biblatex Info: ... file 'numeric-comp.dbx' not found.
+Package biblatex Info: Trying to load biblatex custom data model...
+Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
+\c@afterword=\count465
+\c@savedafterword=\count466
+\c@annotator=\count467
+\c@savedannotator=\count468
+\c@author=\count469
+\c@savedauthor=\count470
+\c@bookauthor=\count471
+\c@savedbookauthor=\count472
+\c@commentator=\count473
+\c@savedcommentator=\count474
+\c@editor=\count475
+\c@savededitor=\count476
+\c@editora=\count477
+\c@savededitora=\count478
+\c@editorb=\count479
+\c@savededitorb=\count480
+\c@editorc=\count481
+\c@savededitorc=\count482
+\c@foreword=\count483
+\c@savedforeword=\count484
+\c@holder=\count485
+\c@savedholder=\count486
+\c@introduction=\count487
+\c@savedintroduction=\count488
+\c@namea=\count489
+\c@savednamea=\count490
+\c@nameb=\count491
+\c@savednameb=\count492
+\c@namec=\count493
+\c@savednamec=\count494
+\c@translator=\count495
+\c@savedtranslator=\count496
+\c@shortauthor=\count497
+\c@savedshortauthor=\count498
+\c@shorteditor=\count499
+\c@savedshorteditor=\count500
+\c@labelname=\count501
+\c@savedlabelname=\count502
+\c@institution=\count503
+\c@savedinstitution=\count504
+\c@lista=\count505
+\c@savedlista=\count506
+\c@listb=\count507
+\c@savedlistb=\count508
+\c@listc=\count509
+\c@savedlistc=\count510
+\c@listd=\count511
+\c@savedlistd=\count512
+\c@liste=\count513
+\c@savedliste=\count514
+\c@listf=\count515
+\c@savedlistf=\count516
+\c@location=\count517
+\c@savedlocation=\count518
+\c@organization=\count519
+\c@savedorganization=\count520
+\c@origlocation=\count521
+\c@savedoriglocation=\count522
+\c@origpublisher=\count523
+\c@savedorigpublisher=\count524
+\c@publisher=\count525
+\c@savedpublisher=\count526
+\c@language=\count527
+\c@savedlanguage=\count528
+\c@origlanguage=\count529
+\c@savedoriglanguage=\count530
+\c@pageref=\count531
+\c@savedpageref=\count532
+\shorthandwidth=\skip89
+\shortjournalwidth=\skip90
+\shortserieswidth=\skip91
+\shorttitlewidth=\skip92
+\shortauthorwidth=\skip93
+\shorteditorwidth=\skip94
+\locallabelnumberwidth=\skip95
+\locallabelalphawidth=\skip96
+\localshorthandwidth=\skip97
+\localshortjournalwidth=\skip98
+\localshortserieswidth=\skip99
+\localshorttitlewidth=\skip100
+\localshortauthorwidth=\skip101
+\localshorteditorwidth=\skip102
+Package biblatex Info: Trying to load compatibility code...
+Package biblatex Info: ... file 'blx-compat.def' found.
+ (C:\Program Files\MiKTeX\tex/latex/biblatex\blx-compat.def
+File: blx-compat.def 2025/07/10 v3.21 biblatex compatibility (PK/MW)
+)
+Package biblatex Info: Trying to load generic definitions...
+Package biblatex Info: ... file 'biblatex.def' found.
+ (C:\Program Files\MiKTeX\tex/latex/biblatex\biblatex.def
+File: biblatex.def 2025/07/10 v3.21 biblatex compatibility (PK/MW)
+\c@textcitecount=\count533
+\c@textcitetotal=\count534
+\c@textcitemaxnames=\count535
+\c@biburlbigbreakpenalty=\count536
+\c@biburlbreakpenalty=\count537
+\c@biburlnumpenalty=\count538
+\c@biburlucpenalty=\count539
+\c@biburllcpenalty=\count540
+\biburlbigskip=\muskip19
+\biburlnumskip=\muskip20
+\biburlucskip=\muskip21
+\biburllcskip=\muskip22
+\c@smartand=\count541
+)
+Package biblatex Info: Trying to load bibliography style 'numeric-comp'...
+Package biblatex Info: ... file 'numeric-comp.bbx' found.
+ (C:\Program Files\MiKTeX\tex/latex/biblatex/bbx\numeric-comp.bbx
+File: numeric-comp.bbx 2025/07/10 v3.21 biblatex bibliography style (PK/MW)
+Package biblatex Info: Trying to load bibliography style 'numeric'...
+Package biblatex Info: ... file 'numeric.bbx' found.
+ (C:\Program Files\MiKTeX\tex/latex/biblatex/bbx\numeric.bbx
+File: numeric.bbx 2025/07/10 v3.21 biblatex bibliography style (PK/MW)
+Package biblatex Info: Trying to load bibliography style 'standard'...
+Package biblatex Info: ... file 'standard.bbx' found.
+ (C:\Program Files\MiKTeX\tex/latex/biblatex/bbx\standard.bbx
+File: standard.bbx 2025/07/10 v3.21 biblatex bibliography style (PK/MW)
+\c@bbx:relatedcount=\count542
+\c@bbx:relatedtotal=\count543
+)))
+Package biblatex Info: Trying to load citation style 'numeric-comp'...
+Package biblatex Info: ... file 'numeric-comp.cbx' found.
+ (C:\Program Files\MiKTeX\tex/latex/biblatex/cbx\numeric-comp.cbx
+File: numeric-comp.cbx 2025/07/10 v3.21 biblatex citation style (PK/MW)
+\c@cbx@tempcnta=\count544
+\c@cbx@tempcntb=\count545
+\c@cbx@tempcntc=\count546
+\c@cbx@tempcntd=\count547
+Package biblatex Info: Redefining '\cite'.
+Package biblatex Info: Redefining '\parencite'.
+Package biblatex Info: Redefining '\footcite'.
+Package biblatex Info: Redefining '\footcitetext'.
+Package biblatex Info: Redefining '\smartcite'.
+Package biblatex Info: Redefining '\supercite'.
+Package biblatex Info: Redefining '\textcite'.
+Package biblatex Info: Redefining '\textcites'.
+Package biblatex Info: Redefining '\cites'.
+Package biblatex Info: Redefining '\parencites'.
+Package biblatex Info: Redefining '\smartcites'.
+)
+Package biblatex Info: Trying to load configuration file...
+Package biblatex Info: ... file 'biblatex.cfg' found.
+ (C:\Program Files\MiKTeX\tex/latex/biblatex\biblatex.cfg
+File: biblatex.cfg 
+)
+Package biblatex Info: Input encoding 'utf8' detected.
+Package biblatex Info: Document encoding is UTF8 ....
+
+(C:\Program Files\MiKTeX\tex/latex/l3kernel\expl3.sty
+Package: expl3 2026-06-18 L3 programming layer (loader) 
+ (C:\Program Files\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
+File: l3backend-pdftex.def 2026-02-18 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count548
+))
+Package biblatex Info: ... and expl3
+(biblatex)             2026-06-18 L3 programming layer (loader) 
+(biblatex)             is new enough (at least 2020/04/06),
+(biblatex)             setting 'casechanger=expl3'.
+ (C:\Program Files\MiKTeX\tex/latex/biblatex\blx-case-expl3.sty (C:\Program Files\MiKTeX\tex/latex/l3packages/xparse\xparse.sty
+Package: xparse 2025-10-09 L3 Experimental document command parser
+)
+Package: blx-case-expl3 2025/07/10 v3.21 expl3 case changing code for biblatex
+)) (C:\Program Files\MiKTeX\tex/latex/hyperref\hyperref.sty
+Package: hyperref 2026-06-17 v7.01r Hypertext links for LaTeX
+ (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/generic/kvdefinekeys\kvdefinekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+) (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/generic/pdfescape\pdfescape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+) (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/hycolor\hycolor.sty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+) (C:\Program Files\MiKTeX\tex/latex/hyperref\nameref.sty
+Package: nameref 2026-01-29 v2.58 Cross-referencing by name of section
+ (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/refcount\refcount.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+) (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/generic/gettitlestring\gettitlestring.sty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+)
+\c@section@level=\count549
+) (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/generic/stringenc\stringenc.sty
+Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
+)
+\@linkdim=\dimen345
+\Hy@linkcounter=\count550
+\Hy@pagecounter=\count551
+ (C:\Program Files\MiKTeX\tex/latex/hyperref\pd1enc.def
+File: pd1enc.def 2026-06-17 v7.01r Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
+) (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/generic/intcalc\intcalc.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+)
+\Hy@SavedSpaceFactor=\count552
+ (C:\Program Files\MiKTeX\tex/latex/hyperref\puenc.def
+File: puenc.def 2026-06-17 v7.01r Hyperref: PDF Unicode definition (HO)
+Now handling font encoding PU ...
+... no UTF-8 mapping file for font encoding PU
+)
+Package hyperref Info: Hyper figures OFF on input line 4199.
+Package hyperref Info: Link nesting OFF on input line 4204.
+Package hyperref Info: Hyper index ON on input line 4207.
+Package hyperref Info: Plain pages OFF on input line 4214.
+Package hyperref Info: Backreferencing OFF on input line 4219.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4466.
+\c@Hy@tempcnt=\count553
+LaTeX Info: Redefining \url on input line 4805.
+\XeTeXLinkMargin=\dimen346
+ (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/generic/bitset\bitset.sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+ (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/generic/bigintcalc\bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
+))
+\Fld@menulength=\count554
+\Field@Width=\dimen347
+\Fld@charsize=\dimen348
+Package hyperref Info: Hyper figures OFF on input line 6091.
+Package hyperref Info: Link nesting OFF on input line 6096.
+Package hyperref Info: Hyper index ON on input line 6099.
+Package hyperref Info: backreferencing OFF on input line 6106.
+Package hyperref Info: Link coloring OFF on input line 6111.
+Package hyperref Info: Link coloring with OCG OFF on input line 6116.
+Package hyperref Info: PDF/A mode OFF on input line 6121.
+\Hy@abspage=\count555
+\c@Item=\count556
+\c@Hfootnote=\count557
+)
+Package hyperref Info: Driver (autodetected): hpdftex.
+ (C:\Program Files\MiKTeX\tex/latex/hyperref\hpdftex.def
+File: hpdftex.def 2026-06-17 v7.01r Hyperref driver for pdfTeX
+\Fld@listcount=\count558
+\c@bookmark@seq@number=\count559
+ (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/rerunfilecheck\rerunfilecheck.sty
+Package: rerunfilecheck 2025-06-21 v1.11 Rerun checks for auxiliary files (HO)
+ (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/generic/uniquecounter\uniquecounter.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 284.
+)
+\Hy@SectionHShift=\skip103
+)
+Package hyperref Info: Option `colorlinks' set `true' on input line 90.
+ (esprit-style.tex)
+Package csquotes Info: Checking for multilingual support...
+Package csquotes Info: ... found 'babel' package.
+Package csquotes Info: Adjusting default style.
+Package csquotes Info: Redefining alias 'default' -> 'french'.
+LaTeX Font Info:    Trying to load font information for T1+ptm on input line 167.
+ (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/psnfss\t1ptm.fd
+File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
+) (main.aux)
+\openout1 = `main.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 167.
+LaTeX Font Info:    ... okay on input line 167.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 167.
+LaTeX Font Info:    ... okay on input line 167.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 167.
+LaTeX Font Info:    ... okay on input line 167.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 167.
+LaTeX Font Info:    ... okay on input line 167.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 167.
+LaTeX Font Info:    ... okay on input line 167.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 167.
+LaTeX Font Info:    ... okay on input line 167.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 167.
+LaTeX Font Info:    ... okay on input line 167.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 167.
+LaTeX Font Info:    ... okay on input line 167.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 167.
+LaTeX Font Info:    ... okay on input line 167.
+Package babel Info: 'french' activates 'french' shorthands.
+(babel)             Reported on input line 167.
+LaTeX Info: Redefining \degres on input line 167.
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(71.13188pt, 455.24411pt, 71.13188pt)
+* v-part:(T,H,B)=(91.04872pt, 668.63986pt, 85.35826pt)
+* \paperwidth=597.50787pt
+* \paperheight=845.04684pt
+* \textwidth=455.24411pt
+* \textheight=668.63986pt
+* \oddsidemargin=-1.1381pt
+* \evensidemargin=-1.1381pt
+* \topmargin=-18.22127pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=12.0pt
+* \footskip=30.0pt
+* \marginparwidth=35.0pt
+* \marginparsep=10.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+LaTeX Info: Redefining \microtypecontext on input line 167.
+Package microtype Info: Applying patch `item' on input line 167.
+Package microtype Info: Applying patch `toc' on input line 167.
+Package microtype Info: Applying patch `eqnum' on input line 167.
+Package microtype Info: Applying patch `footnote' on input line 167.
+Package microtype Info: Applying patch `verbatim' on input line 167.
+LaTeX Info: Redefining \microtypesetup on input line 167.
+Package microtype Info: Generating PDF output.
+Package microtype Info: Character protrusion enabled (level 2).
+Package microtype Info: Using default protrusion set `alltext'.
+Package microtype Info: Automatic font expansion enabled (level 2),
+(microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
+Package microtype Info: Using default expansion set `alltext-nott'.
+Package microtype Info: Patching command `\showhyphens'.
+Package microtype Info: No adjustment of tracking.
+Package microtype Info: No adjustment of interword spacing.
+Package microtype Info: No adjustment of character kerning.
+(C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/microtype\mt-ptm.cfg
+File: mt-ptm.cfg 2006/04/20 v1.7 microtype config. file: Times (RS)
+) (C:\Program Files\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count560
+\scratchdimen=\dimen349
+\scratchbox=\box111
+\nofMPsegments=\count561
+\nofMParguments=\count562
+\everyMPshowfont=\toks52
+\MPscratchCnt=\count563
+\MPscratchDim=\dimen350
+\MPnumerator=\count564
+\makeMPintoPDFobject=\count565
+\everyMPtoPDFconversion=\toks53
+) (C:\Program Files\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
+ (C:\Program Files\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
+))
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: hyperref package is loaded.
+Package caption Info: listings package is loaded.
+Package caption Info: longtable package is loaded.
+ (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/caption\ltcaption.sty
+Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
+)
+Package caption Info: End \AtBeginDocument code.
+ (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/translations/dicts\translations-basic-dictionary-french.trsl
+File: translations-basic-dictionary-french.trsl (french translation file `translations-basic-dictionary')
+)
+Package translations Info: loading dictionary `translations-basic-dictionary' for `french'. on input line 167.
+\c@lstlisting=\count566
+Package biblatex Info: Trying to load language 'french'...
+Package biblatex Info: ... file 'french.lbx' found.
+ (C:\Program Files\MiKTeX\tex/latex/biblatex/lbx\french.lbx
+File: french.lbx 2025/07/10 v3.21 biblatex localization (PK/MW)
+)
+Package biblatex Info: Input encoding 'utf8' detected.
+Package biblatex Info: Automatic encoding selection.
+(biblatex)             Assuming data encoding 'utf8'.
+\openout4 = `main.bcf'.
+
+Package biblatex Info: Trying to load bibliographic data...
+Package biblatex Info: ... file 'main.bbl' not found.
+
+No file main.bbl.
+Package biblatex Info: Reference section=0 on input line 167.
+Package biblatex Info: Reference segment=0 on input line 167.
+Package hyperref Info: Link coloring ON on input line 167.
+\@outlinefile=\write5
+\openout5 = `main.out'.
+
+Package babel Info: Main language set to 'french'.
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 181.
+
+
+e:/PFE/sleep/report/_v2/main.tex:181: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.181 ...i et M\textsuperscript{me} Hajer Dahmeni}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+LaTeX Font Info:    Trying to load font information for T1+pcr on input line 181.
+(C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/psnfss\t1pcr.fd
+File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
+)
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `pcr' (encoding: T1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+ (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/microtype\mt-cmr.cfg
+File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman (RS)
+)
+LaTeX Font Info:    Trying to load font information for U+msa on input line 181.
+ (C:\Program Files\MiKTeX\tex/latex/amsfonts\umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+) (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/microtype\mt-msa.cfg
+File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 181.
+ (C:\Program Files\MiKTeX\tex/latex/amsfonts\umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+) (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/microtype\mt-msb.cfg
+File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
+)
+
+LaTeX Warning: File `images/cni_logo.jpg' not found on input line 181.
+
+
+e:/PFE/sleep/report/_v2/main.tex:181: Package pdftex.def Error: File `images/cni_logo.jpg' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.181 ...i et M\textsuperscript{me} Hajer Dahmeni}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[1
+
+{C:/Users/aymen/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Program Files/MiKTeX/fonts/enc/dvips/base/8r.enc}] [2]
+\openout2 = `validation.aux'.
+
+
+No file validation.tex.
+\openout2 = `dedicaces.aux'.
+
+No file dedicaces.tex.
+\openout2 = `remerciements.aux'.
+
+No file remerciements.tex.
+No file main.toc.
+\tf@toc=\write6
+\openout6 = `main.toc'.
+
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.197 \clearpage
+                
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 197.
+
+
+e:/PFE/sleep/report/_v2/main.tex:197: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.197 \clearpage
+                
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[2
+
+
+
+
+
+
+
+
+
+
+
+]
+No file main.lof.
+\tf@lof=\write7
+\openout7 = `main.lof'.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 200.
+
+
+e:/PFE/sleep/report/_v2/main.tex:200: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.200 \clearpage
+                
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[3
+
+
+]
+No file main.lot.
+\tf@lot=\write8
+\openout8 = `main.lot'.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 203.
+
+
+e:/PFE/sleep/report/_v2/main.tex:203: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.203 \clearpage
+                
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[4
+
+
+]
+\openout2 = `acronymes.aux'.
+
+
+No file acronymes.tex.
+\openout2 = `introduction.aux'.
+
+(introduction.tex
+
+LaTeX Warning: Reference `chap:cadre' on page 5 undefined on input line 36.
+
+
+LaTeX Warning: Reference `chap:etat-art' on page 5 undefined on input line 38.
+
+
+LaTeX Warning: Reference `chap:analyse' on page 5 undefined on input line 40.
+
+
+LaTeX Warning: Reference `chap:conception' on page 5 undefined on input line 42.
+
+
+LaTeX Warning: Reference `chap:realisation-ia' on page 5 undefined on input line 43.
+
+
+LaTeX Warning: Reference `chap:realisation-plateforme' on page 5 undefined on input line 46.
+
+)
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 210.
+
+
+e:/PFE/sleep/report/_v2/main.tex:210: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.210 \include{introduction}
+                            
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[5
+
+
+
+
+
+
+]
+\openout2 = `chapitre1.aux'.
+
+ (chapitre1.tex
+Chapitre 1.
+
+LaTeX Warning: Reference `fig:cni-timeline' on page 6 undefined on input line 43.
+
+
+Overfull \hbox (36.45169pt too wide) in paragraph at lines 79--81
+ [][] 
+ []
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 81.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 81.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 84.
+
+
+chapitre1.tex:84: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.84 
+     
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[6
+
+
+
+
+]
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 91.
+ (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/psnfss\ts1ptm.fd
+File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
+)
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 130.
+
+
+chapitre1.tex:130: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.130 \end{itemize}
+                   
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[7]
+
+LaTeX Warning: Citation 'aasm2020' on page 8 undefined on input line 144.
+
+
+LaTeX Warning: Citation 'rechtschaffen1968' on page 8 undefined on input line 145.
+
+
+LaTeX Warning: Reference `tab:stades' on page 8 undefined on input line 146.
+
+
+LaTeX Warning: Reference `fig:hypnogramme' on page 8 undefined on input line 187.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 189.
+
+
+chapitre1.tex:189: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.189 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[8]
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 252.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 252.
+
+
+LaTeX Warning: Reference `tab:derivations' on page 9 undefined on input line 260.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 292.
+
+
+chapitre1.tex:292: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.292 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[9]
+
+LaTeX Warning: Citation 'benjafield2019' on page 10 undefined on input line 303.
+
+
+LaTeX Warning: Citation 'marin2005' on page 10 undefined on input line 304.
+
+
+LaTeX Warning: Citation 'young1997' on page 10 undefined on input line 305.
+
+
+LaTeX Warning: Citation 'kapur2017' on page 10 undefined on input line 308.
+
+
+LaTeX Warning: Reference `tab:iah' on page 10 undefined on input line 309.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 351.
+
+
+chapitre1.tex:351: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.351   \item \textbf
+                     {Fournir la chaîne applicative complète} : dossier pa...
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[10]
+
+LaTeX Warning: Citation 'rosenberg2013' on page 11 undefined on input line 374.
+
+
+LaTeX Warning: Citation 'danker2009' on page 11 undefined on input line 375.
+
+
+LaTeX Warning: Citation 'supratak2017' on page 11 undefined on input line 386.
+
+
+LaTeX Warning: Citation 'perslev2021' on page 11 undefined on input line 386.
+
+
+LaTeX Warning: Citation 'goodman2017' on page 11 undefined on input line 393.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 413.
+
+
+chapitre1.tex:413: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.413 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[11]
+
+LaTeX Warning: Reference `tab:etat-art-staging' on page 12 undefined on input line 422.
+
+
+LaTeX Warning: Citation 'supratak2017' on page 12 undefined on input line 423.
+
+
+LaTeX Warning: Citation 'supratak2020' on page 12 undefined on input line 425.
+
+
+LaTeX Warning: Citation 'perslev2021' on page 12 undefined on input line 426.
+
+
+LaTeX Warning: Citation 'phan2022' on page 12 undefined on input line 427.
+
+
+LaTeX Warning: Citation 'phan2021' on page 12 undefined on input line 429.
+
+
+LaTeX Warning: Citation 'fraiwan2012' on page 12 undefined on input line 441.
+
+
+LaTeX Warning: Citation 'tsinalis2016' on page 12 undefined on input line 444.
+
+
+LaTeX Warning: Citation 'supratak2017' on page 12 undefined on input line 447.
+
+
+Overfull \hbox (41.19637pt too wide) in paragraph at lines 447--447
+[]|\T1/ptm/m/n/10.95 (-20) DeepSleepNet [[]]|  
+ []
+
+
+LaTeX Warning: Citation 'chambon2018' on page 12 undefined on input line 450.
+
+
+LaTeX Warning: Citation 'mousavi2019' on page 12 undefined on input line 453.
+
+
+Overfull \hbox (36.0974pt too wide) in paragraph at lines 453--453
+[]|\T1/ptm/m/n/10.95 (-20) SleepEEGNet [[]]|  
+ []
+
+
+LaTeX Warning: Citation 'supratak2020' on page 12 undefined on input line 456.
+
+
+Overfull \hbox (38.27747pt too wide) in paragraph at lines 456--456
+[]|\T1/ptm/m/n/10.95 (-20) TinySleepNet [[]]|  
+ []
+
+
+LaTeX Warning: Citation 'eldele2021' on page 12 undefined on input line 459.
+
+
+Overfull \hbox (6.91772pt too wide) in paragraph at lines 459--459
+[]|\T1/ptm/m/n/10.95 (-20) AttnSleep [[]]|  
+ []
+
+
+LaTeX Warning: Citation 'perslev2021' on page 12 undefined on input line 462.
+
+
+LaTeX Warning: Citation 'phan2022' on page 12 undefined on input line 465.
+
+
+Overfull \hbox (38.06607pt too wide) in paragraph at lines 465--465
+[]|\T1/ptm/m/n/10.95 (-20) SleepTransformer [[]]|  
+ []
+
+
+LaTeX Warning: Citation 'phan2021' on page 12 undefined on input line 468.
+
+
+Overfull \hbox (8.05943pt too wide) in paragraph at lines 468--468
+[]|\T1/ptm/m/n/10.95 (-20) XSleepNet [[]]|  
+ []
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 475.
+
+
+chapitre1.tex:475: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.475 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[12]
+
+LaTeX Warning: Reference `tab:existant' on page 13 undefined on input line 492.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 517.
+
+
+chapitre1.tex:517: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.517 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[13]
+
+LaTeX Warning: Citation 'schwaber2020' on page 14 undefined on input line 548.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 558.
+
+
+chapitre1.tex:558: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.558 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[14]
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 618.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 618.
+
+)
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 212.
+
+
+e:/PFE/sleep/report/_v2/main.tex:212: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.212 \include{chapitre1}
+                             % Presentation generale
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[15]
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 212.
+
+
+e:/PFE/sleep/report/_v2/main.tex:212: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.212 \include{chapitre1}
+                             % Presentation generale
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[16]
+\openout2 = `chapitre2.aux'.
+
+ (chapitre2.tex
+Chapitre 2.
+
+LaTeX Warning: Reference `tab:acteurs' on page 17 undefined on input line 19.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 59.
+
+
+chapitre2.tex:59: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.59 \section{Étude des besoins}
+                                 
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[17
+
+
+
+
+]
+
+LaTeX Warning: Reference `tab:epics' on page 18 undefined on input line 65.
+
+
+LaTeX Warning: Reference `tab:bnf' on page 18 undefined on input line 112.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 169.
+
+
+chapitre2.tex:169: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.169 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[18]
+
+LaTeX Warning: Reference `fig:uc-global' on page 19 undefined on input line 172.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 241.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 241.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 241.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 241.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 244.
+
+
+chapitre2.tex:244: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.244 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[19]
+
+LaTeX Warning: Reference `fig:uc-analyse' on page 20 undefined on input line 246.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 314.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 314.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 317.
+
+
+chapitre2.tex:317: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.317 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[20]
+
+LaTeX Warning: Reference `tab:desc-analyse' on page 21 undefined on input line 318.
+
+
+LaTeX Warning: Reference `tab:desc-osa' on page 21 undefined on input line 318.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 368.
+
+
+chapitre2.tex:368: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.368 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[21]
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 413.
+
+
+chapitre2.tex:413: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.413 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[22]
+
+LaTeX Warning: Reference `tab:backlog' on page 23 undefined on input line 438.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 544.
+
+
+chapitre2.tex:544: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.544 \end{longtable}
+                     
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[23]
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 544.
+
+
+chapitre2.tex:544: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.544 \end{longtable}
+                     
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[24]
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 544.
+
+
+chapitre2.tex:544: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.544 \end{longtable}
+                     
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[25]
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 544.
+
+
+chapitre2.tex:544: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.544 \end{longtable}
+                     
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[26]
+
+LaTeX Warning: Reference `fig:classes' on page 27 undefined on input line 552.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 582--582
+[]|[]\T1/ptm/m/n/6 (+20) id, name, billing_tier, b2_bucket,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 585--585
+[]|[]\T1/ptm/m/n/6 (+20) id, email, ha-shed_password, role,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 585--585
+\T1/ptm/m/n/6 (+20) first_name, last_name, sta-tus, li-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 587--587
+[]|[]\T1/ptm/m/n/6 (+20) id, first_name, last_name, age, imc,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 591--591
+[]|[]\T1/ptm/m/n/6 (+20) id, ti-mes-tamp, user_email, user_role,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 596--596
+[]|[]\T1/ptm/m/n/6 (+20) id, date, se-ve-rity, re-port_data,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 596--596
+\T1/ptm/m/n/6 (+20) edf_url, hyp-no-gram_url, hyp-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 596--596
+\T1/ptm/m/n/6 (+20) no-gram_annotated_url, csv_url,
+ []
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 634.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 634.
+
+
+LaTeX Warning: Reference `tab:dico' on page 27 undefined on input line 638.
+
+
+Overfull \hbox (92.01895pt too wide) in paragraph at lines 645--677
+ [][] 
+ []
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 680.
+
+
+chapitre2.tex:680: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.680 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[27]
+
+LaTeX Warning: Reference `tab:techno' on page 28 undefined on input line 692.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 728.
+
+
+chapitre2.tex:728: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.728 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[28]
+
+LaTeX Warning: Citation 'gramfort2013' on page 29 undefined on input line 740.
+
+
+LaTeX Warning: Citation 'paszke2019' on page 29 undefined on input line 741.
+
+
+LaTeX Warning: Citation 'pedregosa2011' on page 29 undefined on input line 742.
+
+
+LaTeX Warning: Citation 'chen2016' on page 29 undefined on input line 743.
+
+
+LaTeX Warning: Citation 'ke2017' on page 29 undefined on input line 743.
+
+
+LaTeX Warning: Citation 'lundberg2017' on page 29 undefined on input line 744.
+
+
+LaTeX Warning: Citation 'lundberg2020' on page 29 undefined on input line 744.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 756.
+
+
+chapitre2.tex:756: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.756 \subsection{Environnement matériel}
+                                          
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[29]
+
+LaTeX Warning: Reference `chap:sprint2' on page 30 undefined on input line 764.
+
+
+LaTeX Warning: Reference `fig:archi3t' on page 30 undefined on input line 771.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 834.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 834.
+
+
+LaTeX Warning: Reference `tab:choix' on page 30 undefined on input line 838.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 875.
+
+
+chapitre2.tex:875: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.875 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[30]
+
+LaTeX Warning: Reference `fig:deploiement' on page 31 undefined on input line 878.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 924.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 924.
+
+
+LaTeX Warning: Reference `tab:sprints' on page 31 undefined on input line 934.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 935.
+
+
+chapitre2.tex:935: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.935 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[31]
+
+LaTeX Warning: Reference `fig:velocite' on page 32 undefined on input line 980.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 1022.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 1022.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 1025.
+
+
+chapitre2.tex:1025: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1025 
+       
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[32]
+
+LaTeX Warning: Reference `fig:gantt' on page 33 undefined on input line 1028.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 1089.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 1089.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 1100.
+
+
+chapitre2.tex:1100: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1100 
+       
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[33])
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 213.
+
+
+e:/PFE/sleep/report/_v2/main.tex:213: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.213 \include{chapitre2}
+                             % Analyse et specification des besoins
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[34]
+\openout2 = `chapitre3.aux'.
+
+ (chapitre3.tex
+Chapitre 3.
+
+LaTeX Warning: Citation 'zhang2018nsrr' on page 35 undefined on input line 23.
+
+
+LaTeX Warning: Citation 'kemp2000' on page 35 undefined on input line 24.
+
+
+LaTeX Warning: Citation 'goldberger2000' on page 35 undefined on input line 24.
+
+
+LaTeX Warning: Reference `tab:bl-s1' on page 35 undefined on input line 40.
+
+
+Overfull \vbox (8.60234pt too high) detected at line 49
+ []
+
+
+Overfull \vbox (8.60234pt too high) detected at line 53
+ []
+
+
+Overfull \vbox (8.60234pt too high) detected at line 62
+ []
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 70.
+
+
+chapitre3.tex:70: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.70 
+     
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[35
+
+
+
+
+]
+
+LaTeX Warning: Reference `fig:uc-s1' on page 36 undefined on input line 76.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 132.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 132.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 135.
+
+
+chapitre3.tex:135: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.135 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[36]
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 166.
+
+
+chapitre3.tex:166: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.166 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[37]
+
+LaTeX Warning: Reference `fig:seq-s1' on page 38 undefined on input line 169.
+
+\pgf@layerbox@umlsd@background=\box112
+\pgf@layerboxsaved@umlsd@background=\box113
+\pgf@layerbox@umlsd@threadlayer=\box114
+\pgf@layerboxsaved@umlsd@threadlayer=\box115
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 200.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 200.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 203.
+
+
+chapitre3.tex:203: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.203 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[38]
+
+LaTeX Warning: Reference `fig:chaine' on page 39 undefined on input line 209.
+
+
+Overfull \hbox (58.7033pt too wide) in paragraph at lines 241--244
+ [][] 
+ []
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 244.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 244.
+
+
+LaTeX Warning: Citation 'rechtschaffen1968' on page 39 undefined on input line 259.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 266.
+
+
+chapitre3.tex:266: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.266 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[39]
+
+LaTeX Warning: Citation 'quan1997' on page 40 undefined on input line 290.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 350.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 350.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 360.
+
+
+chapitre3.tex:360: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.360 \subsection{Découpage et pondération}
+                                             
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[40])
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 214.
+
+
+e:/PFE/sleep/report/_v2/main.tex:214: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.214 \include{chapitre3}
+                             % Sprint 1
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[41]
+\openout2 = `chapitre4.aux'.
+
+ (chapitre4.tex
+Chapitre 4.
+
+LaTeX Warning: Reference `tab:bl-s2' on page 42 undefined on input line 32.
+
+
+Overfull \vbox (8.60234pt too high) detected at line 41
+ []
+
+
+Overfull \vbox (8.60234pt too high) detected at line 45
+ []
+
+
+Overfull \vbox (8.60234pt too high) detected at line 49
+ []
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 61.
+
+
+chapitre4.tex:61: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.61 
+     
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[42
+
+
+
+
+]
+
+LaTeX Warning: Reference `fig:uc-s2' on page 43 undefined on input line 65.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 116.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 116.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 119.
+
+
+chapitre4.tex:119: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.119 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[43]
+
+LaTeX Warning: Reference `fig:seq-s2' on page 44 undefined on input line 152.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 187.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 187.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 189.
+
+
+chapitre4.tex:189: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.189 \end{figure}
+                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[44]
+
+LaTeX Warning: Reference `fig:cnn' on page 45 undefined on input line 204.
+
+
+Overfull \hbox (5.48782pt too wide) in paragraph at lines 247--250
+ [][] 
+ []
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 250.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 250.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 253.
+
+
+chapitre4.tex:253: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.253 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[45]
+
+LaTeX Warning: Citation 'hochreiter1997' on page 46 undefined on input line 258.
+
+
+LaTeX Warning: Citation 'bahdanau2015' on page 46 undefined on input line 264.
+
+
+LaTeX Warning: Reference `fig:lstm' on page 46 undefined on input line 266.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 301.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 301.
+
+
+LaTeX Warning: Citation 'vaswani2017' on page 46 undefined on input line 307.
+
+
+LaTeX Warning: Reference `fig:transformer' on page 46 undefined on input line 311.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 349.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 349.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 351.
+
+
+chapitre4.tex:351: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.351 \end{figure}
+                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[46]
+
+LaTeX Warning: Reference `tab:empreinte' on page 47 undefined on input line 360.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 420.
+
+
+chapitre4.tex:420: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.420 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[47]
+
+LaTeX Warning: Citation 'cohen1960' on page 48 undefined on input line 480.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 486.
+
+
+chapitre4.tex:486: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.486 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[48]
+
+LaTeX Warning: Reference `fig:courbes' on page 49 undefined on input line 487.
+
+
+LaTeX Warning: File `images/resultats/curves_CNN_5ch_3cls.png' not found on input line 494.
+
+
+chapitre4.tex:494: Package pdftex.def Error: File `images/resultats/curves_CNN_5ch_3cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.494 ...images/resultats/curves_CNN_5ch_3cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 498.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 498.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 501.
+
+
+chapitre4.tex:501: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.501 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[49]
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 539.
+
+
+chapitre4.tex:539: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.539 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[50]
+
+LaTeX Warning: Reference `fig:cm-3archi' on page 51 undefined on input line 555.
+
+
+LaTeX Warning: File `images/resultats/cm_CNN_5ch_3cls.png' not found on input line 563.
+
+
+chapitre4.tex:563: Package pdftex.def Error: File `images/resultats/cm_CNN_5ch_3cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.563 ...th]{images/resultats/cm_CNN_5ch_3cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `images/resultats/cm_LSTM_5ch_3cls.png' not found on input line 569.
+
+
+chapitre4.tex:569: Package pdftex.def Error: File `images/resultats/cm_LSTM_5ch_3cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.569 ...h]{images/resultats/cm_LSTM_5ch_3cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `images/resultats/cm_Transformer_5ch_3cls.png' not found on input line 575.
+
+
+chapitre4.tex:575: Package pdftex.def Error: File `images/resultats/cm_Transformer_5ch_3cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.575 ...es/resultats/cm_Transformer_5ch_3cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 580.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 580.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 583.
+
+
+chapitre4.tex:583: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.583 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[51]
+
+LaTeX Warning: Reference `fig:cm-5cls' on page 52 undefined on input line 621.
+
+
+LaTeX Warning: File `images/resultats/cm_CNN_5ch_5cls.png' not found on input line 625.
+
+
+chapitre4.tex:625: Package pdftex.def Error: File `images/resultats/cm_CNN_5ch_5cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.625 ...th]{images/resultats/cm_CNN_5ch_5cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 628.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 628.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 631.
+
+
+chapitre4.tex:631: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.631 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[52]
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 658.
+
+
+chapitre4.tex:658: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.658 E
+       nfin, l'analyse par classe a révélé que les trois architectures é...
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[53])
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 215.
+
+
+e:/PFE/sleep/report/_v2/main.tex:215: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.215 \include{chapitre4}
+                             % Sprint 2
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[54]
+\openout2 = `chapitre5.aux'.
+
+ (chapitre5.tex
+Chapitre 5.
+
+LaTeX Warning: Reference `chap:presentation' on page 55 undefined on input line 29.
+
+
+Overfull \vbox (8.60234pt too high) detected at line 46
+ []
+
+
+Overfull \vbox (8.60234pt too high) detected at line 54
+ []
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 62.
+
+
+chapitre5.tex:62: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.62 
+     
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[55
+
+
+
+
+]
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 116.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 116.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 119.
+
+
+chapitre5.tex:119: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.119 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[56]
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 155.
+
+
+chapitre5.tex:155: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.155 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[57]
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 183.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 183.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 186.
+
+
+chapitre5.tex:186: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.186 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[58]
+
+LaTeX Warning: Citation 'wolpert1992' on page 59 undefined on input line 193.
+
+
+LaTeX Warning: Reference `fig:stacking-principe' on page 59 undefined on input line 197.
+
+
+Overfull \hbox (5.08676pt too wide) in paragraph at lines 219--219
+ [][]\T1/ptm/m/n/10.95 (-20) Concat�nation 
+ []
+
+
+Overfull \hbox (11.24437pt too wide) in paragraph at lines 239--243
+ [][] 
+ []
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 243.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 243.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 246.
+
+
+chapitre5.tex:246: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.246 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[59]
+
+LaTeX Warning: Citation 'ting1999' on page 60 undefined on input line 252.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 294.
+
+
+chapitre5.tex:294: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.294 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[60]
+
+LaTeX Warning: File `images/resultats/kappa_comparison_5ch_5cls.png' not found on input line 308.
+
+
+chapitre5.tex:308: Package pdftex.def Error: File `images/resultats/kappa_comparison_5ch_5cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.308 .../resultats/kappa_comparison_5ch_5cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 311.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 311.
+
+
+LaTeX Warning: File `images/resultats/cm_stacking_5ch_3cls.png' not found on input line 317.
+
+
+chapitre5.tex:317: Package pdftex.def Error: File `images/resultats/cm_stacking_5ch_3cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.317 ...mages/resultats/cm_stacking_5ch_3cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 320.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 320.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 323.
+
+
+chapitre5.tex:323: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.323 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[61]
+
+LaTeX Warning: Reference `tab:etat-art-osa' on page 62 undefined on input line 329.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 365.
+
+
+chapitre5.tex:365: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.365 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[62]
+
+LaTeX Warning: Reference `fig:pipeline-osa' on page 63 undefined on input line 366.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 407.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 407.
+
+
+LaTeX Warning: Reference `fig:distrib-osa' on page 63 undefined on input line 419.
+
+
+LaTeX Warning: File `images/resultats/feature_distributions.png' not found on input line 427.
+
+
+chapitre5.tex:427: Package pdftex.def Error: File `images/resultats/feature_distributions.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.427 ...ages/resultats/feature_distributions.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 430.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 430.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 433.
+
+
+chapitre5.tex:433: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.433 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[63]
+
+LaTeX Warning: File `images/resultats/model_comparison.png' not found on input line 441.
+
+
+chapitre5.tex:441: Package pdftex.def Error: File `images/resultats/model_comparison.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.441 ...h]{images/resultats/model_comparison.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 444.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 444.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 447.
+
+
+chapitre5.tex:447: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.447 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[64]
+
+LaTeX Warning: Citation 'breiman2001' on page 65 undefined on input line 448.
+
+
+LaTeX Warning: Citation 'chen2016' on page 65 undefined on input line 449.
+
+
+LaTeX Warning: Citation 'ke2017' on page 65 undefined on input line 449.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 478.
+
+
+chapitre5.tex:478: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.478 \paragraph{L'empilement n'apporte rien ici.}
+                                                   Contrairement au cas de l...
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[65]
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 534.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 534.
+
+
+LaTeX Warning: File `images/resultats/roc_curves.png' not found on input line 545.
+
+
+chapitre5.tex:545: Package pdftex.def Error: File `images/resultats/roc_curves.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.545 ...xtwidth]{images/resultats/roc_curves.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 547.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 547.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 550.
+
+
+chapitre5.tex:550: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.550 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[66]
+
+LaTeX Warning: Reference `fig:xai-taxo' on page 67 undefined on input line 565.
+
+
+LaTeX Warning: Citation 'simonyan2014' on page 67 undefined on input line 596.
+
+
+Underfull \hbox (badness 6412) in paragraph at lines 596--596
+[][]\T1/ptm/m/n/8 (+20) Cartes de 
+ []
+
+
+LaTeX Warning: Citation 'selvaraju2017' on page 67 undefined on input line 597.
+
+
+LaTeX Warning: Citation 'sundararajan2017' on page 67 undefined on input line 598.
+
+
+Underfull \hbox (badness 2573) in paragraph at lines 598--598
+[][]\T1/ptm/m/n/8 (+20) Gradients in-t�- 
+ []
+
+
+LaTeX Warning: Citation 'bahdanau2015' on page 67 undefined on input line 599.
+
+
+Underfull \hbox (badness 3128) in paragraph at lines 599--599
+[][]\T1/ptm/m/n/8 (+20) Poids d'at-ten- 
+ []
+
+
+LaTeX Warning: Citation 'ribeiro2016' on page 67 undefined on input line 607.
+
+
+LaTeX Warning: Citation 'lundberg2017' on page 67 undefined on input line 608.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 624.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 624.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 626.
+
+
+chapitre5.tex:626: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.626 \end{figure}
+                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[67]
+
+LaTeX Warning: Citation 'shapley1953' on page 68 undefined on input line 628.
+
+
+LaTeX Warning: Citation 'lundberg2017' on page 68 undefined on input line 629.
+
+
+LaTeX Warning: Citation 'lundberg2020' on page 68 undefined on input line 631.
+
+
+Overfull \hbox (70.51453pt too wide) in paragraph at lines 628--633
+[]\T1/ptm/m/n/12 (-20) Les va-leurs de Sha-pley [[]], trans-po-s�es � l'ap-pren-tis-sage au-to-ma-tique par SHAP [[]],
+ []
+
+
+Overfull \hbox (7.42369pt too wide) in paragraph at lines 628--633
+\T1/ptm/m/n/12 (-20) va-riable, avec des pro-pri�-t�s d'uni-cit� d�-mon-tr�es. Leur va-riante d�-di�e aux arbres [[]]
+ []
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 687.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 687.
+
+
+LaTeX Warning: File `images/resultats/xgb_feature_importance.png' not found on input line 699.
+
+
+chapitre5.tex:699: Package pdftex.def Error: File `images/resultats/xgb_feature_importance.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.699 ...ges/resultats/xgb_feature_importance.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 701.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 701.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 704.
+
+
+chapitre5.tex:704: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.704 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[68]
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 727.
+
+
+chapitre5.tex:727: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.727 ...ph{Un découpage au niveau des époques.}
+                                                   Les douze modèles de bas...
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[69]
+
+LaTeX Warning: Reference `tab:ensembles' on page 70 undefined on input line 736.
+
+
+LaTeX Warning: Reference `tab:12modeles' on page 70 undefined on input line 737.
+
+)
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 216.
+
+
+e:/PFE/sleep/report/_v2/main.tex:216: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.216 \include{chapitre5}
+                             % Sprint 3
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[70]
+\openout2 = `chapitre6.aux'.
+
+ (chapitre6.tex
+Chapitre 6.
+
+Overfull \vbox (8.60234pt too high) detected at line 45
+ []
+
+
+Overfull \vbox (8.60234pt too high) detected at line 53
+ []
+
+
+Overfull \vbox (28.93398pt too high) detected at line 57
+ []
+
+
+Overfull \hbox (5.41823pt too wide) in paragraph at lines 37--60
+ [][] 
+ []
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 63.
+
+
+chapitre6.tex:63: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.63 
+     
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[71
+
+
+
+
+]
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 119.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 119.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 122.
+
+
+chapitre6.tex:122: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.122 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[72]
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 152.
+
+
+chapitre6.tex:152: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.152 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[73]
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 182.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 182.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 185.
+
+
+chapitre6.tex:185: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.185 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[74]
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 223.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 223.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 226.
+
+
+chapitre6.tex:226: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.226 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[75]
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 269.
+
+
+chapitre6.tex:269: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.269 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[76]
+Overfull \hbox (2.74141pt too wide) in paragraph at lines 291--291
+[]|\T1/pcr/m/n/10.95 /admin/doctors/{id}/lifecycle|  
+ []
+
+
+Overfull \hbox (35.59137pt too wide) in paragraph at lines 292--292
+[]|\T1/pcr/m/n/10.95 /admin/doctors/{id}/reset-password|  
+ []
+
+
+Overfull \hbox (55.30135pt too wide) in paragraph at lines 308--308
+[]|\T1/pcr/m/n/10.95 /psgs/{id}/upload_hypnogram_annotated|  
+ []
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 332.
+
+
+chapitre6.tex:332: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.332 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[77]
+Overfull \vbox (3.00822pt too high) has occurred while \output is active []
+
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 332.
+
+
+chapitre6.tex:332: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.332 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[78]
+LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <10.95> not available
+(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 341.
+LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <10> not available
+(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 341.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 341.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 341.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 413.
+
+
+chapitre6.tex:413: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.413 \end{table}
+                 
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[79]
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 419.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 419.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 421.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 421.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 422.
+
+
+chapitre6.tex:422: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.422 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[80]
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 427.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 427.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 435.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 435.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 440.
+
+
+chapitre6.tex:440: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.440 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[81]
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 441.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 441.
+
+)
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 217.
+
+
+e:/PFE/sleep/report/_v2/main.tex:217: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.217 \include{chapitre6}
+                             % Sprint 4
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[82]
+\openout2 = `chapitre7.aux'.
+
+ (chapitre7.tex
+Chapitre 7.
+
+Overfull \vbox (8.60234pt too high) detected at line 42
+ []
+
+
+Overfull \hbox (21.84319pt too wide) in paragraph at lines 34--55
+ [][] 
+ []
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 58.
+
+
+chapitre7.tex:58: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.58 
+     
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[83
+
+
+
+
+]
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 111.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 111.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 114.
+
+
+chapitre7.tex:114: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.114 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[84]
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 142.
+
+
+chapitre7.tex:142: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.142 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[85]
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 188.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 188.
+
+
+LaTeX Warning: Reference `chap:analyse' on page 86 undefined on input line 196.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 200.
+
+
+chapitre7.tex:200: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.200 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[86]
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 239.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 239.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 240.
+
+
+chapitre7.tex:240: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.240 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[87]
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 241.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 241.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 253.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 253.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 260.
+
+
+chapitre7.tex:260: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.260 L
+       es \textbf{données patient ne sont pas chiffrées au repos} : elles ...
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[88])
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 218.
+
+
+e:/PFE/sleep/report/_v2/main.tex:218: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.218 \include{chapitre7}
+                             % Sprint 5
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[89]
+\openout2 = `chapitre8.aux'.
+
+ (chapitre8.tex
+Chapitre 8.
+
+Overfull \vbox (8.60234pt too high) detected at line 37
+ []
+
+
+Overfull \hbox (18.80568pt too wide) in paragraph at lines 29--51
+ [][] 
+ []
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 54.
+
+
+chapitre8.tex:54: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.54 
+     
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[90
+
+
+
+
+]
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 109.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 109.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 112.
+
+
+chapitre8.tex:112: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.112 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[91]
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 148.
+
+
+chapitre8.tex:148: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.148 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[92]
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 149.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 149.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 173.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 173.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 174.
+
+
+chapitre8.tex:174: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.174 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[93]
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 182.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 182.
+
+
+Overfull \hbox (39.99144pt too wide) in paragraph at lines 192--206
+ [][] 
+ []
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 215.
+
+
+chapitre8.tex:215: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.215 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[94]
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 260.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 260.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 309.
+
+
+chapitre8.tex:309: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.309 \end{table}
+                 
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[95]
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 321.
+
+
+chapitre8.tex:321: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.321 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[96])
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 219.
+
+
+e:/PFE/sleep/report/_v2/main.tex:219: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.219 \include{chapitre8}
+                             % Sprint 6
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[97]
+\openout2 = `conclusion.aux'.
+
+ (conclusion.tex
+
+Package hyperref Warning: The anchor of a bookmark and its parent's must not
+(hyperref)                be the same. Added a new anchor on input line 7.
+
+
+LaTeX Warning: Reference `chap:cadre' on page 98 undefined on input line 26.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 67.
+
+
+conclusion.tex:67: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.67 
+     
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[98
+
+
+
+
+]
+
+LaTeX Warning: Reference `chap:realisation-ia' on page 99 undefined on input line 98.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 120.
+
+
+conclusion.tex:120: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.120 L
+       a deuxième tient au \textbf{corpus}. Les 196 enregistrements retenus...
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[99]
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 176.
+
+
+conclusion.tex:176: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.176 L
+       a \textbf{validation clinique} enfin : aucun praticien n'a évalué l...
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[100]
+
+LaTeX Warning: Reference `chap:etat-art' on page 101 undefined on input line 198.
+
+)
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 221.
+
+
+e:/PFE/sleep/report/_v2/main.tex:221: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.221 \include{conclusion}
+                          
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[101]
+
+LaTeX Warning: Empty bibliography on input line 229.
+
+\openout2 = `annexes.aux'.
+
+(annexes.tex
+Annexe A.
+
+LaTeX Warning: Reference `chap:realisation-ia' on page 102 undefined on input line 10.
+
+
+LaTeX Warning: File `images/resultats/curves_CNN_5ch_3cls.png' not found on input line 30.
+
+
+annexes.tex:30: Package pdftex.def Error: File `images/resultats/curves_CNN_5ch_3cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.30 ...{images/resultats/curves_CNN_5ch_3cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `images/resultats/curves_CNN_2ch_3cls.png' not found on input line 34.
+
+
+annexes.tex:34: Package pdftex.def Error: File `images/resultats/curves_CNN_2ch_3cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.34 ...{images/resultats/curves_CNN_2ch_3cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `images/resultats/curves_CNN_5ch_5cls.png' not found on input line 38.
+
+
+annexes.tex:38: Package pdftex.def Error: File `images/resultats/curves_CNN_5ch_5cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.38 ...{images/resultats/curves_CNN_5ch_5cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `images/resultats/curves_CNN_2ch_5cls.png' not found on input line 42.
+
+
+annexes.tex:42: Package pdftex.def Error: File `images/resultats/curves_CNN_2ch_5cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.42 ...{images/resultats/curves_CNN_2ch_5cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 46.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 46.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 49.
+
+
+annexes.tex:49: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.49 
+     
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[102
+
+
+
+
+
+]
+Overfull \vbox (1295.44067pt too high) has occurred while \output is active []
+
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 49.
+
+
+annexes.tex:49: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.49 
+     
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[103]
+
+LaTeX Warning: File `images/resultats/curves_LSTM_5ch_3cls.png' not found on input line 56.
+
+
+annexes.tex:56: Package pdftex.def Error: File `images/resultats/curves_LSTM_5ch_3cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.56 ...images/resultats/curves_LSTM_5ch_3cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `images/resultats/curves_LSTM_2ch_3cls.png' not found on input line 60.
+
+
+annexes.tex:60: Package pdftex.def Error: File `images/resultats/curves_LSTM_2ch_3cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.60 ...images/resultats/curves_LSTM_2ch_3cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `images/resultats/curves_LSTM_5ch_5cls.png' not found on input line 64.
+
+
+annexes.tex:64: Package pdftex.def Error: File `images/resultats/curves_LSTM_5ch_5cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.64 ...images/resultats/curves_LSTM_5ch_5cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `images/resultats/curves_LSTM_2ch_5cls.png' not found on input line 68.
+
+
+annexes.tex:68: Package pdftex.def Error: File `images/resultats/curves_LSTM_2ch_5cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.68 ...images/resultats/curves_LSTM_2ch_5cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 72.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 72.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 75.
+
+
+annexes.tex:75: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.75 
+     
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[104
+
+]
+Overfull \vbox (1295.44067pt too high) has occurred while \output is active []
+
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 75.
+
+
+annexes.tex:75: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.75 
+     
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[105]
+
+LaTeX Warning: File `images/resultats/curves_Transformer_5ch_3cls.png' not found on input line 82.
+
+
+annexes.tex:82: Package pdftex.def Error: File `images/resultats/curves_Transformer_5ch_3cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.82 ...resultats/curves_Transformer_5ch_3cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `images/resultats/curves_Transformer_2ch_3cls.png' not found on input line 86.
+
+
+annexes.tex:86: Package pdftex.def Error: File `images/resultats/curves_Transformer_2ch_3cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.86 ...resultats/curves_Transformer_2ch_3cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `images/resultats/curves_Transformer_5ch_5cls.png' not found on input line 90.
+
+
+annexes.tex:90: Package pdftex.def Error: File `images/resultats/curves_Transformer_5ch_5cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.90 ...resultats/curves_Transformer_5ch_5cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `images/resultats/curves_Transformer_2ch_5cls.png' not found on input line 94.
+
+
+annexes.tex:94: Package pdftex.def Error: File `images/resultats/curves_Transformer_2ch_5cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.94 ...resultats/curves_Transformer_2ch_5cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 98.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 98.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 101.
+
+
+annexes.tex:101: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.101 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[106
+
+]
+Overfull \vbox (1295.44067pt too high) has occurred while \output is active []
+
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 101.
+
+
+annexes.tex:101: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.101 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[107]
+
+LaTeX Warning: Reference `sec:strategie' on page 108 undefined on input line 110.
+
+
+LaTeX Warning: File `images/resultats/cm_CNN_5ch_3cls.png' not found on input line 117.
+
+
+annexes.tex:117: Package pdftex.def Error: File `images/resultats/cm_CNN_5ch_3cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.117 ...th]{images/resultats/cm_CNN_5ch_3cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `images/resultats/cm_CNN_2ch_3cls.png' not found on input line 121.
+
+
+annexes.tex:121: Package pdftex.def Error: File `images/resultats/cm_CNN_2ch_3cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.121 ...th]{images/resultats/cm_CNN_2ch_3cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `images/resultats/cm_LSTM_5ch_3cls.png' not found on input line 125.
+
+
+annexes.tex:125: Package pdftex.def Error: File `images/resultats/cm_LSTM_5ch_3cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.125 ...h]{images/resultats/cm_LSTM_5ch_3cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `images/resultats/cm_LSTM_2ch_3cls.png' not found on input line 129.
+
+
+annexes.tex:129: Package pdftex.def Error: File `images/resultats/cm_LSTM_2ch_3cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.129 ...h]{images/resultats/cm_LSTM_2ch_3cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `images/resultats/cm_Transformer_5ch_3cls.png' not found on input line 133.
+
+
+annexes.tex:133: Package pdftex.def Error: File `images/resultats/cm_Transformer_5ch_3cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.133 ...es/resultats/cm_Transformer_5ch_3cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `images/resultats/cm_Transformer_2ch_3cls.png' not found on input line 137.
+
+
+annexes.tex:137: Package pdftex.def Error: File `images/resultats/cm_Transformer_2ch_3cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.137 ...es/resultats/cm_Transformer_2ch_3cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 141.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 141.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 144.
+
+
+annexes.tex:144: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.144 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[108
+
+]
+Overfull \vbox (108.54678pt too high) has occurred while \output is active []
+
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 144.
+
+
+annexes.tex:144: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.144 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[109]
+
+LaTeX Warning: File `images/resultats/cm_CNN_5ch_5cls.png' not found on input line 151.
+
+
+annexes.tex:151: Package pdftex.def Error: File `images/resultats/cm_CNN_5ch_5cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.151 ...th]{images/resultats/cm_CNN_5ch_5cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `images/resultats/cm_CNN_2ch_5cls.png' not found on input line 155.
+
+
+annexes.tex:155: Package pdftex.def Error: File `images/resultats/cm_CNN_2ch_5cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.155 ...th]{images/resultats/cm_CNN_2ch_5cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `images/resultats/cm_LSTM_5ch_5cls.png' not found on input line 159.
+
+
+annexes.tex:159: Package pdftex.def Error: File `images/resultats/cm_LSTM_5ch_5cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.159 ...h]{images/resultats/cm_LSTM_5ch_5cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `images/resultats/cm_LSTM_2ch_5cls.png' not found on input line 163.
+
+
+annexes.tex:163: Package pdftex.def Error: File `images/resultats/cm_LSTM_2ch_5cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.163 ...h]{images/resultats/cm_LSTM_2ch_5cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `images/resultats/cm_Transformer_5ch_5cls.png' not found on input line 167.
+
+
+annexes.tex:167: Package pdftex.def Error: File `images/resultats/cm_Transformer_5ch_5cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.167 ...es/resultats/cm_Transformer_5ch_5cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `images/resultats/cm_Transformer_2ch_5cls.png' not found on input line 171.
+
+
+annexes.tex:171: Package pdftex.def Error: File `images/resultats/cm_Transformer_2ch_5cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.171 ...es/resultats/cm_Transformer_2ch_5cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 176.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 176.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 179.
+
+
+annexes.tex:179: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.179 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[110
+
+]
+Overfull \vbox (122.14679pt too high) has occurred while \output is active []
+
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 179.
+
+
+annexes.tex:179: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.179 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[111]
+
+LaTeX Warning: File `images/resultats/kappa_comparison_5ch_3cls.png' not found on input line 193.
+
+
+annexes.tex:193: Package pdftex.def Error: File `images/resultats/kappa_comparison_5ch_3cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.193 .../resultats/kappa_comparison_5ch_3cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `images/resultats/cm_stacking_5ch_3cls.png' not found on input line 197.
+
+
+annexes.tex:197: Package pdftex.def Error: File `images/resultats/cm_stacking_5ch_3cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.197 ...mages/resultats/cm_stacking_5ch_3cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `images/resultats/kappa_comparison_2ch_3cls.png' not found on input line 201.
+
+
+annexes.tex:201: Package pdftex.def Error: File `images/resultats/kappa_comparison_2ch_3cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.201 .../resultats/kappa_comparison_2ch_3cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `images/resultats/cm_stacking_2ch_3cls.png' not found on input line 205.
+
+
+annexes.tex:205: Package pdftex.def Error: File `images/resultats/cm_stacking_2ch_3cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.205 ...mages/resultats/cm_stacking_2ch_3cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `images/resultats/kappa_comparison_5ch_5cls.png' not found on input line 209.
+
+
+annexes.tex:209: Package pdftex.def Error: File `images/resultats/kappa_comparison_5ch_5cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.209 .../resultats/kappa_comparison_5ch_5cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `images/resultats/cm_stacking_5ch_5cls.png' not found on input line 213.
+
+
+annexes.tex:213: Package pdftex.def Error: File `images/resultats/cm_stacking_5ch_5cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.213 ...mages/resultats/cm_stacking_5ch_5cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `images/resultats/kappa_comparison_2ch_5cls.png' not found on input line 217.
+
+
+annexes.tex:217: Package pdftex.def Error: File `images/resultats/kappa_comparison_2ch_5cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.217 .../resultats/kappa_comparison_2ch_5cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `images/resultats/cm_stacking_2ch_5cls.png' not found on input line 221.
+
+
+annexes.tex:221: Package pdftex.def Error: File `images/resultats/cm_stacking_2ch_5cls.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.221 ...mages/resultats/cm_stacking_2ch_5cls.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 226.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 226.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 229.
+
+
+annexes.tex:229: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.229 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[112
+
+]
+Overfull \vbox (504.41905pt too high) has occurred while \output is active []
+
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 229.
+
+
+annexes.tex:229: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.229 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[113]
+
+LaTeX Warning: Reference `chap:realisation-ia' on page 114 undefined on input line 303.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 306.
+
+
+annexes.tex:306: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.306 \clearpage
+                
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[114
+
+]
+Annexe B.
+
+Overfull \hbox (107.00557pt too wide) in paragraph at lines 321--344
+ [][] 
+ []
+
+
+LaTeX Warning: File `images/resultats/cm_baseline.png' not found on input line 355.
+
+
+annexes.tex:355: Package pdftex.def Error: File `images/resultats/cm_baseline.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.355 ...ewidth]{images/resultats/cm_baseline.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `images/resultats/cm_stacking.png' not found on input line 359.
+
+
+annexes.tex:359: Package pdftex.def Error: File `images/resultats/cm_stacking.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.359 ...ewidth]{images/resultats/cm_stacking.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 368.
+
+
+LaTeX Warning: Reference `chap:realisation-ia' on page 115 undefined on input line 368.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 368.
+
+
+LaTeX Warning: Reference `chap:realisation-ia' on page 115 undefined on input line 368.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 371.
+
+
+annexes.tex:371: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.371 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[115
+
+
+]
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 392.
+
+
+annexes.tex:392: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.392 \chapter
+              {Dictionnaire de données}
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[116]
+Annexe C.
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 464.
+
+
+annexes.tex:464: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.464 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[117
+
+]
+Overfull \hbox (36.84973pt too wide) in paragraph at lines 507--526
+ [][] 
+ []
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 526.
+
+
+annexes.tex:526: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.526 \end{table}
+                 
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[118]
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 567.
+
+
+annexes.tex:567: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.567 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[119]
+Overfull \hbox (61.37108pt too wide) in paragraph at lines 625--638
+ [][] 
+ []
+
+
+Overfull \hbox (24.4541pt too wide) in paragraph at lines 649--671
+ [][] 
+ []
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 672.
+
+
+annexes.tex:672: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.672 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[120]
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 680.
+
+
+annexes.tex:680: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.680 \chapter
+              {Manuel utilisateur}
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[121]
+Annexe D.
+
+LaTeX Warning: Reference `chap:realisation-plateforme' on page 122 undefined on input line 686.
+
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 741.
+
+
+annexes.tex:741: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.741   \item \textbf
+                     {Choisir la granularité.} \emph{3 classes} — éveil,...
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[122
+
+]
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 792.
+
+
+annexes.tex:792: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.792 
+      
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[123]
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 854.
+
+
+annexes.tex:854: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.854 \subsection*{Consulter le journal d'audit}
+                                                
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[124])
+
+LaTeX Warning: File `images/logo_esprit.png' not found on input line 231.
+
+
+e:/PFE/sleep/report/_v2/main.tex:231: Package pdftex.def Error: File `images/logo_esprit.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.231 \include{annexes}
+                       
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[125] (main.aux (validation.aux) (dedicaces.aux) (remerciements.aux) (acronymes.aux) (introduction.aux) (chapitre1.aux) (chapitre2.aux) (chapitre3.aux) (chapitre4.aux) (chapitre5.aux) (chapitre6.aux) (chapitre7.aux) (chapitre8.aux) (conclusion.aux) (annexes.aux))
+ ***********
+LaTeX2e <2026-06-01>
+L3 programming layer <2026-06-18>
+ ***********
+
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package rerunfilecheck Warning: File `main.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `main.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  945045D89E1E7F0B16F7B0916FE2CF7B;33436.
+
+Package biblatex Warning: Please (re)run Biber on the file:
+(biblatex)                main
+(biblatex)                and rerun LaTeX afterwards.
+
+Package logreq Info: Writing requests to 'main.run.xml'.
+\openout1 = `main.run.xml'.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 51431 strings out of 467510
+ 1076346 string characters out of 5418903
+ 1880062 words of memory out of 5000000
+ 78754 multiletter control sequences out of 15000+600000
+ 763752 words of font info for 571 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 84i,15n,94p,1221b,2164s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cmextra/cmex7.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmib10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/symbols/msam10.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/courier/ucrb8a.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/courier/ucrr8a.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/courier/ucrro8a.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/times/utmbi8a.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (126 pages, 752793 bytes).
+PDF statistics:
+ 1145 PDF objects out of 1200 (max. 8388607)
+ 485 named destinations out of 1000 (max. 500000)
+ 126061 words of extra memory for PDF output out of 128383 (max. 10000000)
+

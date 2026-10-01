@@ -1,0 +1,74 @@
+\babel@toc {french}{}\relax 
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {1}{\ignorespaces Chronologie du Centre National de l'Informatique}}{7}{figure.caption.5}%
+\contentsline {figure}{\numberline {2}{\ignorespaces Hypnogramme d'une nuit physiologique}}{9}{figure.caption.7}%
+\contentsline {figure}{\numberline {3}{\ignorespaces Cycle Scrum adapté au projet}}{15}{figure.caption.12}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4}{\ignorespaces Diagramme de cas d'utilisation global}}{20}{figure.caption.16}%
+\contentsline {figure}{\numberline {5}{\ignorespaces Raffinement du cas « Analyser un enregistrement »}}{21}{figure.caption.17}%
+\contentsline {figure}{\numberline {6}{\ignorespaces Diagramme de classes du modèle métier}}{27}{figure.caption.20}%
+\contentsline {figure}{\numberline {7}{\ignorespaces Architecture générale du système}}{30}{figure.caption.24}%
+\contentsline {figure}{\numberline {8}{\ignorespaces Vue de déploiement}}{31}{figure.caption.26}%
+\contentsline {figure}{\numberline {9}{\ignorespaces Vélocité par sprint}}{33}{figure.caption.28}%
+\contentsline {figure}{\numberline {10}{\ignorespaces Diagramme de Gantt du projet}}{33}{figure.caption.29}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {11}{\ignorespaces Diagramme des cas d'utilisation du sprint 1 --- préparation des données}}{37}{figure.caption.31}%
+\contentsline {figure}{\numberline {12}{\ignorespaces Diagramme de séquence objet du sprint 1 --- préparation d'un enregistrement}}{39}{figure.caption.33}%
+\contentsline {figure}{\numberline {13}{\ignorespaces Chaîne de traitement du signal}}{39}{figure.caption.34}%
+\contentsline {figure}{\numberline {14}{\ignorespaces Distribution des stades dans le corpus SHHS1}}{40}{figure.caption.35}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {15}{\ignorespaces Diagramme des cas d'utilisation du sprint 2 --- classification des stades}}{44}{figure.caption.37}%
+\contentsline {figure}{\numberline {16}{\ignorespaces Diagramme de séquence objet du sprint 2 --- entraînement d'un modèle}}{45}{figure.caption.39}%
+\contentsline {figure}{\numberline {17}{\ignorespaces Architecture du réseau convolutif}}{46}{figure.caption.40}%
+\contentsline {figure}{\numberline {18}{\ignorespaces Architecture du réseau récurrent}}{46}{figure.caption.41}%
+\contentsline {figure}{\numberline {19}{\ignorespaces Architecture du modèle attentionnel}}{47}{figure.caption.42}%
+\contentsline {figure}{\numberline {20}{\ignorespaces Courbes d'apprentissage du modèle convolutif}}{50}{figure.caption.46}%
+\contentsline {figure}{\numberline {21}{\ignorespaces Matrices de confusion des trois architectures}}{52}{figure.caption.48}%
+\contentsline {figure}{\numberline {22}{\ignorespaces Matrice de confusion à cinq classes}}{53}{figure.caption.50}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {23}{\ignorespaces Diagramme des cas d'utilisation du sprint 3 --- diagnostic et explication}}{57}{figure.caption.52}%
+\contentsline {figure}{\numberline {24}{\ignorespaces Séquence de prédiction de la sévérité}}{59}{figure.caption.54}%
+\contentsline {figure}{\numberline {25}{\ignorespaces Principe de l'empilement de modèles}}{60}{figure.caption.55}%
+\contentsline {figure}{\numberline {26}{\ignorespaces Comparaison des $\kappa $ pour l'ensemble à cinq classes}}{61}{figure.caption.57}%
+\contentsline {figure}{\numberline {27}{\ignorespaces Matrice de confusion de l'ensemble}}{62}{figure.caption.58}%
+\contentsline {figure}{\numberline {28}{\ignorespaces Pipeline de prédiction de la sévérité}}{63}{figure.caption.60}%
+\contentsline {figure}{\numberline {29}{\ignorespaces Distribution des marqueurs selon la sévérité}}{64}{figure.caption.61}%
+\contentsline {figure}{\numberline {30}{\ignorespaces Comparaison des six classifieurs en validation croisée}}{65}{figure.caption.62}%
+\contentsline {figure}{\numberline {31}{\ignorespaces Matrice de confusion de la prédiction de sévérité}}{66}{figure.caption.64}%
+\contentsline {figure}{\numberline {32}{\ignorespaces Courbes ROC de la prédiction de sévérité}}{67}{figure.caption.65}%
+\contentsline {figure}{\numberline {33}{\ignorespaces Taxonomie des méthodes d'explication}}{68}{figure.caption.66}%
+\contentsline {figure}{\numberline {34}{\ignorespaces Lecture en cascade d'une explication SHAP}}{68}{figure.caption.67}%
+\contentsline {figure}{\numberline {35}{\ignorespaces Importance globale des variables}}{69}{figure.caption.68}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {36}{\ignorespaces Diagramme des cas d'utilisation du sprint 4 --- poste de travail du médecin}}{73}{figure.caption.70}%
+\contentsline {figure}{\numberline {37}{\ignorespaces Séquence d'authentification}}{75}{figure.caption.72}%
+\contentsline {figure}{\numberline {38}{\ignorespaces Séquence d'analyse d'un enregistrement}}{76}{figure.caption.73}%
+\contentsline {figure}{\numberline {39}{\ignorespaces Documentation OpenAPI générée automatiquement}}{79}{figure.caption.76}%
+\contentsline {figure}{\numberline {40}{\ignorespaces Assistant d'analyse, étape 1 : déclaration du montage}}{80}{figure.caption.79}%
+\contentsline {figure}{\numberline {41}{\ignorespaces Assistant d'analyse, étape 2 : granularité de classification}}{81}{figure.caption.80}%
+\contentsline {figure}{\numberline {42}{\ignorespaces Écran de progression du traitement}}{81}{figure.caption.81}%
+\contentsline {figure}{\numberline {43}{\ignorespaces Restitution des résultats d'analyse}}{81}{figure.caption.82}%
+\contentsline {figure}{\numberline {44}{\ignorespaces Prédiction de sévérité à partir d'une saisie manuelle}}{82}{figure.caption.83}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {45}{\ignorespaces Diagramme des cas d'utilisation du sprint 5 --- dossier patient et gouvernance}}{85}{figure.caption.85}%
+\contentsline {figure}{\numberline {46}{\ignorespaces Cycle de vie d'un examen}}{86}{figure.caption.87}%
+\contentsline {figure}{\numberline {47}{\ignorespaces Registre des médecins et gestion des licences}}{88}{figure.caption.88}%
+\contentsline {figure}{\numberline {48}{\ignorespaces Gestion des établissements rattachés}}{88}{figure.caption.89}%
+\contentsline {figure}{\numberline {49}{\ignorespaces Journal d'audit : consultation et export}}{88}{figure.caption.90}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {50}{\ignorespaces Diagramme des cas d'utilisation du sprint 6 --- collaboration et restitution}}{92}{figure.caption.92}%
+\contentsline {figure}{\numberline {51}{\ignorespaces Fil de discussion rattaché à un examen}}{93}{figure.caption.94}%
+\contentsline {figure}{\numberline {52}{\ignorespaces Compte rendu clinique généré}}{94}{figure.caption.95}%
+\contentsline {figure}{\numberline {53}{\ignorespaces Tableau de bord du médecin en thème sombre}}{94}{figure.caption.96}%
+\contentsline {figure}{\numberline {54}{\ignorespaces Exécution de la chaîne d'intégration continue}}{95}{figure.caption.99}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {55}{\ignorespaces Courbes d'apprentissage --- architecture convolutive}}{103}{figure.caption.105}%
+\contentsline {figure}{\numberline {56}{\ignorespaces Courbes d'apprentissage --- architecture récurrente}}{105}{figure.caption.106}%
+\contentsline {figure}{\numberline {57}{\ignorespaces Courbes d'apprentissage --- architecture attentionnelle}}{107}{figure.caption.107}%
+\contentsline {figure}{\numberline {58}{\ignorespaces Matrices de confusion --- classification en trois stades}}{109}{figure.caption.108}%
+\contentsline {figure}{\numberline {59}{\ignorespaces Matrices de confusion --- classification en cinq stades}}{111}{figure.caption.109}%
+\contentsline {figure}{\numberline {60}{\ignorespaces Résultats des quatre ensembles par empilement}}{113}{figure.caption.110}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {61}{\ignorespaces Matrices de confusion de la prédiction de sévérité}}{116}{figure.caption.115}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }

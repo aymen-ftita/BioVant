@@ -1,0 +1,191 @@
+% =============================================================================
+%  esprit-style.tex — Habillage graphique du gabarit ESPRIT
+%  Chargé par main.tex après les paquets.
+% =============================================================================
+
+% ── Palette ESPRIT ───────────────────────────────────────────────────────────
+\definecolor{espritred}{HTML}{CE1126}
+\definecolor{espritdark}{HTML}{3C3C3B}
+\definecolor{espritgrey}{HTML}{9C9B9B}
+\definecolor{espritlight}{HTML}{D9D9D9}
+\definecolor{esprittable}{HTML}{1F3864}   % bandeau d'en-tete des tableaux
+\definecolor{espritband}{HTML}{C00000}
+
+% ── Motif de triangles : coin superieur droit ────────────────────────────────
+\newcommand{\espritTrianglesHaut}{%
+  \begin{tikzpicture}[x=1mm,y=1mm]
+    % rangee de petits triangles, du plus clair au plus sature
+    \fill[espritlight]  (0,0)   -- (5,0)   -- (2.5,4.5)  -- cycle;
+    \fill[espritgrey]   (6,1)   -- (12,1)  -- (9,6)      -- cycle;
+    \fill[espritred]    (13,0)  -- (20,0)  -- (16.5,6)   -- cycle;
+    \fill[espritlight]  (21,2)  -- (26,2)  -- (23.5,6.5) -- cycle;
+    \fill[espritdark]   (27,0)  -- (34,0)  -- (30.5,6)   -- cycle;
+    \fill[espritgrey]   (35,1)  -- (40,1)  -- (37.5,5.5) -- cycle;
+    \fill[espritred]    (41,0)  -- (49,0)  -- (45,7)     -- cycle;
+    \fill[espritdark]   (50,2)  -- (56,2)  -- (53,7)     -- cycle;
+    \fill[espritgrey]   (57,0)  -- (64,0)  -- (60.5,6)   -- cycle;
+    % seconde rangee, decalee
+    \fill[espritred]    (10,7)  -- (15,7)  -- (12.5,11)  -- cycle;
+    \fill[espritlight]  (30,8)  -- (35,8)  -- (32.5,12)  -- cycle;
+    \fill[espritdark]   (44,8)  -- (50,8)  -- (47,13)    -- cycle;
+    \fill[espritgrey]   (56,7)  -- (62,7)  -- (59,12)    -- cycle;
+  \end{tikzpicture}}
+
+% ── Motif de triangles : bas de page ─────────────────────────────────────────
+\newcommand{\espritTrianglesBas}{%
+  \begin{tikzpicture}[x=1mm,y=1mm]
+    \fill[espritred] (0,0)  -- (18,0) -- (9,13)  -- cycle;
+    \fill[espritred] (34,0) -- (50,0) -- (42,12) -- cycle;
+    \fill[espritred] (66,0) -- (82,0) -- (74,12) -- cycle;
+  \end{tikzpicture}}
+
+% ── Fond de page applique a toutes les pages du corps ────────────────────────
+\newcommand{\espritHabillage}{%
+  \AddToShipoutPictureBG{%
+    % logo en haut a gauche
+    \AtPageUpperLeft{\raisebox{-16mm}{\hspace*{14mm}%
+      \includegraphics[height=9mm]{images/logo_esprit.png}}}%
+    % triangles en haut a droite
+    \AtPageUpperLeft{\raisebox{-20mm}{\hspace*{110mm}\espritTrianglesHaut}}%
+    % triangles en bas
+    \AtPageLowerLeft{\raisebox{4mm}{\hspace*{18mm}\espritTrianglesBas}}%
+  }}
+
+% ── Page de garde ────────────────────────────────────────────────────────────
+\newcommand{\espritPageDeGarde}[7]{%
+  % #1 annee  #2 specialite  #3 nom du produit  #4 sous-titre
+  % #5 etudiant  #6 encadrant esprit  #7 encadrants entreprise
+  \begin{titlepage}
+  \thispagestyle{empty}
+  \AddToShipoutPictureFG*{%
+    % bande laterale gauche : triangles decoratifs
+    \AtPageLowerLeft{\begin{tikzpicture}[x=1mm,y=1mm,remember picture,overlay]
+      \fill[espritlight] (6,250)  -- (30,250) -- (18,228) -- cycle;
+      \fill[espritred]   (10,262) -- (26,262) -- (18,248) -- cycle;
+      \fill[espritgrey]  (2,215)  -- (22,215) -- (12,197) -- cycle;
+      \fill[espritdark]  (14,190) -- (34,190) -- (24,172) -- cycle;
+      \fill[espritlight] (4,160)  -- (26,160) -- (15,140) -- cycle;
+      \fill[espritred]   (8,120)  -- (30,120) -- (19,100) -- cycle;
+      \fill[espritgrey]  (2,84)   -- (20,84)  -- (11,68)  -- cycle;
+      \fill[espritdark]  (16,60)  -- (36,60)  -- (26,42)  -- cycle;
+      \fill[espritlight] (6,34)   -- (24,34)  -- (15,18)  -- cycle;
+      % triangles disperses a droite
+      \fill[espritlight] (150,240) -- (168,240) -- (159,224) -- cycle;
+      \fill[espritgrey]  (172,214) -- (188,214) -- (180,200) -- cycle;
+      \fill[espritlight] (140,120) -- (162,120) -- (151,100) -- cycle;
+      \fill[espritgrey]  (176,86)  -- (192,86)  -- (184,72)  -- cycle;
+    \end{tikzpicture}}}
+
+  \centering
+  \vspace*{4mm}
+  \includegraphics[width=0.42\textwidth]{images/logo_esprit.png}\\[6mm]
+
+  {\LARGE\bfseries\color{espritred} #1}\\[3mm]
+  {\Huge\bfseries\color{espritdark} PROJET DE FIN D'ÉTUDES}\\[6mm]
+
+  \colorbox{espritband}{\parbox{0.96\textwidth}{\centering\vspace{2mm}
+    {\LARGE\bfseries\color{white} DIPLÔME NATIONAL D'INGÉNIEUR}\vspace{2mm}}}\\[8mm]
+
+  {\large\bfseries\color{espritdark} SPÉCIALITÉ : #2}\\[10mm]
+
+  {\Huge\bfseries #3}\\[5mm]
+  {\large\itshape #4}\\[16mm]
+
+  \begin{minipage}{0.82\textwidth}
+    \raggedright\large
+    \textbf{Réalisé par :} #5\\[2mm]
+    \textbf{Encadrant ESPRIT :} #6\\[2mm]
+    \textbf{Encadrants entreprise :} #7
+  \end{minipage}\\[10mm]
+
+  \includegraphics[width=0.16\textwidth]{images/cni_logo.jpg}
+
+  \vfill
+  {\color{espritgrey}\rule{0.9\textwidth}{0.6pt}}\\[3mm]
+  {\footnotesize\color{espritgrey} Centre National de l'Informatique --- Tunis}
+  \end{titlepage}
+  \clearpage}
+
+% ── Style des titres ─────────────────────────────────────────────────────────
+\titleformat{\chapter}[hang]
+  {\Large\bfseries}
+  {\thechapter}{1em}{}
+  [\vspace{-4pt}{\color{espritdark}\rule{\textwidth}{0.8pt}}]
+\titlespacing*{\chapter}{0pt}{6pt}{18pt}
+
+\titleformat{name=\chapter,numberless}[hang]
+  {\Large\bfseries}{}{0pt}{}
+  [\vspace{-4pt}{\color{espritdark}\rule{\textwidth}{0.8pt}}]
+
+\titleformat{\section}{\large\bfseries}{\thesection}{0.8em}{}
+\titlespacing*{\section}{0pt}{14pt}{6pt}
+
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.7em}{}
+\titlespacing*{\subsection}{0pt}{11pt}{4pt}
+
+\titleformat{\subsubsection}{\small\bfseries}{\thesubsubsection}{0.6em}{}
+\titlespacing*{\subsubsection}{0pt}{9pt}{3pt}
+
+% Intertitres des chapitres de release, a la taille du texte courant :
+% \paragraph donne un titre detache non numerote, \subparagraph un titre en ligne
+\titleformat{\paragraph}[hang]{\normalfont\bfseries\itshape}{}{0pt}{}
+\titlespacing*{\paragraph}{0pt}{8pt}{3pt}
+
+\titleformat{\subparagraph}[runin]{\normalfont\bfseries}{}{0pt}{}
+\titlespacing*{\subparagraph}{0pt}{6pt}{0.5em}
+
+% Titre de section non numerote employe en ouverture et en cloture des chapitres
+\newcommand{\sectionsansnum}[1]{%
+  \par\vspace{12pt}\noindent{\large\bfseries #1}\par\vspace{5pt}}
+
+% ── Numerotation continue des figures et tableaux ────────────────────────────
+\counterwithout{figure}{chapter}
+\counterwithout{table}{chapter}
+
+% ── Legendes ─────────────────────────────────────────────────────────────────
+\captionsetup[figure]{
+  labelfont     = {it,small},
+  textfont      = {it,small},
+  labelsep      = space,
+  justification = centering,
+  skip          = 4pt,
+}
+\captionsetup[table]{
+  labelfont     = {small},
+  textfont      = {small},
+  labelsep      = space,
+  justification = centering,
+  position      = below,
+  skip          = 4pt,
+}
+\captionsetup[subfigure]{labelfont={it,footnotesize},textfont={it,footnotesize}}
+
+% ── Tableaux : bandeau d'en-tete bleu fonce, texte blanc ─────────────────────
+\newcommand{\entete}[1]{\textcolor{white}{\textbf{#1}}}
+\newcommand{\ligneentete}{\rowcolor{esprittable}}
+
+% Tableau de description textuelle d'un cas d'utilisation
+\newcommand{\legendecasu}{}
+\newenvironment{casutilisation}[1]
+  {\renewcommand{\legendecasu}{#1}%
+   \begin{table}[H]\centering\small
+   \renewcommand{\arraystretch}{1.25}
+   \begin{tabular}{@{}>{\columncolor{esprittable}\color{white}\bfseries}p{3.3cm}
+                     |p{10.4cm}@{}}
+   \hline}
+  {\\\hline\end{tabular}\par\vspace{2pt}\caption{\legendecasu}\end{table}}
+
+% ── Boite « en cours de redaction » ──────────────────────────────────────────
+\newcommand{\enattente}[1]{%
+  \begin{center}
+  \setlength{\fboxrule}{0.7pt}\setlength{\fboxsep}{8pt}%
+  \fcolorbox{espritgrey}{white}{\parbox{0.84\textwidth}{\centering
+    \color{espritdark}\small\itshape Section en cours de rédaction\\[5pt]
+    \upshape\footnotesize #1}}%
+  \end{center}}
+
+% Ligne d'intitule d'epic dans le tableau du backlog
+\newcommand{\epictitre}[1]{%
+  \midrule
+  \multicolumn{5}{@{}l}{\cellcolor{hypnolight}\textbf{#1}}\\
+  \midrule}

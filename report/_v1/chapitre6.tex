@@ -1,0 +1,530 @@
+\chapter{Réalisation de la plateforme clinique et déploiement}
+\label{chap:realisation-plateforme}
+
+Les modèles décrits au chapitre précédent ne valent que par l'usage qu'un praticien
+peut en faire. Ce chapitre décrit la plateforme qui les met à disposition :
+l'interface applicative et ses points d'entrée, les mécanismes de sécurité, la
+stratégie d'archivage, l'interface utilisateur et la production du compte rendu. Il se
+termine par la conteneurisation, la chaîne d'intégration continue et la campagne de
+validation fonctionnelle.
+
+% =============================================================================
+\section{Interface applicative}
+% =============================================================================
+
+\subsection{Organisation des modules}
+
+L'interface applicative est bâtie sur FastAPI, choisi pour son modèle asynchrone, sa
+validation déclarative des données et la génération automatique de sa documentation.
+Le code est réparti en modules à responsabilité unique, décrits au
+tableau~\ref{tab:modules}.
+
+\begin{table}[H]
+\centering
+\caption{Modules de l'interface applicative}
+\label{tab:modules}
+\small
+\begin{tabular}{@{}lrL{8.3cm}@{}}
+\toprule
+\textbf{Module} & \textbf{Lignes} & \textbf{Responsabilité} \\
+\midrule
+\texttt{main.py}          & 695 & Point d'entrée, routes métier et d'administration,
+                                  migration au démarrage, journalisation \\
+\texttt{ml\_routes.py}    & 984 & Routes d'inférence : analyse, extraction de
+                                  marqueurs, prédiction de sévérité, lecture de
+                                  fichiers externes \\
+\texttt{ml\_models.py}    & 117 & Définition des trois architectures de réseaux \\
+\texttt{preprocessing.py} & 199 & Décodage EDF, résolution des dérivations, calcul
+                                  des métriques AASM \\
+\texttt{osa\_predictor.py}& 113 & Chargement des modèles de sévérité, prédiction et
+                                  attribution des contributions \\
+\texttt{db\_models.py}    & 113 & Modèle de données et relations \\
+\texttt{schemas.py}       & 163 & Schémas de validation des entrées et sorties \\
+\texttt{auth.py}          &  51 & Jetons, empreintes de mots de passe, dépendance
+                                  d'authentification \\
+\texttt{b2\_storage.py}   & 121 & Client de stockage objet, dépôt et signature des
+                                  liens \\
+\texttt{database.py}      &  19 & Connexion et session \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Deux mécanismes transversaux méritent d'être signalés.
+
+Le premier est la \textbf{migration au démarrage}. Le schéma ayant évolué au fil des
+sprints, l'application exécute à son lancement une série d'ajouts de colonnes
+conditionnels, ce qui permet de déployer une nouvelle version sur une base existante
+sans intervention manuelle. Cette approche convient à un projet de cette taille ;
+au-delà, un outil de migration versionnée serait préférable, et c'est ce que nous
+recommandons en perspective.
+
+Le second est la \textbf{signature des liens à la sérialisation}. Les schémas de
+sortie déclarent un validateur qui intercepte toute référence de fichier au moment de
+composer la réponse et la remplace par un lien signé temporaire. La conséquence est
+importante : aucune route ne peut divulguer une référence brute par inadvertance,
+puisque la conversion est appliquée par le schéma et non par la route.
+
+\subsection{Points d'entrée}
+
+L'interface expose trente points d'entrée, regroupés par domaine au
+tableau~\ref{tab:endpoints}. La documentation interactive est produite automatiquement
+au format OpenAPI.
+
+\begin{table}[H]
+\centering
+\caption{Points d'entrée de l'interface applicative}
+\label{tab:endpoints}
+\small
+\begin{tabular}{@{}lL{6.6cm}cL{2.6cm}@{}}
+\toprule
+\textbf{Méthode} & \textbf{Chemin} & \textbf{Accès} & \textbf{Domaine} \\
+\midrule
+POST & \texttt{/token}                        & public   & \multirow{2}{*}{Authentification} \\
+GET  & \texttt{/users/me}                     & connecté & \\
+\midrule
+POST & \texttt{/admin/doctors}                & admin & \multirow{8}{*}{Administration} \\
+GET  & \texttt{/admin/doctors}                & admin & \\
+PUT  & \texttt{/admin/doctors/\{id\}/lifecycle}      & admin & \\
+POST & \texttt{/admin/doctors/\{id\}/reset-password} & admin & \\
+POST & \texttt{/admin/hospitals}              & admin & \\
+GET  & \texttt{/admin/hospitals}              & admin & \\
+GET  & \texttt{/admin/dashboard-stats}        & admin & \\
+GET  & \texttt{/admin/audit-logs}             & admin & \\
+GET  & \texttt{/admin/audit-logs/export}      & admin & \\
+\midrule
+POST & \texttt{/patients}                     & médecin & \multirow{4}{*}{Patients} \\
+GET  & \texttt{/patients}                     & médecin & \\
+GET  & \texttt{/patients/\{id\}}              & médecin & \\
+GET  & \texttt{/doctor/stats}                 & médecin & \\
+\midrule
+POST & \texttt{/patients/\{id\}/psgs}         & médecin & \multirow{8}{*}{Examens} \\
+PUT  & \texttt{/psgs/\{id\}}                  & médecin & \\
+POST & \texttt{/psgs/\{id\}/upload\_edf}      & médecin & \\
+POST & \texttt{/psgs/\{id\}/upload\_hypnogram} & médecin & \\
+POST & \texttt{/psgs/\{id\}/upload\_hypnogram\_annotated} & médecin & \\
+POST & \texttt{/psgs/\{id\}/upload\_osa\_report} & médecin & \\
+POST & \texttt{/psgs/\{id\}/annotations}      & médecin & \\
+GET  & \texttt{/psgs/\{id\}/annotations}      & médecin & \\
+\midrule
+GET  & \texttt{/doctors}                      & médecin & \multirow{5}{*}{Collaboration} \\
+POST & \texttt{/conversations}                & médecin & \\
+GET  & \texttt{/conversations}                & médecin & \\
+GET  & \texttt{/conversations/psg/\{id\}}     & médecin & \\
+GET  & \texttt{/conversations/\{id\}/messages} & médecin & \\
+POST & \texttt{/conversations/\{id\}/messages} & médecin & \\
+\midrule
+GET  & \texttt{/health}                       & public & \multirow{7}{*}{Inférence} \\
+POST & \texttt{/channels}                     & public & \\
+POST & \texttt{/analyze}                      & public & \\
+POST & \texttt{/extract\_features}            & public & \\
+POST & \texttt{/predict\_osa}                 & public & \\
+POST & \texttt{/predict\_osa\_custom}         & public & \\
+POST & \texttt{/parse\_features\_file}        & public & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Il faut relever ici une \textbf{faiblesse de la version livrée} : les routes
+d'inférence ne sont pas protégées par le contrôle d'accès. Ce choix, initialement fait
+pour faciliter les essais pendant le sprint de mise au point, n'a pas été rétabli. Un
+appelant non authentifié peut donc soumettre un enregistrement à l'analyse. Aucune
+donnée patient n'est exposée — ces routes ne lisent ni n'écrivent en base — mais elles
+consomment des ressources de calcul. L'ajout de la dépendance d'authentification, qui
+tient en une ligne par route, figure parmi les corrections à apporter avant toute mise
+en service réelle.
+
+\capturefig{swagger}{0.9}{Documentation OpenAPI générée automatiquement, avec les
+trente points d'entrée regroupés par domaine.}{fig:swagger}
+
+% =============================================================================
+\section{Sécurité et conformité}
+% =============================================================================
+
+\subsection{Mise en œuvre}
+
+Les quatre mécanismes conçus au chapitre~\ref{chap:conception} se traduisent ainsi.
+
+Les \textbf{mots de passe} sont hachés par bcrypt, dont le sel aléatoire par compte
+interdit les tables précalculées et dont le coût algorithmique ralentit une attaque
+par force brute. Le condensat seul est stocké ; la vérification recalcule l'empreinte
+à partir du mot de passe fourni.
+
+Les \textbf{jetons} sont signés en HMAC-SHA256 et portent l'adresse électronique de
+l'utilisateur, son rôle et une date d'expiration fixée à sept jours. La clé de
+signature provient de l'environnement d'exécution. Chaque route protégée déclare une
+dépendance qui décode le jeton, vérifie la signature et l'échéance, puis charge le
+compte correspondant.
+
+Le \textbf{contrôle d'accès} superpose deux niveaux. Le rôle est vérifié en tête de
+route ; la propriété de la ressource l'est ensuite, en confrontant l'identifiant du
+praticien à celui du patient consulté. Un médecin ne peut donc pas accéder au dossier
+d'un confrère, même en devinant un identifiant.
+
+Les \textbf{liens d'accès} aux fichiers sont signés et expirent au bout de vingt-quatre
+heures. Le service de stockage vérifie la signature avant de servir l'objet. Une
+subtilité a été traitée : les enregistrements et les fichiers tabulaires sont servis
+avec une en-tête forçant le téléchargement, tandis que les images et les comptes rendus
+restent affichables dans le navigateur.
+
+\subsection{Cycle de vie des licences}
+
+Un cinquième niveau, propre au contexte clinique, conditionne l'ouverture de session.
+Trois vérifications s'ajoutent à celle du mot de passe : le compte ne doit pas être
+suspendu, il ne doit pas être en attente d'approbation, et sa date d'échéance ne doit
+pas être dépassée. Chacune produit un message distinct, de sorte que le praticien sache
+s'il doit contacter son administrateur ou renouveler son abonnement.
+
+Ce dispositif permet de \textbf{révoquer un accès sans détruire de données}, ce qui est
+la seule manière acceptable de gérer une fin de contrat sur un système qui héberge des
+dossiers médicaux.
+
+\subsection{Traçabilité}
+
+Chaque action sensible inscrit dans le journal son auteur, son rôle, son horodatage,
+la nature de l'action et l'adresse d'origine. Sont journalisées les connexions, les
+créations de compte, les modifications de statut et les réinitialisations de mot de
+passe. Le journal est consultable par l'administrateur et exportable au format
+tabulaire pour un contrôle externe.
+
+Comme exposé au chapitre~\ref{chap:conception}, la table est délibérément dénormalisée :
+elle recopie l'adresse et le rôle plutôt que de référencer le compte, afin que la trace
+survive à la suppression de celui-ci.
+
+\capturefig{audit}{0.9}{Journal d'audit : consultation filtrée et export tabulaire.}{fig:audit}
+
+\subsection{Limites au regard du règlement européen}
+
+Le système n'est pas conforme au règlement général sur la protection des données, et il
+serait malhonnête de le prétendre. Trois écarts principaux subsistent.
+
+Les \textbf{données patient ne sont pas chiffrées au repos} : elles reposent sur le
+chiffrement offert par le service de stockage et par le système de fichiers de la base,
+sans couche applicative supplémentaire. Le \textbf{droit à l'effacement} n'est pas
+outillé : aucune procédure n'efface un patient et ses fichiers archivés en une
+opération. Enfin, aucune \textbf{durée de conservation} n'est définie ni appliquée.
+
+Ces trois points sont identifiés et documentés ; ils relèvent d'un travail de mise en
+conformité qui dépasse le périmètre d'un projet de fin d'études, mais qu'une mise en
+service réelle imposerait.
+
+% =============================================================================
+\section{Archivage sur stockage objet}
+% =============================================================================
+
+Les fichiers volumineux sont confiés à un service de stockage objet compatible avec
+l'interface S3. Chaque objet est rangé dans un préfixe portant le nom du patient et
+nommé selon le motif \texttt{patient\_date\_alea}, ce qui rend l'arborescence lisible
+depuis la console du fournisseur sans consulter la base.
+
+Le point remarquable de cette réalisation est le \textbf{transfert en arrière-plan}.
+Un enregistrement pèse plusieurs centaines de mégaoctets ; attendre la fin de son
+téléversement avant d'afficher les résultats aurait immobilisé le praticien pendant
+plusieurs minutes. L'enchaînement retenu est donc le suivant : l'analyse est exécutée,
+les résultats sont affichés, l'examen est créé en base, puis le transfert démarre sans
+bloquer l'interface. Une vignette flottante affiche la progression de chaque transfert
+et disparaît quelques secondes après son achèvement.
+
+Un échec de transfert n'interrompt rien : il est signalé dans la vignette, et l'examen
+reste pleinement exploitable puisque les résultats d'analyse sont stockés en base
+indépendamment des fichiers. C'est le comportement modélisé par le diagramme d'états du
+chapitre~\ref{chap:conception}.
+
+% =============================================================================
+\section{Interface utilisateur}
+% =============================================================================
+
+\subsection{Architecture des composants}
+
+L'interface est une application monopage React, construite par Vite. Elle est
+organisée en composants regroupés par domaine fonctionnel, décrits au
+tableau~\ref{tab:composants}.
+
+\begin{table}[H]
+\centering
+\caption{Principaux composants de l'interface}
+\label{tab:composants}
+\small
+\begin{tabular}{@{}lrL{8.0cm}@{}}
+\toprule
+\textbf{Composant} & \textbf{Lignes} & \textbf{Rôle} \\
+\midrule
+\texttt{AnalysisResults} & 1134 & Restitution complète : hypnogramme, métriques,
+                                  marqueurs, formulaire clinique, rapport de sévérité \\
+\texttt{PatientList}     &  993 & Registre des patients, historique des examens,
+                                  documents archivés \\
+\texttt{CustomOSA}       &  658 & Prédiction à partir d'une saisie manuelle ou d'un
+                                  rapport importé \\
+\texttt{Hypnogram}       &  552 & Tracé interactif de l'hypnogramme, de la saturation
+                                  et de la densité d'événements \\
+\texttt{DoctorList}      &  539 & Administration des comptes et des licences \\
+\texttt{DeveloperPipeline} & 497 & Visualisation de la chaîne de traitement \\
+\texttt{LandingPage}     &  406 & Page publique et authentification \\
+\texttt{AnalysisWizard}  &  428 & Assistant d'analyse en quatre étapes \\
+\texttt{HospitalsDashboard} & 233 & Gestion des établissements \\
+\texttt{ConsultationsView}  & 198 & Boîte de réception des sollicitations \\
+\texttt{AuditLogsDashboard} & 194 & Consultation et export du journal \\
+\texttt{CollaborationChat}  & 171 & Fil de discussion rattaché à un examen \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+L'ensemble représente environ \num{7700} lignes. Le choix de composants volumineux
+plutôt que d'une décomposition fine se justifie par la cohésion : le composant de
+restitution, par exemple, orchestre des visualisations qui partagent toutes le même
+état d'analyse, et le fractionner aurait imposé un mécanisme de partage sans bénéfice.
+
+\subsection{Parcours d'analyse}
+
+Le parcours principal se déroule en quatre étapes. Le praticien déclare d'abord le
+montage disponible, puis la granularité de classification souhaitée, dépose ensuite le
+fichier, et consulte enfin les résultats. Chaque étape n'expose qu'une seule décision,
+assortie d'une recommandation par défaut.
+
+\capturefig{wizard-1}{0.86}{Assistant d'analyse, étape 1 : déclaration du montage
+disponible.}{fig:wizard1}
+
+\capturefig{wizard-2}{0.86}{Assistant d'analyse, étape 2 : choix de la granularité de
+classification.}{fig:wizard2}
+
+Pendant le traitement, un écran de progression affiche les tracés physiologiques et
+détaille les cinq étapes du pipeline. Ce retour visuel n'est pas décoratif : une
+analyse dure plusieurs dizaines de secondes, et une interface muette pendant ce laps
+de temps laisserait croire à un blocage.
+
+\capturefig{progression}{0.86}{Écran de progression : tracés physiologiques et étapes
+du pipeline.}{fig:progression}
+
+\subsection{Restitution des résultats}
+
+La page de résultats superpose sur un même axe temporel l'hypnogramme prédit, la courbe
+de saturation et la densité d'événements respiratoires. Cette superposition est le
+choix de visualisation le plus utile de l'interface : elle permet de constater
+directement qu'une désaturation coïncide avec une sortie de sommeil paradoxal, ce que
+trois graphiques séparés ne montreraient pas.
+
+\capturefig{resultats}{0.92}{Restitution : hypnogramme, saturation et densité
+d'événements sur un axe commun, puis métriques AASM.}{fig:resultats}
+
+Les métriques AASM sont présentées sous forme de cartes, chacune accompagnée de sa
+plage de référence et d'une comparaison aux valeurs de la cohorte SHHS. Une valeur hors
+norme est signalée visuellement, et une liste d'alertes cliniques reprend en clair les
+anomalies détectées.
+
+\subsection{Prédiction de sévérité et explication}
+
+Sous les résultats de classification, un formulaire recueille les données
+démographiques et oxymétriques. La prédiction produit une classe de sévérité, ses
+probabilités et la décomposition des facteurs, présentés en deux colonnes : ce qui
+aggrave l'estimation et ce qui la tempère.
+
+Un second parcours permet une prédiction sans enregistrement, à partir d'une saisie
+manuelle ou d'un rapport externe importé au format tabulaire ou balisé. Cette voie
+répond à un usage réel : disposer d'un compte rendu produit par un autre laboratoire
+sans avoir accès au signal brut.
+
+\capturefig{custom-osa}{0.86}{Prédiction de sévérité à partir d'une saisie manuelle.}{fig:customosa}
+
+\subsection{Multilinguisme et thème sombre}
+
+L'interface est intégralement traduite en français et en anglais. Les chaînes sont
+centralisées dans un catalogue unique et la bascule est immédiate, sans rechargement.
+Un thème sombre est également disponible, adapté à la lecture nocturne — un praticien
+qui interprète un enregistrement le fait rarement en plein jour.
+
+\capturefig{dark}{0.86}{Tableau de bord du médecin en thème sombre.}{fig:dark}
+
+% =============================================================================
+\section{Production du compte rendu}
+% =============================================================================
+
+Le compte rendu est produit côté client : les sections retenues sont converties en
+images par capture du rendu, puis assemblées dans un document paginé. Cette approche
+garantit que le document reproduit exactement ce que le praticien a validé à l'écran,
+sans qu'un moteur de rendu distinct puisse introduire un écart.
+
+Le praticien choisit les sections à inclure : hypnogramme, métriques AASM, classe de
+sévérité, facteurs explicatifs, tracés bruts et comparaison aux normes. Cette
+composition à la carte répond à des destinataires différents — un confrère n'attend pas
+le même document qu'un dossier d'assurance.
+
+Le document est ensuite archivé au même titre que les autres pièces de l'examen.
+
+\capturefig{rapport}{0.78}{Compte rendu clinique généré, avec les sections
+sélectionnées par le praticien.}{fig:rapport}
+
+% =============================================================================
+\section{Conteneurisation}
+% =============================================================================
+
+La pile est décrite par un fichier d'orchestration unique qui déclare trois services.
+
+Le service de \textbf{base de données} s'appuie sur une image PostgreSQL allégée, avec
+un volume persistant et une sonde de disponibilité. Cette sonde est indispensable :
+sans elle, l'interface applicative démarrerait avant que la base n'accepte les
+connexions et échouerait à créer son schéma.
+
+Le service d'\textbf{interface applicative} est construit à partir d'une image Python
+allégée. Son fichier de construction comporte une particularité qui mérite explication :
+PyTorch y est installé depuis l'index dédié aux processeurs, \emph{avant} les autres
+dépendances. Sans cette précaution, l'installation télécharge plusieurs gigaoctets de
+bibliothèques CUDA inutiles en déploiement — l'inférence en production s'exécutant sur
+processeur — et fait échouer la construction sur une machine de développement.
+
+Le service de \textbf{serveur web} est construit en deux étapes : une première image
+Node compile l'application, une seconde image Nginx ne reçoit que le résultat compilé.
+L'image finale ne contient donc ni les sources, ni les dépendances de développement.
+Une configuration Nginx spécifique redirige toutes les routes inconnues vers le
+document principal, ce qu'exige le routage côté client.
+
+\begin{table}[H]
+\centering
+\caption{Services de la pile conteneurisée}
+\label{tab:services}
+\small
+\begin{tabular}{@{}lllL{5.4cm}@{}}
+\toprule
+\textbf{Service} & \textbf{Image de base} & \textbf{Port} & \textbf{Particularité} \\
+\midrule
+Base de données & \texttt{postgres:15-alpine} & 5432 &
+Volume persistant, sonde de disponibilité \\
+\addlinespace[2pt]
+Interface applicative & \texttt{python:3.10-slim} & 8000 &
+PyTorch en version processeur installé en premier \\
+\addlinespace[2pt]
+Serveur web & \texttt{node:20-alpine} puis \texttt{nginx:alpine} & 80 &
+Construction en deux étapes, redirection du routage client \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+L'ensemble démarre par une commande unique, et les secrets — identifiants de base,
+clé de signature, accès au stockage — sont injectés par variables d'environnement.
+
+% =============================================================================
+\section{Intégration continue}
+% =============================================================================
+
+Une chaîne d'intégration continue s'exécute à chaque livraison sur la branche
+principale et à chaque proposition de fusion. Elle comporte trois travaux, décrits au
+tableau~\ref{tab:ci}.
+
+\begin{table}[H]
+\centering
+\caption{Travaux de la chaîne d'intégration continue}
+\label{tab:ci}
+\small
+\begin{tabular}{@{}lL{10.4cm}@{}}
+\toprule
+\textbf{Travail} & \textbf{Étapes} \\
+\midrule
+Interface applicative &
+Installation des dépendances avec PyTorch en version processeur ; contrôle syntaxique
+de tous les modules ; démarrage d'une instance PostgreSQL de service ; démarrage réel
+de l'application ; vérification du schéma OpenAPI et de la présence des points
+d'entrée attendus ; contrôle du cloisonnement des rôles \\
+\addlinespace[3pt]
+Interface utilisateur &
+Installation reproductible des dépendances ; analyse statique ; construction de
+production ; publication du bundle en tant qu'artefact \\
+\addlinespace[3pt]
+Images de conteneur &
+Construction des deux images avec cache de couches, conditionnée à la réussite des
+deux travaux précédents \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Le travail portant sur l'interface applicative ne se contente pas d'un contrôle
+syntaxique : il \textbf{démarre réellement l'application} contre une base de données
+éphémère, puis exerce trois vérifications de comportement. Un appel sans jeton doit
+recevoir un refus d'authentification ; une connexion administrateur doit délivrer un
+jeton ; et ce jeton d'administrateur, présenté au registre des patients, doit recevoir
+un refus d'autorisation. Ces trois assertions couvrent l'essentiel du cloisonnement
+des rôles et échoueraient immédiatement si une dépendance de sécurité venait à
+disparaître au fil d'une modification.
+
+\capturefig{ci}{0.9}{Exécution de la chaîne d'intégration continue.}{fig:ci}
+
+% =============================================================================
+\section{Validation fonctionnelle}
+% =============================================================================
+
+En l'absence de tests automatisés exhaustifs, la validation a reposé sur une campagne
+de scénarios fonctionnels exécutés manuellement à chaque fin de sprint. Le
+tableau~\ref{tab:tests} en présente les principaux.
+
+\begin{table}[H]
+\centering
+\caption{Scénarios de validation fonctionnelle}
+\label{tab:tests}
+\small
+\begin{tabular}{@{}clL{7.2cm}c@{}}
+\toprule
+\textbf{N\textsuperscript{o}} & \textbf{Scénario} & \textbf{Critère de réussite} &
+\textbf{État} \\
+\midrule
+1 & Connexion valide & Jeton délivré, espace de travail ouvert & \checkmark \\
+2 & Connexion refusée & Compte suspendu ou licence expirée rejeté avec message
+    distinct & \checkmark \\
+3 & Cloisonnement des rôles & Un médecin n'atteint aucune route d'administration &
+    \checkmark \\
+4 & Cloisonnement des patients & Un médecin n'accède pas au dossier d'un confrère &
+    \checkmark \\
+5 & Analyse complète & Enregistrement déposé, hypnogramme et métriques affichés &
+    \checkmark \\
+6 & Montage incomplet & Dérivation absente : repli appliqué, analyse aboutie &
+    \checkmark \\
+7 & Fichier invalide & Format non reconnu refusé avec message explicite & \checkmark \\
+8 & Prédiction de sévérité & Classe, probabilités et facteurs restitués & \checkmark \\
+9 & Import de rapport externe & Formulaire prérempli depuis un fichier tabulaire ou
+    balisé & \checkmark \\
+10 & Archivage en arrière-plan & Résultats affichés avant la fin du transfert &
+    \checkmark \\
+11 & Échec d'archivage & Transfert interrompu : examen consultable, erreur signalée &
+    \checkmark \\
+12 & Lien expiré & Lien réutilisé après échéance : accès refusé & \checkmark \\
+13 & Annotation d'époque & Note enregistrée et retrouvée au rechargement & \checkmark \\
+14 & Consultation confraternelle & Message émis par un praticien, reçu par l'autre &
+    \checkmark \\
+15 & Compte rendu & Document produit avec les seules sections sélectionnées &
+    \checkmark \\
+16 & Journal d'audit & Actions sensibles tracées et exportées & \checkmark \\
+17 & Bascule linguistique & Aucune chaîne non traduite sur le parcours principal &
+    \checkmark \\
+18 & Démarrage de la pile & Trois services opérationnels en une commande & \checkmark \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Il faut reconnaître la limite de cette approche : une campagne manuelle n'est ni
+reproductible ni exhaustive, et elle ne protège pas contre les régressions entre deux
+exécutions. Les trois assertions automatisées de la chaîne d'intégration continue
+constituent un premier filet de sécurité, mais une véritable couverture de tests —
+unitaires sur la chaîne de traitement du signal, d'intégration sur les points d'entrée,
+de bout en bout sur le parcours d'analyse — reste à construire. Elle figure parmi les
+perspectives.
+
+% =============================================================================
+\section{Conclusion}
+% =============================================================================
+
+Ce chapitre a décrit la plateforme qui rend les modèles utilisables. L'interface
+applicative expose trente points d'entrée documentés automatiquement, protégés par un
+double contrôle de rôle et de propriété, et complétés par un cycle de vie des licences
+qui permet de révoquer un accès sans détruire de données.
+
+L'archivage sur stockage objet illustre le principe directeur de la réalisation : ne
+jamais faire attendre le praticien. Les résultats sont affichés avant la fin du
+transfert, et un échec d'archivage ne compromet pas l'exploitation de l'examen.
+
+L'interface utilisateur guide l'analyse en quatre décisions et superpose sur un axe
+commun l'hypnogramme, la saturation et les événements respiratoires. Le compte rendu
+est composable section par section.
+
+La pile est enfin entièrement conteneurisée et vérifiée par une chaîne d'intégration
+continue qui démarre réellement l'application et contrôle le cloisonnement des rôles.
+Deux faiblesses ont été signalées sans détour : les routes d'inférence ne sont pas
+authentifiées, et la conformité au règlement européen reste incomplète sur le
+chiffrement au repos, le droit à l'effacement et les durées de conservation.
+
+La conclusion générale dresse à présent le bilan de l'ensemble du travail.

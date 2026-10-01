@@ -1,12 +1,54 @@
 \babel@toc {french}{}\relax 
 \addvspace {10\p@ }
+\contentsline {table}{\numberline {1}{\ignorespaces Les cinq états de vigilance définis par le référentiel AASM}}{18}{table.caption.10}%
+\contentsline {table}{\numberline {2}{\ignorespaces Dérivations minimales d'un montage polysomnographique de scorage}}{19}{table.caption.13}%
+\contentsline {table}{\numberline {3}{\ignorespaces Classes de sévérité du SAOS selon l'index d'apnées-hypopnées}}{20}{table.caption.14}%
+\contentsline {table}{\numberline {4}{\ignorespaces Principales suites commerciales d'analyse polysomnographique}}{22}{table.caption.15}%
+\contentsline {table}{\numberline {5}{\ignorespaces Principaux travaux de classification automatique des stades du sommeil}}{23}{table.caption.16}%
+\contentsline {table}{\numberline {6}{\ignorespaces Positionnement de \textsc {Hypnoria}{} face aux suites commerciales}}{23}{table.caption.17}%
 \addvspace {10\p@ }
+\contentsline {table}{\numberline {7}{\ignorespaces Acteurs du système et leurs responsabilités}}{26}{table.caption.19}%
+\contentsline {table}{\numberline {8}{\ignorespaces Regroupement des besoins fonctionnels en épics}}{27}{table.caption.20}%
+\contentsline {table}{\numberline {9}{\ignorespaces Besoins non fonctionnels et moyens de vérification}}{28}{table.caption.21}%
+\contentsline {table}{\numberline {10}{\ignorespaces Description textuelle du cas « Analyser un enregistrement »}}{31}{table.caption.24}%
+\contentsline {table}{\numberline {11}{\ignorespaces Description textuelle du cas « Prédire la sévérité du SAOS »}}{32}{table.caption.25}%
+\contentsline {table}{\numberline {12}{\ignorespaces Product Backlog --- 60 récits utilisateur, 358 points}}{33}{table.2.12}%
+\contentsline {table}{\numberline {13}{\ignorespaces Technologies retenues et motifs de choix}}{37}{table.caption.28}%
+\contentsline {table}{\numberline {14}{\ignorespaces Environnement logiciel}}{37}{table.caption.29}%
+\contentsline {table}{\numberline {15}{\ignorespaces Décisions d'architecture et leur justification}}{39}{table.caption.31}%
+\contentsline {table}{\numberline {16}{\ignorespaces Planification du projet en trois releases}}{41}{table.caption.34}%
+\contentsline {table}{\numberline {17}{\ignorespaces Découpage des releases en sprints}}{43}{table.caption.36}%
 \addvspace {10\p@ }
+\contentsline {table}{\numberline {18}{\ignorespaces Backlog de la release 1}}{46}{table.caption.39}%
+\contentsline {table}{\numberline {19}{\ignorespaces Sprint Backlog --- Sprint 1}}{48}{table.caption.40}%
+\contentsline {table}{\numberline {20}{\ignorespaces Description textuelle du cas « Préparer un enregistrement »}}{50}{table.caption.42}%
+\contentsline {table}{\numberline {21}{\ignorespaces Sprint Backlog --- Sprint 2}}{54}{table.caption.50}%
+\contentsline {table}{\numberline {22}{\ignorespaces Description textuelle du cas « Classer une époque »}}{55}{table.caption.52}%
+\contentsline {table}{\numberline {23}{\ignorespaces Empreinte du corpus d'entraînement en simple précision}}{58}{table.caption.58}%
+\contentsline {table}{\numberline {24}{\ignorespaces Stratégies de résidence des données pendant l'entraînement}}{59}{table.caption.60}%
+\contentsline {table}{\numberline {25}{\ignorespaces Performances des douze modèles de base sur le jeu de test}}{60}{table.caption.65}%
+\contentsline {table}{\numberline {26}{\ignorespaces Performances par classe --- configuration à cinq dérivations}}{61}{table.caption.71}%
+\contentsline {table}{\numberline {27}{\ignorespaces Revue de la release 1 : incrément attendu et incrément livré}}{63}{table.caption.73}%
 \addvspace {10\p@ }
+\contentsline {table}{\numberline {28}{\ignorespaces Backlog de la release 2}}{64}{table.caption.77}%
+\contentsline {table}{\numberline {29}{\ignorespaces Sprint Backlog --- Sprint 3}}{66}{table.caption.78}%
+\contentsline {table}{\numberline {30}{\ignorespaces Description textuelle du cas « Prédire la sévérité du SAOS »}}{68}{table.caption.80}%
+\contentsline {table}{\numberline {31}{\ignorespaces Ensembles par empilement, comparés aux modèles de base et au vote moyen}}{70}{table.caption.85}%
+\contentsline {table}{\numberline {32}{\ignorespaces Approches d'évaluation du risque de SAOS}}{72}{table.caption.89}%
+\contentsline {table}{\numberline {33}{\ignorespaces Prédiction de la sévérité --- résultats sur les 530 sujets de test}}{74}{table.caption.96}%
+\contentsline {table}{\numberline {34}{\ignorespaces Sprint Backlog --- Sprint 4}}{79}{table.caption.110}%
+\contentsline {table}{\numberline {35}{\ignorespaces Description textuelle du cas « Analyser un enregistrement »}}{81}{table.caption.112}%
+\contentsline {table}{\numberline {36}{\ignorespaces Modules de l'interface applicative}}{84}{table.caption.115}%
+\contentsline {table}{\numberline {37}{\ignorespaces Mécanismes de sécurité et menaces couvertes}}{85}{table.caption.117}%
+\contentsline {table}{\numberline {38}{\ignorespaces Principaux composants de l'interface}}{86}{table.caption.118}%
+\contentsline {table}{\numberline {39}{\ignorespaces Revue de la release 2 : incrément attendu et incrément livré}}{88}{table.caption.124}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {5.1}{\ignorespaces Product Backlog du projet}}{13}{table.caption.6}%
-\addvspace {10\p@ }
-\contentsline {table}{\numberline {6.1}{\ignorespaces Hyperparamètres des modèles}}{19}{table.caption.9}%
-\contentsline {table}{\numberline {6.2}{\ignorespaces Résultats globaux des 12 modèles}}{19}{table.caption.10}%
-\contentsline {table}{\numberline {6.3}{\ignorespaces Rapport de classification détaillé (CNN 5ch, 3 classes)}}{21}{table.caption.13}%
-\contentsline {table}{\numberline {6.4}{\ignorespaces Comparaison des architectures (5 canaux, 3 classes)}}{22}{table.caption.14}%
+\contentsline {table}{\numberline {40}{\ignorespaces Backlog de la release 3}}{90}{table.caption.128}%
+\contentsline {table}{\numberline {41}{\ignorespaces Sprint Backlog --- Sprint 5}}{91}{table.caption.129}%
+\contentsline {table}{\numberline {42}{\ignorespaces Description textuelle du cas « Gérer le cycle de vie d'un compte »}}{93}{table.caption.131}%
+\contentsline {table}{\numberline {43}{\ignorespaces Sprint Backlog --- Sprint 6}}{97}{table.caption.136}%
+\contentsline {table}{\numberline {44}{\ignorespaces Description textuelle du cas « Solliciter un confrère »}}{98}{table.caption.138}%
+\contentsline {table}{\numberline {45}{\ignorespaces Services de la pile conteneurisée}}{101}{table.caption.143}%
+\contentsline {table}{\numberline {46}{\ignorespaces Travaux de la chaîne d'intégration continue}}{102}{table.caption.144}%
+\contentsline {table}{\numberline {47}{\ignorespaces Revue de la release 3 : incrément attendu et incrément livré}}{103}{table.caption.146}%
+\contentsline {table}{\numberline {48}{\ignorespaces Scénarios de validation fonctionnelle}}{104}{table.caption.147}%
