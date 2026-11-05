@@ -1,6 +1,6 @@
 PWD E:\PFE\sleep\report
 INPUT C:\Users\aymen\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
-INPUT main.tex
+INPUT E:\PFE\sleep\report\main.tex
 OUTPUT main.log
 INPUT C:\Program Files\MiKTeX\tex\latex\base\report.cls
 INPUT C:\Program Files\MiKTeX\tex\latex\base\report.cls
@@ -116,6 +116,8 @@ INPUT C:\Program Files\MiKTeX\tex\latex\tools\tabularx.sty
 INPUT C:\Program Files\MiKTeX\tex\latex\tools\tabularx.sty
 INPUT C:\Users\aymen\AppData\Roaming\MiKTeX\tex\latex\enumitem\enumitem.sty
 INPUT C:\Users\aymen\AppData\Roaming\MiKTeX\tex\latex\enumitem\enumitem.sty
+INPUT C:\Users\aymen\AppData\Roaming\MiKTeX\tex\latex\wrapfig\wrapfig.sty
+INPUT C:\Users\aymen\AppData\Roaming\MiKTeX\tex\latex\wrapfig\wrapfig.sty
 INPUT C:\Program Files\MiKTeX\tex\latex\amsmath\amsmath.sty
 INPUT C:\Program Files\MiKTeX\tex\latex\amsmath\amsmath.sty
 INPUT C:\Program Files\MiKTeX\tex\latex\amsmath\amsopn.sty
@@ -715,35 +717,35 @@ INPUT C:\Users\aymen\AppData\Roaming\MiKTeX\tex\latex\psnfss\ts1ptm.fd
 INPUT C:\Users\aymen\AppData\Roaming\MiKTeX\tex\latex\psnfss\ts1ptm.fd
 INPUT C:\Program Files\MiKTeX\fonts\tfm\adobe\times\ptmr8c.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\adobe\times\ptmr8t.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\adobe\times\ptmb8t.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmr10.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmmi10.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmsy10.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmex10.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
-INPUT C:\Program Files\MiKTeX\fonts\tfm\adobe\times\ptmb8t.tfm
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT C:\Program Files\MiKTeX\fonts\vf\adobe\times\ptmr8c.vf
-INPUT C:\Program Files\MiKTeX\fonts\tfm\adobe\times\ptmb8t.tfm
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
 INPUT C:\Program Files\MiKTeX\fonts\vf\adobe\times\ptmb8t.vf
 INPUT C:\Program Files\MiKTeX\fonts\tfm\adobe\times\ptmb8r.tfm
 INPUT C:\Program Files\MiKTeX\fonts\vf\adobe\times\ptmr8t.vf
+INPUT C:\Program Files\MiKTeX\fonts\tfm\adobe\times\ptmb8t.tfm
+INPUT .\images\polysomnogramme.png
+INPUT .\images\polysomnogramme.png
+INPUT .\images\polysomnogramme.png
+INPUT .\images\polysomnogramme.png
+INPUT .\images\polysomnogramme.png
+INPUT .\images\polysomnogramme.png
+INPUT .\images\polysomnogramme.png
+INPUT .\images\logo_esprit.png
+INPUT .\images\logo_esprit.png
+INPUT .\images\logo_esprit.png
+INPUT .\images\logo_esprit.png
 INPUT C:\Program Files\MiKTeX\fonts\vf\adobe\times\ptmb8t.vf
 INPUT C:\Program Files\MiKTeX\fonts\tfm\adobe\times\ptmb8r.tfm
-INPUT .\images\polysomnogramme.png
-INPUT .\images\polysomnogramme.png
-INPUT .\images\polysomnogramme.png
-INPUT .\images\polysomnogramme.png
-INPUT .\images\polysomnogramme.png
-INPUT .\images\polysomnogramme.png
-INPUT .\images\polysomnogramme.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
@@ -782,10 +784,6 @@ INPUT .\images\logos\ensosleep.png
 INPUT .\images\logos\ensosleep.png
 INPUT .\images\logos\ensosleep.png
 INPUT .\images\logos\ensosleep.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
@@ -828,10 +826,6 @@ INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT C:\Program Files\MiKTeX\fonts\tfm\adobe\times\ptmr8t.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\adobe\times\ptmri8t.tfm
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
 INPUT C:\Program Files\MiKTeX\fonts\tfm\adobe\times\ptmr8c.tfm
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
@@ -839,10 +833,6 @@ INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT C:\Program Files\MiKTeX\fonts\vf\adobe\times\ptmri8t.vf
 INPUT C:\Program Files\MiKTeX\fonts\tfm\adobe\times\ptmri8r.tfm
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
 INPUT C:\Program Files\MiKTeX\fonts\vf\adobe\times\ptmr8c.vf
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
@@ -890,14 +880,6 @@ INPUT .\images\architecture.jpeg
 INPUT .\images\architecture.jpeg
 INPUT .\images\architecture.jpeg
 INPUT .\images\architecture.jpeg
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
@@ -960,18 +942,6 @@ INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
 INPUT C:\Program Files\MiKTeX\fonts\tfm\adobe\times\ptmbi8t.tfm
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
@@ -979,17 +949,17 @@ INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT C:\Program Files\MiKTeX\fonts\vf\adobe\times\ptmbi8t.vf
 INPUT C:\Program Files\MiKTeX\fonts\tfm\adobe\times\ptmbi8r.tfm
+INPUT .\images\resultats\curves_CNN_5ch_3cls.png
+INPUT .\images\resultats\curves_CNN_5ch_3cls.png
+INPUT .\images\resultats\curves_CNN_5ch_3cls.png
+INPUT .\images\resultats\curves_CNN_5ch_3cls.png
+INPUT .\images\resultats\curves_CNN_5ch_3cls.png
+INPUT .\images\resultats\curves_CNN_5ch_3cls.png
+INPUT .\images\resultats\curves_CNN_5ch_3cls.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
-INPUT .\images\resultats\curves_CNN_5ch_3cls.png
-INPUT .\images\resultats\curves_CNN_5ch_3cls.png
-INPUT .\images\resultats\curves_CNN_5ch_3cls.png
-INPUT .\images\resultats\curves_CNN_5ch_3cls.png
-INPUT .\images\resultats\curves_CNN_5ch_3cls.png
-INPUT .\images\resultats\curves_CNN_5ch_3cls.png
-INPUT .\images\resultats\curves_CNN_5ch_3cls.png
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmbx10.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmbx8.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmbx6.tfm
@@ -999,31 +969,40 @@ INPUT C:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmmib6.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmbsy10.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmbsy8.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmbsy6.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmbx10.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmbx7.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmbx5.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmmib10.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmmib7.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmmib5.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmbsy10.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmbsy7.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmbsy5.tfm
+INPUT .\images\resultats\cm_CNN_5ch_3cls.png
+INPUT .\images\resultats\cm_CNN_5ch_3cls.png
+INPUT .\images\resultats\cm_CNN_5ch_3cls.png
+INPUT .\images\resultats\cm_CNN_5ch_3cls.png
+INPUT .\images\resultats\cm_CNN_5ch_3cls.png
+INPUT .\images\resultats\cm_CNN_5ch_3cls.png
+INPUT .\images\resultats\cm_CNN_5ch_3cls.png
+INPUT .\images\resultats\cm_LSTM_5ch_3cls.png
+INPUT .\images\resultats\cm_LSTM_5ch_3cls.png
+INPUT .\images\resultats\cm_LSTM_5ch_3cls.png
+INPUT .\images\resultats\cm_LSTM_5ch_3cls.png
+INPUT .\images\resultats\cm_LSTM_5ch_3cls.png
+INPUT .\images\resultats\cm_LSTM_5ch_3cls.png
+INPUT .\images\resultats\cm_LSTM_5ch_3cls.png
+INPUT .\images\resultats\cm_Transformer_5ch_3cls.png
+INPUT .\images\resultats\cm_Transformer_5ch_3cls.png
+INPUT .\images\resultats\cm_Transformer_5ch_3cls.png
+INPUT .\images\resultats\cm_Transformer_5ch_3cls.png
+INPUT .\images\resultats\cm_Transformer_5ch_3cls.png
+INPUT .\images\resultats\cm_Transformer_5ch_3cls.png
+INPUT .\images\resultats\cm_Transformer_5ch_3cls.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
-INPUT .\images\resultats\cm_CNN_5ch_3cls.png
-INPUT .\images\resultats\cm_CNN_5ch_3cls.png
-INPUT .\images\resultats\cm_CNN_5ch_3cls.png
-INPUT .\images\resultats\cm_CNN_5ch_3cls.png
-INPUT .\images\resultats\cm_CNN_5ch_3cls.png
-INPUT .\images\resultats\cm_CNN_5ch_3cls.png
-INPUT .\images\resultats\cm_CNN_5ch_3cls.png
-INPUT .\images\resultats\cm_LSTM_5ch_3cls.png
-INPUT .\images\resultats\cm_LSTM_5ch_3cls.png
-INPUT .\images\resultats\cm_LSTM_5ch_3cls.png
-INPUT .\images\resultats\cm_LSTM_5ch_3cls.png
-INPUT .\images\resultats\cm_LSTM_5ch_3cls.png
-INPUT .\images\resultats\cm_LSTM_5ch_3cls.png
-INPUT .\images\resultats\cm_LSTM_5ch_3cls.png
-INPUT .\images\resultats\cm_Transformer_5ch_3cls.png
-INPUT .\images\resultats\cm_Transformer_5ch_3cls.png
-INPUT .\images\resultats\cm_Transformer_5ch_3cls.png
-INPUT .\images\resultats\cm_Transformer_5ch_3cls.png
-INPUT .\images\resultats\cm_Transformer_5ch_3cls.png
-INPUT .\images\resultats\cm_Transformer_5ch_3cls.png
-INPUT .\images\resultats\cm_Transformer_5ch_3cls.png
 INPUT .\images\resultats\cm_CNN_5ch_5cls.png
 INPUT .\images\resultats\cm_CNN_5ch_5cls.png
 INPUT .\images\resultats\cm_CNN_5ch_5cls.png
@@ -1065,18 +1044,6 @@ INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
 INPUT .\images\resultats\kappa_comparison_5ch_5cls.png
 INPUT .\images\resultats\kappa_comparison_5ch_5cls.png
 INPUT .\images\resultats\kappa_comparison_5ch_5cls.png
@@ -1139,14 +1106,6 @@ INPUT .\images\resultats\xgb_feature_importance.png
 INPUT .\images\resultats\xgb_feature_importance.png
 INPUT .\images\resultats\xgb_feature_importance.png
 INPUT .\images\resultats\xgb_feature_importance.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
@@ -1172,24 +1131,56 @@ INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
-INPUT C:\Program Files\MiKTeX\fonts\tfm\adobe\courier\pcrro8t.tfm
-INPUT C:\Program Files\MiKTeX\fonts\tfm\adobe\courier\pcrro8t.tfm
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
 INPUT C:\Program Files\MiKTeX\fonts\vf\adobe\courier\pcrr8t.vf
 INPUT C:\Program Files\MiKTeX\fonts\tfm\adobe\courier\pcrr8r.tfm
+INPUT .\images\captures\swagger.png
+INPUT .\images\captures\swagger.png
+INPUT .\images\captures\swagger.png
+INPUT .\images\captures\swagger.png
+INPUT .\images\captures\swagger.png
+INPUT .\images\captures\swagger.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
-INPUT C:\Program Files\MiKTeX\fonts\vf\adobe\courier\pcrro8t.vf
-INPUT C:\Program Files\MiKTeX\fonts\tfm\adobe\courier\pcrro8r.tfm
+INPUT .\images\captures\wizard-1.png
+INPUT .\images\captures\wizard-1.png
+INPUT .\images\captures\wizard-1.png
+INPUT .\images\captures\wizard-1.png
+INPUT .\images\captures\wizard-1.png
+INPUT .\images\captures\wizard-1.png
+INPUT .\images\captures\wizard-2.png
+INPUT .\images\captures\wizard-2.png
+INPUT .\images\captures\wizard-2.png
+INPUT .\images\captures\wizard-2.png
+INPUT .\images\captures\wizard-2.png
+INPUT .\images\captures\wizard-2.png
+INPUT .\images\captures\progression.png
+INPUT .\images\captures\progression.png
+INPUT .\images\captures\progression.png
+INPUT .\images\captures\progression.png
+INPUT .\images\captures\progression.png
+INPUT .\images\captures\progression.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
+INPUT .\images\captures\resultats.png
+INPUT .\images\captures\resultats.png
+INPUT .\images\captures\resultats.png
+INPUT .\images\captures\resultats.png
+INPUT .\images\captures\resultats.png
+INPUT .\images\captures\resultats.png
+INPUT .\images\logo_esprit.png
+INPUT .\images\logo_esprit.png
+INPUT .\images\logo_esprit.png
+INPUT .\images\logo_esprit.png
+INPUT .\images\captures\custom-osa.png
+INPUT .\images\captures\custom-osa.png
+INPUT .\images\captures\custom-osa.png
+INPUT .\images\captures\custom-osa.png
+INPUT .\images\captures\custom-osa.png
+INPUT .\images\captures\custom-osa.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
@@ -1220,6 +1211,28 @@ INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
+INPUT .\images\captures\admin-medecins.png
+INPUT .\images\captures\admin-medecins.png
+INPUT .\images\captures\admin-medecins.png
+INPUT .\images\captures\admin-medecins.png
+INPUT .\images\captures\admin-medecins.png
+INPUT .\images\captures\admin-medecins.png
+INPUT .\images\captures\admin-hopitaux.png
+INPUT .\images\captures\admin-hopitaux.png
+INPUT .\images\captures\admin-hopitaux.png
+INPUT .\images\captures\admin-hopitaux.png
+INPUT .\images\captures\admin-hopitaux.png
+INPUT .\images\captures\admin-hopitaux.png
+INPUT .\images\logo_esprit.png
+INPUT .\images\logo_esprit.png
+INPUT .\images\logo_esprit.png
+INPUT .\images\logo_esprit.png
+INPUT .\images\captures\audit.png
+INPUT .\images\captures\audit.png
+INPUT .\images\captures\audit.png
+INPUT .\images\captures\audit.png
+INPUT .\images\captures\audit.png
+INPUT .\images\captures\audit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
@@ -1232,6 +1245,29 @@ INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
+INPUT .\images\captures\consultation.png
+INPUT .\images\captures\consultation.png
+INPUT .\images\captures\consultation.png
+INPUT .\images\captures\consultation.png
+INPUT .\images\captures\consultation.png
+INPUT .\images\captures\consultation.png
+INPUT .\images\logo_esprit.png
+INPUT .\images\logo_esprit.png
+INPUT .\images\logo_esprit.png
+INPUT .\images\logo_esprit.png
+INPUT .\images\captures\rapport.png
+INPUT .\images\captures\rapport.png
+INPUT .\images\captures\rapport.png
+INPUT .\images\captures\rapport.png
+INPUT .\images\captures\rapport.png
+INPUT .\images\captures\rapport.png
+INPUT .\images\captures\rapport.png
+INPUT .\images\captures\dark.png
+INPUT .\images\captures\dark.png
+INPUT .\images\captures\dark.png
+INPUT .\images\captures\dark.png
+INPUT .\images\captures\dark.png
+INPUT .\images\captures\dark.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
@@ -1240,26 +1276,13 @@ INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
-INPUT .\images\logo_esprit.png
+INPUT .\images\captures\ci.png
+INPUT .\images\captures\ci.png
+INPUT .\images\captures\ci.png
+INPUT .\images\captures\ci.png
+INPUT .\images\captures\ci.png
+INPUT .\images\captures\ci.png
+INPUT .\images\captures\ci.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
@@ -1298,6 +1321,10 @@ INPUT C:\Program Files\MiKTeX\fonts\vf\adobe\times\ptmrc8t.vf
 INPUT C:\Program Files\MiKTeX\fonts\tfm\adobe\times\ptmr8r.tfm
 INPUT C:\Program Files\MiKTeX\fonts\vf\adobe\times\ptmri8t.vf
 INPUT C:\Program Files\MiKTeX\fonts\tfm\adobe\times\ptmri8r.tfm
+INPUT .\images\logo_esprit.png
+INPUT .\images\logo_esprit.png
+INPUT .\images\logo_esprit.png
+INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
 INPUT .\images\logo_esprit.png
@@ -1388,8 +1415,6 @@ INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\symbols\msam10.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\symbols\msam10.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\urw\courier\ucrr8a.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\urw\courier\ucrr8a.pfb
-INPUT C:\Program Files\MiKTeX\fonts\type1\urw\courier\ucrro8a.pfb
-INPUT C:\Program Files\MiKTeX\fonts\type1\urw\courier\ucrro8a.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\urw\times\utmb8a.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\urw\times\utmb8a.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\urw\times\utmbi8a.pfb

@@ -165,15 +165,29 @@
 \newcommand{\ligneentete}{\rowcolor{esprittable}}
 
 % Tableau de description textuelle d'un cas d'utilisation
+% (argument optionnel : etiquette du tableau, pour \ref)
+% Secable entre deux lignes : un cas trop long pour la fin de page se poursuit sur
+% la suivante au lieu de laisser un blanc ; la legende reste sous la derniere ligne.
 \newcommand{\legendecasu}{}
-\newenvironment{casutilisation}[1]
-  {\renewcommand{\legendecasu}{#1}%
-   \begin{table}[H]\centering\small
-   \renewcommand{\arraystretch}{1.25}
-   \begin{tabular}{@{}>{\columncolor{esprittable}\color{white}\bfseries}p{3.3cm}
+\newcommand*{\etiquettecasu}{}
+% Etape d'un scenario : une par ligne de tableau, pour autoriser la coupure de page
+% entre deux etapes
+\newcommand{\etape}[2]{\hangindent=1.3em\hangafter=1\noindent\makebox[1.3em][l]{#1}#2}
+\newenvironment{casutilisation}[2][]
+  {\renewcommand{\legendecasu}{#2}\renewcommand*{\etiquettecasu}{#1}%
+   \begingroup\small
+   \renewcommand{\arraystretch}{1.25}%
+   \begin{longtable}{@{}>{\columncolor{esprittable}\leavevmode\color{white}\bfseries}p{3.3cm}
                      |p{10.4cm}@{}}
-   \hline}
-  {\\\hline\end{tabular}\par\vspace{2pt}\caption{\legendecasu}\end{table}}
+   \hline
+   \endhead
+   \hline
+   \multicolumn{2}{@{}r}{\small\itshape suite page suivante}\\
+   \endfoot
+   \hline
+   \caption{\legendecasu}\ifx\etiquettecasu\empty\else\label{\etiquettecasu}\fi\\
+   \endlastfoot}
+  {\\\end{longtable}\endgroup}
 
 % ── Boite « en cours de redaction » ──────────────────────────────────────────
 \newcommand{\enattente}[1]{%

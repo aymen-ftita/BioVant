@@ -31,33 +31,13 @@ une plateforme autour de modèles dont rien ne garantissait encore la qualité.
 \subsection{Backlog de la release}
 
 La release regroupe les huit premiers récits du backlog, ceux de l'épic E1, pour
-76 points de complexité
-répartis sur deux sprints de quatre semaines (tableau~\ref{tab:rel1}).
+76 points de complexité répartis sur deux sprints de quatre semaines. Le sprint~1, du
+26 janvier au 22 février, porte les récits US-01 à US-04 (29 points) : il construit la
+chaîne de préparation du signal et la valide sur un jeu public. Le sprint~2, du 23 février
+au 22 mars, porte les récits US-05 à US-08 (47 points) : il prépare la cohorte clinique et
+entraîne les trois familles d'architectures. Ce découpage reprend celui du
+tableau~\ref{tab:sprints}.
 
-\begin{table}[H]
-\centering\small
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{@{}L{1.4cm}|L{3.0cm}|L{5.4cm}|L{2.7cm}|c@{}}
-\hline
-\ligneentete \entete{Sprint} & \entete{Période} & \entete{Objectif du sprint} &
-\entete{Récits} & \entete{Pts} \\
-\hline
-Sprint 1 & 26 jan. -- 22 fév. &
-Construire la chaîne de préparation du signal et la valider sur un jeu public &
-US-01 à 04 & 29 \\
-\hline
-Sprint 2 & 23 fév. -- 22 mars &
-Préparer la cohorte clinique et entraîner les trois familles d'architectures &
-US-05 à 08 & 47 \\
-\hline
-\multicolumn{3}{@{}r|}{\textbf{Total de la release}} & \textbf{8 récits} & \textbf{76} \\
-\hline
-\end{tabular}
-\caption{Backlog de la release 1}
-\label{tab:rel1}
-\end{table}
-
-\noindent
 L'incrément attendu en fin de release comprend un corpus d'apprentissage étiqueté conforme
 au référentiel AASM et douze modèles de base couvrant trois architectures, deux montages et
 deux granularités.
@@ -76,7 +56,8 @@ d'accès aux cohortes cliniques, que nous avons choisi d'occuper plutôt que de 
 \subsection{Objectif du sprint}
 
 L'objectif était double. Il s'agissait d'abord de construire la chaîne de
-préparation du signal : lire un fichier au format EDF quel que soit son constructeur,
+préparation du signal : lire un fichier au format EDF~\cite{kemp1992} quel que soit son
+constructeur,
 en extraire les cinq dérivations utiles, uniformiser la fréquence d'échantillonnage,
 découper le signal en fenêtres conformes au référentiel AASM et neutraliser les écarts
 d'amplitude entre sujets.
@@ -100,34 +81,40 @@ chaîne était éprouvée et il n'a plus été question que de la rejouer à plu
 Le sprint a embarqué quatre récits utilisateur pour un total de 29 points de
 complexité, détaillés au tableau~\ref{tab:bl-s1}.
 
-\begin{table}[H]
-\centering\small
-\renewcommand{\arraystretch}{1.15}
-\begin{tabular}{@{}c|L{2.5cm}|L{4.6cm}|L{4.6cm}|c@{}}
+\begingroup\footnotesize\renewcommand{\arraystretch}{1.1}
+\begin{longtable}{@{}c|L{2.3cm}|L{4.4cm}|L{4.4cm}|c@{}}
 \hline
 \ligneentete \entete{ID} & \entete{Module} & \entete{R\'ecit utilisateur} & \entete{T\^aches} & \entete{Estim.} \\
 \hline
-\multirow{3}{*}{US-01} & \multirow{3}{=}{Lecture des enregistrements} & \multirow{3}{=}{En tant que syst\`eme, je veux lire un fichier EDF et en extraire les d\'erivations physiologiques} & Int\'egrer la biblioth\`eque de lecture des formats physiologiques & \multirow{3}{*}{8 pts} \\
- &  &  & Inventorier les d\'erivations et la fr\'equence native &  \\
+\endfirsthead
+\multicolumn{5}{@{}l}{\small\itshape Tableau~\ref{tab:bl-s1} (suite)}\\
+\hline
+\ligneentete \entete{ID} & \entete{Module} & \entete{R\'ecit utilisateur} & \entete{T\^aches} & \entete{Estim.} \\
+\hline
+\endhead
+\multicolumn{5}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\hline
+\caption{Sprint Backlog --- Sprint 1}\label{tab:bl-s1}\\
+\endlastfoot
+\multirow{3}{*}{US-01} & \multirow{3}{=}{Lecture des enregistrements} & \multirow{3}{=}{En tant que syst\`eme, je veux lire un fichier EDF et en extraire les d\'erivations physiologiques} & Int\'egrer la biblioth\`eque de lecture des formats physiologiques & \multirow{3}{*}{8 pts} \\*
+ &  &  & Inventorier les d\'erivations et la fr\'equence native &  \\*
  &  &  & G\'erer les fichiers tronqu\'es ou illisibles &  \\
 \hline
-\multirow{3}{*}{US-02} & \multirow{3}{=}{R\'esolution des canaux} & \multirow{3}{=}{En tant que syst\`eme, je veux r\'esoudre les canaux malgr\'e l'h\'et\'erog\'en\'eit\'e des conventions de nommage} & Construire la table d'alias des cinq emplacements logiques & \multirow{3}{*}{5 pts} \\
- &  &  & D\'efinir la strat\'egie de repli sur l'EEG principal &  \\
+\multirow{3}{*}{US-02} & \multirow{3}{=}{R\'esolution des canaux} & \multirow{3}{=}{En tant que syst\`eme, je veux r\'esoudre les canaux malgr\'e l'h\'et\'erog\'en\'eit\'e des conventions de nommage} & Construire la table d'alias des cinq emplacements logiques & \multirow{3}{*}{5 pts} \\*
+ &  &  & D\'efinir la strat\'egie de repli sur l'EEG principal &  \\*
  &  &  & Exiger le montage complet \`a l'entra\^inement &  \\
 \hline
-\multirow{4}{*}{US-03} & \multirow{4}{=}{Normalisation du signal} & \multirow{4}{=}{En tant que syst\`eme, je veux r\'e\'echantillonner, segmenter en \'epoques de 30 s et normaliser} & R\'e\'echantillonner \`a 100\,Hz par m\'ethode de Fourier & \multirow{4}{*}{8 pts} \\
- &  &  & D\'ecouper en fen\^etres de 3\,000 \'echantillons &  \\
- &  &  & Centrer et r\'eduire chaque fen\^etre &  \\
+\multirow{4}{*}{US-03} & \multirow{4}{=}{Normalisation du signal} & \multirow{4}{=}{En tant que syst\`eme, je veux r\'e\'echantillonner, segmenter en \'epoques de 30 s et normaliser} & R\'e\'echantillonner \`a 100\,Hz par m\'ethode de Fourier & \multirow{4}{*}{8 pts} \\*
+ &  &  & D\'ecouper en fen\^etres de 3\,000 \'echantillons &  \\*
+ &  &  & Centrer et r\'eduire chaque fen\^etre &  \\*
  &  &  & S\'erialiser en tenseurs par sujet &  \\
 \hline
-\multirow{3}{*}{US-04} & \multirow{3}{=}{Amor\c{c}age} & \multirow{3}{=}{En tant qu'ing\'enieur, je veux valider la cha\^ine sur un jeu public avant l'acc\`es aux cohortes cliniques} & T\'el\'echarger et pr\'eparer le jeu public & \multirow{3}{*}{8 pts} \\
- &  &  & Entra\^iner un mod\`ele de faisabilit\'e &  \\
+\multirow{3}{*}{US-04} & \multirow{3}{=}{Amor\c{c}age} & \multirow{3}{=}{En tant qu'ing\'enieur, je veux valider la cha\^ine sur un jeu public avant l'acc\`es aux cohortes cliniques} & T\'el\'echarger et pr\'eparer le jeu public & \multirow{3}{*}{8 pts} \\*
+ &  &  & Entra\^iner un mod\`ele de faisabilit\'e &  \\*
  &  &  & V\'erifier la boucle compl\`ete de bout en bout &  \\
-\hline
-\end{tabular}
-\caption{Sprint Backlog --- Sprint 1}
-\label{tab:bl-s1}
-\end{table}
+\end{longtable}
+\endgroup
 
 \subsection{Analyse}
 
@@ -140,57 +127,25 @@ principal est donc porté par le moteur d'inférence, acteur secondaire du syst�
 
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}[
-    x=1cm,y=1cm,
-    uc/.style     = {ellipse, draw=hypnoblue!60, fill=hypnolight,
-                     align=center, font=\scriptsize, text width=2.6cm,
-                     inner sep=1.5pt, minimum height=1.0cm},
-    ucp/.style    = {ellipse, draw=hypnored!70, fill=hypnored!7,
-                     align=center, font=\scriptsize\bfseries, text width=2.6cm,
-                     inner sep=1.5pt, minimum height=1.0cm},
-    lien/.style   = {hypnogray!75, line width=0.55pt},
-    rel/.style    = {-{Latex[length=2mm]}, hypnoblue!70, line width=0.5pt, dashed},
-    et/.style     = {font=\tiny\itshape, text=hypnoblue!85, fill=white, inner sep=1pt},
-    nomact/.style = {font=\scriptsize\bfseries, align=center, text width=2.2cm},
-  ]
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \draw[cusys] (3.0,-2.85) rectangle (12.4,3.3);
+  \node[cutitre] at (3.2,3.2) {Module de préparation des données};
 
-  \tikzset{acteur/.pic={
-      \draw[hypnoblue,line width=0.8pt] (0,0) circle (0.17);
-      \draw[hypnoblue,line width=0.8pt] (0,-0.17) -- (0,-0.66);
-      \draw[hypnoblue,line width=0.8pt] (-0.28,-0.34) -- (0.28,-0.34);
-      \draw[hypnoblue,line width=0.8pt] (0,-0.66) -- (-0.24,-1.04);
-      \draw[hypnoblue,line width=0.8pt] (0,-0.66) -- (0.24,-1.04);}}
+  \node[cup] (prep) at (5.1, 1.0)  {Préparer un\\enregistrement};
+  \node[cu]  (ser)  at (5.1,-1.8)  {Sérialiser le\\corpus};
 
-  % Frontiere du systeme
-  \draw[hypnoblue!55,line width=0.9pt,rounded corners=3pt]
-       (3.1,-6.0) rectangle (12.5,2.4);
-  \node[font=\small\bfseries,text=hypnoblue,anchor=north west] at (3.35,2.25)
-       {Module de préparation des données};
+  \node[cu]  (lire) at (10.2, 2.2) {Décoder le\\fichier EDF};
+  \node[cu]  (res)  at (10.2, 1.1) {Résoudre les\\dérivations};
+  \node[cu]  (ree)  at (10.2, 0.0) {Rééchantillonner\\à 100\,Hz};
+  \node[cu]  (seg)  at (10.2,-1.1) {Segmenter en\\époques de 30\,s};
+  \node[cu]  (nor)  at (10.2,-2.2) {Normaliser\\chaque époque};
 
-  % Cas principal et cas terminal, colonne de gauche
-  \node[ucp] (prep) at (5.1, 0.9)  {Préparer un\\enregistrement};
-  \node[uc]  (ser)  at (5.1,-4.3)  {Sérialiser le\\corpus};
+  \pic[pic text={Moteur\\d'inférence}] at (1.2,0.55) {cuacteur};
+  \draw[culien] (1.55,0.25) -- (prep.west);
+  \draw[culien] (1.55,0.25) -- (ser.west);
 
-  % Sous-cas inclus, colonne de droite
-  \node[uc]  (lire) at (10.0, 1.2) {Décoder le\\fichier EDF};
-  \node[uc]  (res)  at (10.0,-0.3) {Résoudre les\\dérivations};
-  \node[uc]  (ree)  at (10.0,-1.8) {Rééchantillonner\\à 100\,Hz};
-  \node[uc]  (seg)  at (10.0,-3.3) {Segmenter en\\époques de 30\,s};
-  \node[uc]  (nor)  at (10.0,-4.8) {Normaliser\\chaque époque};
-
-  % Acteur
-  \pic at (1.3,0.6) {acteur};
-  \node[nomact,anchor=north] at (1.3,-0.05) {Moteur\\d'inférence};
-
-  \draw[lien] (1.7,0.25) -- (prep.west);
-  \draw[lien] (1.7,0.25) -- (ser.west);
-
-  \draw[rel] (prep) -- node[et,pos=0.62] {$\ll$include$\gg$} (lire);
-  \draw[rel] (prep) -- node[et,pos=0.62] {$\ll$include$\gg$} (res);
-  \draw[rel] (prep) -- node[et,pos=0.62] {$\ll$include$\gg$} (ree);
-  \draw[rel] (prep) -- node[et,pos=0.66] {$\ll$include$\gg$} (seg);
-  \draw[rel] (prep) -- node[et,pos=0.70] {$\ll$include$\gg$} (nor);
-
+  \foreach \c/\p in {lire/0.62,res/0.62,ree/0.62,seg/0.64,nor/0.66}
+    \draw[curel] (prep) -- node[cuet,pos=\p] {$\ll$include$\gg$} (\c);
 \end{tikzpicture}
 \caption{Diagramme des cas d'utilisation du sprint 1 --- préparation des données}
 \label{fig:uc-s1}
@@ -198,33 +153,24 @@ principal est donc porté par le moteur d'inférence, acteur secondaire du syst�
 
 \subsubsection{Description textuelle des cas d'utilisation}
 
-\begin{casutilisation}{Description textuelle du cas « Préparer un enregistrement »}
+Le tableau~\ref{tab:cu-s1} déroule le cas « Préparer un enregistrement », du décodage du
+fichier à la sérialisation du résultat.
+
+\begin{casutilisation}[tab:cu-s1]{Description textuelle du cas « Préparer un enregistrement »}
 Titre & Préparer un enregistrement \\ \hline
 Acteur & Moteur d'inférence \\ \hline
 Description & Transformer un enregistrement polysomnographique brut en un ensemble de
 fenêtres normalisées, directement exploitables par un modèle de classification \\ \hline
 Préconditions & Un fichier au format EDF est disponible et lisible \\ \hline
-Scénario de base &
-\begin{minipage}[t]{\linewidth}
-\begin{enumerate}[leftmargin=1.1em,itemsep=1pt,topsep=3pt]
-  \item Le système décode le fichier et inventorie ses dérivations.
-  \item Il apparie chaque dérivation attendue à son équivalent dans le fichier.
-  \item Il ramène l'ensemble des signaux à \SI{100}{\hertz}.
-  \item Il découpe le signal en fenêtres de \num{3000} échantillons.
-  \item Il centre et réduit chaque fenêtre indépendamment.
-  \item Il sérialise le résultat sous forme de tenseur accompagné de ses étiquettes.
-\end{enumerate}
-\end{minipage} \\ \hline
-Scénario alternatif &
-\begin{minipage}[t]{\linewidth}
-\begin{itemize}[leftmargin=1.1em,itemsep=1pt,topsep=3pt]
-  \item \textbf{2a} --- Une dérivation est absente : en production, repli documenté sur
-        l'EEG principal ; à l'entraînement, le sujet est écarté du corpus.
-  \item \textbf{4a} --- L'enregistrement est plus court qu'une époque : le traitement
-        s'interrompt avec un message explicite.
-  \item \textbf{6a} --- L'hypnogramme de référence est absent : le sujet est écarté.
-\end{itemize}
-\end{minipage}
+Scénario de base & \etape{1.}{Le système décode le fichier et inventorie ses dérivations.} \\*
+ & \etape{2.}{Il apparie chaque dérivation attendue à son équivalent dans le fichier.} \\
+ & \etape{3.}{Il ramène l'ensemble des signaux à \SI{100}{\hertz}.} \\
+ & \etape{4.}{Il découpe le signal en fenêtres de \num{3000} échantillons.} \\
+ & \etape{5.}{Il centre et réduit chaque fenêtre indépendamment.} \\*
+ & \etape{6.}{Il sérialise le résultat sous forme de tenseur accompagné de ses étiquettes.} \\ \hline
+Scénario alternatif & \etape{\textbullet}{\textbf{2a} --- Une dérivation est absente : en production, repli documenté sur l'EEG principal ; à l'entraînement, le sujet est écarté du corpus.} \\
+ & \etape{\textbullet}{\textbf{4a} --- L'enregistrement est plus court qu'une époque : le traitement s'interrompt avec un message explicite.} \\*
+ & \etape{\textbullet}{\textbf{6a} --- L'hypnogramme de référence est absent : le sujet est écarté.}
 \end{casutilisation}
 
 \subsection{Conception}
@@ -236,8 +182,9 @@ enregistrement.
 
 \begin{figure}[H]
 \centering
-\resizebox{0.96\textwidth}{!}{%
+\resizebox{0.86\textwidth}{!}{%
 \begin{sequencediagram}
+  \def\unitfactor{0.48}% espacement vertical resserre
   \newthread[hypnolight]{p}{\scriptsize Script de préparation}
   \newinst[2.0]{l}{\scriptsize Lecteur EDF}
   \newinst[2.0]{a}{\scriptsize Résolveur de canaux}
@@ -390,11 +337,12 @@ retenus, pour un total de \num{195130} époques de 30 secondes. Le
 corpus est filtré et non échantillonné : un sujet est écarté s'il lui manque une
 des cinq dérivations requises ou son fichier d'annotations. Les sujets retenus sont donc
 les premiers de la cohorte à satisfaire le montage complet, ce qui introduit un biais de
-sélection dont nous discuterons la portée.
+sélection dont nous discuterons la portée. La figure~\ref{fig:distribution} donne la
+répartition des stades dans ce corpus, aux deux granularités.
 
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}[x=1cm,y=1cm]
+\begin{tikzpicture}[x=1cm,y=0.75cm]
 
   \def\W{11.4}
 
@@ -443,7 +391,7 @@ sélection dont nous discuterons la portée.
        {corpus SHHS1 --- 196 enregistrements, \num{195130} époques de 30 secondes};
 
 \end{tikzpicture}
-\vspace{0.35cm}
+\vspace{0.1cm}
 \caption[Distribution des stades dans le corpus SHHS1]%
         {Distribution des stades dans le corpus d'entraînement, aux deux granularités.}
 \label{fig:distribution}
@@ -509,33 +457,39 @@ sur un protocole identique.
 Le sprint a embarqué quatre récits pour 47 points de complexité
 (tableau~\ref{tab:bl-s2}).
 
-\begin{table}[H]
-\centering\small
-\renewcommand{\arraystretch}{1.15}
-\begin{tabular}{@{}c|L{2.5cm}|L{4.6cm}|L{4.6cm}|c@{}}
+\begingroup\footnotesize\renewcommand{\arraystretch}{1.1}
+\begin{longtable}{@{}c|L{2.3cm}|L{4.4cm}|L{4.4cm}|c@{}}
 \hline
 \ligneentete \entete{ID} & \entete{Module} & \entete{R\'ecit utilisateur} & \entete{T\^aches} & \entete{Estim.} \\
 \hline
-\multirow{3}{*}{US-05} & \multirow{3}{=}{Corpus \`a l'\'echelle} & \multirow{3}{=}{En tant qu'ing\'enieur, je veux pr\'etraiter les 196 enregistrements de la cohorte clinique} & Rapatrier la cohorte apr\`es obtention de l'acc\`es & \multirow{3}{*}{8 pts} \\
- &  &  & Rejouer la cha\^ine de pr\'eparation \`a l'\'echelle &  \\
+\endfirsthead
+\multicolumn{5}{@{}l}{\small\itshape Tableau~\ref{tab:bl-s2} (suite)}\\
+\hline
+\ligneentete \entete{ID} & \entete{Module} & \entete{R\'ecit utilisateur} & \entete{T\^aches} & \entete{Estim.} \\
+\hline
+\endhead
+\multicolumn{5}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\hline
+\caption{Sprint Backlog --- Sprint 2}\label{tab:bl-s2}\\
+\endlastfoot
+\multirow{3}{*}{US-05} & \multirow{3}{=}{Corpus \`a l'\'echelle} & \multirow{3}{=}{En tant qu'ing\'enieur, je veux pr\'etraiter les 196 enregistrements de la cohorte clinique} & Rapatrier la cohorte apr\`es obtention de l'acc\`es & \multirow{3}{*}{8 pts} \\*
+ &  &  & Rejouer la cha\^ine de pr\'eparation \`a l'\'echelle &  \\*
  &  &  & Contr\^oler la distribution des classes obtenue &  \\
 \hline
-\multirow{3}{*}{US-06} & \multirow{3}{=}{R\'eseau convolutif} & \multirow{3}{=}{En tant que syst\`eme, je veux classer chaque \'epoque avec un r\'eseau convolutif multi-\'echelle} & Concevoir les deux branches d'\'echelles distinctes & \multirow{3}{*}{13 pts} \\
- &  &  & Impl\'ementer la boucle d'entra\^inement &  \\
+\multirow{3}{*}{US-06} & \multirow{3}{=}{R\'eseau convolutif} & \multirow{3}{=}{En tant que syst\`eme, je veux classer chaque \'epoque avec un r\'eseau convolutif multi-\'echelle} & Concevoir les deux branches d'\'echelles distinctes & \multirow{3}{*}{13 pts} \\*
+ &  &  & Impl\'ementer la boucle d'entra\^inement &  \\*
  &  &  & Entra\^iner les quatre variantes &  \\
 \hline
-\multirow{3}{*}{US-07} & \multirow{3}{=}{R\'eseau r\'ecurrent} & \multirow{3}{=}{En tant que syst\`eme, je veux classer chaque \'epoque avec un r\'eseau r\'ecurrent \`a pooling attentionnel} & Impl\'ementer le r\'eseau bidirectionnel \`a m\'emoire longue & \multirow{3}{*}{13 pts} \\
- &  &  & Ajouter le m\'ecanisme d'attention temporelle &  \\
+\multirow{3}{*}{US-07} & \multirow{3}{=}{R\'eseau r\'ecurrent} & \multirow{3}{=}{En tant que syst\`eme, je veux classer chaque \'epoque avec un r\'eseau r\'ecurrent \`a pooling attentionnel} & Impl\'ementer le r\'eseau bidirectionnel \`a m\'emoire longue & \multirow{3}{*}{13 pts} \\*
+ &  &  & Ajouter le m\'ecanisme d'attention temporelle &  \\*
  &  &  & Entra\^iner les quatre variantes &  \\
 \hline
-\multirow{3}{*}{US-08} & \multirow{3}{=}{R\'eseau attentionnel} & \multirow{3}{=}{En tant que syst\`eme, je veux classer chaque \'epoque avec un Transformer par patchs} & D\'ecouper l'\'epoque en fragments et les projeter & \multirow{3}{*}{13 pts} \\
- &  &  & Ajouter le jeton de synth\`ese et l'encodage positionnel &  \\
+\multirow{3}{*}{US-08} & \multirow{3}{=}{R\'eseau attentionnel} & \multirow{3}{=}{En tant que syst\`eme, je veux classer chaque \'epoque avec un Transformer par patchs} & D\'ecouper l'\'epoque en fragments et les projeter & \multirow{3}{*}{13 pts} \\*
+ &  &  & Ajouter le jeton de synth\`ese et l'encodage positionnel &  \\*
  &  &  & Entra\^iner les quatre variantes &  \\
-\hline
-\end{tabular}
-\caption{Sprint Backlog --- Sprint 2}
-\label{tab:bl-s2}
-\end{table}
+\end{longtable}
+\endgroup
 
 \subsection{Analyse}
 
@@ -547,51 +501,26 @@ sprint~4, dans la release~2, lorsque le service d'inférence sera exposé.
 
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}[
-    x=1cm,y=1cm,
-    uc/.style     = {ellipse, draw=hypnoblue!60, fill=hypnolight,
-                     align=center, font=\scriptsize, text width=2.7cm,
-                     inner sep=1.5pt, minimum height=1.0cm},
-    ucp/.style    = {ellipse, draw=hypnored!70, fill=hypnored!7,
-                     align=center, font=\scriptsize\bfseries, text width=2.7cm,
-                     inner sep=1.5pt, minimum height=1.0cm},
-    lien/.style   = {hypnogray!75, line width=0.55pt},
-    rel/.style    = {-{Latex[length=2mm]}, hypnoblue!70, line width=0.5pt, dashed},
-    et/.style     = {font=\tiny\itshape, text=hypnoblue!85, fill=white, inner sep=1pt},
-    nomact/.style = {font=\scriptsize\bfseries, align=center, text width=2.2cm},
-  ]
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \draw[cusys] (3.0,-2.3) rectangle (12.4,2.75);
+  \node[cutitre] at (3.2,2.65) {Module de classification};
 
-  \tikzset{acteur/.pic={
-      \draw[hypnoblue,line width=0.8pt] (0,0) circle (0.17);
-      \draw[hypnoblue,line width=0.8pt] (0,-0.17) -- (0,-0.66);
-      \draw[hypnoblue,line width=0.8pt] (-0.28,-0.34) -- (0.28,-0.34);
-      \draw[hypnoblue,line width=0.8pt] (0,-0.66) -- (-0.24,-1.04);
-      \draw[hypnoblue,line width=0.8pt] (0,-0.66) -- (0.24,-1.04);}}
+  \node[cup] (cls) at (5.1, 0.7)  {Classer une\\époque};
+  \node[cu]  (sel) at (5.1,-1.4)  {Choisir la\\configuration};
 
-  \draw[hypnoblue!55,line width=0.9pt,rounded corners=3pt]
-       (3.1,-4.6) rectangle (12.5,2.4);
-  \node[font=\small\bfseries,text=hypnoblue,anchor=north west] at (3.35,2.25)
-       {Module de classification};
+  \node[cu]  (cnn) at (10.2, 1.65) {Extraire les motifs\\multi-échelles};
+  \node[cu]  (rec) at (10.2, 0.55) {Modéliser la\\dynamique temporelle};
+  \node[cu]  (att) at (10.2,-0.55) {Pondérer les\\fragments par attention};
+  \node[cu]  (pon) at (10.2,-1.65) {Pondérer les\\classes rares};
 
-  \node[ucp] (cls) at (5.2, 0.9)  {Classer une\\époque};
-  \node[uc]  (sel) at (5.2,-2.9)  {Choisir la\\configuration};
+  \pic[pic text={Moteur\\d'inférence}] at (1.2,0.55) {cuacteur};
+  \draw[culien] (1.55,0.25) -- (cls.west);
+  \draw[culien] (1.55,0.25) -- (sel.west);
 
-  \node[uc]  (cnn) at (10.1, 1.2) {Extraire les motifs\\multi-échelles};
-  \node[uc]  (rec) at (10.1,-0.4) {Modéliser la\\dynamique temporelle};
-  \node[uc]  (att) at (10.1,-2.0) {Pondérer les\\fragments par attention};
-  \node[uc]  (pon) at (10.1,-3.6) {Pondérer les\\classes rares};
-
-  \pic at (1.3,0.6) {acteur};
-  \node[nomact,anchor=north] at (1.3,-0.05) {Moteur\\d'inférence};
-
-  \draw[lien] (1.7,0.25) -- (cls.west);
-  \draw[lien] (1.7,0.25) -- (sel.west);
-
-  \draw[rel] (cls) -- node[et,pos=0.62] {$\ll$extend$\gg$} (cnn);
-  \draw[rel] (cls) -- node[et,pos=0.62] {$\ll$extend$\gg$} (rec);
-  \draw[rel] (cls) -- node[et,pos=0.64] {$\ll$extend$\gg$} (att);
-  \draw[rel] (cls) -- node[et,pos=0.68] {$\ll$include$\gg$} (pon);
-
+  \draw[curel] (cls) -- node[cuet,pos=0.62] {$\ll$extend$\gg$}  (cnn);
+  \draw[curel] (cls) -- node[cuet,pos=0.62] {$\ll$extend$\gg$}  (rec);
+  \draw[curel] (cls) -- node[cuet,pos=0.62] {$\ll$extend$\gg$}  (att);
+  \draw[curel] (cls) -- node[cuet,pos=0.66] {$\ll$include$\gg$} (pon);
 \end{tikzpicture}
 \caption{Diagramme des cas d'utilisation du sprint 2 --- classification des stades}
 \label{fig:uc-s2}
@@ -599,32 +528,23 @@ sprint~4, dans la release~2, lorsque le service d'inférence sera exposé.
 
 \subsubsection{Description textuelle des cas d'utilisation}
 
-\begin{casutilisation}{Description textuelle du cas « Classer une époque »}
+Le cas « Classer une époque » est décrit au tableau~\ref{tab:cu-s2}, avec ses deux
+scénarios alternatifs.
+
+\begin{casutilisation}[tab:cu-s2]{Description textuelle du cas « Classer une époque »}
 Titre & Classer une époque \\ \hline
 Acteur & Moteur d'inférence \\ \hline
 Description & Attribuer à une fenêtre de 30 secondes le stade de vigilance qui la
 caractérise, parmi trois ou cinq classes selon la configuration \\ \hline
 Préconditions & Un tenseur d'époques normalisées est disponible ; le modèle
 correspondant à la configuration demandée est chargé \\ \hline
-Scénario de base &
-\begin{minipage}[t]{\linewidth}
-\begin{enumerate}[leftmargin=1.1em,itemsep=1pt,topsep=3pt]
-  \item Le système sélectionne le modèle correspondant au montage et à la granularité.
-  \item Il constitue des lots d'époques et les transfère au processeur graphique.
-  \item Le modèle produit un vecteur de scores par époque.
-  \item Le système retient la classe de score maximal.
-  \item Il restitue la séquence de stades pour l'enregistrement complet.
-\end{enumerate}
-\end{minipage} \\ \hline
-Scénario alternatif &
-\begin{minipage}[t]{\linewidth}
-\begin{itemize}[leftmargin=1.1em,itemsep=1pt,topsep=3pt]
-  \item \textbf{1a} --- Le modèle demandé n'est pas disponible : l'opération est refusée
-        avec un message explicite.
-  \item \textbf{2a} --- La mémoire du processeur graphique est insuffisante : le
-        traitement bascule sur le processeur central.
-\end{itemize}
-\end{minipage}
+Scénario de base & \etape{1.}{Le système sélectionne le modèle correspondant au montage et à la granularité.} \\*
+ & \etape{2.}{Il constitue des lots d'époques et les transfère au processeur graphique.} \\
+ & \etape{3.}{Le modèle produit un vecteur de scores par époque.} \\
+ & \etape{4.}{Le système retient la classe de score maximal.} \\*
+ & \etape{5.}{Il restitue la séquence de stades pour l'enregistrement complet.} \\ \hline
+Scénario alternatif & \etape{\textbullet}{\textbf{1a} --- Le modèle demandé n'est pas disponible : l'opération est refusée avec un message explicite.} \\*
+ & \etape{\textbullet}{\textbf{2a} --- La mémoire du processeur graphique est insuffisante : le traitement bascule sur le processeur central.}
 \end{casutilisation}
 
 \subsection{Conception}
@@ -635,8 +555,9 @@ La figure~\ref{fig:seq-s2} décrit la boucle d'entraînement d'un modèle.
 
 \begin{figure}[H]
 \centering
-\resizebox{0.96\textwidth}{!}{%
+\resizebox{0.78\textwidth}{!}{%
 \begin{sequencediagram}
+  \def\unitfactor{0.44}% espacement vertical resserre
   \newthread[hypnolight]{e}{\scriptsize Boucle d'entraînement}
   \newinst[2.0]{c}{\scriptsize Corpus en mémoire}
   \newinst[2.0]{m}{\scriptsize Modèle}
@@ -678,7 +599,7 @@ capter une facette différente du signal.
 Le premier modèle exploite une observation issue de l'étude préalable : les éléments
 graphiques du référentiel AASM vivent à des échelles temporelles différentes. Un fuseau
 du sommeil dure environ une demi-seconde et oscille autour de 12 à 14 hertz ; une onde
-lente s'étale sur plus d'une seconde. Un noyau de convolution unique ne peut capter les
+lente s'étale sur plus d'une seconde~\cite{aasm2020}. Un noyau de convolution unique ne peut capter les
 deux.
 
 L'architecture retenue comporte donc deux branches parallèles appliquées au même signal
@@ -843,26 +764,33 @@ Une époque de 30 secondes échantillonnée à \SI{100}{\hertz} sur cinq dériva
 dépasse de plusieurs ordres de grandeur ce qu'une station de développement peut contenir
 (tableau~\ref{tab:empreinte}).
 
-\begin{table}[H]
-\centering
-
-\small
-\begin{tabular}{@{}L{5.0cm}rrrl@{}}
+\begingroup\small
+\begin{longtable}{@{}L{5.7cm}rrrl@{}}
 \toprule
 \textbf{Configuration} & \textbf{Sujets} & \textbf{Époques} & \textbf{Empreinte} &
 \textbf{Tient dans} \\
 \midrule
+\endfirsthead
+\multicolumn{5}{@{}l}{\small\itshape Tableau~\ref{tab:empreinte} (suite)}\\
+\toprule
+\textbf{Configuration} & \textbf{Sujets} & \textbf{Époques} & \textbf{Empreinte} &
+\textbf{Tient dans} \\
+\midrule
+\endhead
+\bottomrule
+\multicolumn{5}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\bottomrule
+\caption{Empreinte du corpus d'entraînement en simple précision}\label{tab:empreinte}\\
+\endlastfoot
 2 dérivations & 196 & \num{195130} & \SI{4,7}{\giga\octet} & mémoire vidéo et vive \\
 5 dérivations & 196 & \num{195130} & \SI{11,7}{\giga\octet} & mémoire vive seulement \\
 5 dérivations, variante attentionnelle & 150 & \num{148958} & \SI{8,9}{\giga\octet} &
 mémoire vive seulement \\
 \textbf{cohorte SHHS1 complète} & \num{5793} & $\approx$ \num{5800000} &
 $\approx$ \SI{346}{\giga\octet} & ni l'une ni l'autre \\
-\bottomrule
-\end{tabular}
-\caption{Empreinte du corpus d'entraînement en simple précision}
-\label{tab:empreinte}
-\end{table}
+\end{longtable}
+\endgroup
 
 La cohorte complète représenterait environ \SI{346}{\giga\octet}. Comme les fichiers
 préparés sont stockés exactement tels qu'ils seront chargés, ce chiffre vaut aussi bien
@@ -872,14 +800,27 @@ faire circuler jusqu'au processeur graphique.
 
 \paragraph{Trois stratégies de résidence des données}
 
-\begin{table}[H]
-\centering
+Le tableau~\ref{tab:residence} compare les trois façons de tenir le corpus à disposition
+du processeur graphique pendant l'entraînement, avec la limite de chacune et la décision
+prise.
 
-\small
-\begin{tabular}{@{}L{2.9cm}L{4.5cm}L{4.3cm}c@{}}
+\begingroup\small
+\begin{longtable}{@{}L{3.0cm}L{5.2cm}L{5.0cm}c@{}}
 \toprule
 \textbf{Stratégie} & \textbf{Principe} & \textbf{Limite} & \textbf{Décision} \\
 \midrule
+\endfirsthead
+\multicolumn{4}{@{}l}{\small\itshape Tableau~\ref{tab:residence} (suite)}\\
+\toprule
+\textbf{Stratégie} & \textbf{Principe} & \textbf{Limite} & \textbf{Décision} \\
+\midrule
+\endhead
+\bottomrule
+\multicolumn{4}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\bottomrule
+\caption{Stratégies de résidence des données pendant l'entraînement}\label{tab:residence}\\
+\endlastfoot
 Tout en mémoire vidéo &
 Le corpus est transféré une fois sur le processeur graphique ; plus aucune copie
 pendant l'entraînement &
@@ -896,11 +837,8 @@ Lecture paresseuse &
 Chaque lot est relu sur disque à la volée ; l'empreinte mémoire devient négligeable &
 Le processeur graphique attend le disque à chaque itération &
 écartée \\
-\bottomrule
-\end{tabular}
-\caption{Stratégies de résidence des données pendant l'entraînement}
-\label{tab:residence}
-\end{table}
+\end{longtable}
+\endgroup
 
 La lecture paresseuse aurait permis d'exploiter les \num{5793} enregistrements, mais en
 affamant le processeur graphique : le temps par époque devient dominé par les
@@ -928,7 +866,8 @@ seule variante compte \num{14896} époques au lieu de \num{19513}.
 
 \paragraph{Réglages d'entraînement}
 
-Quatre réglages découlent directement de la contrainte mémoire. La précision mixte tient
+Quatre réglages découlent directement de la contrainte mémoire. La précision
+mixte~\cite{micikevicius2018} tient
 les activations en demi-précision et les accumulations en simple précision, avec mise à
 l'échelle des gradients : l'empreinte des activations est divisée par deux et les unités
 tensorielles y gagnent en débit. Les lots transitent par une zone de mémoire
@@ -939,10 +878,11 @@ tenseur de \SI{11,7}{\giga\octet} sans rien précharger. Les segments extensible
 l'allocateur limitent enfin la fragmentation, qui provoquait des échecs d'allocation en
 fin d'entraînement.
 
-Les autres réglages portent sur l'optimisation. L'optimiseur est AdamW, de pas initial
-\num{5e-4}, qui découple la régularisation de l'adaptation du pas ; un recuit cosinus
-fait décroître ce pas jusqu'à \num{1e-6} au fil des trente époques. Le gradient est
-écrêté à \num{1,0}, sans quoi les gradients du modèle récurrent explosent sur des
+Les autres réglages portent sur l'optimisation. L'optimiseur est
+AdamW~\cite{loshchilov2019}, de pas initial \num{5e-4}, qui découple la régularisation de
+l'adaptation du pas ; un recuit cosinus~\cite{loshchilov2017} fait décroître ce pas jusqu'à
+\num{1e-6} au fil des trente époques. Le gradient est écrêté à
+\num{1,0}~\cite{pascanu2013}, sans quoi les gradients du modèle récurrent explosent sur des
 séquences de \num{3000} pas. Le point de contrôle retenu est celui qui maximise le
 $\kappa$ de validation, et non celui qui minimise la perte : sur des classes aussi
 déséquilibrées, la perte peut s'améliorer pendant que la classe minoritaire se dégrade,
@@ -967,39 +907,49 @@ en pratique.
 
 \paragraph{Les douze modèles}
 
-\begin{table}[H]
-\centering
+Le tableau~\ref{tab:12modeles} rapporte, pour chaque configuration, les performances des
+trois architectures sur le jeu de test.
 
-\small
-\begin{tabular}{@{}llcccc@{}}
+\begingroup\small
+\begin{longtable}{@{}llcccc@{}}
 \toprule
 \textbf{Configuration} & \textbf{Architecture} & \textbf{Exactitude} &
 \textbf{$\kappa$} & \textbf{F1 macro} & \textbf{F1 pondéré} \\
 \midrule
+\endfirsthead
+\multicolumn{6}{@{}l}{\small\itshape Tableau~\ref{tab:12modeles} (suite)}\\
+\toprule
+\textbf{Configuration} & \textbf{Architecture} & \textbf{Exactitude} &
+\textbf{$\kappa$} & \textbf{F1 macro} & \textbf{F1 pondéré} \\
+\midrule
+\endhead
+\bottomrule
+\multicolumn{6}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\bottomrule
+\caption{Performances des douze modèles de base sur le jeu de test}\label{tab:12modeles}\\
+\endlastfoot
 \multirow{3}{*}{5 dérivations, 3 classes}
- & Convolutif   & \textbf{\SI{91,66}{\percent}} & \textbf{0,853} & 0,89 & 0,92 \\
- & Récurrent    & \SI{90,86}{\percent} & 0,843 & 0,89 & 0,91 \\
+ & Convolutif   & \textbf{\SI{91,66}{\percent}} & \textbf{0,853} & 0,89 & 0,92 \\*
+ & Récurrent    & \SI{90,86}{\percent} & 0,843 & 0,89 & 0,91 \\*
  & Attentionnel & \SI{90,14}{\percent} & 0,826 & 0,87 & 0,90 \\
 \midrule
 \multirow{3}{*}{2 dérivations, 3 classes}
- & Convolutif   & \SI{89,10}{\percent} & 0,810 & 0,86 & 0,89 \\
- & Récurrent    & \SI{87,58}{\percent} & 0,790 & 0,84 & 0,88 \\
+ & Convolutif   & \SI{89,10}{\percent} & 0,810 & 0,86 & 0,89 \\*
+ & Récurrent    & \SI{87,58}{\percent} & 0,790 & 0,84 & 0,88 \\*
  & Attentionnel & \SI{86,92}{\percent} & 0,771 & 0,83 & 0,87 \\
 \midrule
 \multirow{3}{*}{5 dérivations, 5 classes}
- & Convolutif   & \SI{82,78}{\percent} & 0,761 & 0,72 & 0,83 \\
- & Récurrent    & \SI{78,60}{\percent} & 0,713 & 0,71 & 0,80 \\
+ & Convolutif   & \SI{82,78}{\percent} & 0,761 & 0,72 & 0,83 \\*
+ & Récurrent    & \SI{78,60}{\percent} & 0,713 & 0,71 & 0,80 \\*
  & Attentionnel & \SI{81,55}{\percent} & 0,742 & 0,70 & 0,81 \\
 \midrule
 \multirow{3}{*}{2 dérivations, 5 classes}
- & Convolutif   & \SI{79,90}{\percent} & 0,723 & 0,69 & 0,80 \\
- & Récurrent    & \SI{76,01}{\percent} & 0,679 & 0,68 & 0,78 \\
+ & Convolutif   & \SI{79,90}{\percent} & 0,723 & 0,69 & 0,80 \\*
+ & Récurrent    & \SI{76,01}{\percent} & 0,679 & 0,68 & 0,78 \\*
  & Attentionnel & \SI{77,15}{\percent} & 0,686 & 0,66 & 0,77 \\
-\bottomrule
-\end{tabular}
-\caption{Performances des douze modèles de base sur le jeu de test}
-\label{tab:12modeles}
-\end{table}
+\end{longtable}
+\endgroup
 
 Trois enseignements se dégagent.
 
@@ -1047,33 +997,43 @@ endroits. C'est cette complémentarité que l'empilement, au sprint suivant, exp
 
 \paragraph{Le problème du stade N1}
 
-\begin{table}[H]
-\centering
+Le tableau~\ref{tab:parclasse} détaille les performances par classe du modèle convolutif à
+cinq dérivations, aux deux granularités.
 
-\small
-\begin{tabular}{@{}llcccc@{}}
+\begingroup\small
+\begin{longtable}{@{}llcccc@{}}
 \toprule
 & \textbf{Classe} & \textbf{Précision} & \textbf{Rappel} & \textbf{F1} &
 \textbf{Effectif} \\
 \midrule
+\endfirsthead
+\multicolumn{6}{@{}l}{\small\itshape Tableau~\ref{tab:parclasse} (suite)}\\
+\toprule
+& \textbf{Classe} & \textbf{Précision} & \textbf{Rappel} & \textbf{F1} &
+\textbf{Effectif} \\
+\midrule
+\endhead
+\bottomrule
+\multicolumn{6}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\bottomrule
+\caption{Performances par classe --- configuration à cinq dérivations}\label{tab:parclasse}\\
+\endlastfoot
 \multirow{3}{*}{\rotatebox{90}{\scriptsize 3 classes}}
- & Éveil & 0,94 & 0,92 & 0,93 & \num{5990} \\
- & NREM  & 0,92 & 0,94 & 0,93 & \num{11001} \\
+ & Éveil & 0,94 & 0,92 & 0,93 & \num{5990} \\*
+ & NREM  & 0,92 & 0,94 & 0,93 & \num{11001} \\*
  & REM   & 0,84 & 0,79 & 0,82 & \num{2522} \\
 \midrule
 \multirow{5}{*}{\rotatebox{90}{\scriptsize 5 classes}}
- & Éveil & 0,92 & 0,92 & 0,92 & \num{5990} \\
+ & Éveil & 0,92 & 0,92 & 0,92 & \num{5990} \\*
  & N1    & \textcolor{hypnored}{\textbf{0,29}} &
            \textcolor{hypnored}{\textbf{0,24}} &
-           \textcolor{hypnored}{\textbf{0,26}} & \num{638} \\
- & N2    & 0,86 & 0,78 & 0,82 & \num{7832} \\
- & N3    & 0,70 & 0,88 & 0,78 & \num{2531} \\
+           \textcolor{hypnored}{\textbf{0,26}} & \num{638} \\*
+ & N2    & 0,86 & 0,78 & 0,82 & \num{7832} \\*
+ & N3    & 0,70 & 0,88 & 0,78 & \num{2531} \\*
  & REM   & 0,80 & 0,84 & 0,82 & \num{2522} \\
-\bottomrule
-\end{tabular}
-\caption{Performances par classe --- configuration à cinq dérivations}
-\label{tab:parclasse}
-\end{table}
+\end{longtable}
+\endgroup
 
 Le stade N1 est la seule classe véritablement échouée, avec un F1 de \num{0,26} pour le
 modèle convolutif. Les autres architectures ne font pas mieux (le récurrent atteint
@@ -1082,16 +1042,6 @@ précision de \num{0,20} : il sur-prédit massivement le N1. Le convolutif fait 
 avec un rappel de \num{0,24} pour une précision de \num{0,29}.
 
 La figure~\ref{fig:cm-5cls} montre où partent les époques de N1 mal classées.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.72\textwidth]{images/resultats/cm_CNN_5ch_5cls.png}
-\caption[Matrice de confusion à cinq classes]%
-        {Matrice de confusion du modèle convolutif à cinq dérivations et cinq
-         classes. Effectifs bruts sur les \num{19513} époques de test.}
-\label{fig:cm-5cls}
-\end{figure}
-
 Sur les \num{638} époques réellement en N1, \num{150} seulement sont reconnues. Les
 autres se dispersent : \num{233} sont versées en N2, \num{136} en éveil et \num{116} en
 sommeil paradoxal. Cette dispersion n'est pas un défaut d'apprentissage mais le reflet de
@@ -1101,9 +1051,20 @@ hésitant.
 
 On observe par ailleurs une seconde confusion, de nature différente : \num{950} époques
 de N2 sont classées en N3. Celle-ci relève d'un seuil et non d'une ambiguïté : le
-référentiel AASM fixe le passage en N3 à \SI{20}{\percent} d'ondes lentes dans la
+référentiel AASM~\cite{aasm2020} fixe le passage en N3 à \SI{20}{\percent} d'ondes lentes
+dans la
 fenêtre, et une époque à \SI{19}{\percent} est presque indiscernable d'une époque à
 \SI{21}{\percent}.
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.72\textwidth]{images/resultats/cm_CNN_5ch_5cls.png}
+\caption[Matrice de confusion à cinq classes]%
+        {Matrice de confusion du modèle convolutif à cinq dérivations et cinq
+         classes. Effectifs bruts sur les \num{19513} époques de test.}
+\label{fig:cm-5cls}
+\end{figure}
 
 \subsection{Revue du sprint}
 
@@ -1133,13 +1094,22 @@ La release a livré l'intégralité de son backlog, soit 76 points en deux sprin
 tableau~\ref{tab:revue-r1} confronte l'incrément attendu à celui qui a été démontré à
 l'encadrement lors de la revue.
 
-\begin{table}[H]
-\centering\small
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{@{}L{3.6cm}|L{9.4cm}|c@{}}
+\begingroup\small\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{@{}L{3.6cm}|L{9.4cm}|c@{}}
 \hline
 \ligneentete \entete{Élément attendu} & \entete{Réalisation} & \entete{État} \\
 \hline
+\endfirsthead
+\multicolumn{3}{@{}l}{\small\itshape Tableau~\ref{tab:revue-r1} (suite)}\\
+\hline
+\ligneentete \entete{Élément attendu} & \entete{Réalisation} & \entete{État} \\
+\hline
+\endhead
+\multicolumn{3}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\hline
+\caption{Revue de la release 1 : incrément attendu et incrément livré}\label{tab:revue-r1}\\
+\endlastfoot
 Chaîne de préparation & Six étapes, du décodage du fichier EDF à la sérialisation en
 tenseurs ; script relançable & \checkmark \\
 \hline
@@ -1151,11 +1121,8 @@ granularités) évalués sur un protocole identique & \checkmark \\
 \hline
 Niveau de performance & Meilleure variante, convolutive à cinq dérivations et trois
 classes : \SI{91,66}{\percent} d'exactitude pour un $\kappa$ de \num{0,853} & \checkmark \\
-\hline
-\end{tabular}
-\caption{Revue de la release 1 : incrément attendu et incrément livré}
-\label{tab:revue-r1}
-\end{table}
+\end{longtable}
+\endgroup
 
 \subsection{Rétrospective}
 

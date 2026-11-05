@@ -24,44 +24,26 @@ en contexte clinique : dossier patient, archivage sécurisé, annotation, compte
 composable, collaboration entre praticiens et traçabilité des actions.
 
 Mené selon le cadre Scrum en trois releases de deux sprints chacune, le projet a livré les
-soixante récits de son backlog. Les objectifs fixés au chapitre~\ref{chap:presentation}
-ont été atteints dans les proportions que résume le tableau ci-dessous.
+soixante récits de son backlog.
 
-\begin{table}[H]
-\centering
-\caption*{\textbf{Bilan au regard des objectifs}}
-\small
-\begin{tabular}{@{}L{4.2cm}L{7.6cm}c@{}}
-\toprule
-\textbf{Objectif} & \textbf{Réalisation} & \textbf{État} \\
-\midrule
-Automatiser le scorage des stades &
-Douze modèles entraînés et quatre ensembles construits ; meilleure exactitude de
-\SI{91,66}{\percent} pour un $\kappa$ de \num{0,853} &
-atteint \\
-\addlinespace[3pt]
-Prédire la sévérité du SAOS &
-Modèle à quatre classes sur 53 variables ; \SI{57,0}{\percent} d'exactitude et plus de
-\SI{95}{\percent} des prédictions à un cran près &
-atteint \\
-\addlinespace[3pt]
-Expliquer chaque prédiction &
-Attributions par valeurs de Shapley sur le modèle de sévérité, restituées en facteurs
-aggravants et protecteurs &
-partiellement \\
-\addlinespace[3pt]
-Fournir la chaîne applicative &
-Trente points d'entrée, deux rôles, archivage cloud, collaboration, journal d'audit,
-interface bilingue, pile conteneurisée &
-atteint \\
-\bottomrule
-\end{tabular}
-\end{table}
+\subsection*{Bilan au regard des objectifs}
 
-L'objectif d'explicabilité n'est que partiellement atteint : les explications produites
-portent sur la prédiction de sévérité, non sur
-la classification des stades. Les cartes de saillance et les poids d'attention
-initialement envisagés pour les modèles profonds n'ont pas été exposés dans
+Des quatre objectifs fixés au chapitre~\ref{chap:presentation}, trois sont atteints et
+le quatrième l'est en partie.
+
+Le scorage des stades est automatisé : douze modèles ont été entraînés et quatre
+ensembles construits, et la meilleure exactitude est de \SI{91,66}{\percent}, pour un
+$\kappa$ de \num{0,853}. La sévérité du SAOS est prédite par un modèle à quatre classes
+fondé sur 53 variables, qui obtient \SI{57,0}{\percent} d'exactitude et dont plus de
+\SI{95}{\percent} des prédictions tombent à un cran près. La chaîne applicative est
+livrée avec trente-six points d'entrée, deux rôles, l'archivage cloud, la collaboration,
+le journal d'audit, une interface bilingue et une pile conteneurisée.
+
+L'explication des prédictions, elle, n'est que partiellement atteinte. Les attributions
+par valeurs de Shapley sont restituées au praticien en facteurs aggravants et
+protecteurs, mais elles portent sur le seul modèle de sévérité et laissent la
+classification des stades sans explication. Les cartes de saillance et les poids
+d'attention initialement envisagés pour les modèles profonds n'ont pas été exposés dans
 l'interface. Le mécanisme d'attention existe pourtant dans l'architecture récurrente,
 et ses poids sont calculés à chaque inférence : les rendre visibles relève d'un travail
 de restitution, non de modélisation.

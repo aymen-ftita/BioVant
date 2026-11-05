@@ -4,8 +4,7 @@ from botocore.exceptions import ClientError
 from fastapi import UploadFile
 import uuid
 
-# Backblaze B2 S3-compatible Credentials
-# TODO: In production, store these in a .env file!
+
 B2_KEY_ID = os.getenv("B2_KEY_ID", "003807cc139097e0000000001")
 B2_APP_KEY = os.getenv("B2_APP_KEY", "K003vMFfMziTO2T9UWB5jZr3AHqSkVI")
 B2_BUCKET_NAME = os.getenv("B2_BUCKET_NAME", "hypnoria-files")

@@ -138,7 +138,7 @@ physiologiques distincts, qui se répètent au cours de la nuit selon des cycles
 durée moyenne de 90 minutes. On distingue le sommeil sans mouvements oculaires rapides,
 ou \emph{NREM}, subdivisé en stades de profondeur croissante, et le sommeil paradoxal,
 ou \emph{REM}, caractérisé par une activité cérébrale proche de l'éveil associée à une
-atonie musculaire complète.
+atonie musculaire complète~\cite{aasm2020}.
 
 La classification de référence est celle de l'\emph{American Academy of Sleep
 Medicine}~\cite{aasm2020}, qui a succédé en 2007 aux règles de Rechtschaffen et
@@ -146,15 +146,25 @@ Kales~\cite{rechtschaffen1968}. Elle définit cinq états, décrits au
 tableau~\ref{tab:stades}, et impose que le scorage se fasse par fenêtres, ou
 \emph{époques}, de 30 secondes.
 
-\begin{table}[H]
-\centering
-
-\small
-\begin{tabular}{@{}lL{4.6cm}L{5.4cm}c@{}}
+\begingroup\small
+\begin{longtable}{@{}lL{5.1cm}L{5.6cm}c@{}}
 \toprule
 \textbf{Stade} & \textbf{Signature électrophysiologique} & \textbf{Éléments
 caractéristiques} & \textbf{Part typique} \\
 \midrule
+\endfirsthead
+\multicolumn{4}{@{}l}{\small\itshape Tableau~\ref{tab:stades} (suite)}\\
+\toprule
+\textbf{Stade} & \textbf{Signature électrophysiologique} & \textbf{Éléments
+caractéristiques} & \textbf{Part typique} \\
+\midrule
+\endhead
+\bottomrule
+\multicolumn{4}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\bottomrule
+\caption{Les cinq états de vigilance définis par le référentiel AASM}\label{tab:stades}\\
+\endlastfoot
 W (éveil) & Rythme alpha postérieur, activité bêta, tonus musculaire élevé &
 Mouvements oculaires volontaires et clignements & --- \\
 \addlinespace[2pt]
@@ -165,15 +175,12 @@ N2 & Activité thêta dominante & Fuseaux du sommeil et complexes K & \SI{45}{\p
 à \SI{55}{\percent} \\
 \addlinespace[2pt]
 N3 & Ondes lentes de grande amplitude, sur plus de \SI{20}{\percent} de l'époque &
-Sommeil profond, seuil d'éveil élevé & \SI{15}{\percent} à \SI{25}{\percent} \\
+Sommeil profond, seuil d'éveil élevé & \SI{15}{\percent} à \SI{25}{\percent} \\*
 \addlinespace[2pt]
 REM & Rythme rapide et désynchronisé, proche de l'éveil & Mouvements oculaires
 rapides, atonie musculaire & \SI{20}{\percent} à \SI{25}{\percent} \\
-\bottomrule
-\end{tabular}
-\caption{Les cinq états de vigilance définis par le référentiel AASM}
-\label{tab:stades}
-\end{table}
+\end{longtable}
+\endgroup
 
 Deux points conditionnent la difficulté de la tâche d'automatisation. D'une part, la
 distribution des stades est fortement déséquilibrée : le N2 représente à lui seul
@@ -184,7 +191,7 @@ négativement. C'est la classe sur laquelle les experts humains eux-mêmes s'acc
 moins.
 
 La succession des stades attribués aux époques successives constitue
-l'\emph{hypnogramme} (figure~\ref{fig:hypnogramme}), document de référence du médecin
+l'\emph{hypnogramme}~\cite{aasm2020} (figure~\ref{fig:hypnogramme}), document de référence du médecin
 du sommeil : il condense environ mille décisions élémentaires en une seule courbe.
 
 \begin{figure}[H]
@@ -257,7 +264,7 @@ du sommeil : il condense environ mille décisions élémentaires en une seule co
 
 L'hypnogramme n'est pas une mesure directe mais une interprétation. Il découle d'un
 examen appelé polysomnographie, qui enregistre simultanément plusieurs signaux
-physiologiques pendant une nuit complète. La figure~\ref{fig:psg-epoque} en montre une
+physiologiques pendant une nuit complète~\cite{kapur2017}. La figure~\ref{fig:psg-epoque} en montre une
 époque de 30 secondes, l'unité élémentaire sur laquelle porte le scorage. Le
 tableau~\ref{tab:derivations} décrit les dérivations minimales requises pour établir ce
 scorage, qui sont précisément celles exploitées dans ce travail.
@@ -273,14 +280,23 @@ scorage, qui sont précisément celles exploitées dans ce travail.
 \label{fig:psg-epoque}
 \end{figure}
 
-\begin{table}[H]
-\centering
-
-\small
-\begin{tabular}{@{}llL{7.2cm}@{}}
+\begingroup\small
+\begin{longtable}{@{}llL{7.2cm}@{}}
 \toprule
 \textbf{Signal} & \textbf{Nombre} & \textbf{Apport au scorage} \\
 \midrule
+\endfirsthead
+\multicolumn{3}{@{}l}{\small\itshape Tableau~\ref{tab:derivations} (suite)}\\
+\toprule
+\textbf{Signal} & \textbf{Nombre} & \textbf{Apport au scorage} \\
+\midrule
+\endhead
+\bottomrule
+\multicolumn{3}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\bottomrule
+\caption{Dérivations minimales d'un montage polysomnographique de scorage}\label{tab:derivations}\\
+\endlastfoot
 Électroencéphalogramme (EEG) & 2 & Rythme de fond, fuseaux, complexes K et ondes
 lentes : c'est le signal qui porte la décision \\
 \addlinespace[2pt]
@@ -289,11 +305,8 @@ l'endormissement des mouvements rapides du sommeil paradoxal \\
 \addlinespace[2pt]
 Électromyogramme (EMG) mentonnier & 1 & Le tonus musculaire sépare le sommeil
 paradoxal du sommeil lent : son effondrement signe le REM \\
-\bottomrule
-\end{tabular}
-\caption{Dérivations minimales d'un montage polysomnographique de scorage}
-\label{tab:derivations}
-\end{table}
+\end{longtable}
+\endgroup
 
 Un montage complet comporte en pratique d'autres capteurs (flux nasal, sangles
 thoraciques, oxymétrie de pouls, électrocardiogramme) destinés à la caractérisation
@@ -305,7 +318,7 @@ réduite à deux dérivations.
 \subsection{Le syndrome d'apnées obstructives du sommeil}
 
 Le syndrome d'apnées obstructives du sommeil (SAOS) résulte d'obstructions répétées des
-voies aériennes supérieures pendant le sommeil. Chaque obstruction provoque une
+voies aériennes supérieures pendant le sommeil~\cite{kapur2017}. Chaque obstruction provoque une
 désaturation en oxygène et un micro-éveil, invisible pour le patient mais destructeur
 pour l'architecture du sommeil.
 
@@ -321,23 +334,29 @@ respiratoires par heure de sommeil. Le référentiel AASM~\cite{kapur2017} en d�
 quatre classes, reprises au tableau~\ref{tab:iah}, qui constituent les classes cibles
 du second modèle développé dans ce mémoire.
 
-\begin{table}[H]
-\centering
-
-\small
-\begin{tabular}{@{}lcL{7.4cm}@{}}
+\begingroup\small
+\begin{longtable}{@{}lcL{7.4cm}@{}}
 \toprule
 \textbf{Classe} & \textbf{IAH (évén./h)} & \textbf{Conduite habituelle} \\
 \midrule
+\endfirsthead
+\multicolumn{3}{@{}l}{\small\itshape Tableau~\ref{tab:iah} (suite)}\\
+\toprule
+\textbf{Classe} & \textbf{IAH (évén./h)} & \textbf{Conduite habituelle} \\
+\midrule
+\endhead
+\bottomrule
+\multicolumn{3}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\bottomrule
+\caption{Classes de sévérité du SAOS selon l'index d'apnées-hypopnées}\label{tab:iah}\\
+\endlastfoot
 Normal   & $< 5$          & Pas de traitement spécifique \\
 Léger    & $5$ à $< 15$   & Mesures hygiéno-diététiques, surveillance \\
 Modéré   & $15$ à $< 30$  & Traitement discuté selon la symptomatologie \\
 Sévère   & $\geq 30$      & Traitement par pression positive continue indiqué \\
-\bottomrule
-\end{tabular}
-\caption{Classes de sévérité du SAOS selon l'index d'apnées-hypopnées}
-\label{tab:iah}
-\end{table}
+\end{longtable}
+\endgroup
 
 Au-delà des événements respiratoires qu'il provoque, le SAOS déforme l'architecture du
 sommeil.
@@ -398,7 +417,8 @@ Depuis 2017, les réseaux de neurones profonds atteignent sur les bases publique
 performances comparables à celles d'un scoreur humain~\cite{supratak2017,perslev2021}.
 Le verrou s'est donc déplacé de la précision vers l'adoption.
 
-Un modèle d'apprentissage profond fonctionne comme une boîte noire : il produit une
+Un modèle d'apprentissage profond fonctionne comme une boîte noire~\cite{adadi2018} : il
+produit une
 classe sans énoncer ce qui l'a déterminée. Or le praticien engage sa responsabilité sur
 le diagnostic qu'il signe, et ne peut ni valider ni contester une décision dont il
 ignore les motifs. À ce frein pratique s'ajoute un cadre réglementaire européen qui
@@ -425,17 +445,27 @@ d'EnsoData, propose un scorage automatique fondé sur l'apprentissage profond.
 
 Le tableau~\ref{tab:commerciales} récapitule ces cinq suites.
 
-\begin{table}[H]
-\centering
-
-\small
-\begin{tabular}{@{}cL{2.1cm}L{2.5cm}L{2.6cm}L{2.5cm}@{}}
+\begingroup\small
+\begin{longtable}{@{}cL{2.1cm}L{2.5cm}L{2.6cm}L{2.5cm}@{}}
 \toprule
 & \textbf{Solution} & \textbf{Éditeur} & \textbf{Matériel associé} &
 \textbf{Scorage automatique} \\
 \midrule
+\endfirsthead
+\multicolumn{5}{@{}l}{\small\itshape Tableau~\ref{tab:commerciales} (suite)}\\
+\toprule
+& \textbf{Solution} & \textbf{Éditeur} & \textbf{Matériel associé} &
+\textbf{Scorage automatique} \\
+\midrule
+\endhead
+\bottomrule
+\multicolumn{5}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\bottomrule
+\caption{Principales suites commerciales d'analyse polysomnographique}\label{tab:commerciales}\\
+\endlastfoot
 \logoedit{noxturnal} & Noxturnal & Nox Medical, Islande & enregistreurs Nox A1 et T3 &
-assisté, règles paramétrables \\
+assisté, règles paramétrables \\*
 \addlinespace[3pt]
 \logoedit{sleepware} & Sleepware G3 & Philips Respironics, Pays-Bas & systèmes Alice &
 assisté \\
@@ -444,15 +474,12 @@ assisté \\
 Siesta & assisté \\
 \addlinespace[3pt]
 \logoedit{sleepworks} & SleepWorks & Natus Medical, États-Unis & plateformes Embla &
-assisté \\
+assisté \\*
 \addlinespace[3pt]
 \logoedit{ensosleep} & EnsoSleep & EnsoData, États-Unis & indépendant du constructeur &
 apprentissage profond \\
-\bottomrule
-\end{tabular}
-\caption{Principales suites commerciales d'analyse polysomnographique}
-\label{tab:commerciales}
-\end{table}
+\end{longtable}
+\endgroup
 
 En Tunisie, les laboratoires du sommeil s'appuient sur ces mêmes suites, acquises avec
 le matériel d'enregistrement. Le coût de licence et l'adhérence au matériel du
@@ -472,15 +499,25 @@ d'auto-attention ainsi qu'une forme d'interprétabilité par les poids d'attenti
 \emph{XSleepNet}~\cite{phan2021} exploite conjointement la représentation temporelle
 brute et la représentation temps-fréquence.
 
-\begin{table}[H]
-\centering
-
-\small
-\begin{tabular}{@{}L{3.3cm}cL{4.4cm}L{2.2cm}c@{}}
+\begingroup\small
+\begin{longtable}{@{}L{3.3cm}cL{4.4cm}L{2.2cm}c@{}}
 \toprule
 \textbf{Travail} & \textbf{Année} & \textbf{Approche} & \textbf{Évaluation} &
 \textbf{Exactitude} \\
 \midrule
+\endfirsthead
+\multicolumn{5}{@{}l}{\small\itshape Tableau~\ref{tab:etat-art-staging} (suite)}\\
+\toprule
+\textbf{Travail} & \textbf{Année} & \textbf{Approche} & \textbf{Évaluation} &
+\textbf{Exactitude} \\
+\midrule
+\endhead
+\bottomrule
+\multicolumn{5}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\bottomrule
+\caption{Principaux travaux de classification automatique des stades du sommeil}\label{tab:etat-art-staging}\\
+\endlastfoot
 Fraiwan \emph{et al.}~\cite{fraiwan2012} & 2012 & Temps-fréquence + forêt aléatoire &
 jeu propriétaire & $\approx$ \SI{83}{\percent} \\
 \addlinespace[2pt]
@@ -510,11 +547,8 @@ $\approx$ \SI{88}{\percent} \\
 \addlinespace[2pt]
 XSleepNet~\cite{phan2021} & 2022 & Fusion brut + temps-fréquence & SHHS &
 $\approx$ \SI{89}{\percent} \\
-\bottomrule
-\end{tabular}
-\caption{Principaux travaux de classification automatique des stades du sommeil}
-\label{tab:etat-art-staging}
-\end{table}
+\end{longtable}
+\endgroup
 
 \subsection{Critique de l'existant}
 
@@ -534,28 +568,34 @@ examens, production d'un compte rendu, collaboration.
 
 Le tableau~\ref{tab:existant} confronte les suites commerciales aux besoins identifiés.
 
-\begin{table}[H]
-\centering
-
-\small
-\begin{tabular}{@{}L{6.0cm}cc@{}}
+\begingroup\small
+\begin{longtable}{@{}L{6.0cm}cc@{}}
 \toprule
 \textbf{Critère} & \textbf{Suites commerciales} & \textbf{\hypnoria{}} \\
 \midrule
-Scorage automatique                & partiel   & oui \\
+\endfirsthead
+\multicolumn{3}{@{}l}{\small\itshape Tableau~\ref{tab:existant} (suite)}\\
+\toprule
+\textbf{Critère} & \textbf{Suites commerciales} & \textbf{\hypnoria{}} \\
+\midrule
+\endhead
+\bottomrule
+\multicolumn{3}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\bottomrule
+\caption{Positionnement de \hypnoria{} face aux suites commerciales}\label{tab:existant}\\
+\endlastfoot
+Scorage automatique                & partiel   & oui \\*
 Indépendance au matériel           & faible    & oui \\
 Explicabilité des décisions        & non       & oui \\
 Prédiction de la sévérité SAOS     & indirecte & oui \\
 Application web multi-utilisateurs & non       & oui \\
 Dossier patient et historique      & oui       & oui \\
 Collaboration entre praticiens     & non       & oui \\
-Traçabilité et audit               & partielle & oui \\
+Traçabilité et audit               & partielle & oui \\*
 Coût d'acquisition                 & élevé     & nul \\
-\bottomrule
-\end{tabular}
-\caption{Positionnement de \hypnoria{} face aux suites commerciales}
-\label{tab:existant}
-\end{table}
+\end{longtable}
+\endgroup
 
 \subsection{Solution proposée}
 
@@ -593,7 +633,7 @@ chaque incrément a révélé.
 
 \subsection{Les rôles dans la méthodologie Scrum}
 
-Scrum définit trois rôles. Le \emph{Product Owner} porte la vision du produit, arbitre
+Scrum définit trois rôles~\cite{schwaber2020}. Le \emph{Product Owner} porte la vision du produit, arbitre
 les priorités du backlog et valide la valeur livrée. Le \emph{Scrum Master} garantit le
 respect du cadre, anime les cérémonies et lève les obstacles. L'\emph{équipe de
 développement} réalise l'incrément.
@@ -611,7 +651,8 @@ deux cent mille exemples se compte en heures de calcul, et douze variantes devai
 produites. Une itération de deux semaines n'aurait pas permis de livrer un incrément
 évaluable pendant la phase de modélisation.
 
-Trois artefacts ont été tenus à jour : le \emph{Product Backlog}, liste priorisée des
+Trois artefacts du cadre~\cite{schwaber2020} ont été tenus à jour : le \emph{Product
+Backlog}, liste priorisée des
 fonctionnalités attendues ; le \emph{Sprint Backlog}, sous-ensemble sélectionné pour
 l'itération en cours ; et l'\emph{incrément}, version fonctionnelle livrée en fin de
 sprint. Les cérémonies ont été condensées : une réunion de planification en début de
@@ -623,7 +664,7 @@ quotidienne, une revue de sprint sous forme de démonstration et une rétrospect
 
 Au-dessus du sprint, un second niveau de planification a été retenu : la
 release, version livrable du produit qui regroupe plusieurs sprints autour d'un
-objectif de valeur commun. Ce niveau répond à une réalité du projet : un sprint isolé,
+objectif de valeur commun~\cite{cohn2005}. Ce niveau répond à une réalité du projet : un sprint isolé,
 comme celui consacré à l'entraînement des modèles, ne produit pas toujours à lui seul une
 version exploitable, alors que deux sprints consécutifs orientés vers un même objectif le
 peuvent.

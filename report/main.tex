@@ -35,9 +35,12 @@
 \usepackage{array}
 \usepackage{multirow}
 \usepackage{longtable}
+\setlength{\LTpre}{8pt}
+\setlength{\LTpost}{8pt}
 \usepackage{colortbl}
 \usepackage{tabularx}
 \usepackage{enumitem}
+\usepackage{wrapfig}
 
 % ---------------------------------------------------------------------------
 %  Mathematiques et unites
@@ -102,6 +105,27 @@
 \definecolor{stN3}{HTML}{6C3483}
 \definecolor{stREM}{HTML}{148F77}
 
+% -- Diagrammes de cas d'utilisation des sprints -----------------------------
+\tikzset{
+  cu/.style      = {ellipse, draw=hypnoblue!60, fill=hypnolight, align=center,
+                    font=\scriptsize, text width=2.5cm, inner sep=0pt,
+                    minimum height=0.8cm},
+  cup/.style     = {cu, draw=hypnored!70, fill=hypnored!7, font=\scriptsize\bfseries},
+  culien/.style  = {hypnogray!75, line width=0.55pt},
+  curel/.style   = {-{Latex[length=2mm]}, hypnoblue!70, line width=0.5pt, dashed},
+  cuet/.style    = {font=\tiny\itshape, text=hypnoblue!85, fill=white, inner sep=0.8pt},
+  cusys/.style   = {hypnoblue!55, line width=0.9pt, rounded corners=3pt},
+  cutitre/.style = {font=\small\bfseries, text=hypnoblue, anchor=north west},
+  cuacteur/.pic  = {
+    \draw[hypnoblue,line width=0.8pt] (0,0) circle (0.16cm);
+    \draw[hypnoblue,line width=0.8pt] (0,-0.16cm) -- (0,-0.58cm);
+    \draw[hypnoblue,line width=0.8pt] (-0.26cm,-0.30cm) -- (0.26cm,-0.30cm);
+    \draw[hypnoblue,line width=0.8pt] (0,-0.58cm) -- (-0.22cm,-0.92cm);
+    \draw[hypnoblue,line width=0.8pt] (0,-0.58cm) -- (0.22cm,-0.92cm);
+    \node[font=\scriptsize\bfseries, align=center, anchor=north] at (0,-0.98cm)
+         {\tikzpictext};},
+}
+
 % -- Style des listings -----------------------------------------------------
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -155,6 +179,42 @@
   \caption{#3}
   \label{#4}
   \end{figure}}
+
+% -- Deux captures cote a cote, chacune avec sa legende -----------------------
+%    #1 fichier, #2 legende, #3 etiquette (gauche) ; #4, #5, #6 (droite)
+\newcommand{\captureboite}[2]{%
+  \IfFileExists{images/captures/#1.png}%
+    {\includegraphics[width=\linewidth]{images/captures/#1.png}}%
+    {\setlength{\fboxrule}{0.8pt}\setlength{\fboxsep}{0pt}%
+     \textcolor{hypnogray!45}{\fbox{\parbox[c][3.6cm][c]{\linewidth}{\centering
+       \color{hypnogray}\small\itshape Capture d'\'ecran \`a ins\'erer\\[5pt]
+       \ttfamily\scriptsize images/captures/#1.png\\[7pt]
+       \upshape\rmfamily\scriptsize
+       \parbox{0.85\linewidth}{\centering #2}}}}}}
+\newcommand{\capturedouble}[6]{%
+  \begin{figure}[H]
+  \begin{minipage}[t]{0.485\textwidth}\centering\vspace{0pt}
+    \captureboite{#1}{#2}
+    \caption{#2}\label{#3}
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.485\textwidth}\centering\vspace{0pt}
+    \captureboite{#4}{#5}
+    \caption{#5}\label{#6}
+  \end{minipage}
+  \end{figure}}
+
+% -- Capture d'ecran placee a droite du paragraphe qui suit (texte habille) ---
+%    [#1] nombre de lignes habillees (vide : calcul automatique), #2 fichier,
+%    #3 largeur en fraction de \textwidth, #4 legende, #5 etiquette
+\newcommand{\capturewrap}[5][]{%
+  \begin{wrapfigure}[#1]{r}{#3\textwidth}
+  \vspace{-10pt}
+  \centering
+  \includegraphics[width=#3\textwidth]{images/captures/#2.png}
+  \caption{#4}
+  \label{#5}
+  \vspace{-10pt}
+  \end{wrapfigure}}
 
 % -- Habillage graphique ESPRIT ---------------------------------------------
 \input{esprit-style}

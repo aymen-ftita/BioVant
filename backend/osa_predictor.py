@@ -31,6 +31,11 @@ def init_osa_predictor():
         stacking_path = os.path.join(STEP2_DIR, "stacking_model.pkl")
         if os.path.exists(stacking_path):
             stacking_model = joblib.load(stacking_path)
+            # Modèle picklé avec scikit-learn 1.8 (attribut multi_class supprimé) ;
+            # sous 1.7 predict_proba le lit encore -> valeur par défaut (softmax).
+            meta_est = getattr(stacking_model, "final_estimator_", None)
+            if meta_est is not None and not hasattr(meta_est, "multi_class"):
+                meta_est.multi_class = "deprecated"
             print("  ✓ Stacking model loaded")
         else:
             stacking_model = None
@@ -45,7 +50,14 @@ def init_osa_predictor():
         osa_medians = numeric_df.median().to_dict()
 
         # SHAP explainer on XGBoost (TreeExplainer is fast + accurate for trees)
-        explainer = shap.TreeExplainer(osa_model)
+        # XGBoost >= 3.1 stocke base_score sous forme de vecteur (multi-classe),
+        # que shap ne sait pas toujours lire : on bascule alors sur le TreeSHAP
+        # natif d'XGBoost (pred_contribs) dans predict_osa_severity.
+        try:
+            explainer = shap.TreeExplainer(osa_model)
+        except Exception as e:
+            explainer = None
+            print(f"  ⚠ shap.TreeExplainer indisponible ({e}), fallback XGBoost pred_contribs")
         print("✓ Step 2 initialized (XGBoost SHAP + Stacking prediction).")
     except Exception as e:
         print(f"Warning: Could not initialize Step 2 predictor: {e}")
@@ -87,8 +99,12 @@ def predict_osa_severity(feature_df):
         proba_dict = {pred_label: 1.0}
 
     # 3. SHAP explanations (always from XGBoost — TreeExplainer)
-    shap_values = explainer(feature_df)
-    shap_vals = shap_values.values[0]
+    if explainer is not None:
+        shap_vals = explainer(feature_df).values[0]
+    else:
+        # TreeSHAP natif : (n, n_classes, n_features + 1), dernière colonne = biais
+        contribs = osa_model.get_booster().predict(xgb.DMatrix(feature_df), pred_contribs=True)
+        shap_vals = contribs[0][..., :-1].T if contribs.ndim == 3 else contribs[0][:-1]
 
     # For multi-class: shape (n_features, n_classes) — get the predicted class
     if len(shap_vals.shape) > 1:

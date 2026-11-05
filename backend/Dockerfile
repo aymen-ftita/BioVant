@@ -13,7 +13,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Copier et installer les dépendances
 COPY requirements.txt .
 # Installer la version CPU de PyTorch en premier pour éviter le téléchargement de 4 Go de librairies NVIDIA (qui font crasher Docker Desktop)
-RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+RUN pip install --upgrade pip
+RUN pip install torch --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple
 RUN pip install --default-timeout=1000 --no-cache-dir -r requirements.txt
 
 # Copier tout le code source du backend

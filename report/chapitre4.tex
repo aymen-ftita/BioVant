@@ -17,7 +17,7 @@ de la release, détaillons ses deux sprints, puis en dressons la revue.
 
 \subsection{Objectif de la release}
 
-La deuxième release vise à livrer un produit minimum viable : le plus petit
+La deuxième release vise à livrer un produit minimum viable~\cite{ries2011} : le plus petit
 incrément qui apporte au praticien la valeur centrale du projet, à savoir un diagnostic
 expliqué. Elle réunit deux sprints de natures différentes. Le sprint~3 prolonge le travail
 de modélisation : il combine les modèles de base, construit le modèle de sévérité et son
@@ -31,33 +31,13 @@ délivre pas le diagnostic attendu. C'est leur réunion qui forme l'incrément d
 \subsection{Backlog de la release}
 
 La release regroupe vingt récits issus de cinq épics (authentification, classification,
-sévérité du SAOS, visualisation et export), pour 122 points de complexité
-(tableau~\ref{tab:rel2}).
+sévérité du SAOS, visualisation et export), pour 122 points de complexité. Le sprint~3, du
+23 mars au 19 avril, porte les récits US-13 à US-16 (42 points) : il fait coopérer les
+architectures, puis prédit de manière explicable la sévérité du SAOS. Le sprint~4, du
+20 avril au 17 mai, porte les seize autres (US-09 à 12, 17 à 23, 26 à 29 et 40, soit
+80 points) : il rend les modèles consommables et offre au praticien un parcours d'analyse
+guidé. Ce découpage reprend celui du tableau~\ref{tab:sprints}.
 
-\begin{table}[H]
-\centering\small
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{@{}L{1.4cm}|L{3.0cm}|L{5.4cm}|L{2.7cm}|c@{}}
-\hline
-\ligneentete \entete{Sprint} & \entete{Période} & \entete{Objectif du sprint} &
-\entete{Récits} & \entete{Pts} \\
-\hline
-Sprint 3 & 23 mars -- 19 avr. &
-Faire coopérer les architectures, puis prédire de manière explicable la sévérité du SAOS &
-US-13 à 16 & 42 \\
-\hline
-Sprint 4 & 20 avr. -- 17 mai &
-Rendre les modèles consommables et offrir au praticien un parcours d'analyse guidé &
-US-09 à 12, 17 à 23, 26 à 29, 40 & 80 \\
-\hline
-\multicolumn{3}{@{}r|}{\textbf{Total de la release}} & \textbf{20 récits} & \textbf{122} \\
-\hline
-\end{tabular}
-\caption{Backlog de la release 2}
-\label{tab:rel2}
-\end{table}
-
-\noindent
 L'incrément attendu en fin de release est un parcours complet, de l'authentification du
 praticien jusqu'au rapport de sévérité expliqué, reposant sur quatre ensembles de
 classification et sur un modèle de sévérité.
@@ -95,88 +75,70 @@ clinique posée dès le chapitre~\ref{chap:presentation}.
 Le sprint a embarqué quatre récits pour 42 points de complexité
 (tableau~\ref{tab:bl-s3}).
 
-\begin{table}[H]
-\centering\small
-\renewcommand{\arraystretch}{1.15}
-\begin{tabular}{@{}c|L{2.5cm}|L{4.6cm}|L{4.6cm}|c@{}}
+\begingroup\footnotesize\renewcommand{\arraystretch}{1.1}
+\begin{longtable}{@{}c|L{2.3cm}|L{4.4cm}|L{4.4cm}|c@{}}
 \hline
 \ligneentete \entete{ID} & \entete{Module} & \entete{R\'ecit utilisateur} & \entete{T\^aches} & \entete{Estim.} \\
 \hline
-\multirow{3}{*}{US-13} & \multirow{3}{=}{Ensembles} & \multirow{3}{=}{En tant que syst\`eme, je veux combiner les trois mod\`eles par un m\'eta-apprenant} & Collecter les probabilit\'es sur un jeu de validation par sujets & \multirow{3}{*}{13 pts} \\
- &  &  & Entra\^iner une r\'egression logistique \'equilibr\'ee &  \\
+\endfirsthead
+\multicolumn{5}{@{}l}{\small\itshape Tableau~\ref{tab:bl-s3} (suite)}\\
+\hline
+\ligneentete \entete{ID} & \entete{Module} & \entete{R\'ecit utilisateur} & \entete{T\^aches} & \entete{Estim.} \\
+\hline
+\endhead
+\multicolumn{5}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\hline
+\caption{Sprint Backlog --- Sprint 3}\label{tab:bl-s3}\\
+\endlastfoot
+\multirow{3}{*}{US-13} & \multirow{3}{=}{Ensembles} & \multirow{3}{=}{En tant que syst\`eme, je veux combiner les trois mod\`eles par un m\'eta-apprenant} & Collecter les probabilit\'es sur un jeu de validation par sujets & \multirow{3}{*}{13 pts} \\*
+ &  &  & Entra\^iner une r\'egression logistique \'equilibr\'ee &  \\*
  &  &  & Comparer au vote moyen et au meilleur mod\`ele isol\'e &  \\
 \hline
-\multirow{3}{*}{US-14} & \multirow{3}{=}{Marqueurs du sommeil} & \multirow{3}{=}{En tant que syst\`eme, je veux extraire les marqueurs d'architecture du sommeil depuis l'hypnogramme} & Analyser les hypnogrammes de la seconde visite & \multirow{3}{*}{8 pts} \\
- &  &  & Calculer 25 marqueurs conformes au r\'ef\'erentiel AASM &  \\
+\multirow{3}{*}{US-14} & \multirow{3}{=}{Marqueurs du sommeil} & \multirow{3}{=}{En tant que syst\`eme, je veux extraire les marqueurs d'architecture du sommeil depuis l'hypnogramme} & Analyser les hypnogrammes de la seconde visite & \multirow{3}{*}{8 pts} \\*
+ &  &  & Calculer 25 marqueurs conformes au r\'ef\'erentiel AASM &  \\*
  &  &  & Construire 8 variables d'interaction &  \\
 \hline
-\multirow{3}{*}{US-15} & \multirow{3}{=}{Pr\'ediction de s\'ev\'erit\'e} & \multirow{3}{=}{En tant que syst\`eme, je veux pr\'edire la s\'ev\'erit\'e du SAOS en quatre classes} & \'Ecarter les variables qui fuient la cible & \multirow{3}{*}{13 pts} \\
- &  &  & Comparer six familles de classifieurs en validation crois\'ee &  \\
+\multirow{3}{*}{US-15} & \multirow{3}{=}{Pr\'ediction de s\'ev\'erit\'e} & \multirow{3}{=}{En tant que syst\`eme, je veux pr\'edire la s\'ev\'erit\'e du SAOS en quatre classes} & \'Ecarter les variables qui fuient la cible & \multirow{3}{*}{13 pts} \\*
+ &  &  & Comparer six familles de classifieurs en validation crois\'ee &  \\*
  &  &  & Empiler les trois meilleurs vers un m\'eta-apprenant &  \\
 \hline
-\multirow{3}{*}{US-16} & \multirow{3}{=}{Explicabilit\'e} & \multirow{3}{=}{En tant que m\'edecin, je veux conna\^itre les facteurs aggravants et protecteurs de la pr\'ediction} & Calculer les attributions par valeurs de Shapley & \multirow{3}{*}{8 pts} \\
- &  &  & Trier et restituer les dix facteurs dominants &  \\
+\multirow{3}{*}{US-16} & \multirow{3}{=}{Explicabilit\'e} & \multirow{3}{=}{En tant que m\'edecin, je veux conna\^itre les facteurs aggravants et protecteurs de la pr\'ediction} & Calculer les attributions par valeurs de Shapley & \multirow{3}{*}{8 pts} \\*
+ &  &  & Trier et restituer les dix facteurs dominants &  \\*
  &  &  & S\'eparer contributions positives et n\'egatives &  \\
-\hline
-\end{tabular}
-\caption{Sprint Backlog --- Sprint 3}
-\label{tab:bl-s3}
-\end{table}
+\end{longtable}
+\endgroup
 
 \subsection{Analyse}
 
 \subsubsection{Diagramme des cas d'utilisation}
 
+La figure~\ref{fig:uc-s3} présente les cas d'utilisation du sprint. Le médecin déclenche la
+prédiction de la sévérité, qui inclut l'extraction des marqueurs, l'imputation des valeurs
+manquantes, le classement en quatre niveaux et l'attribution des contributions. La
+combinaison des modèles de base revient au moteur d'inférence.
+
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}[
-    x=1cm,y=1cm,
-    uc/.style     = {ellipse, draw=hypnoblue!60, fill=hypnolight,
-                     align=center, font=\scriptsize, text width=2.7cm,
-                     inner sep=1.5pt, minimum height=1.0cm},
-    ucp/.style    = {ellipse, draw=hypnored!70, fill=hypnored!7,
-                     align=center, font=\scriptsize\bfseries, text width=2.7cm,
-                     inner sep=1.5pt, minimum height=1.0cm},
-    lien/.style   = {hypnogray!75, line width=0.55pt},
-    rel/.style    = {-{Latex[length=2mm]}, hypnoblue!70, line width=0.5pt, dashed},
-    et/.style     = {font=\tiny\itshape, text=hypnoblue!85, fill=white, inner sep=1pt},
-    nomact/.style = {font=\scriptsize\bfseries, align=center, text width=2.2cm},
-  ]
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \draw[cusys] (3.0,-2.3) rectangle (12.4,2.75);
+  \node[cutitre] at (3.2,2.65) {Module de diagnostic};
 
-  \tikzset{acteur/.pic={
-      \draw[hypnoblue,line width=0.8pt] (0,0) circle (0.17);
-      \draw[hypnoblue,line width=0.8pt] (0,-0.17) -- (0,-0.66);
-      \draw[hypnoblue,line width=0.8pt] (-0.28,-0.34) -- (0.28,-0.34);
-      \draw[hypnoblue,line width=0.8pt] (0,-0.66) -- (-0.24,-1.04);
-      \draw[hypnoblue,line width=0.8pt] (0,-0.66) -- (0.24,-1.04);}}
+  \node[cup] (sev) at (5.1, 0.9)  {Prédire la\\sévérité du SAOS};
+  \node[cu]  (ens) at (5.1,-1.5)  {Combiner les\\modèles de base};
 
-  \draw[hypnoblue!55,line width=0.9pt,rounded corners=3pt]
-       (3.6,-4.6) rectangle (12.6,2.4);
-  \node[font=\small\bfseries,text=hypnoblue,anchor=north west] at (3.85,2.25)
-       {Module de diagnostic};
+  \node[cu]  (mar) at (10.2, 1.65) {Extraire les marqueurs\\d'architecture};
+  \node[cu]  (imp) at (10.2, 0.55) {Imputer les valeurs\\manquantes};
+  \node[cu]  (pre) at (10.2,-0.55) {Classer en quatre\\niveaux de sévérité};
+  \node[cu]  (exp) at (10.2,-1.65) {Attribuer les\\contributions};
 
-  \node[ucp] (sev) at (5.7, 0.7)  {Prédire la\\sévérité du SAOS};
-  \node[uc]  (ens) at (5.7,-3.0)  {Combiner les\\modèles de base};
+  \pic[pic text=Médecin] at (1.2,1.75) {cuacteur};
+  \pic[pic text={Moteur\\d'inférence}] at (1.2,-0.65) {cuacteur};
+  \draw[culien] (1.55,1.45) -- (sev.west);
+  \draw[culien] (1.55,-0.95) -- (ens.west);
 
-  \node[uc]  (mar) at (10.2, 1.2) {Extraire les marqueurs\\d'architecture};
-  \node[uc]  (imp) at (10.2,-0.3) {Imputer les valeurs\\manquantes};
-  \node[uc]  (pre) at (10.2,-1.8) {Classer en quatre\\niveaux de sévérité};
-  \node[uc]  (exp) at (10.2,-3.3) {Attribuer les\\contributions};
-
-  \pic at (1.5,0.4) {acteur};
-  \node[nomact,anchor=north] at (1.5,-0.25) {Médecin};
-
-  \pic at (1.5,-2.6) {acteur};
-  \node[nomact,anchor=north] at (1.5,-3.25) {Moteur\\d'inférence};
-
-  \draw[lien] (1.9,0.05) -- (sev.west);
-  \draw[lien] (1.9,-2.95) -- (ens.west);
-
-  \draw[rel] (sev) -- node[et,pos=0.62] {$\ll$include$\gg$} (mar);
-  \draw[rel] (sev) -- node[et,pos=0.62] {$\ll$include$\gg$} (imp);
-  \draw[rel] (sev) -- node[et,pos=0.64] {$\ll$include$\gg$} (pre);
-  \draw[rel] (sev) -- node[et,pos=0.68] {$\ll$include$\gg$} (exp);
-
+  \foreach \c/\p in {mar/0.62,imp/0.62,pre/0.64,exp/0.66}
+    \draw[curel] (sev) -- node[cuet,pos=\p] {$\ll$include$\gg$} (\c);
 \end{tikzpicture}
 \caption{Diagramme des cas d'utilisation du sprint 3 --- diagnostic et explication}
 \label{fig:uc-s3}
@@ -184,7 +146,10 @@ Le sprint a embarqué quatre récits pour 42 points de complexité
 
 \subsubsection{Description textuelle des cas d'utilisation}
 
-\begin{casutilisation}{Description textuelle du cas « Prédire la sévérité du SAOS »}
+Le tableau~\ref{tab:cu-s3} décrit le cas « Prédire la sévérité du SAOS », le seul de ce
+sprint que le médecin déclenche lui-même.
+
+\begin{casutilisation}[tab:cu-s3]{Description textuelle du cas « Prédire la sévérité du SAOS »}
 Titre & Prédire la sévérité du SAOS \\ \hline
 Acteurs & Médecin du sommeil, moteur d'inférence \\ \hline
 Description & Estimer le niveau de sévérité du syndrome d'apnées obstructives à partir
@@ -192,40 +157,33 @@ de l'architecture du sommeil et de marqueurs cliniques, et exposer les facteurs 
 déterminent cette estimation \\ \hline
 Préconditions & Une séquence de stades est disponible, issue d'une analyse ou d'une
 saisie manuelle \\ \hline
-Scénario de base &
-\begin{minipage}[t]{\linewidth}
-\begin{enumerate}[leftmargin=1.1em,itemsep=1pt,topsep=3pt]
-  \item Le système extrait les marqueurs d'architecture depuis l'hypnogramme.
-  \item Le médecin complète les données démographiques et oxymétriques.
-  \item Il déclenche l'évaluation du risque.
-  \item Le système construit le vecteur de variables et comble les valeurs absentes.
-  \item Le moteur produit la classe de sévérité et ses probabilités.
-  \item Le système calcule les contributions de chaque variable.
-  \item Le système affiche la sévérité, les facteurs aggravants et protecteurs, et
-        l'interprétation clinique.
-\end{enumerate}
-\end{minipage} \\ \hline
-Scénario alternatif &
-\begin{minipage}[t]{\linewidth}
-\begin{itemize}[leftmargin=1.1em,itemsep=1pt,topsep=3pt]
-  \item \textbf{2a} --- Le médecin importe un rapport externe : le système en extrait les
-        valeurs et préremplit le formulaire.
-  \item \textbf{4a} --- Des variables cliniques manquent : le système applique la médiane
-        de la population d'apprentissage et le signale.
-  \item \textbf{5a} --- Les modèles ne sont pas chargés : l'opération est refusée avec un
-        message explicite.
-\end{itemize}
-\end{minipage}
+Scénario de base & \etape{1.}{Le système extrait les marqueurs d'architecture depuis l'hypnogramme.} \\*
+ & \etape{2.}{Le médecin complète les données démographiques et oxymétriques.} \\
+ & \etape{3.}{Il déclenche l'évaluation du risque.} \\
+ & \etape{4.}{Le système construit le vecteur de variables et comble les valeurs absentes.} \\
+ & \etape{5.}{Le moteur produit la classe de sévérité et ses probabilités.} \\
+ & \etape{6.}{Le système calcule les contributions de chaque variable.} \\*
+ & \etape{7.}{Le système affiche la sévérité, les facteurs aggravants et protecteurs, et l'interprétation clinique.} \\ \hline
+Scénario alternatif & \etape{\textbullet}{\textbf{2a} --- Le médecin importe un rapport externe : le système en extrait les valeurs et préremplit le formulaire.} \\
+ & \etape{\textbullet}{\textbf{4a} --- Des variables cliniques manquent : le système applique la médiane de la population d'apprentissage et le signale.} \\*
+ & \etape{\textbullet}{\textbf{5a} --- Les modèles ne sont pas chargés : l'opération est refusée avec un message explicite.}
 \end{casutilisation}
 
 \subsection{Conception}
 
 \subsubsection{Diagramme de séquence objet}
 
+La figure~\ref{fig:seq-osa} déroule la prédiction de la sévérité, de la saisie des données
+cliniques par le praticien à l'affichage du rapport expliqué. L'interface applicative
+extrait les marqueurs et comble les valeurs absentes, puis interroge deux fois le moteur
+d'inférence : pour la classe et ses probabilités d'abord, pour les contributions de chaque
+variable ensuite.
+
 \begin{figure}[H]
 \centering
-\resizebox{0.93\textwidth}{!}{%
+\resizebox{0.74\textwidth}{!}{%
 \begin{sequencediagram}
+  \def\unitfactor{0.42}% espacement vertical resserre
   \newthread[hypnolight]{u}{\scriptsize Praticien}
   \newinst[2.2]{f}{\scriptsize Client web}
   \newinst[2.2]{a}{\scriptsize Interface applicative}
@@ -266,13 +224,13 @@ méta-apprenant \emph{apprend} à qui faire confiance et dans quelles circonstan
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[
-    x=1cm,y=1cm,
+    x=1cm,y=0.5cm,
     bloc/.style   = {rectangle,rounded corners=2pt,draw=hypnoblue!60,fill=hypnolight,
-                     align=center,font=\small,minimum height=1.0cm,text width=2.5cm},
+                     align=center,font=\small,minimum height=0.85cm,text width=2.5cm},
     meta/.style   = {rectangle,rounded corners=2pt,draw=hypnored!75,fill=hypnored!8,
-                     align=center,font=\small,minimum height=1.0cm,text width=2.8cm},
+                     align=center,font=\small,minimum height=0.85cm,text width=2.8cm},
     ent/.style    = {rectangle,rounded corners=2pt,draw=hypnogray!60,fill=white,
-                     align=center,font=\small,minimum height=1.0cm,text width=2.0cm},
+                     align=center,font=\small,minimum height=0.85cm,text width=2.0cm},
     fl/.style     = {-{Latex[length=2.2mm]},hypnoblue!75,line width=0.8pt},
     lab/.style    = {font=\scriptsize\itshape,text=hypnogray},
   ]
@@ -304,10 +262,9 @@ méta-apprenant \emph{apprend} à qui faire confiance et dans quelles circonstan
   \draw[hypnogray!45,dashed,line width=0.5pt] (5.6,3.1) -- (5.6,-3.0);
 
 \end{tikzpicture}
-\vspace{0.4cm}
 \caption[Principe de l'empilement de modèles]%
-        {Principe de l'empilement : trois modèles hétérogènes produisent des vecteurs
-         de probabilités, qu'un méta-apprenant apprend à combiner.}
+        {Principe de l'empilement : un méta-apprenant combine les probabilités de trois
+         modèles hétérogènes.}
 \label{fig:stacking-principe}
 \end{figure}
 
@@ -326,7 +283,7 @@ collectées sur un jeu de validation constitué par découpage au niveau des suj
 
 \paragraph{Résultats}
 
-Quatre ensembles ont été construits, un par configuration.
+Quatre ensembles ont été construits, un par configuration (tableau~\ref{tab:ensembles}).
 
 \begin{table}[H]
 \centering
@@ -343,7 +300,7 @@ Quatre ensembles ont été construits, un par configuration.
 5 dérivations, 5 classes & 0,875 & 0,754 & 0,887 & 0,894 & \textbf{0,899} & $+$0,005 \\
 2 dérivations, 5 classes & 0,819 & 0,695 & 0,815 & 0,834 & \textbf{0,839} & $+$0,005 \\
 \bottomrule
-\end{tabular}
+\end{tabular}\par
 \vspace{2pt}
 \raggedright\footnotesize
 Valeurs de $\kappa$ de Cohen sur le jeu de test par sujets. Le gain est mesuré par
@@ -367,42 +324,59 @@ apprendre, et la pondération estimée n'apporte pas davantage qu'une moyenne un
 Rapporter seulement le gain sur le meilleur modèle isolé aurait donné de l'empilement
 une image trop favorable. La comparaison au vote moyen, souvent
 omise dans la littérature, montre que son apport est réel mais modeste, et qu'il dépend
-du degré de désaccord entre les modèles combinés.
+du degré de désaccord entre les modèles combinés. La figure~\ref{fig:kappa-comp} montre
+cet écart sur la configuration à cinq dérivations et cinq classes ; la
+figure~\ref{fig:cm-stack}, à côté, donne la matrice de confusion de l'ensemble à cinq
+dérivations et trois classes.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.92\textwidth]{images/resultats/kappa_comparison_5ch_5cls.png}
-\caption[Comparaison des $\kappa$ pour l'ensemble à cinq classes]%
-        {Comparaison des $\kappa$ obtenus par les modèles de base, le vote moyen et
-         l'empilement, pour la configuration à cinq dérivations et cinq classes.}
-\label{fig:kappa-comp}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.62\textwidth]{images/resultats/cm_stacking_5ch_3cls.png}
-\caption[Matrice de confusion de l'ensemble]%
-        {Matrice de confusion de l'ensemble à cinq dérivations et trois classes, sur
-         les \num{20314} époques du jeu de test par sujets.}
-\label{fig:cm-stack}
+\begin{minipage}[t]{0.56\textwidth}
+  \centering
+  \vspace{0pt}
+  \includegraphics[width=\linewidth]{images/resultats/kappa_comparison_5ch_5cls.png}
+  \caption[Comparaison des $\kappa$ pour l'ensemble à cinq classes]%
+          {Comparaison des $\kappa$ obtenus par les modèles de base, le vote moyen et
+           l'empilement, pour la configuration à cinq dérivations et cinq classes.}
+  \label{fig:kappa-comp}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.40\textwidth}
+  \centering
+  \vspace{0pt}
+  \includegraphics[width=0.88\linewidth]{images/resultats/cm_stacking_5ch_3cls.png}
+  \caption[Matrice de confusion de l'ensemble]%
+          {Matrice de confusion de l'ensemble à cinq dérivations et trois classes, sur
+           les \num{20314} époques du jeu de test par sujets.}
+  \label{fig:cm-stack}
+\end{minipage}
 \end{figure}
 
 \subsubsection{Prédiction de la sévérité du syndrome d'apnées}
 
 \paragraph{Positionnement}
 
-Le dépistage du syndrome d'apnées repose classiquement sur des questionnaires cliniques
-ou sur l'analyse de signaux respiratoires. Le tableau~\ref{tab:etat-art-osa} situe notre
+Le dépistage du syndrome d'apnées repose classiquement sur des questionnaires
+cliniques~\cite{netzer1999,chung2008} ou sur l'analyse de signaux
+respiratoires~\cite{mostafa2019}. Le tableau~\ref{tab:etat-art-osa} situe notre
 approche parmi ces familles.
 
-\begin{table}[H]
-\centering
-
-\small
-\begin{tabular}{@{}L{3.6cm}L{3.8cm}L{3.4cm}L{2.6cm}@{}}
+\begingroup\small
+\begin{longtable}{@{}L{3.6cm}L{3.8cm}L{3.4cm}L{2.6cm}@{}}
 \toprule
 \textbf{Approche} & \textbf{Entrées} & \textbf{Atouts} & \textbf{Limites} \\
 \midrule
+\endfirsthead
+\multicolumn{4}{@{}l}{\small\itshape Tableau~\ref{tab:etat-art-osa} (suite)}\\
+\toprule
+\textbf{Approche} & \textbf{Entrées} & \textbf{Atouts} & \textbf{Limites} \\
+\midrule
+\endhead
+\bottomrule
+\multicolumn{4}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\bottomrule
+\caption{Approches d'évaluation du risque de SAOS}\label{tab:etat-art-osa}\\
+\endlastfoot
 Questionnaires\newline (Berlin, STOP-BANG) & Anamnèse, anthropométrie &
 Immédiat, sans matériel & Spécificité faible, pas de sévérité \\
 \addlinespace[3pt]
@@ -415,11 +389,8 @@ Performances élevées & Exige les capteurs respiratoires \\
 \textbf{Architecture du sommeil}\newline \emph{(voie retenue)} & Hypnogramme, oxymétrie
 sommaire, index d'éveil & Réutilise l'étage de staging ; marqueurs cliniquement
 lisibles & Marqueur indirect \\
-\bottomrule
-\end{tabular}
-\caption{Approches d'évaluation du risque de SAOS}
-\label{tab:etat-art-osa}
-\end{table}
+\end{longtable}
+\endgroup
 
 \paragraph{Construction de la matrice de variables}
 
@@ -490,17 +461,16 @@ presque entièrement.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{images/resultats/feature_distributions.png}
+\includegraphics[width=0.8\textwidth]{images/resultats/feature_distributions.png}
 \caption[Distribution des marqueurs selon la sévérité]%
-        {Distribution de huit marqueurs d'architecture du sommeil selon la classe de
-         sévérité, sur la cohorte SHHS2.}
+        {Huit marqueurs d'architecture du sommeil selon la classe de sévérité (SHHS2).}
 \label{fig:distrib-osa}
 \end{figure}
 
 \paragraph{Comparaison des classifieurs}
 
 Six familles ont été comparées en validation croisée stratifiée à cinq plis, sur le F1
-macro.
+macro (figure~\ref{fig:comparaison-osa}).
 
 \begin{figure}[H]
 \centering
@@ -519,38 +489,50 @@ modèles de base de l'ensemble.
 
 \paragraph{Résultats sur le jeu de test}
 
-\begin{table}[H]
-\centering
+Le tableau~\ref{tab:osa-resultats} rapporte les performances de la forêt aléatoire et de
+l'empilement sur les 530 sujets de test, avec la classe majoritaire pour référence.
 
-\small
-\begin{tabular}{@{}lcccc@{}}
+\begingroup\small
+\begin{longtable}{@{}lcccc@{}}
 \toprule
 \textbf{Modèle} & \textbf{Exactitude} & \textbf{$\kappa$} & \textbf{F1 macro} &
 \textbf{Écart $\leq$ 1 classe} \\
 \midrule
+\endfirsthead
+\multicolumn{5}{@{}l}{\small\itshape Tableau~\ref{tab:osa-resultats} (suite)}\\
+\toprule
+\textbf{Modèle} & \textbf{Exactitude} & \textbf{$\kappa$} & \textbf{F1 macro} &
+\textbf{Écart $\leq$ 1 classe} \\
+\midrule
+\endhead
+\bottomrule
+\multicolumn{5}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\bottomrule
+\caption{Prédiction de la sévérité --- résultats sur les 530 sujets de test}\label{tab:osa-resultats}\\
+\endlastfoot
 Forêt aléatoire & \textbf{\SI{57,0}{\percent}} & \textbf{0,409} & \textbf{0,576} &
 \SI{95,5}{\percent} \\
 Empilement & \SI{54,5}{\percent} & 0,389 & 0,558 & \SI{95,3}{\percent} \\
 \midrule
 \emph{Référence : classe majoritaire} & \SI{36,2}{\percent} & 0,000 & 0,133 & --- \\
-\bottomrule
-\end{tabular}
-\caption{Prédiction de la sévérité --- résultats sur les 530 sujets de test}
-\label{tab:osa-resultats}
-\end{table}
+\end{longtable}
+\endgroup
 
 Trois observations se dégagent de ces résultats.
 
 \subparagraph{L'empilement n'apporte rien ici.} Contrairement au cas de la classification
 des stades, il fait légèrement \emph{moins} bien que la meilleure ligne de base. Ce
-résultat négatif est cohérent avec la condition de diversité : les trois modèles retenus
+résultat négatif est cohérent avec la condition de diversité~\cite{dietterich2000} : les
+trois modèles retenus
 sont tous des ensembles d'arbres, entraînés sur les mêmes variables. Leurs erreurs se
 recouvrent largement, et la combinaison n'a rien à corriger. Retenir la forêt aléatoire
 seule serait ici le choix rationnel.
 
 \subparagraph{La tâche est intrinsèquement difficile.} Une exactitude de \SI{57}{\percent}
 sur quatre classes peut sembler faible, mais la référence par la classe majoritaire n'est
-que de \SI{36,2}{\percent}, et le $\kappa$ de \num{0,41} correspond à un accord modéré. La
+que de \SI{36,2}{\percent}, et le $\kappa$ de \num{0,41} correspond à un accord
+modéré~\cite{landis1977}. La
 difficulté vient de la nature même des seuils : un index d'apnées de \num{4,9} et un index
 de \num{5,1} classent deux patients différemment alors que rien ne les distingue
 physiologiquement.
@@ -558,7 +540,8 @@ physiologiquement.
 \subparagraph{L'erreur est presque toujours de faible amplitude.} Plus de \SI{95}{\percent}
 des prédictions tombent dans la bonne classe ou dans une classe adjacente. C'est la
 statistique cliniquement pertinente : le système se trompe rarement de plus d'un cran de
-sévérité, et n'annonce quasiment jamais un patient sévère comme normal.
+sévérité, et n'annonce quasiment jamais un patient sévère comme normal. La matrice de
+confusion de la figure~\ref{fig:cm-osa} donne le détail de ces erreurs.
 
 \begin{figure}[H]
 \centering
@@ -606,28 +589,29 @@ La lecture confirme le diagnostic. Les \num{192} sujets légers se répartissent
 l'inverse, aucun sujet sévère n'est classé normal, et un seul sujet normal est classé
 sévère.
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=\textwidth]{images/resultats/roc_curves.png}
-\caption[Courbes ROC de la prédiction de sévérité]%
-        {Courbes ROC en un-contre-tous, meilleure ligne de base et ensemble.}
-\label{fig:roc-osa}
-\end{figure}
-
-\begin{samepage}
 \noindent\textbf{Avertissement sur les étiquettes.} Les figures produites par le script
 d'origine portaient des étiquettes d'axes erronées : l'encodeur de classes les trie par
 ordre alphabétique, si bien que l'ordre effectif des indices est \emph{Léger, Modéré,
 Normal, Sévère} et non l'ordre de sévérité utilisé dans le code. Le défaut ne touchait que
 l'affichage (les prédictions du système sont correctes) mais il a été corrigé dans
 le script, et les matrices présentées ici ont été recalculées avec l'ordre exact.
-\end{samepage}
+
+Les courbes ROC de la figure~\ref{fig:roc-osa} comparent, classe par classe, la meilleure
+ligne de base et l'ensemble.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.72\textwidth]{images/resultats/roc_curves.png}
+\caption[Courbes ROC de la prédiction de sévérité]%
+        {Courbes ROC en un-contre-tous, meilleure ligne de base et ensemble.}
+\label{fig:roc-osa}
+\end{figure}
 
 \subsubsection{Explicabilité des prédictions}
 
 \paragraph{Choix de la méthode}
 
-Les méthodes d'explication se répartissent selon plusieurs axes
+Les méthodes d'explication se répartissent selon plusieurs axes~\cite{adadi2018}
 (figure~\ref{fig:xai-taxo}). Notre besoin est précis : expliquer une prédiction unique
 (explication locale), pour un modèle d'ensemble (méthode agnostique ou spécifique
 aux arbres), de manière exacte et reproductible.
@@ -697,6 +681,9 @@ prédiction en contributions additives par variable, avec des propriétés d'uni
 démontrées. Leur variante dédiée aux arbres~\cite{lundberg2020} les calcule en temps
 polynomial plutôt qu'exponentiel, ce qui les rend applicables en production.
 
+La figure~\ref{fig:shap-cascade} montre comment se lit une telle décomposition : les
+contributions s'ajoutent une à une à la valeur de base, jusqu'à la prédiction.
+
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[
@@ -758,11 +745,12 @@ polynomial plutôt qu'exponentiel, ce qui les rend applicables en production.
 
 Les attributions sont calculées sur le modèle à gradient boosté, puis triées par
 contribution absolue décroissante. Les dix variables dominantes sont restituées au
-praticien, séparées en facteurs aggravants et protecteurs.
+praticien, séparées en facteurs aggravants et protecteurs. La
+figure~\ref{fig:importance} donne l'importance globale des variables de ce modèle.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.86\textwidth]{images/resultats/xgb_feature_importance.png}
+\includegraphics[width=0.68\textwidth]{images/resultats/xgb_feature_importance.png}
 \caption[Importance globale des variables]%
         {Importance des variables du modèle de sévérité, mesurée par le gain.}
 \label{fig:importance}
@@ -867,92 +855,76 @@ laisser devant un écran muet.
 Le sprint a embarqué seize récits pour 80 points de complexité
 (tableau~\ref{tab:bl-s4}).
 
-\begin{table}[H]
-\centering\small
-\renewcommand{\arraystretch}{1.15}
-\begin{tabular}{@{}c|L{2.5cm}|L{4.6cm}|L{4.6cm}|c@{}}
+\begingroup\footnotesize\renewcommand{\arraystretch}{1.1}
+\begin{longtable}{@{}c|L{2.3cm}|L{4.4cm}|L{4.4cm}|c@{}}
 \hline
 \ligneentete \entete{ID} & \entete{Module} & \entete{R\'ecit utilisateur} & \entete{T\^aches} & \entete{Estim.} \\
 \hline
-\multirow{3}{*}{US-26\,\`a\,29} & \multirow{3}{=}{Authentification} & \multirow{3}{=}{En tant qu'utilisateur, je veux me connecter et acc\'eder aux fonctions de mon r\^ole} & Hacher les mots de passe avec sel al\'eatoire & \multirow{3}{*}{15 pts} \\
- &  &  & D\'elivrer un jeton sign\'e \`a expiration &  \\
+\endfirsthead
+\multicolumn{5}{@{}l}{\small\itshape Tableau~\ref{tab:bl-s4} (suite)}\\
+\hline
+\ligneentete \entete{ID} & \entete{Module} & \entete{R\'ecit utilisateur} & \entete{T\^aches} & \entete{Estim.} \\
+\hline
+\endhead
+\multicolumn{5}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\hline
+\caption{Sprint Backlog --- Sprint 4}\label{tab:bl-s4}\\
+\endlastfoot
+\multirow{3}{*}{US-26\,\`a\,29} & \multirow{3}{=}{Authentification} & \multirow{3}{=}{En tant qu'utilisateur, je veux me connecter et acc\'eder aux fonctions de mon r\^ole} & Hacher les mots de passe avec sel al\'eatoire & \multirow{3}{*}{15 pts} \\*
+ &  &  & D\'elivrer un jeton sign\'e \`a expiration &  \\*
  &  &  & V\'erifier le r\^ole sur chaque route prot\'eg\'ee &  \\
 \hline
-\multirow{3}{*}{US-09\,\`a\,12} & \multirow{3}{=}{Service d'inf\'erence} & \multirow{3}{=}{En tant que m\'edecin, je veux lancer une analyse en choisissant la configuration adapt\'ee \`a mon montage} & Exposer les routes d'analyse et d'inspection & \multirow{3}{*}{19 pts} \\
- &  &  & Mettre les mod\`eles en cache m\'emoire &  \\
+\multirow{3}{*}{US-09\,\`a\,12} & \multirow{3}{=}{Service d'inf\'erence} & \multirow{3}{=}{En tant que m\'edecin, je veux lancer une analyse en choisissant la configuration adapt\'ee \`a mon montage} & Exposer les routes d'analyse et d'inspection & \multirow{3}{*}{19 pts} \\*
+ &  &  & Mettre les mod\`eles en cache m\'emoire &  \\*
  &  &  & Calculer les m\'etriques AASM &  \\
 \hline
-\multirow{3}{*}{US-17\,\`a\,20} & \multirow{3}{=}{Rapport de s\'ev\'erit\'e} & \multirow{3}{=}{En tant que m\'edecin, je veux saisir les donn\'ees cliniques et obtenir un rapport expliqu\'e} & Cr\'eer le formulaire clinique & \multirow{3}{*}{23 pts} \\
- &  &  & Analyser les rapports externes import\'es &  \\
+\multirow{3}{*}{US-17\,\`a\,20} & \multirow{3}{=}{Rapport de s\'ev\'erit\'e} & \multirow{3}{=}{En tant que m\'edecin, je veux saisir les donn\'ees cliniques et obtenir un rapport expliqu\'e} & Cr\'eer le formulaire clinique & \multirow{3}{*}{23 pts} \\*
+ &  &  & Analyser les rapports externes import\'es &  \\*
  &  &  & Produire l'interpr\'etation automatique &  \\
 \hline
-\multirow{3}{*}{US-21\,\`a\,23} & \multirow{3}{=}{Visualisation} & \multirow{3}{=}{En tant que m\'edecin, je veux visualiser l'hypnogramme et suivre la progression de l'analyse} & Tracer l'hypnogramme interactif & \multirow{3}{*}{18 pts} \\
- &  &  & Superposer saturation et densit\'e d'\'ev\'enements &  \\
+\multirow{3}{*}{US-21\,\`a\,23} & \multirow{3}{=}{Visualisation} & \multirow{3}{=}{En tant que m\'edecin, je veux visualiser l'hypnogramme et suivre la progression de l'analyse} & Tracer l'hypnogramme interactif & \multirow{3}{*}{18 pts} \\*
+ &  &  & Superposer saturation et densit\'e d'\'ev\'enements &  \\*
  &  &  & Afficher l'\'ecran de progression &  \\
 \hline
 \multirow{1}{*}{US-40} & \multirow{1}{=}{Export} & \multirow{1}{=}{En tant que m\'edecin, je veux exporter les marqueurs calcul\'es} & Produire les exports tabulaire et balis\'e & \multirow{1}{*}{5 pts} \\
-\hline
-\end{tabular}
-\caption{Sprint Backlog --- Sprint 4}
-\label{tab:bl-s4}
-\end{table}
+\end{longtable}
+\endgroup
 
 \subsection{Analyse}
 
 \subsubsection{Diagramme des cas d'utilisation}
 
+La figure~\ref{fig:uc-s4} présente les cas d'utilisation du sprint, tous déclenchés par le
+médecin. L'analyse d'un enregistrement en est le cas central : elle inclut
+l'authentification, le choix du montage et de la granularité, la visualisation de
+l'hypnogramme et la consultation des métriques, que le rapport de sévérité peut prolonger.
+
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}[
-    x=1cm,y=1cm,
-    uc/.style     = {ellipse, draw=hypnoblue!60, fill=hypnolight,
-                     align=center, font=\scriptsize, text width=2.7cm,
-                     inner sep=1.5pt, minimum height=1.0cm},
-    ucp/.style    = {ellipse, draw=hypnored!70, fill=hypnored!7,
-                     align=center, font=\scriptsize\bfseries, text width=2.7cm,
-                     inner sep=1.5pt, minimum height=1.0cm},
-    lien/.style   = {hypnogray!75, line width=0.55pt},
-    rel/.style    = {-{Latex[length=2mm]}, hypnoblue!70, line width=0.5pt, dashed},
-    et/.style     = {font=\tiny\itshape, text=hypnoblue!85, fill=white, inner sep=1pt},
-    nomact/.style = {font=\scriptsize\bfseries, align=center, text width=2.2cm},
-  ]
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \draw[cusys] (3.0,-3.15) rectangle (12.4,3.6);
+  \node[cutitre] at (3.2,3.5) {Poste de travail du médecin};
 
-  \tikzset{acteur/.pic={
-      \draw[hypnoblue,line width=0.8pt] (0,0) circle (0.17);
-      \draw[hypnoblue,line width=0.8pt] (0,-0.17) -- (0,-0.66);
-      \draw[hypnoblue,line width=0.8pt] (-0.28,-0.34) -- (0.28,-0.34);
-      \draw[hypnoblue,line width=0.8pt] (0,-0.66) -- (-0.24,-1.04);
-      \draw[hypnoblue,line width=0.8pt] (0,-0.66) -- (0.24,-1.04);}}
+  \node[cu]  (auth) at (5.1, 1.9)  {S'authentifier};
+  \node[cup] (ana)  at (5.1, 0.0)  {Analyser un\\enregistrement};
+  \node[cu]  (exp)  at (5.1,-2.3)  {Exporter les\\marqueurs};
 
-  \draw[hypnoblue!55,line width=0.9pt,rounded corners=3pt]
-       (3.6,-5.4) rectangle (12.6,2.4);
-  \node[font=\small\bfseries,text=hypnoblue,anchor=north west] at (3.85,2.25)
-       {Poste de travail du médecin};
+  \node[cu]  (cfg)  at (10.2, 2.5)  {Choisir montage\\et granularité};
+  \node[cu]  (vis)  at (10.2, 1.25) {Visualiser\\l'hypnogramme};
+  \node[cu]  (met)  at (10.2, 0.0)  {Consulter les\\métriques AASM};
+  \node[cu]  (sev)  at (10.2,-1.25) {Obtenir le rapport\\de sévérité};
+  \node[cu]  (imp)  at (10.2,-2.5)  {Importer un\\rapport externe};
 
-  \node[uc]  (auth) at (5.8, 1.4)  {S'authentifier};
-  \node[ucp] (ana)  at (5.8,-0.6)  {Analyser un\\enregistrement};
-  \node[uc]  (exp)  at (5.8,-3.9)  {Exporter les\\marqueurs};
+  \pic[pic text=Médecin] at (1.2,0.55) {cuacteur};
+  \foreach \c in {auth,ana,exp} \draw[culien] (1.55,0.25) -- (\c.west);
 
-  \node[uc]  (cfg)  at (10.3, 1.3) {Choisir montage\\et granularité};
-  \node[uc]  (vis)  at (10.3,-0.2) {Visualiser\\l'hypnogramme};
-  \node[uc]  (met)  at (10.3,-1.7) {Consulter les\\métriques AASM};
-  \node[uc]  (sev)  at (10.3,-3.2) {Obtenir le rapport\\de sévérité};
-  \node[uc]  (imp)  at (10.3,-4.7) {Importer un\\rapport externe};
-
-  \pic at (1.5,0.9) {acteur};
-  \node[nomact,anchor=north] at (1.5,0.25) {Médecin};
-
-  \draw[lien] (1.9,0.55) -- (auth.west);
-  \draw[lien] (1.9,0.55) -- (ana.west);
-  \draw[lien] (1.9,0.55) -- (exp.west);
-
-  \draw[rel] (ana) -- node[et,pos=0.58] {$\ll$include$\gg$} (cfg);
-  \draw[rel] (ana) -- node[et,pos=0.6]  {$\ll$include$\gg$} (vis);
-  \draw[rel] (ana) -- node[et,pos=0.6]  {$\ll$include$\gg$} (met);
-  \draw[rel] (sev) -- node[et,pos=0.5,above]  {$\ll$extend$\gg$} (met);
-  \draw[rel] (imp) -- node[et,pos=0.5,below]  {$\ll$extend$\gg$} (sev);
-  \draw[rel] (ana) -- node[et,pos=0.55] {$\ll$include$\gg$} (auth);
-
+  \draw[curel] (ana) -- node[cuet,pos=0.55] {$\ll$include$\gg$} (auth);
+  \draw[curel] (ana) -- node[cuet,pos=0.6]  {$\ll$include$\gg$} (cfg);
+  \draw[curel] (ana) -- node[cuet,pos=0.6]  {$\ll$include$\gg$} (vis);
+  \draw[curel] (ana) -- node[cuet,pos=0.6]  {$\ll$include$\gg$} (met);
+  \draw[curel] (sev) -- node[cuet,right=2pt,midway] {$\ll$extend$\gg$} (met);
+  \draw[curel] (imp) -- node[cuet,right=2pt,midway] {$\ll$extend$\gg$} (sev);
 \end{tikzpicture}
 \caption{Diagramme des cas d'utilisation du sprint 4 --- poste de travail du médecin}
 \label{fig:uc-s4}
@@ -960,32 +932,25 @@ Le sprint a embarqué seize récits pour 80 points de complexité
 
 \subsubsection{Description textuelle des cas d'utilisation}
 
-\begin{casutilisation}{Description textuelle du cas « Analyser un enregistrement »}
+Le tableau~\ref{tab:cu-s4} reprend le cas central, « Analyser un enregistrement », tel
+qu'il est livré à ce stade : l'archivage du fichier n'y figure pas encore.
+
+\begin{casutilisation}[tab:cu-s4]{Description textuelle du cas « Analyser un enregistrement »}
 Titre & Analyser un enregistrement \\ \hline
 Acteurs & Médecin du sommeil, moteur d'inférence \\ \hline
 Description & Produire l'hypnogramme et les métriques d'une nuit à partir d'un fichier
 d'enregistrement brut \\ \hline
 Préconditions & Le médecin est authentifié ; sa licence est valide ; il dispose d'un
 fichier au format EDF \\ \hline
-Scénario de base &
-\begin{minipage}[t]{\linewidth}
-\begin{enumerate}[leftmargin=1.1em,itemsep=1pt,topsep=3pt]
-  \item Le médecin choisit le montage disponible, à deux ou cinq dérivations.
-  \item Il choisit la granularité de classification, à trois ou cinq stades.
-  \item Il dépose le fichier d'enregistrement.
-  \item Le système décode le fichier, résout les dérivations et prétraite le signal.
-  \item Le moteur classe chaque époque et le système calcule les métriques.
-  \item Le système affiche l'hypnogramme, les métriques et les alertes cliniques.
-\end{enumerate}
-\end{minipage} \\ \hline
-Scénario alternatif &
-\begin{minipage}[t]{\linewidth}
-\begin{itemize}[leftmargin=1.1em,itemsep=1pt,topsep=3pt]
-  \item \textbf{3a} --- Le fichier n'est pas au format attendu : le dépôt est refusé.
-  \item \textbf{4a} --- Une dérivation est absente : repli documenté, l'analyse aboutit.
-  \item \textbf{4b} --- L'enregistrement est trop court : interruption avec message.
-\end{itemize}
-\end{minipage}
+Scénario de base & \etape{1.}{Le médecin choisit le montage disponible, à deux ou cinq dérivations.} \\*
+ & \etape{2.}{Il choisit la granularité de classification, à trois ou cinq stades.} \\
+ & \etape{3.}{Il dépose le fichier d'enregistrement.} \\
+ & \etape{4.}{Le système décode le fichier, résout les dérivations et prétraite le signal.} \\
+ & \etape{5.}{Le moteur classe chaque époque et le système calcule les métriques.} \\*
+ & \etape{6.}{Le système affiche l'hypnogramme, les métriques et les alertes cliniques.} \\ \hline
+Scénario alternatif & \etape{\textbullet}{\textbf{3a} --- Le fichier n'est pas au format attendu : le dépôt est refusé.} \\
+ & \etape{\textbullet}{\textbf{4a} --- Une dérivation est absente : repli documenté, l'analyse aboutit.} \\*
+ & \etape{\textbullet}{\textbf{4b} --- L'enregistrement est trop court : interruption avec message.}
 \end{casutilisation}
 
 \subsection{Conception}
@@ -997,8 +962,9 @@ structurants du sprint : l'ouverture de session et l'analyse d'un enregistrement
 
 \begin{figure}[H]
 \centering
-\resizebox{0.98\textwidth}{!}{%
+\resizebox{0.74\textwidth}{!}{%
 \begin{sequencediagram}
+  \def\unitfactor{0.42}% espacement vertical resserre
   \newthread[hypnolight]{u}{\scriptsize Praticien}
   \newinst[2.2]{f}{\scriptsize Client web}
   \newinst[2.2]{a}{\scriptsize Interface applicative}
@@ -1028,8 +994,9 @@ structurants du sprint : l'ouverture de session et l'analyse d'un enregistrement
 
 \begin{figure}[H]
 \centering
-\resizebox{0.98\textwidth}{!}{%
+\resizebox{0.86\textwidth}{!}{%
 \begin{sequencediagram}
+  \def\unitfactor{0.48}% espacement vertical resserre
   \newthread[hypnolight]{u}{\scriptsize Praticien}
   \newinst[1.8]{f}{\scriptsize Client web}
   \newinst[1.8]{a}{\scriptsize Interface applicative}
@@ -1077,16 +1044,25 @@ suivant, ne soit terminé.
 
 L'interface applicative est bâtie sur FastAPI, choisi pour son modèle asynchrone, sa
 validation déclarative des données et la génération automatique de sa documentation. Le
-code est réparti en modules à responsabilité unique.
+code est réparti en modules à responsabilité unique (tableau~\ref{tab:modules}).
 
-\begin{table}[H]
-\centering
-
-\small
-\begin{tabular}{@{}lrL{8.3cm}@{}}
+\begingroup\small
+\begin{longtable}{@{}lrL{8.3cm}@{}}
 \toprule
 \textbf{Module} & \textbf{Lignes} & \textbf{Responsabilité} \\
 \midrule
+\endfirsthead
+\multicolumn{3}{@{}l}{\small\itshape Tableau~\ref{tab:modules} (suite)}\\
+\toprule
+\textbf{Module} & \textbf{Lignes} & \textbf{Responsabilité} \\
+\midrule
+\endhead
+\bottomrule
+\multicolumn{3}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\bottomrule
+\caption{Modules de l'interface applicative}\label{tab:modules}\\
+\endlastfoot
 \texttt{main.py}          & 695 & Point d'entrée, routes métier et d'administration,
                                   migration au démarrage, journalisation \\
 \texttt{ml\_routes.py}    & 984 & Routes d'inférence : analyse, extraction de
@@ -1104,11 +1080,8 @@ code est réparti en modules à responsabilité unique.
 \texttt{b2\_storage.py}   & 121 & Client de stockage objet, dépôt et signature des
                                   liens \\
 \texttt{database.py}      &  19 & Connexion et session \\
-\bottomrule
-\end{tabular}
-\caption{Modules de l'interface applicative}
-\label{tab:modules}
-\end{table}
+\end{longtable}
+\endgroup
 
 Deux mécanismes transversaux sont à signaler. Le premier est la migration
 au démarrage : le schéma ayant évolué au fil des sprints, l'application exécute à son
@@ -1148,14 +1121,26 @@ les corrections à apporter avant toute mise en service réelle.
 
 \subsubsection{Sécurité des accès}
 
-\begin{table}[H]
-\centering
+Quatre mécanismes protègent les accès. Le tableau~\ref{tab:secu} associe chacun à la menace
+qu'il couvre.
 
-\small
-\begin{tabular}{@{}L{3.2cm}L{5.3cm}L{5.5cm}@{}}
+\begingroup\small
+\begin{longtable}{@{}L{3.2cm}L{5.3cm}L{5.5cm}@{}}
 \toprule
 \textbf{Mécanisme} & \textbf{Principe} & \textbf{Menace couverte} \\
 \midrule
+\endfirsthead
+\multicolumn{3}{@{}l}{\small\itshape Tableau~\ref{tab:secu} (suite)}\\
+\toprule
+\textbf{Mécanisme} & \textbf{Principe} & \textbf{Menace couverte} \\
+\midrule
+\endhead
+\bottomrule
+\multicolumn{3}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\bottomrule
+\caption{Mécanismes de sécurité et menaces couvertes}\label{tab:secu}\\
+\endlastfoot
 Empreintes de mots de passe &
 Fonction de dérivation lente avec sel aléatoire par compte &
 Compromission de la base : les mots de passe restent inexploitables \\
@@ -1171,11 +1156,8 @@ Vérification du rôle et de la propriété de la ressource sur chaque route pro
 Liens d'accès signés &
 Les références de fichiers sont converties en URL signées valables 24 heures &
 Fuite de données : aucun objet n'est accessible sans signature valide \\
-\bottomrule
-\end{tabular}
-\caption{Mécanismes de sécurité et menaces couvertes}
-\label{tab:secu}
-\end{table}
+\end{longtable}
+\endgroup
 
 Les mots de passe sont hachés par bcrypt, dont le sel aléatoire par compte
 interdit les tables précalculées. Les jetons sont signés en HMAC-SHA256 et portent
@@ -1186,16 +1168,25 @@ propriété de la ressource l'est ensuite.
 \subsubsection{Poste de travail du praticien}
 
 L'interface est une application monopage React, construite par Vite, organisée en
-composants regroupés par domaine fonctionnel.
+composants regroupés par domaine fonctionnel (tableau~\ref{tab:composants}).
 
-\begin{table}[H]
-\centering
-
-\small
-\begin{tabular}{@{}lrL{8.0cm}@{}}
+\begingroup\small
+\begin{longtable}{@{}lrL{8.0cm}@{}}
 \toprule
 \textbf{Composant} & \textbf{Lignes} & \textbf{Rôle} \\
 \midrule
+\endfirsthead
+\multicolumn{3}{@{}l}{\small\itshape Tableau~\ref{tab:composants} (suite)}\\
+\toprule
+\textbf{Composant} & \textbf{Lignes} & \textbf{Rôle} \\
+\midrule
+\endhead
+\bottomrule
+\multicolumn{3}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\bottomrule
+\caption{Principaux composants de l'interface}\label{tab:composants}\\
+\endlastfoot
 \texttt{AnalysisResults} & 1134 & Restitution complète : hypnogramme, métriques,
                                   marqueurs, formulaire clinique, rapport de sévérité \\
 \texttt{PatientList}     &  993 & Registre des patients, historique des examens,
@@ -1212,27 +1203,26 @@ composants regroupés par domaine fonctionnel.
 \texttt{ConsultationsView}  & 198 & Boîte de réception des sollicitations \\
 \texttt{AuditLogsDashboard} & 194 & Consultation et export du journal \\
 \texttt{CollaborationChat}  & 171 & Fil de discussion rattaché à un examen \\
-\bottomrule
-\end{tabular}
-\caption{Principaux composants de l'interface}
-\label{tab:composants}
-\end{table}
+\end{longtable}
+\endgroup
 
 Le parcours principal se déroule en quatre étapes : le praticien déclare le montage
 disponible, puis la granularité souhaitée, dépose le fichier, et consulte les résultats.
-Chaque étape n'expose qu'une seule décision, assortie d'une recommandation par défaut.
+Chaque étape n'expose qu'une seule décision, assortie d'une recommandation par défaut
+(figures~\ref{fig:wizard1} et~\ref{fig:wizard2}).
 
-\capturefig{wizard-1}{0.86}{Assistant d'analyse, étape 1 : déclaration du montage}{fig:wizard1}
+\capturedouble{wizard-1}{Assistant d'analyse, étape 1 : déclaration du montage}{fig:wizard1}
+              {wizard-2}{Assistant d'analyse, étape 2 : granularité de classification}{fig:wizard2}
 
-\capturefig{wizard-2}{0.86}{Assistant d'analyse, étape 2 : granularité de classification}{fig:wizard2}
-
-Pendant le traitement, un écran de progression affiche les tracés physiologiques et
+Pendant le traitement, un écran de progression (figure~\ref{fig:progression}) affiche les
+tracés physiologiques et
 détaille les cinq étapes du pipeline. Ce retour visuel a une fonction précise : une
 interface muette pendant plusieurs dizaines de secondes laisserait croire à un blocage.
 
 \capturefig{progression}{0.86}{Écran de progression du traitement}{fig:progression}
 
-La page de résultats superpose sur un même axe temporel l'hypnogramme prédit, la courbe de
+La page de résultats (figure~\ref{fig:resultats}) superpose sur un même axe temporel
+l'hypnogramme prédit, la courbe de
 saturation et la densité d'événements respiratoires. Cette superposition est le choix de
 visualisation le plus utile de l'interface : elle permet de constater directement qu'une
 désaturation coïncide avec une sortie de sommeil paradoxal, ce que trois graphiques séparés
@@ -1240,7 +1230,8 @@ ne montreraient pas.
 
 \capturefig{resultats}{0.92}{Restitution des résultats d'analyse}{fig:resultats}
 
-Un second parcours permet une prédiction sans enregistrement, à partir d'une saisie manuelle
+Un second parcours (figure~\ref{fig:customosa}) permet une prédiction sans enregistrement,
+à partir d'une saisie manuelle
 ou d'un rapport externe importé. Cette voie répond à un usage réel : disposer d'un compte
 rendu produit par un autre laboratoire sans avoir accès au signal brut.
 
@@ -1266,15 +1257,24 @@ authentifiées.
 La release a livré ses 122 points en deux sprints, dont 80 pour le seul sprint~4.
 L'incrément démontré lors de la revue est récapitulé au tableau~\ref{tab:revue-r2}.
 
-\begin{table}[H]
-\centering\small
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{@{}L{3.6cm}|L{8.6cm}|c@{}}
+\begingroup\small\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{@{}L{3.6cm}|L{8.6cm}|c@{}}
 \hline
 \ligneentete \entete{Élément attendu} & \entete{Réalisation} & \entete{État} \\
 \hline
+\endfirsthead
+\multicolumn{3}{@{}l}{\small\itshape Tableau~\ref{tab:revue-r2} (suite)}\\
+\hline
+\ligneentete \entete{Élément attendu} & \entete{Réalisation} & \entete{État} \\
+\hline
+\endhead
+\multicolumn{3}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\hline
+\caption{Revue de la release 2 : incrément attendu et incrément livré}\label{tab:revue-r2}\\
+\endlastfoot
 Ensembles de classification & Quatre ensembles par empilement, supérieurs au meilleur
-modèle isolé sur les quatre configurations & \checkmark \\
+modèle isolé sur les quatre configurations & \checkmark \\*
 \hline
 Modèle de sévérité & Quatre classes, 53 variables : \SI{57,0}{\percent} d'exactitude et
 plus de \SI{95}{\percent} des prédictions à un cran près & \checkmark \\
@@ -1283,15 +1283,12 @@ Explication des prédictions & Attributions par valeurs de Shapley, restituées 
 aggravants et protecteurs & \checkmark \\
 \hline
 Interface applicative & Jetons signés, contrôle des rôles, modèles conservés en mémoire ;
-routes d'inférence non authentifiées & avec réserve \\
+routes d'inférence non authentifiées & avec réserve \\*
 \hline
 Poste de travail & Assistant d'analyse en quatre étapes, restitution sur un axe temporel
 unique, prédiction sans enregistrement & \checkmark \\
-\hline
-\end{tabular}
-\caption{Revue de la release 2 : incrément attendu et incrément livré}
-\label{tab:revue-r2}
-\end{table}
+\end{longtable}
+\endgroup
 
 \subsection{Rétrospective}
 

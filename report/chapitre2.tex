@@ -13,20 +13,30 @@ releases de deux sprints chacune, qui structure les trois chapitres suivants.
 
 \section{Identification des acteurs}
 
-Un acteur désigne toute entité qui interagit avec le système sans en faire partie. On
+Un acteur désigne toute entité qui interagit avec le système sans en faire
+partie~\cite{omg2017uml}. On
 distingue les acteurs \emph{principaux}, qui déclenchent les cas d'utilisation pour en
 retirer une valeur, des acteurs \emph{secondaires}, sollicités par le système pour
 mener une opération à bien. Le tableau~\ref{tab:acteurs} recense les quatre acteurs de
 \hypnoria{}.
 
-\begin{table}[H]
-\centering
-
-\small
-\begin{tabular}{@{}L{3.0cm}cL{8.2cm}@{}}
+\begingroup\small
+\begin{longtable}{@{}L{3.0cm}cL{10.4cm}@{}}
 \toprule
 \textbf{Acteur} & \textbf{Type} & \textbf{Responsabilités} \\
 \midrule
+\endfirsthead
+\multicolumn{3}{@{}l}{\small\itshape Tableau~\ref{tab:acteurs} (suite)}\\
+\toprule
+\textbf{Acteur} & \textbf{Type} & \textbf{Responsabilités} \\
+\midrule
+\endhead
+\bottomrule
+\multicolumn{3}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\bottomrule
+\caption{Acteurs du système et leurs responsabilités}\label{tab:acteurs}\\
+\endlastfoot
 Médecin du sommeil & principal &
 Constituer et suivre son registre de patients, lancer l'analyse d'un enregistrement,
 interpréter l'hypnogramme et la prédiction de sévérité, annoter, produire le compte
@@ -44,11 +54,8 @@ les métriques et les attributions d'explication \\
 Service de stockage & secondaire &
 Recevoir les fichiers volumineux, les conserver de façon durable et délivrer des liens
 d'accès temporaires \\
-\bottomrule
-\end{tabular}
-\caption{Acteurs du système et leurs responsabilités}
-\label{tab:acteurs}
-\end{table}
+\end{longtable}
+\endgroup
 
 Deux remarques sur ce découpage. Le moteur d'inférence est modélisé comme un
 acteur distinct bien qu'il réside dans le même processus que l'interface applicative :
@@ -61,23 +68,34 @@ externe.
 \subsection{Les besoins fonctionnels}
 
 Les besoins fonctionnels ont été organisés en neuf \emph{épics}, regroupements
-thématiques de fonctionnalités partageant un même objectif métier. Cette structure,
+thématiques de fonctionnalités partageant un même objectif métier~\cite{cohn2004}. Cette
+structure,
 présentée au tableau~\ref{tab:epics}, sert de colonne vertébrale au backlog. Les épics
 y sont rangés dans l'ordre où ils ont été traités : les deux étages d'apprentissage
 d'abord, puis la restitution au praticien, et enfin la plateforme, sa gouvernance et son
 déploiement.
 
-\begin{table}[H]
-\centering
-
-\small
-\begin{tabular}{@{}clL{7.4cm}cc@{}}
+\begingroup\small
+\begin{longtable}{@{}clL{7.4cm}cc@{}}
 \toprule
 \textbf{Épic} & \textbf{Intitulé} & \textbf{Portée} & \textbf{Récits} &
 \textbf{Points} \\
 \midrule
+\endfirsthead
+\multicolumn{5}{@{}l}{\small\itshape Tableau~\ref{tab:epics} (suite)}\\
+\toprule
+\textbf{Épic} & \textbf{Intitulé} & \textbf{Portée} & \textbf{Récits} &
+\textbf{Points} \\
+\midrule
+\endhead
+\bottomrule
+\multicolumn{5}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\bottomrule
+\caption{Regroupement des besoins fonctionnels en épics}\label{tab:epics}\\
+\endlastfoot
 E1 & Classification & Lecture EDF, prétraitement, modèles de base, métriques AASM
-& 12 & 95 \\
+& 12 & 95 \\*
 \addlinespace[2pt]
 E2 & Sévérité du SAOS & Empilement, extraction de marqueurs, prédiction, explications
 & 8 & 65 \\
@@ -99,14 +117,11 @@ statistiques & 10 & 45 \\
 E8 & Collaboration & Discussions rattachées à un examen, boîte de réception & 3 & 18 \\
 \addlinespace[2pt]
 E9 & Industrialisation & Conteneurisation, intégration continue, déploiement,
-multilinguisme & 5 & 29 \\
+multilinguisme & 5 & 29 \\*
 \midrule
 \multicolumn{3}{@{}r}{\textbf{Total}} & \textbf{60} & \textbf{358} \\
-\bottomrule
-\end{tabular}
-\caption{Regroupement des besoins fonctionnels en épics}
-\label{tab:epics}
-\end{table}
+\end{longtable}
+\endgroup
 
 \subsection{Les besoins non fonctionnels}
 
@@ -116,14 +131,23 @@ de santé, impose des obligations propres. Le tableau~\ref{tab:bnf} les énonce 
 pour chacune, le moyen de vérification retenu : un besoin non fonctionnel qu'on ne sait
 pas vérifier n'est qu'une intention.
 
-\begin{table}[H]
-\centering
-
-\small
-\begin{tabular}{@{}L{2.7cm}L{5.6cm}L{5.6cm}@{}}
+\begingroup\small
+\begin{longtable}{@{}L{2.7cm}L{6.1cm}L{6.0cm}@{}}
 \toprule
 \textbf{Critère} & \textbf{Exigence} & \textbf{Vérification} \\
 \midrule
+\endfirsthead
+\multicolumn{3}{@{}l}{\small\itshape Tableau~\ref{tab:bnf} (suite)}\\
+\toprule
+\textbf{Critère} & \textbf{Exigence} & \textbf{Vérification} \\
+\midrule
+\endhead
+\bottomrule
+\multicolumn{3}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\bottomrule
+\caption{Besoins non fonctionnels et moyens de vérification}\label{tab:bnf}\\
+\endlastfoot
 Sécurité &
 Aucun accès sans jeton valide ; mots de passe jamais stockés en clair ; cloisonnement
 strict entre rôles &
@@ -164,11 +188,8 @@ Démarrage de la pile sur un poste neuf en une commande \\
 Maintenabilité &
 Séparation nette des responsabilités ; ajout d'un modèle sans toucher au reste &
 Ajout d'une variante de modèle à titre d'essai \\
-\bottomrule
-\end{tabular}
-\caption{Besoins non fonctionnels et moyens de vérification}
-\label{tab:bnf}
-\end{table}
+\end{longtable}
+\endgroup
 
 \section{Diagramme de cas d'utilisation global}
 
@@ -177,67 +198,41 @@ acteurs et le système.
 
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}[
-    x=1cm,y=1cm,
-    uc/.style      = {ellipse, draw=hypnoblue!60, fill=hypnolight,
-                      align=center, font=\scriptsize, text width=2.45cm,
-                      inner sep=1.5pt, minimum height=0.92cm},
-    lien/.style    = {hypnogray!75, line width=0.5pt},
-    nomact/.style  = {font=\scriptsize\bfseries, align=center, text width=2.2cm},
-  ]
-
-  % ── Pictogramme d'acteur ────────────────────────────────────────────────
-  \tikzset{acteur/.pic={
-      \draw[hypnoblue,line width=0.8pt] (0,0) circle (0.17);
-      \draw[hypnoblue,line width=0.8pt] (0,-0.17) -- (0,-0.66);
-      \draw[hypnoblue,line width=0.8pt] (-0.28,-0.34) -- (0.28,-0.34);
-      \draw[hypnoblue,line width=0.8pt] (0,-0.66) -- (-0.24,-1.04);
-      \draw[hypnoblue,line width=0.8pt] (0,-0.66) -- (0.24,-1.04);}}
-
-  % ── Frontière du système ────────────────────────────────────────────────
-  \draw[hypnoblue!55,line width=0.9pt,rounded corners=3pt]
-       (3.45,-6.40) rectangle (11.05,2.55);
-  \node[font=\small\bfseries,text=hypnoblue,anchor=north] at (7.25,2.42)
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \draw[cusys] (3.3,-3.8) rectangle (11.5,3.1);
+  \node[font=\small\bfseries,text=hypnoblue,anchor=north] at (7.4,3.0)
        {Système \hypnoria{}};
 
-  % ── Cas d'utilisation ───────────────────────────────────────────────────
-  \node[uc] (auth)  at (7.25, 1.20) {S'authentifier};
+  \node[cu] (auth)  at (7.4, 2.0)  {S'authentifier};
 
-  \node[uc] (pat)   at (5.35,-0.40) {Gérer ses patients};
-  \node[uc] (ana)   at (5.35,-1.70) {Analyser un\\enregistrement};
-  \node[uc] (osa)   at (5.35,-3.00) {Prédire la\\sévérité du SAOS};
-  \node[uc] (annot) at (5.35,-4.30) {Annoter et\\exporter};
-  \node[uc] (colab) at (5.35,-5.60) {Solliciter un\\confrère};
+  \node[cu] (pat)   at (5.3, 0.95) {Gérer ses patients};
+  \node[cu] (ana)   at (5.3,-0.1)  {Analyser un\\enregistrement};
+  \node[cu] (osa)   at (5.3,-1.15) {Prédire la\\sévérité du SAOS};
+  \node[cu] (annot) at (5.3,-2.2)  {Annoter et\\exporter};
+  \node[cu] (colab) at (5.3,-3.25) {Solliciter un\\confrère};
 
-  \node[uc] (comp)  at (9.15,-0.40) {Gérer les comptes\\et licences};
-  \node[uc] (etab)  at (9.15,-1.70) {Gérer les\\établissements};
-  \node[uc] (audit) at (9.15,-3.00) {Consulter le\\journal d'audit};
-  \node[uc] (stats) at (9.15,-4.30) {Suivre l'activité\\de la plateforme};
+  \node[cu] (comp)  at (9.5, 0.95) {Gérer les comptes\\et licences};
+  \node[cu] (etab)  at (9.5,-0.1)  {Gérer les\\établissements};
+  \node[cu] (audit) at (9.5,-1.15) {Consulter le\\journal d'audit};
+  \node[cu] (stats) at (9.5,-2.2)  {Suivre l'activité\\de la plateforme};
 
-  % ── Acteurs principaux : libellé au-dessus, liaisons vers la droite ─────
-  \pic at (1.15,0.00) {acteur};
-  \node[nomact,anchor=south] at (1.15,0.42) {Médecin\\du sommeil};
-
-  \pic at (13.35,0.00) {acteur};
-  \node[nomact,anchor=south] at (13.35,0.42) {Administrateur};
-
+  \pic[pic text={Médecin\\du sommeil}] at (1.3,0.9) {cuacteur};
+  \pic[pic text=Administrateur] at (13.5,0.9) {cuacteur};
   \foreach \c in {auth,pat,ana,osa,annot,colab}
-    \draw[lien] (1.50,-0.20) -- (\c.west);
-
+    \draw[culien] (1.65,0.6) -- (\c.west);
   \foreach \c in {auth,comp,etab,audit,stats}
-    \draw[lien] (13.00,-0.20) -- (\c.east);
+    \draw[culien] (13.15,0.6) -- (\c.east);
 
-  % ── Acteurs secondaires : libellé en dessous ────────────────────────────
-  \pic at (7.25,-7.55) {acteur};
-  \node[nomact,anchor=north] at (7.25,-8.72) {Moteur\\d'inférence};
-
-  \pic at (10.35,-7.55) {acteur};
-  \node[nomact,anchor=north] at (10.35,-8.72) {Service de\\stockage};
-
-  \draw[lien] (7.25,-7.28) -- (ana.east);
-  \draw[lien] (7.25,-7.28) -- (osa.east);
-  \draw[lien] (10.35,-7.28) -- (annot.east);
-
+  % Acteurs secondaires sous la frontiere, nommes sur leur droite
+  \pic[pic text={}] at (7.6,-4.35) {cuacteur};
+  \node[font=\scriptsize\bfseries,align=left,anchor=west] at (7.95,-4.85)
+       {Moteur\\d'inférence};
+  \pic[pic text={}] at (10.6,-4.35) {cuacteur};
+  \node[font=\scriptsize\bfseries,align=left,anchor=west] at (10.95,-4.85)
+       {Service de\\stockage};
+  \draw[culien] (7.6,-4.19) -- (ana.east);
+  \draw[culien] (7.6,-4.19) -- (osa.east);
+  \draw[culien] (10.6,-4.19) -- (annot.east);
 \end{tikzpicture}
 \vspace{0.2cm}
 \caption[Diagramme de cas d'utilisation global]%
@@ -247,70 +242,34 @@ acteurs et le système.
 
 Le cas « Analyser un enregistrement » constitue le c\oe ur fonctionnel du système. La
 figure~\ref{fig:uc-analyse} le décompose et fait apparaître les relations d'inclusion
-(sous-cas systématiquement exécutés) et d'extension (comportements optionnels).
+(sous-cas systématiquement exécutés) et d'extension (comportements
+optionnels)~\cite{omg2017uml}.
 
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}[
-    x=1cm,y=1cm,
-    uc/.style      = {ellipse, draw=hypnoblue!60, fill=hypnolight,
-                      align=center, font=\scriptsize, text width=2.5cm,
-                      inner sep=1.5pt, minimum height=0.92cm},
-    ucp/.style     = {ellipse, draw=hypnored!75, fill=hypnored!8,
-                      align=center, font=\scriptsize\bfseries, text width=2.5cm,
-                      inner sep=1.5pt, minimum height=0.92cm},
-    lien/.style    = {hypnogray!75, line width=0.5pt},
-    incl/.style    = {-{Latex[length=2mm]}, hypnoblue!75, line width=0.5pt, dashed},
-    ext/.style     = {-{Latex[length=2mm]}, hypnored!70, line width=0.5pt, dashed},
-    et/.style      = {font=\tiny\itshape, fill=white, inner sep=1.2pt},
-    nomact/.style  = {font=\scriptsize\bfseries, align=center, text width=1.8cm},
-  ]
+\begin{tikzpicture}[x=1cm,y=1cm,
+    ext/.style = {curel, draw=hypnored!70},
+    etr/.style = {cuet, text=hypnored!85}]
+  \draw[cusys] (3.0,-3.05) rectangle (12.4,3.3);
+  \node[cutitre] at (3.2,3.2) {Module d'analyse};
 
-  \tikzset{acteur/.pic={
-      \draw[hypnoblue,line width=0.8pt] (0,0) circle (0.17);
-      \draw[hypnoblue,line width=0.8pt] (0,-0.17) -- (0,-0.66);
-      \draw[hypnoblue,line width=0.8pt] (-0.28,-0.34) -- (0.28,-0.34);
-      \draw[hypnoblue,line width=0.8pt] (0,-0.66) -- (-0.24,-1.04);
-      \draw[hypnoblue,line width=0.8pt] (0,-0.66) -- (0.24,-1.04);}}
+  \node[cup] (ana) at (5.1, 0.8)  {Analyser un\\enregistrement};
+  \node[cu]  (exp) at (5.1,-1.1)  {Exporter les\\marqueurs};
+  \node[cu]  (pdf) at (5.1,-2.4)  {Produire le\\compte rendu};
 
-  % ── Frontière ───────────────────────────────────────────────────────────
-  \draw[hypnoblue!55,line width=0.9pt,rounded corners=3pt]
-       (2.75,-4.55) rectangle (12.60,3.15);
-  \node[font=\small\bfseries,text=hypnoblue,anchor=north] at (7.65,3.02)
-       {Module d'analyse};
+  \node[cu]  (chn) at (10.2, 2.2) {Choisir le montage\\et la granularité};
+  \node[cu]  (pre) at (10.2, 1.1) {Prétraiter\\le signal};
+  \node[cu]  (cls) at (10.2, 0.0) {Classer les époques};
+  \node[cu]  (met) at (10.2,-1.1) {Calculer les\\métriques AASM};
+  \node[cu]  (osa) at (10.2,-2.4) {Prédire la\\sévérité};
 
-  % ── Cas central et cas déclenchés par le médecin ────────────────────────
-  \node[ucp] (ana) at (4.75, 0.75) {Analyser un\\enregistrement};
-  \node[uc]  (exp) at (4.75,-2.20) {Exporter les\\marqueurs};
-  \node[uc]  (pdf) at (4.75,-3.65) {Produire le\\compte rendu};
+  \pic[pic text=Médecin] at (1.2,0.55) {cuacteur};
+  \foreach \c in {ana,exp,pdf} \draw[culien] (1.55,0.25) -- (\c.west);
 
-  % ── Sous-cas inclus ─────────────────────────────────────────────────────
-  \node[uc] (chn) at (10.30, 2.10) {Choisir le montage\\et la granularité};
-  \node[uc] (pre) at (10.30, 0.85) {Prétraiter\\le signal};
-  \node[uc] (cls) at (10.30,-0.40) {Classer les époques};
-  \node[uc] (met) at (10.30,-1.75) {Calculer les\\métriques AASM};
-
-  % ── Cas étendu ──────────────────────────────────────────────────────────
-  \node[uc] (osa) at (10.30,-3.65) {Prédire la\\sévérité};
-
-  % ── Acteur ──────────────────────────────────────────────────────────────
-  \pic at (1.05,0.55) {acteur};
-  \node[nomact,anchor=south] at (1.05,0.97) {Médecin};
-
-  \draw[lien] (1.40,0.35) -- (ana.west);
-  \draw[lien] (1.40,0.35) -- (exp.west);
-  \draw[lien] (1.40,0.35) -- (pdf.west);
-
-  % ── Relations d'inclusion (libellés étagés le long du faisceau) ──────────
-  \draw[incl] (ana) -- node[et,text=hypnoblue!85,pos=0.30] {$\ll$include$\gg$} (chn);
-  \draw[incl] (ana) -- node[et,text=hypnoblue!85,pos=0.44] {$\ll$include$\gg$} (pre);
-  \draw[incl] (ana) -- node[et,text=hypnoblue!85,pos=0.58] {$\ll$include$\gg$} (cls);
-  \draw[incl] (ana) -- node[et,text=hypnoblue!85,pos=0.72] {$\ll$include$\gg$} (met);
-
-  % ── Relations d'extension ───────────────────────────────────────────────
-  \draw[ext] (osa) -- node[et,text=hypnored!85,pos=0.5] {$\ll$extend$\gg$} (met);
-  \draw[ext] (pdf) -- node[et,text=hypnored!85,pos=0.5] {$\ll$extend$\gg$} (exp);
-
+  \foreach \c/\p in {chn/0.60,pre/0.60,cls/0.62,met/0.64}
+    \draw[curel] (ana) -- node[cuet,pos=\p] {$\ll$include$\gg$} (\c);
+  \draw[ext] (osa) -- node[etr,right=2pt,midway] {$\ll$extend$\gg$} (met);
+  \draw[ext] (pdf) -- node[etr,right=2pt,midway] {$\ll$extend$\gg$} (exp);
 \end{tikzpicture}
 \vspace{0.2cm}
 \caption[Raffinement du cas « Analyser un enregistrement »]%
@@ -322,13 +281,20 @@ Les tableaux~\ref{tab:desc-analyse} et~\ref{tab:desc-osa} décrivent textuelleme
 deux cas les plus critiques. Un diagramme montre en effet la structure des interactions,
 mais pas leur déroulement.
 
-\begin{table}[H]
-\centering
-
-\small
-\begin{tabular}{@{}L{3.0cm}L{11.4cm}@{}}
+\begingroup\small
+\begin{longtable}{@{}L{3.0cm}L{11.4cm}@{}}
 \toprule
-\textbf{Identifiant} & UC-03 \\
+\endfirsthead
+\multicolumn{2}{@{}l}{\small\itshape Tableau~\ref{tab:desc-analyse} (suite)}\\
+\toprule
+\endhead
+\bottomrule
+\multicolumn{2}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\bottomrule
+\caption{Description textuelle du cas « Analyser un enregistrement »}\label{tab:desc-analyse}\\
+\endlastfoot
+\textbf{Identifiant} & UC-03 \\*
 \textbf{Acteur principal} & Médecin du sommeil \\
 \textbf{Acteurs secondaires} & Moteur d'inférence, service de stockage \\
 \textbf{Préconditions} & Le médecin est authentifié ; sa licence est valide ; il
@@ -336,46 +302,36 @@ dispose d'un fichier d'enregistrement au format EDF \\
 \textbf{Postconditions} & Un examen est créé dans le dossier du patient, la séquence
 de stades et les métriques sont enregistrées, le fichier brut est archivé \\
 \midrule
-\textbf{Scénario nominal} &
-\begin{minipage}[t]{11.2cm}
-\begin{enumerate}[leftmargin=1.1em,itemsep=1pt,topsep=2pt]
-  \item Le médecin sélectionne le patient concerné.
-  \item Il choisit le montage disponible, à deux ou cinq dérivations.
-  \item Il choisit la granularité de classification, à trois ou cinq stades.
-  \item Il dépose le fichier d'enregistrement.
-  \item Le système décode le fichier, résout les dérivations et prétraite le signal.
-  \item Le moteur d'inférence classe chaque époque et le système calcule les métriques.
-  \item Le système affiche l'hypnogramme, les métriques et les alertes cliniques.
-  \item Le système crée l'examen et lance l'archivage du fichier en arrière-plan.
-\end{enumerate}
-\end{minipage} \\
+\textbf{Scénario nominal} & \etape{1.}{Le médecin sélectionne le patient concerné.} \\*
+ & \etape{2.}{Il choisit le montage disponible, à deux ou cinq dérivations.} \\*
+ & \etape{3.}{Il choisit la granularité de classification, à trois ou cinq stades.} \\*
+ & \etape{4.}{Il dépose le fichier d'enregistrement.} \\*
+ & \etape{5.}{Le système décode le fichier, résout les dérivations et prétraite le signal.} \\*
+ & \etape{6.}{Le moteur d'inférence classe chaque époque et le système calcule les métriques.} \\*
+ & \etape{7.}{Le système affiche l'hypnogramme, les métriques et les alertes cliniques.} \\*
+ & \etape{8.}{Le système crée l'examen et lance l'archivage du fichier en arrière-plan.} \\
 \midrule
-\textbf{Scénarios alternatifs} &
-\begin{minipage}[t]{11.2cm}
-\begin{itemize}[leftmargin=1.1em,itemsep=1pt,topsep=2pt]
-  \item \textbf{4a} --- Le fichier n'est pas au format attendu : le système refuse le
-        dépôt et le signale.
-  \item \textbf{5a} --- Une dérivation est absente : le système applique son repli
-        documenté et poursuit.
-  \item \textbf{5b} --- L'enregistrement est plus court qu'une époque : le traitement
-        s'interrompt avec un message explicite.
-  \item \textbf{8a} --- L'archivage échoue : les résultats restent consultables et le
-        transfert est signalé en erreur.
-\end{itemize}
-\end{minipage} \\
-\bottomrule
-\end{tabular}
-\caption{Description textuelle du cas « Analyser un enregistrement »}
-\label{tab:desc-analyse}
-\end{table}
+\textbf{Scénarios alternatifs} & \etape{\textbullet}{\textbf{4a} --- Le fichier n'est pas au format attendu : le système refuse le dépôt et le signale.} \\
+ & \etape{\textbullet}{\textbf{5a} --- Une dérivation est absente : le système applique son repli documenté et poursuit.} \\
+ & \etape{\textbullet}{\textbf{5b} --- L'enregistrement est plus court qu'une époque : le traitement s'interrompt avec un message explicite.} \\*
+ & \etape{\textbullet}{\textbf{8a} --- L'archivage échoue : les résultats restent consultables et le transfert est signalé en erreur.} \\
+\end{longtable}
+\endgroup
 
-\begin{table}[H]
-\centering
-
-\small
-\begin{tabular}{@{}L{3.0cm}L{11.4cm}@{}}
+\begingroup\small
+\begin{longtable}{@{}L{3.0cm}L{11.4cm}@{}}
 \toprule
-\textbf{Identifiant} & UC-04 \\
+\endfirsthead
+\multicolumn{2}{@{}l}{\small\itshape Tableau~\ref{tab:desc-osa} (suite)}\\
+\toprule
+\endhead
+\bottomrule
+\multicolumn{2}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\bottomrule
+\caption{Description textuelle du cas « Prédire la sévérité du SAOS »}\label{tab:desc-osa}\\
+\endlastfoot
+\textbf{Identifiant} & UC-04 \\*
 \textbf{Acteur principal} & Médecin du sommeil \\
 \textbf{Acteur secondaire} & Moteur d'inférence \\
 \textbf{Préconditions} & Une séquence de stades est disponible, issue d'une analyse ou
@@ -383,50 +339,34 @@ d'une saisie manuelle \\
 \textbf{Postconditions} & Une classe de sévérité, ses probabilités et la décomposition
 des facteurs sont associées à l'examen \\
 \midrule
-\textbf{Scénario nominal} &
-\begin{minipage}[t]{11.2cm}
-\begin{enumerate}[leftmargin=1.1em,itemsep=1pt,topsep=2pt]
-  \item Le système extrait les marqueurs d'architecture depuis l'hypnogramme.
-  \item Le médecin complète les données démographiques et oxymétriques.
-  \item Il déclenche l'évaluation du risque.
-  \item Le système construit le vecteur de variables et comble les valeurs absentes.
-  \item Le moteur produit la classe de sévérité et ses probabilités.
-  \item Le système calcule les contributions de chaque variable.
-  \item Le système affiche la sévérité, les facteurs aggravants et protecteurs, et
-        l'interprétation clinique.
-\end{enumerate}
-\end{minipage} \\
+\textbf{Scénario nominal} & \etape{1.}{Le système extrait les marqueurs d'architecture depuis l'hypnogramme.} \\*
+ & \etape{2.}{Le médecin complète les données démographiques et oxymétriques.} \\*
+ & \etape{3.}{Il déclenche l'évaluation du risque.} \\*
+ & \etape{4.}{Le système construit le vecteur de variables et comble les valeurs absentes.} \\*
+ & \etape{5.}{Le moteur produit la classe de sévérité et ses probabilités.} \\*
+ & \etape{6.}{Le système calcule les contributions de chaque variable.} \\*
+ & \etape{7.}{Le système affiche la sévérité, les facteurs aggravants et protecteurs, et l'interprétation clinique.} \\*
 \midrule
-\textbf{Scénarios alternatifs} &
-\begin{minipage}[t]{11.2cm}
-\begin{itemize}[leftmargin=1.1em,itemsep=1pt,topsep=2pt]
-  \item \textbf{2a} --- Le médecin importe un rapport externe : le système en extrait
-        les valeurs et préremplit le formulaire.
-  \item \textbf{4a} --- Des variables cliniques manquent : le système applique la
-        valeur médiane de la population d'apprentissage et le signale.
-  \item \textbf{5a} --- Les modèles ne sont pas chargés : l'opération est refusée avec
-        un message explicite.
-\end{itemize}
-\end{minipage} \\
-\bottomrule
-\end{tabular}
-\caption{Description textuelle du cas « Prédire la sévérité du SAOS »}
-\label{tab:desc-osa}
-\end{table}
+\textbf{Scénarios alternatifs} & \etape{\textbullet}{\textbf{2a} --- Le médecin importe un rapport externe : le système en extrait les valeurs et préremplit le formulaire.} \\
+ & \etape{\textbullet}{\textbf{4a} --- Des variables cliniques manquent : le système applique la valeur médiane de la population d'apprentissage et le signale.} \\*
+ & \etape{\textbullet}{\textbf{5a} --- Les modèles ne sont pas chargés : l'opération est refusée avec un message explicite.} \\
+\end{longtable}
+\endgroup
 
 \section{Backlog du produit}
 
-Le \emph{Product Backlog} est la liste ordonnée de tout ce que le produit doit offrir.
-Chaque élément prend la forme d'un récit utilisateur suivant la formulation canonique :
-\emph{en tant que} \dots, \emph{je veux} \dots, \emph{afin de} \dots. Cette
+Le \emph{Product Backlog} est la liste ordonnée de tout ce que le produit doit
+offrir~\cite{schwaber2020}. Chaque élément prend la forme d'un récit utilisateur suivant la
+formulation canonique~\cite{cohn2004} : \emph{en tant que} \dots, \emph{je veux} \dots,
+\emph{afin de} \dots. Cette
 formulation force à énoncer le bénéficiaire et la finalité, et non seulement la
 fonction.
 
-Deux attributs complètent chaque récit. La priorité suit la méthode MoSCoW :
+Deux attributs complètent chaque récit. La priorité suit la méthode MoSCoW~\cite{clegg1994} :
 \emph{Must have} pour ce sans quoi le produit n'a pas de sens, \emph{Should have} pour
 ce qui lui donne sa valeur, \emph{Could have} pour ce qui l'améliore sans le
 conditionner. L'estimation s'exprime en points de complexité sur la suite de
-Fibonacci, échelle relative qui compare les récits entre eux plutôt que de prétendre
+Fibonacci~\cite{cohn2005}, échelle relative qui compare les récits entre eux plutôt que de prétendre
 prédire une durée.
 
 L'ordre de la liste suit celui de la réalisation. Les récits d'apprentissage
@@ -571,17 +511,16 @@ que le praticien y a portées et les discussions qu'elle a suscitées.
 \begin{tikzpicture}[
     x=1cm,y=1cm,
     cls/.style  = {rectangle,draw=hypnoblue!65,fill=white,align=left,anchor=north,
-                   font=\tiny,inner sep=0pt,text width=4.35cm},
+                   font=\tiny,inner sep=0pt,text width=3.55cm},
     ent/.style  = {rectangle,draw=hypnored!70,fill=hypnored!6,align=left,anchor=north,
-                   font=\tiny,inner sep=0pt,text width=4.35cm},
+                   font=\tiny,inner sep=0pt,text width=3.55cm},
     rel/.style  = {hypnogray!85,line width=0.6pt},
-    card/.style = {font=\tiny,text=hypnogray,inner sep=1.6pt,fill=white},
-    note/.style = {font=\tiny\itshape,text=hypnogray,align=center,text width=4.2cm},
+    card/.style = {font=\tiny,text=hypnogray,inner sep=1.4pt,fill=white},
   ]
 
   \newcommand{\classe}[3]{%
     \begin{tabular}{@{\hspace{3pt}}>{\raggedright\arraybackslash
-                             \hyphenpenalty=10000\exhyphenpenalty=10000}p{4.15cm}@{}}
+                             \hyphenpenalty=10000\exhyphenpenalty=10000}p{3.35cm}@{}}
       \rowcolor{hypnolight}\textbf{#1}\\[1pt]
       \hline
       \rule{0pt}{7pt}#2\\[1pt]
@@ -590,7 +529,7 @@ que le praticien y a portées et les discussions qu'elle a suscitées.
     \end{tabular}}
 
   % ── Rangée 1 ────────────────────────────────────────────────────────────
-  \node[cls] (hop) at (2.45, 6.30) {\classe{Hospital}{%
+  \node[cls] (hop) at (1.8, 0) {\classe{Hospital}{%
        $-$~id : int\newline
        $-$~name : str\newline
        $-$~b2\_bucket : str\newline
@@ -599,7 +538,7 @@ que le praticien y a portées et les discussions qu'elle a suscitées.
        + create\_hospital(name : str) : Hospital\newline
        + get\_hospitals() : list[Hospital]}};
 
-  \node[cls] (usr) at (7.95, 6.30) {\classe{User}{%
+  \node[cls] (usr) at (6.0, 0) {\classe{User}{%
        $-$~id : int\newline
        $-$~email : str\newline
        $-$~hashed\_password : str\newline
@@ -608,27 +547,24 @@ que le praticien y a portées et les discussions qu'elle a suscitées.
        $-$~last\_name : str\newline
        $-$~status : str\newline
        $-$~license\_expiry : datetime\newline
-       $-$~last\_login : datetime\newline
-       $-$~hospital\_id : int}{%
+       $-$~last\_login : datetime}{%
        + verify\_password(plain : str) : bool\newline
        + create\_access\_token(ttl : timedelta) : str\newline
        + update\_lifecycle(status : str, expiry : datetime) : User\newline
        + reset\_password(new : str) : bool}};
 
-  \node[cls] (pat) at (13.45, 6.30) {\classe{Patient}{%
+  \node[cls] (pat) at (10.2, 0) {\classe{Patient}{%
        $-$~id : int\newline
        $-$~first\_name : str\newline
        $-$~last\_name : str\newline
        $-$~age : int\newline
        $-$~imc : float\newline
-       $-$~gender : str\newline
-       $-$~doctor\_id : int}{%
+       $-$~gender : str}{%
        + create\_patient() : Patient\newline
        + get\_patients() : list[Patient]\newline
        + get\_doctor\_stats() : dict}};
 
-  % ── Rangée 2 ────────────────────────────────────────────────────────────
-  \node[cls] (log)  at (2.45, 0.55) {\classe{AuditLog}{%
+  \node[cls] (log) at (14.4, 0) {\classe{AuditLog}{%
        $-$~id : int\newline
        $-$~timestamp : datetime\newline
        $-$~user\_email : str\newline
@@ -639,20 +575,23 @@ que le praticien y a portées et les discussions qu'elle a suscitées.
        + get\_audit\_logs(limit : int) : list[AuditLog]\newline
        + export\_csv() : StreamingResponse}};
 
-  \node[cls] (conv) at (7.95, 0.55) {\classe{FileConversation}{%
+  % ── Rangée 2 ────────────────────────────────────────────────────────────
+  \node[cls] (msg) at (1.8, -5.3) {\classe{FileMessage}{%
        $-$~id : int\newline
-       $-$~psg\_id : int\newline
+       $-$~content : str\newline
+       $-$~timestamp : datetime}{%
+       + send\_message(content : str) : FileMessage}};
+
+  \node[cls] (conv) at (6.0, -5.3) {\classe{FileConversation}{%
+       $-$~id : int\newline
        $-$~file\_type : str\newline
-       $-$~doctor\_one\_id : int\newline
-       $-$~doctor\_two\_id : int\newline
        $-$~created\_at : datetime}{%
        + get\_or\_create() : FileConversation\newline
        + get\_my\_conversations() : list[FileConversation]\newline
        + get\_messages() : list[FileMessage]}};
 
-  \node[ent] (psg)  at (13.45, 0.55) {\classe{PSG}{%
+  \node[ent] (psg) at (10.2, -5.3) {\classe{PSG}{%
        $-$~id : int\newline
-       $-$~patient\_id : int\newline
        $-$~date : datetime\newline
        $-$~severity : str\newline
        $-$~report\_data : str\newline
@@ -667,51 +606,36 @@ que le praticien y a portées et les discussions qu'elle a suscitées.
        + analyze(channels : str, classes : str) : dict\newline
        + predict\_osa(features : dict) : dict}};
 
-  % ── Rangée 3 ────────────────────────────────────────────────────────────
-  \node[cls] (msg) at (7.95, -5.55) {\classe{FileMessage}{%
+  \node[cls] (ann) at (14.4, -5.3) {\classe{PSGAnnotation}{%
        $-$~id : int\newline
-       $-$~conversation\_id : int\newline
-       $-$~sender\_id : int\newline
-       $-$~content : str\newline
-       $-$~timestamp : datetime}{%
-       + send\_message(content : str) : FileMessage}};
-
-  \node[cls] (ann) at (13.45,-5.55) {\classe{PSGAnnotation}{%
-       $-$~id : int\newline
-       $-$~psg\_id : int\newline
        $-$~epoch\_index : int\newline
        $-$~note : str\newline
        $-$~created\_at : datetime}{%
        + add\_annotation(epoch : int, note : str) : PSGAnnotation\newline
        + get\_annotations() : list[PSGAnnotation]}};
 
-  \node[note,anchor=north] at (2.45,-3.35)
-       {table volontairement dénormalisée :\\aucune clé étrangère, afin que la
-        trace survive à la suppression du compte};
-
   % ── Associations ────────────────────────────────────────────────────────
-  \draw[rel] (hop.east) -- node[card,pos=0.12] {1}
-                           node[card,pos=0.88] {0..*} (usr.west);
-  \draw[rel] (usr.east) -- node[card,pos=0.12] {1}
-                           node[card,pos=0.88] {0..*} (pat.west);
+  \draw[rel] (hop.east) -- node[card,pos=0.2] {1}
+                           node[card,pos=0.8] {0..*} (hop.east -| usr.west);
+  \draw[rel] (pat.west -| usr.east) -- node[card,pos=0.2] {1}
+                                       node[card,pos=0.8] {0..*} (pat.west);
 
-  \draw[rel] (pat.south) -- node[card,pos=0.13] {1}
-                            node[card,pos=0.87] {0..*} (psg.north);
-  \draw[rel] (psg.south) -- node[card,pos=0.13] {1}
-                            node[card,pos=0.87] {0..*} (ann.north);
+  \draw[rel] (pat.south) -- node[card,pos=0.15] {1}
+                            node[card,pos=0.85] {0..*} (psg.north);
+  \draw[rel] (usr.south) -- node[card,pos=0.15] {2}
+                            node[card,pos=0.85] {0..*} (conv.north);
 
-  \draw[rel] (psg.west) -- node[card,pos=0.13] {1}
-                           node[card,pos=0.87] {0..*} (conv.east);
-  \draw[rel] (conv.south) -- node[card,pos=0.13] {1}
-                             node[card,pos=0.87] {0..*} (msg.north);
+  \draw[rel] (conv.east) -- node[card,pos=0.2] {0..*}
+                            node[card,pos=0.8] {1} (conv.east -| psg.west);
+  \draw[rel] (ann.west -| psg.east) -- node[card,pos=0.2] {1}
+                                       node[card,pos=0.8] {0..*} (ann.west);
+  \draw[rel] (msg.east -| conv.west) -- node[card,pos=0.2] {1}
+                                        node[card,pos=0.8] {0..*} (msg.east);
 
-  \draw[rel] (usr.south) -- node[card,pos=0.13] {2}
-                            node[card,pos=0.88] {0..*} (conv.north);
-
-  % Auteur d'un message : contournement par la gauche
-  \draw[rel] (usr.west) -- ++(-0.55,0)
-             node[card,pos=0.55] {1}
-             |- node[card,pos=0.93] {0..*} (msg.west);
+  % Auteur d'un message : du bas de User vers le haut de FileMessage
+  \draw[rel] ([xshift=-1.2cm]usr.south) -- ++(0,-0.3)
+             node[card,pos=0.5,right] {1}
+             -| node[card,pos=0.85,left] {0..*} (msg.north);
 
 \end{tikzpicture}
 \vspace{0.2cm}
@@ -780,12 +704,23 @@ converties en liens signés à durée limitée au moment de la sérialisation de
 Le tableau~\ref{tab:techno} récapitule les technologies retenues et la raison de leur
 choix.
 
-\begin{table}[H]
-\centering\small
-\begin{tabular}{@{}lL{4.0cm}L{6.6cm}@{}}
+\begingroup\small
+\begin{longtable}{@{}lL{4.0cm}L{6.6cm}@{}}
 \hline
 \ligneentete \entete{Couche} & \entete{Technologie} & \entete{Motif du choix} \\
 \hline
+\endfirsthead
+\multicolumn{3}{@{}l}{\small\itshape Tableau~\ref{tab:techno} (suite)}\\
+\hline
+\ligneentete \entete{Couche} & \entete{Technologie} & \entete{Motif du choix} \\
+\hline
+\endhead
+\hline
+\multicolumn{3}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\hline
+\caption{Technologies retenues et motifs de choix}\label{tab:techno}\\
+\endlastfoot
 Interface utilisateur & React 19 et Vite &
 Composition par composants et rechargement instantané pendant le développement \\
 Visualisation & Recharts &
@@ -808,34 +743,40 @@ Stockage des fichiers & Service objet compatible S3 &
 Fichiers volumineux hors base, liens signés à durée limitée \\
 Conteneurisation & Docker et Docker Compose &
 Déploiement reproductible en une commande \\
-\hline
-\end{tabular}
-\caption{Technologies retenues et motifs de choix}
-\label{tab:techno}
-\end{table}
+\end{longtable}
+\endgroup
 
 \subsection{Environnement logiciel}
 
-\begin{table}[H]
-\centering
+Le tableau~\ref{tab:environnement} recense les outils employés pour la partie
+apprentissage, du traitement du signal à l'expérimentation.
 
-\small
-\begin{tabular}{@{}lL{9.6cm}@{}}
+\begingroup\small
+\begin{longtable}{@{}lL{9.6cm}@{}}
 \toprule
 \textbf{Domaine} & \textbf{Outils} \\
 \midrule
-Langage & Python 3.10 \\
+\endfirsthead
+\multicolumn{2}{@{}l}{\small\itshape Tableau~\ref{tab:environnement} (suite)}\\
+\toprule
+\textbf{Domaine} & \textbf{Outils} \\
+\midrule
+\endhead
+\bottomrule
+\multicolumn{2}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\bottomrule
+\caption{Environnement logiciel}\label{tab:environnement}\\
+\endlastfoot
+Langage & Python 3.10 \\*
 Traitement du signal & MNE-Python~\cite{gramfort2013}, SciPy, NumPy \\
 Apprentissage profond & PyTorch~\cite{paszke2019} avec accélération CUDA \\
 Apprentissage classique & scikit-learn~\cite{pedregosa2011},
 XGBoost~\cite{chen2016}, LightGBM~\cite{ke2017} \\
-Explicabilité & SHAP~\cite{lundberg2017,lundberg2020} \\
+Explicabilité & SHAP~\cite{lundberg2017,lundberg2020} \\*
 Expérimentation & Jupyter, matplotlib, seaborn \\
-\bottomrule
-\end{tabular}
-\caption{Environnement logiciel}
-\label{tab:environnement}
-\end{table}
+\end{longtable}
+\endgroup
 
 Le suivi de version s'appuie sur Git, la modélisation sur des diagrammes produits
 directement dans la chaîne de composition du mémoire, et l'expérimentation sur des
@@ -926,14 +867,23 @@ les fichiers volumineux partent vers un stockage objet.
 Le tableau~\ref{tab:choix} récapitule quatre décisions structurantes, avec
 l'alternative écartée et le motif du choix.
 
-\begin{table}[H]
-\centering
-
-\small
-\begin{tabular}{@{}L{3.2cm}L{5.2cm}L{5.6cm}@{}}
+\begingroup\small
+\begin{longtable}{@{}L{3.2cm}L{5.2cm}L{5.6cm}@{}}
 \toprule
 \textbf{Décision} & \textbf{Alternative écartée} & \textbf{Motif} \\
 \midrule
+\endfirsthead
+\multicolumn{3}{@{}l}{\small\itshape Tableau~\ref{tab:choix} (suite)}\\
+\toprule
+\textbf{Décision} & \textbf{Alternative écartée} & \textbf{Motif} \\
+\midrule
+\endhead
+\bottomrule
+\multicolumn{3}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\bottomrule
+\caption{Décisions d'architecture et leur justification}\label{tab:choix}\\
+\endlastfoot
 Application monopage découplée de l'interface applicative &
 Application web à rendu serveur &
 L'analyse d'un enregistrement dure plusieurs dizaines de secondes ; un client
@@ -955,14 +905,22 @@ Authentification par jeton signé, sans session serveur &
 Session en mémoire ou en base &
 L'absence d'état côté serveur autorise la réplication horizontale sans mécanisme de
 partage de session \\
-\bottomrule
-\end{tabular}
-\caption{Décisions d'architecture et leur justification}
-\label{tab:choix}
-\end{table}
+\end{longtable}
+\endgroup
 
 \subsection{Architecture fonctionnelle du pipeline d'analyse}
 
+% Figure haute et etroite : placee a droite du texte qui la decrit
+\begin{wrapfigure}[25]{r}{0.41\textwidth}
+\vspace{-14pt}
+\centering
+\includegraphics[height=11.6cm,keepaspectratio]{images/architecture.jpeg}
+\caption[Architecture fonctionnelle du pipeline d'analyse]%
+        {Pipeline d'analyse en trois étapes : classification des stades, analyse
+         clinique et explication des décisions.}
+\label{fig:pipeline}
+\vspace{-8pt}
+\end{wrapfigure}
 La figure~\ref{fig:pipeline} suit un enregistrement depuis le dépôt du fichier EDF
 jusqu'au tableau de bord du médecin. Le traitement se déroule en trois étapes.
 
@@ -982,15 +940,6 @@ La troisième étape rend ces décisions lisibles. SHAP indique quels facteurs o
 dans l'estimation du risque, et Grad-CAM montre les zones du signal EEG sur lesquelles
 les réseaux se sont appuyés. Les deux sorties sont affichées dans le tableau de bord
 final.
-
-\begin{figure}[H]
-\centering
-\includegraphics[height=0.78\textheight,keepaspectratio]{images/architecture.jpeg}
-\caption[Architecture fonctionnelle du pipeline d'analyse]%
-        {Pipeline d'analyse en trois étapes : classification des stades, analyse
-         clinique et explication des décisions.}
-\label{fig:pipeline}
-\end{figure}
 
 \subsection{Architecture physique}
 
@@ -1049,44 +998,10 @@ le seul élément externe à l'infrastructure.
 
 \subsection{Découpage en releases}
 
-Une release est une version livrable du produit : elle regroupe plusieurs sprints autour
-d'un objectif de valeur commun et se clôt par une revue au cours de laquelle l'incrément est
+Une release est une version livrable du produit~\cite{cohn2005} : elle regroupe plusieurs
+sprints autour d'un objectif de valeur commun et se clôt par une revue au cours de laquelle l'incrément est
 démontré dans son ensemble. Le backlog du produit a été ordonnancé en trois releases de deux
 sprints chacune, présentées au tableau~\ref{tab:releases} et à la figure~\ref{fig:releases}.
-
-\begin{table}[H]
-\centering
-
-\small
-\begin{tabular}{@{}L{2.5cm}L{2.2cm}L{4.5cm}L{3.8cm}c@{}}
-\toprule
-\textbf{Release} & \textbf{Sprints} & \textbf{Objectif} & \textbf{Incrément livrable} &
-\textbf{Pts} \\
-\midrule
-\textbf{R1}\newline Moteur de classification & S1 et S2\newline du 26 jan.\newline au 22 mars &
-Constituer le corpus et entraîner les modèles de classification des stades &
-Corpus étiqueté et douze modèles de base évalués & 76 \\
-\addlinespace[3pt]
-\textbf{R2}\newline Diagnostic expliqué & S3 et S4\newline du 23 mars\newline au 17 mai &
-Livrer au praticien un diagnostic expliqué à partir d'un enregistrement brut &
-Ensembles, modèle de sévérité expliqué, interface applicative et poste de travail & 122 \\
-\addlinespace[3pt]
-\textbf{R3}\newline Plateforme clinique & S5 et S6\newline du 18 mai\newline au 12 juil. &
-Faire de l'outil d'analyse une plateforme gouvernée, collaborative et déployable &
-Dossier patient, archivage, administration, collaboration, compte rendu, pile
-conteneurisée & 160 \\
-\bottomrule
-\end{tabular}
-\caption{Planification du projet en trois releases}
-\label{tab:releases}
-\end{table}
-
-L'ordre des releases découle des dépendances entre récits et de la répartition de
-l'incertitude. La première traite en priorité ce qui était à la fois le plus incertain et le
-plus structurant : le moteur de classification, dont dépend tout le reste. La deuxième livre
-le plus petit incrément porteur de la valeur centrale du projet, un diagnostic expliqué
-accessible au praticien. La troisième ajoute ce qui rend cet outil exploitable durablement
-et à plusieurs : dossier patient, gouvernance, collaboration et déploiement reproductible.
 
 \begin{figure}[H]
 \centering
@@ -1142,6 +1057,46 @@ et à plusieurs : dossier patient, gouvernance, collaboration et déploiement re
 \label{fig:releases}
 \end{figure}
 
+\begingroup\small
+\begin{longtable}{@{}L{2.5cm}L{2.2cm}L{4.5cm}L{3.8cm}c@{}}
+\toprule
+\textbf{Release} & \textbf{Sprints} & \textbf{Objectif} & \textbf{Incrément livrable} &
+\textbf{Pts} \\
+\midrule
+\endfirsthead
+\multicolumn{5}{@{}l}{\small\itshape Tableau~\ref{tab:releases} (suite)}\\
+\toprule
+\textbf{Release} & \textbf{Sprints} & \textbf{Objectif} & \textbf{Incrément livrable} &
+\textbf{Pts} \\
+\midrule
+\endhead
+\bottomrule
+\multicolumn{5}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\bottomrule
+\caption{Planification du projet en trois releases}\label{tab:releases}\\
+\endlastfoot
+\textbf{R1}\newline Moteur de classification & S1 et S2\newline du 26 jan.\newline au 22 mars &
+Constituer le corpus et entraîner les modèles de classification des stades &
+Corpus étiqueté et douze modèles de base évalués & 76 \\
+\addlinespace[3pt]
+\textbf{R2}\newline Diagnostic expliqué & S3 et S4\newline du 23 mars\newline au 17 mai &
+Livrer au praticien un diagnostic expliqué à partir d'un enregistrement brut &
+Ensembles, modèle de sévérité expliqué, interface applicative et poste de travail & 122 \\
+\addlinespace[3pt]
+\textbf{R3}\newline Plateforme clinique & S5 et S6\newline du 18 mai\newline au 12 juil. &
+Faire de l'outil d'analyse une plateforme gouvernée, collaborative et déployable &
+Dossier patient, archivage, administration, collaboration, compte rendu, pile
+conteneurisée & 160 \\
+\end{longtable}
+\endgroup
+
+L'ordre des releases découle des dépendances entre récits et de la répartition de
+l'incertitude. La première traite en priorité ce qui était à la fois le plus incertain et le
+plus structurant : le moteur de classification, dont dépend tout le reste. La deuxième livre
+le plus petit incrément porteur de la valeur centrale du projet, un diagnostic expliqué
+accessible au praticien. La troisième ajoute ce qui rend cet outil exploitable durablement
+et à plusieurs : dossier patient, gouvernance, collaboration et déploiement reproductible.
 \subsection{Découpage en sprints}
 
 Les vingt-six semaines du stage ont été découpées en six sprints de quatre semaines, suivis
@@ -1149,15 +1104,25 @@ de deux semaines consacrées à la rédaction et à la préparation de la souten
 tableau~\ref{tab:sprints} présente l'objectif et le livrable de chacun, regroupés par
 release.
 
-\begin{table}[H]
-\centering
-
-\small
-\begin{tabular}{@{}L{1.5cm}L{2.5cm}L{5.0cm}L{4.4cm}c@{}}
+\begingroup\small
+\begin{longtable}{@{}L{1.5cm}L{2.5cm}L{5.0cm}L{4.4cm}c@{}}
 \toprule
 \textbf{Sprint} & \textbf{Période} & \textbf{Objectif} & \textbf{Livrable} &
 \textbf{Pts} \\
 \midrule
+\endfirsthead
+\multicolumn{5}{@{}l}{\small\itshape Tableau~\ref{tab:sprints} (suite)}\\
+\toprule
+\textbf{Sprint} & \textbf{Période} & \textbf{Objectif} & \textbf{Livrable} &
+\textbf{Pts} \\
+\midrule
+\endhead
+\bottomrule
+\multicolumn{5}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\bottomrule
+\caption{Découpage des releases en sprints}\label{tab:sprints}\\
+\endlastfoot
 \multicolumn{5}{@{}l}{\cellcolor{hypnolight}\textbf{Release 1 --- Moteur de classification des stades}}\\
 \midrule
 S1 & 26 jan.\newline 22 fév. &
@@ -1186,15 +1151,84 @@ Dossier patient persistant, archivage cloud, espace d'administration & 77 \\
 S6 & 15 juin\newline 12 juil. &
 Couvrir le travail à plusieurs, la restitution documentaire et la reproductibilité &
 Collaboration, compte rendu exportable, pile conteneurisée & 83 \\
-\bottomrule
-\end{tabular}
-\caption{Découpage des releases en sprints}
-\label{tab:sprints}
-\end{table}
+\end{longtable}
+\endgroup
+
+\subsection{Planning}
+
+La figure~\ref{fig:gantt} confronte la planification aux travaux réellement menés. Le
+jalon le plus structurant est l'obtention de l'accès aux cohortes en semaine 5. Le
+recouvrement volontaire entre la demande d'accès et les travaux d'amorçage sur un jeu
+public traduit une décision assumée : occuper le délai administratif au lieu de le
+subir.
+
+\begin{figure}[H]
+\centering
+\begin{ganttchart}[
+    x unit                  = 0.375cm,
+    y unit title            = 0.46cm,
+    y unit chart            = 0.36cm,
+    hgrid                   = {draw=hypnogray!18},
+    vgrid                   = {*1{draw=hypnogray!18}},
+    title/.append style     = {draw=hypnoblue!45, fill=hypnolight},
+    title label font        = \tiny,
+    title height            = 1,
+    bar/.append style       = {draw=hypnoblue!85, fill=hypnoblue!55,
+                               rounded corners=1pt},
+    bar height              = 0.58,
+    bar label font          = \scriptsize,
+    bar label node/.append style = {text=hypnoblue!95},
+    milestone/.append style = {fill=hypnored, draw=hypnored!85},
+    milestone label font    = \scriptsize\itshape,
+    milestone label node/.append style = {text=hypnored},
+    milestone height        = 0.42,
+  ]{1}{26}
+
+  \gantttitle{Release 1}{8}
+  \gantttitle{Release 2}{8}
+  \gantttitle{Release 3}{8}
+  \gantttitle{}{2} \\
+  \gantttitle{Sprint 1}{4}
+  \gantttitle{Sprint 2}{4}
+  \gantttitle{Sprint 3}{4}
+  \gantttitle{Sprint 4}{4}
+  \gantttitle{Sprint 5}{4}
+  \gantttitle{Sprint 6}{4}
+  \gantttitle{Clôture}{2} \\
+  \gantttitlelist{1,...,26}{1} \\
+
+  \ganttbar{Étude bibliographique}{1}{3} \\
+  \ganttbar{Demande d'accès NSRR}{1}{5} \\
+  \ganttbar{Chaîne de prétraitement}{2}{4} \\
+  \ganttbar{Amorçage sur jeu public}{3}{4} \\
+  \ganttmilestone{Accès aux cohortes obtenu}{5} \\
+  \ganttbar{Préparation de la cohorte}{5}{6} \\
+  \ganttbar{Modèles de base}{6}{9} \\
+  \ganttmilestone{12 modèles entraînés}{9} \\
+  \ganttbar{Ensembles par empilement}{9}{10} \\
+  \ganttbar{Modèle de sévérité}{10}{12} \\
+  \ganttbar{Service d'inférence}{13}{15} \\
+  \ganttbar{Interface d'analyse}{14}{17} \\
+  \ganttbar{Base de données, archivage}{17}{19} \\
+  \ganttbar{Administration, audit}{19}{20} \\
+  \ganttbar{Collaboration, annotation}{21}{22} \\
+  \ganttbar{Compte rendu, multilinguisme}{22}{23} \\
+  \ganttmilestone{Plateforme complète}{22} \\
+  \ganttbar{Conteneurisation, intégration}{23}{24} \\
+  \ganttbar{Rédaction du mémoire}{21}{26} \\
+  \ganttmilestone{Soutenance}{26}
+
+\end{ganttchart}
+\vspace{0.3cm}
+\caption[Diagramme de Gantt du projet]%
+        {Déroulement du projet sur les vingt-six semaines du stage.}
+\label{fig:gantt}
+\end{figure}
 
 \subsection{Vélocité}
 
-La vélocité mesure le nombre de points effectivement livrés par sprint. Sa progression,
+La vélocité mesure le nombre de points effectivement livrés par
+sprint~\cite{cohn2005}. Sa progression,
 représentée à la figure~\ref{fig:velocite}, ne décrit pas un plateau régulier, ce qui
 correspond à la réalité du travail : les deux premiers sprints sont absorbés par la
 montée en compétence sur le cadre d'apprentissage profond et par des temps
@@ -1253,77 +1287,6 @@ développement applicatif, moins exposé aux temps de calcul.
 \caption[Vélocité par sprint]%
         {Points de complexité livrés par sprint, regroupés par release.}
 \label{fig:velocite}
-\end{figure}
-
-\subsection{Planning}
-
-La figure~\ref{fig:gantt} confronte la planification aux travaux réellement menés. Le
-jalon le plus structurant est l'obtention de l'accès aux cohortes en semaine 5. Le
-recouvrement volontaire entre la demande d'accès et les travaux d'amorçage sur un jeu
-public traduit une décision assumée : occuper le délai administratif au lieu de le
-subir.
-
-\begin{figure}[H]
-\centering
-\begin{ganttchart}[
-    x unit                  = 0.375cm,
-    y unit title            = 0.52cm,
-    y unit chart            = 0.44cm,
-    hgrid                   = {draw=hypnogray!18},
-    vgrid                   = {*1{draw=hypnogray!18}},
-    title/.append style     = {draw=hypnoblue!45, fill=hypnolight},
-    title label font        = \tiny,
-    title height            = 1,
-    bar/.append style       = {draw=hypnoblue!85, fill=hypnoblue!55,
-                               rounded corners=1pt},
-    bar height              = 0.58,
-    bar label font          = \scriptsize,
-    bar label node/.append style = {text=hypnoblue!95},
-    milestone/.append style = {fill=hypnored, draw=hypnored!85},
-    milestone label font    = \scriptsize\itshape,
-    milestone label node/.append style = {text=hypnored},
-    milestone height        = 0.42,
-  ]{1}{26}
-
-  \gantttitle{Release 1}{8}
-  \gantttitle{Release 2}{8}
-  \gantttitle{Release 3}{8}
-  \gantttitle{}{2} \\
-  \gantttitle{Sprint 1}{4}
-  \gantttitle{Sprint 2}{4}
-  \gantttitle{Sprint 3}{4}
-  \gantttitle{Sprint 4}{4}
-  \gantttitle{Sprint 5}{4}
-  \gantttitle{Sprint 6}{4}
-  \gantttitle{Clôture}{2} \\
-  \gantttitlelist{1,...,26}{1} \\
-
-  \ganttbar{Étude bibliographique}{1}{3} \\
-  \ganttbar{Demande d'accès NSRR}{1}{5} \\
-  \ganttbar{Chaîne de prétraitement}{2}{4} \\
-  \ganttbar{Amorçage sur jeu public}{3}{4} \\
-  \ganttmilestone{Accès aux cohortes obtenu}{5} \\
-  \ganttbar{Préparation de la cohorte}{5}{6} \\
-  \ganttbar{Modèles de base}{6}{9} \\
-  \ganttmilestone{12 modèles entraînés}{9} \\
-  \ganttbar{Ensembles par empilement}{9}{10} \\
-  \ganttbar{Modèle de sévérité}{10}{12} \\
-  \ganttbar{Service d'inférence}{13}{15} \\
-  \ganttbar{Interface d'analyse}{14}{17} \\
-  \ganttbar{Base de données, archivage}{17}{19} \\
-  \ganttbar{Administration, audit}{19}{20} \\
-  \ganttbar{Collaboration, annotation}{21}{22} \\
-  \ganttbar{Compte rendu, multilinguisme}{22}{23} \\
-  \ganttmilestone{Plateforme complète}{22} \\
-  \ganttbar{Conteneurisation, intégration}{23}{24} \\
-  \ganttbar{Rédaction du mémoire}{21}{26} \\
-  \ganttmilestone{Soutenance}{26}
-
-\end{ganttchart}
-\vspace{0.3cm}
-\caption[Diagramme de Gantt du projet]%
-        {Déroulement du projet sur les vingt-six semaines du stage.}
-\label{fig:gantt}
 \end{figure}
 
 \sectionsansnum{Conclusion}

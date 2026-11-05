@@ -26,33 +26,14 @@ production du compte rendu et l'industrialisation du déploiement.
 \subsection{Backlog de la release}
 
 Avec trente-deux récits et 160 points de complexité, cette release est la plus volumineuse
-du projet (tableau~\ref{tab:rel3}). Elle solde le backlog du produit : à son terme, les
-soixante récits ont été livrés.
+du projet. Elle solde le backlog du produit : à son terme, les soixante récits ont été
+livrés. Le sprint~5, du 18 mai au 14 juin, porte dix-huit récits (US-30 à 35, 37 à 39 et
+43 à 51, soit 77 points) : il transforme l'outil d'analyse en plateforme gouvernée et
+traçable. Le sprint~6, du 15 juin au 12 juillet, porte les quatorze autres (US-24, 25, 36,
+41, 42 et 52 à 60, soit 83 points) : il couvre le travail à plusieurs, la restitution
+documentaire et la reproductibilité du déploiement. Ce découpage reprend celui du
+tableau~\ref{tab:sprints}.
 
-\begin{table}[H]
-\centering\small
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{@{}L{1.4cm}|L{3.0cm}|L{5.4cm}|L{2.7cm}|c@{}}
-\hline
-\ligneentete \entete{Sprint} & \entete{Période} & \entete{Objectif du sprint} &
-\entete{Récits} & \entete{Pts} \\
-\hline
-Sprint 5 & 18 mai -- 14 juin &
-Transformer l'outil d'analyse en plateforme gouvernée et traçable &
-US-30 à 35, 37 à 39, 43 à 51 & 77 \\
-\hline
-Sprint 6 & 15 juin -- 12 juil. &
-Couvrir le travail à plusieurs, la restitution documentaire et la reproductibilité &
-US-24, 25, 36, 41, 42, 52 à 60 & 83 \\
-\hline
-\multicolumn{3}{@{}r|}{\textbf{Total de la release}} & \textbf{32 récits} & \textbf{160} \\
-\hline
-\end{tabular}
-\caption{Backlog de la release 3}
-\label{tab:rel3}
-\end{table}
-
-\noindent
 L'incrément attendu en fin de release est la plateforme complète, conteneurisée et vérifiée
 automatiquement à chaque livraison.
 
@@ -87,87 +68,70 @@ tracer les actions sensibles.
 Le sprint a embarqué dix-huit récits pour 77 points de complexité
 (tableau~\ref{tab:bl-s5}).
 
-\begin{table}[H]
-\centering\small
-\renewcommand{\arraystretch}{1.15}
-\begin{tabular}{@{}c|L{2.5cm}|L{4.6cm}|L{4.6cm}|c@{}}
+\begingroup\footnotesize\renewcommand{\arraystretch}{1.1}
+\begin{longtable}{@{}c|L{2.3cm}|L{4.4cm}|L{4.4cm}|c@{}}
 \hline
 \ligneentete \entete{ID} & \entete{Module} & \entete{R\'ecit utilisateur} & \entete{T\^aches} & \entete{Estim.} \\
 \hline
-\multirow{3}{*}{US-31\,\`a\,35} & \multirow{3}{=}{Dossier patient} & \multirow{3}{=}{En tant que m\'edecin, je veux constituer et suivre mon registre de patients} & Mod\'eliser patients et examens & \multirow{3}{*}{19 pts} \\
- &  &  & Cr\'eer le registre et l'historique &  \\
+\endfirsthead
+\multicolumn{5}{@{}l}{\small\itshape Tableau~\ref{tab:bl-s5} (suite)}\\
+\hline
+\ligneentete \entete{ID} & \entete{Module} & \entete{R\'ecit utilisateur} & \entete{T\^aches} & \entete{Estim.} \\
+\hline
+\endhead
+\multicolumn{5}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\hline
+\caption{Sprint Backlog --- Sprint 5}\label{tab:bl-s5}\\
+\endlastfoot
+\multirow{3}{*}{US-31\,\`a\,35} & \multirow{3}{=}{Dossier patient} & \multirow{3}{=}{En tant que m\'edecin, je veux constituer et suivre mon registre de patients} & Mod\'eliser patients et examens & \multirow{3}{*}{19 pts} \\*
+ &  &  & Cr\'eer le registre et l'historique &  \\*
  &  &  & Cloisonner les donn\'ees par praticien &  \\
 \hline
-\multirow{3}{*}{US-37\,\`a\,39} & \multirow{3}{=}{Archivage cloud} & \multirow{3}{=}{En tant que syst\`eme, je veux archiver les fichiers volumineux sans bloquer l'interface} & Int\'egrer le client de stockage objet & \multirow{3}{*}{18 pts} \\
- &  &  & Transf\'erer en arri\`ere-plan avec suivi &  \\
+\multirow{3}{*}{US-37\,\`a\,39} & \multirow{3}{=}{Archivage cloud} & \multirow{3}{=}{En tant que syst\`eme, je veux archiver les fichiers volumineux sans bloquer l'interface} & Int\'egrer le client de stockage objet & \multirow{3}{*}{18 pts} \\*
+ &  &  & Transf\'erer en arri\`ere-plan avec suivi &  \\*
  &  &  & D\'elivrer des liens sign\'es \`a dur\'ee limit\'ee &  \\
 \hline
-\multirow{3}{*}{US-43\,\`a\,47} & \multirow{3}{=}{Comptes et licences} & \multirow{3}{=}{En tant qu'administrateur, je veux g\'erer le cycle de vie des comptes m\'edecins} & Cr\'eer et lister les comptes & \multirow{3}{*}{21 pts} \\
- &  &  & Suspendre, r\'eactiver et fixer l'\'ech\'eance &  \\
+\multirow{3}{*}{US-43\,\`a\,47} & \multirow{3}{=}{Comptes et licences} & \multirow{3}{=}{En tant qu'administrateur, je veux g\'erer le cycle de vie des comptes m\'edecins} & Cr\'eer et lister les comptes & \multirow{3}{*}{21 pts} \\*
+ &  &  & Suspendre, r\'eactiver et fixer l'\'ech\'eance &  \\*
  &  &  & G\'erer les \'etablissements de rattachement &  \\
 \hline
-\multirow{3}{*}{US-30, 48\,\`a\,51} & \multirow{3}{=}{Tra\c{c}abilit\'e} & \multirow{3}{=}{En tant qu'administrateur, je veux tracer et exporter les actions sensibles} & Journaliser auteur, horodatage et adresse & \multirow{3}{*}{19 pts} \\
- &  &  & Appliquer statut et licence \`a la connexion &  \\
+\multirow{3}{*}{US-30, 48\,\`a\,51} & \multirow{3}{=}{Tra\c{c}abilit\'e} & \multirow{3}{=}{En tant qu'administrateur, je veux tracer et exporter les actions sensibles} & Journaliser auteur, horodatage et adresse & \multirow{3}{*}{19 pts} \\*
+ &  &  & Appliquer statut et licence \`a la connexion &  \\*
  &  &  & Exporter le journal au format tabulaire &  \\
-\hline
-\end{tabular}
-\caption{Sprint Backlog --- Sprint 5}
-\label{tab:bl-s5}
-\end{table}
+\end{longtable}
+\endgroup
 
 \subsection{Analyse}
 
 \subsubsection{Diagramme des cas d'utilisation}
 
+La figure~\ref{fig:uc-s5} répartit les cas d'utilisation du sprint entre les deux acteurs
+principaux : le médecin gère ses patients et leurs dossiers d'examen, l'administrateur les
+comptes, les établissements et le journal d'audit.
+
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}[
-    x=1cm,y=1cm,
-    uc/.style     = {ellipse, draw=hypnoblue!60, fill=hypnolight,
-                     align=center, font=\scriptsize, text width=2.7cm,
-                     inner sep=1.5pt, minimum height=1.0cm},
-    ucp/.style    = {ellipse, draw=hypnored!70, fill=hypnored!7,
-                     align=center, font=\scriptsize\bfseries, text width=2.7cm,
-                     inner sep=1.5pt, minimum height=1.0cm},
-    lien/.style   = {hypnogray!75, line width=0.55pt},
-    rel/.style    = {-{Latex[length=2mm]}, hypnoblue!70, line width=0.5pt, dashed},
-    et/.style     = {font=\tiny\itshape, text=hypnoblue!85, fill=white, inner sep=1pt},
-    nomact/.style = {font=\scriptsize\bfseries, align=center, text width=2.2cm},
-  ]
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \draw[cusys] (3.9,-2.55) rectangle (11.9,3.0);
+  \node[cutitre] at (4.1,2.9) {Système d'information clinique};
 
-  \tikzset{acteur/.pic={
-      \draw[hypnoblue,line width=0.8pt] (0,0) circle (0.17);
-      \draw[hypnoblue,line width=0.8pt] (0,-0.17) -- (0,-0.66);
-      \draw[hypnoblue,line width=0.8pt] (-0.28,-0.34) -- (0.28,-0.34);
-      \draw[hypnoblue,line width=0.8pt] (0,-0.66) -- (-0.24,-1.04);
-      \draw[hypnoblue,line width=0.8pt] (0,-0.66) -- (0.24,-1.04);}}
+  \node[cu]  (pat) at (5.9, 1.85)  {Gérer ses\\patients};
+  \node[cup] (exa) at (5.9, 0.6)   {Constituer le\\dossier d'examen};
+  \node[cu]  (arc) at (5.9,-0.65)  {Archiver les\\pièces};
+  \node[cu]  (tab) at (5.9,-1.9)   {Consulter son\\tableau de bord};
 
-  \draw[hypnoblue!55,line width=0.9pt,rounded corners=3pt]
-       (3.9,-5.4) rectangle (11.9,2.4);
-  \node[font=\small\bfseries,text=hypnoblue,anchor=north west] at (4.15,2.25)
-       {Système d'information clinique};
+  \node[cu]  (com) at (9.9, 1.85)  {Gérer les comptes\\et licences};
+  \node[cu]  (eta) at (9.9, 0.6)   {Gérer les\\établissements};
+  \node[cu]  (aud) at (9.9,-0.65)  {Consulter le\\journal d'audit};
+  \node[cu]  (sta) at (9.9,-1.9)   {Suivre l'activité\\de la plateforme};
 
-  \node[uc]  (pat) at (6.1, 1.4)  {Gérer ses\\patients};
-  \node[ucp] (exa) at (6.1,-0.3)  {Constituer le\\dossier d'examen};
-  \node[uc]  (arc) at (6.1,-2.2)  {Archiver les\\pièces};
-  \node[uc]  (tab) at (6.1,-4.1)  {Consulter son\\tableau de bord};
+  \pic[pic text=Médecin] at (1.7,0.55) {cuacteur};
+  \pic[pic text=Administrateur] at (14.1,0.55) {cuacteur};
+  \foreach \c in {pat,exa,arc,tab} \draw[culien] (2.05,0.25) -- (\c.west);
+  \foreach \c in {com,eta,aud,sta} \draw[culien] (13.75,0.25) -- (\c.east);
 
-  \node[uc]  (com) at (9.9, 1.4)  {Gérer les comptes\\et licences};
-  \node[uc]  (eta) at (9.9,-0.3)  {Gérer les\\établissements};
-  \node[uc]  (aud) at (9.9,-2.2)  {Consulter le\\journal d'audit};
-  \node[uc]  (sta) at (9.9,-4.1)  {Suivre l'activité\\de la plateforme};
-
-  \pic at (1.6,0.9) {acteur};
-  \node[nomact,anchor=north] at (1.6,0.25) {Médecin};
-
-  \pic at (14.0,0.9) {acteur};
-  \node[nomact,anchor=north] at (14.0,0.25) {Administrateur};
-
-  \foreach \c in {pat,exa,arc,tab} \draw[lien] (2.0,0.55) -- (\c.west);
-  \foreach \c in {com,eta,aud,sta} \draw[lien] (13.6,0.55) -- (\c.east);
-
-  \draw[rel] (exa) -- node[et,pos=0.5] {$\ll$include$\gg$} (arc);
-
+  \draw[curel] (exa) -- node[cuet,right=2pt,midway] {$\ll$include$\gg$} (arc);
 \end{tikzpicture}
 \caption{Diagramme des cas d'utilisation du sprint 5 --- dossier patient et gouvernance}
 \label{fig:uc-s5}
@@ -175,37 +139,29 @@ Le sprint a embarqué dix-huit récits pour 77 points de complexité
 
 \subsubsection{Description textuelle des cas d'utilisation}
 
-\begin{casutilisation}{Description textuelle du cas « Gérer le cycle de vie d'un compte »}
+Le cas « Gérer le cycle de vie d'un compte », porté par l'administrateur, est détaillé au
+tableau~\ref{tab:cu-s5}.
+
+\begin{casutilisation}[tab:cu-s5]{Description textuelle du cas « Gérer le cycle de vie d'un compte »}
 Titre & Gérer le cycle de vie d'un compte médecin \\ \hline
 Acteur & Administrateur \\ \hline
 Description & Créer un compte praticien, en suspendre ou réactiver l'accès, fixer son
 échéance de licence et le rattacher à un établissement \\ \hline
 Préconditions & L'administrateur est authentifié \\ \hline
-Scénario de base &
-\begin{minipage}[t]{\linewidth}
-\begin{enumerate}[leftmargin=1.1em,itemsep=1pt,topsep=3pt]
-  \item L'administrateur ouvre le registre des médecins.
-  \item Il crée un compte en renseignant identité, adresse et échéance de licence.
-  \item Le système vérifie l'unicité de l'adresse et hache le mot de passe initial.
-  \item Le système journalise la création.
-  \item L'administrateur peut ensuite suspendre, réactiver ou prolonger le compte.
-\end{enumerate}
-\end{minipage} \\ \hline
-Scénario alternatif &
-\begin{minipage}[t]{\linewidth}
-\begin{itemize}[leftmargin=1.1em,itemsep=1pt,topsep=3pt]
-  \item \textbf{3a} --- L'adresse est déjà enregistrée : la création est refusée.
-  \item \textbf{5a} --- Le praticien a perdu son accès : réinitialisation avec mot de
-        passe temporaire.
-\end{itemize}
-\end{minipage}
+Scénario de base & \etape{1.}{L'administrateur ouvre le registre des médecins.} \\*
+ & \etape{2.}{Il crée un compte en renseignant identité, adresse et échéance de licence.} \\
+ & \etape{3.}{Le système vérifie l'unicité de l'adresse et hache le mot de passe initial.} \\
+ & \etape{4.}{Le système journalise la création.} \\*
+ & \etape{5.}{L'administrateur peut ensuite suspendre, réactiver ou prolonger le compte.} \\ \hline
+Scénario alternatif & \etape{\textbullet}{\textbf{3a} --- L'adresse est déjà enregistrée : la création est refusée.} \\*
+ & \etape{\textbullet}{\textbf{5a} --- Le praticien a perdu son accès : réinitialisation avec mot de passe temporaire.}
 \end{casutilisation}
 
 \subsection{Conception}
 
 \subsubsection{Diagramme d'états}
 
-Un examen traverse une succession d'états. Cette modélisation explicite un point important :
+Un examen traverse une succession d'états (figure~\ref{fig:etats}). Cette modélisation explicite un point important :
 un examen reste consultable même si l'archivage échoue, car les résultats d'analyse sont
 stockés en base indépendamment des fichiers.
 
@@ -297,23 +253,25 @@ abonnement.
 
 Ce dispositif permet de révoquer un accès sans détruire de données, ce qui est la
 seule manière acceptable de gérer une fin de contrat sur un système qui héberge des dossiers
-médicaux.
+médicaux. Les figures~\ref{fig:adminmed} et~\ref{fig:adminhop} montrent les deux écrans
+d'administration concernés, le registre des médecins et la gestion des établissements.
 
-\capturefig{admin-medecins}{0.9}{Registre des médecins et gestion des licences}{fig:adminmed}
+\capturefig{admin-medecins}{0.72}{Registre des médecins et gestion des licences}{fig:adminmed}
 
-\capturefig{admin-hopitaux}{0.9}{Gestion des établissements rattachés}{fig:adminhop}
+\capturefig{admin-hopitaux}{0.8}{Gestion des établissements rattachés}{fig:adminhop}
 
 \subsubsection{Traçabilité}
 
 Chaque action sensible inscrit dans le journal son auteur, son rôle, son horodatage, la nature
 de l'action et l'adresse d'origine. Sont journalisées les connexions, les créations de compte,
-les modifications de statut et les réinitialisations de mot de passe. Le journal est exportable
-au format tabulaire pour un contrôle externe.
+les modifications de statut et les réinitialisations de mot de passe. Le journal, consulté
+depuis l'écran de la figure~\ref{fig:audit}, est exportable au format tabulaire pour un
+contrôle externe.
 
 La table est délibérément dénormalisée : elle recopie l'adresse et le rôle plutôt que de
 référencer le compte, afin que la trace survive à la disparition de celui-ci.
 
-\capturefig{audit}{0.9}{Journal d'audit : consultation et export}{fig:audit}
+\capturefig{audit}{0.7}{Journal d'audit : consultation et export}{fig:audit}
 
 \subsubsection{Limites au regard du règlement européen}
 
@@ -368,91 +326,74 @@ vérifier automatiquement qu'une modification ne casse rien.
 Le sprint a embarqué quatorze récits pour 83 points de complexité
 (tableau~\ref{tab:bl-s6}).
 
-\begin{table}[H]
-\centering\small
-\renewcommand{\arraystretch}{1.15}
-\begin{tabular}{@{}c|L{2.5cm}|L{4.6cm}|L{4.6cm}|c@{}}
+\begingroup\footnotesize\renewcommand{\arraystretch}{1.1}
+\begin{longtable}{@{}c|L{2.3cm}|L{4.4cm}|L{4.4cm}|c@{}}
 \hline
 \ligneentete \entete{ID} & \entete{Module} & \entete{R\'ecit utilisateur} & \entete{T\^aches} & \entete{Estim.} \\
 \hline
-\multirow{3}{*}{US-53\,\`a\,55} & \multirow{3}{=}{Collaboration} & \multirow{3}{=}{En tant que m\'edecin, je veux solliciter un confr\`ere sur un examen pr\'ecis} & Mod\'eliser fils et messages rattach\'es \`a un examen & \multirow{3}{*}{18 pts} \\
- &  &  & Cr\'eer l'interface de discussion &  \\
+\endfirsthead
+\multicolumn{5}{@{}l}{\small\itshape Tableau~\ref{tab:bl-s6} (suite)}\\
+\hline
+\ligneentete \entete{ID} & \entete{Module} & \entete{R\'ecit utilisateur} & \entete{T\^aches} & \entete{Estim.} \\
+\hline
+\endhead
+\multicolumn{5}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\hline
+\caption{Sprint Backlog --- Sprint 6}\label{tab:bl-s6}\\
+\endlastfoot
+\multirow{3}{*}{US-53\,\`a\,55} & \multirow{3}{=}{Collaboration} & \multirow{3}{=}{En tant que m\'edecin, je veux solliciter un confr\`ere sur un examen pr\'ecis} & Mod\'eliser fils et messages rattach\'es \`a un examen & \multirow{3}{*}{18 pts} \\*
+ &  &  & Cr\'eer l'interface de discussion &  \\*
  &  &  & Centraliser les sollicitations re\c{c}ues &  \\
 \hline
-\multirow{3}{*}{US-24, 25, 42} & \multirow{3}{=}{Annotation et normes} & \multirow{3}{=}{En tant que m\'edecin, je veux annoter une \'epoque et situer chaque m\'etrique par rapport aux normes} & Enregistrer les notes horodat\'ees \`a l'\'epoque & \multirow{3}{*}{15 pts} \\
- &  &  & Synchroniser l'hypnogramme annot\'e &  \\
+\multirow{3}{*}{US-24, 25, 42} & \multirow{3}{=}{Annotation et normes} & \multirow{3}{=}{En tant que m\'edecin, je veux annoter une \'epoque et situer chaque m\'etrique par rapport aux normes} & Enregistrer les notes horodat\'ees \`a l'\'epoque & \multirow{3}{*}{15 pts} \\*
+ &  &  & Synchroniser l'hypnogramme annot\'e &  \\*
  &  &  & Comparer les m\'etriques aux valeurs de r\'ef\'erence &  \\
 \hline
-\multirow{3}{*}{US-36, 41} & \multirow{3}{=}{Restitution} & \multirow{3}{=}{En tant que m\'edecin, je veux composer et exporter mon compte rendu} & S\'electionner les sections \`a inclure & \multirow{3}{*}{13 pts} \\
- &  &  & Produire le document pagin\'e &  \\
+\multirow{3}{*}{US-36, 41} & \multirow{3}{=}{Restitution} & \multirow{3}{=}{En tant que m\'edecin, je veux composer et exporter mon compte rendu} & S\'electionner les sections \`a inclure & \multirow{3}{*}{13 pts} \\*
+ &  &  & Produire le document pagin\'e &  \\*
  &  &  & Afficher le tableau de bord de la patient\`ele &  \\
 \hline
-\multirow{5}{*}{US-52, 56\,\`a\,60} & \multirow{5}{=}{Industrialisation} & \multirow{5}{=}{En tant que d\'eveloppeur, je veux un d\'eploiement reproductible et v\'erifi\'e automatiquement} & Conteneuriser les trois services & \multirow{5}{*}{37 pts} \\
- &  &  & Orchestrer la pile en une commande &  \\
- &  &  & Automatiser contr\^oles et construction d'images &  \\
- &  &  & Traduire l'interface et ajouter le th\`eme sombre &  \\
+\multirow{5}{*}{US-52, 56\,\`a\,60} & \multirow{5}{=}{Industrialisation} & \multirow{5}{=}{En tant que d\'eveloppeur, je veux un d\'eploiement reproductible et v\'erifi\'e automatiquement} & Conteneuriser les trois services & \multirow{5}{*}{37 pts} \\*
+ &  &  & Orchestrer la pile en une commande &  \\*
+ &  &  & Automatiser contr\^oles et construction d'images &  \\*
+ &  &  & Traduire l'interface et ajouter le th\`eme sombre &  \\*
  &  &  & Visualiser la cha\^ine de traitement des mod\`eles &  \\
-\hline
-\end{tabular}
-\caption{Sprint Backlog --- Sprint 6}
-\label{tab:bl-s6}
-\end{table}
+\end{longtable}
+\endgroup
 
 \subsection{Analyse}
 
 \subsubsection{Diagramme des cas d'utilisation}
 
+La figure~\ref{fig:uc-s6} présente les cas d'utilisation du sprint. Le médecin sollicite un
+confrère, annote une époque et compose le compte rendu ; le confrère intervient par les
+messages et par sa boîte de réception.
+
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}[
-    x=1cm,y=1cm,
-    uc/.style     = {ellipse, draw=hypnoblue!60, fill=hypnolight,
-                     align=center, font=\scriptsize, text width=2.7cm,
-                     inner sep=1.5pt, minimum height=1.0cm},
-    ucp/.style    = {ellipse, draw=hypnored!70, fill=hypnored!7,
-                     align=center, font=\scriptsize\bfseries, text width=2.7cm,
-                     inner sep=1.5pt, minimum height=1.0cm},
-    lien/.style   = {hypnogray!75, line width=0.55pt},
-    rel/.style    = {-{Latex[length=2mm]}, hypnoblue!70, line width=0.5pt, dashed},
-    et/.style     = {font=\tiny\itshape, text=hypnoblue!85, fill=white, inner sep=1pt},
-    nomact/.style = {font=\scriptsize\bfseries, align=center, text width=2.2cm},
-  ]
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \draw[cusys] (3.9,-2.55) rectangle (11.9,3.0);
+  \node[cutitre] at (4.1,2.9) {Collaboration et restitution};
 
-  \tikzset{acteur/.pic={
-      \draw[hypnoblue,line width=0.8pt] (0,0) circle (0.17);
-      \draw[hypnoblue,line width=0.8pt] (0,-0.17) -- (0,-0.66);
-      \draw[hypnoblue,line width=0.8pt] (-0.28,-0.34) -- (0.28,-0.34);
-      \draw[hypnoblue,line width=0.8pt] (0,-0.66) -- (-0.24,-1.04);
-      \draw[hypnoblue,line width=0.8pt] (0,-0.66) -- (0.24,-1.04);}}
+  \node[cup] (col) at (5.9, 1.85)  {Solliciter un\\confrère};
+  \node[cu]  (ann) at (5.9,-0.65)  {Annoter une\\époque};
+  \node[cup] (pdf) at (5.9,-1.9)   {Composer le\\compte rendu};
 
-  \draw[hypnoblue!55,line width=0.9pt,rounded corners=3pt]
-       (3.9,-4.6) rectangle (12.0,2.4);
-  \node[font=\small\bfseries,text=hypnoblue,anchor=north west] at (4.15,2.25)
-       {Collaboration et restitution};
+  \node[cu]  (msg) at (9.9, 1.85)  {Échanger des\\messages};
+  \node[cu]  (rec) at (9.9, 0.6)   {Consulter la boîte\\de réception};
+  \node[cu]  (nor) at (9.9,-0.65)  {Comparer aux\\normes};
+  \node[cu]  (sec) at (9.9,-1.9)   {Choisir les\\sections};
 
-  \node[ucp] (col) at (6.2, 1.2)  {Solliciter un\\confrère};
-  \node[uc]  (msg) at (10.0, 1.2) {Échanger des\\messages};
-  \node[uc]  (rec) at (10.0,-0.4) {Consulter la boîte\\de réception};
-  \node[uc]  (ann) at (6.2,-1.1)  {Annoter une\\époque};
-  \node[uc]  (nor) at (10.0,-2.0) {Comparer aux\\normes};
-  \node[ucp] (pdf) at (6.2,-3.3)  {Composer le\\compte rendu};
-  \node[uc]  (sec) at (10.0,-3.6) {Choisir les\\sections};
+  \pic[pic text=Médecin] at (1.7,0.55) {cuacteur};
+  \pic[pic text=Confrère] at (14.1,0.55) {cuacteur};
+  \foreach \c in {col,ann,pdf} \draw[culien] (2.05,0.25) -- (\c.west);
+  \foreach \c in {msg,rec} \draw[culien] (13.75,0.25) -- (\c.east);
 
-  \pic at (1.6,0.7) {acteur};
-  \node[nomact,anchor=north] at (1.6,0.05) {Médecin};
-
-  \pic at (14.1,0.7) {acteur};
-  \node[nomact,anchor=north] at (14.1,0.05) {Confrère};
-
-  \foreach \c in {col,ann,pdf} \draw[lien] (2.0,0.35) -- (\c.west);
-  \draw[lien] (13.7,0.35) -- (msg.east);
-  \draw[lien] (13.7,0.35) -- (rec.east);
-
-  \draw[rel] (col) -- node[et,pos=0.5] {$\ll$include$\gg$} (msg);
-  \draw[rel] (col) -- node[et,pos=0.6] {$\ll$extend$\gg$} (rec);
-  \draw[rel] (ann) -- node[et,pos=0.6] {$\ll$extend$\gg$} (nor);
-  \draw[rel] (pdf) -- node[et,pos=0.55] {$\ll$include$\gg$} (sec);
-
+  \draw[curel] (col) -- node[cuet,pos=0.5]  {$\ll$include$\gg$} (msg);
+  \draw[curel] (col) -- node[cuet,pos=0.55] {$\ll$extend$\gg$}  (rec);
+  \draw[curel] (ann) -- node[cuet,pos=0.5]  {$\ll$extend$\gg$}  (nor);
+  \draw[curel] (pdf) -- node[cuet,pos=0.5]  {$\ll$include$\gg$} (sec);
 \end{tikzpicture}
 \caption{Diagramme des cas d'utilisation du sprint 6 --- collaboration et restitution}
 \label{fig:uc-s6}
@@ -460,29 +401,21 @@ Le sprint a embarqué quatorze récits pour 83 points de complexité
 
 \subsubsection{Description textuelle des cas d'utilisation}
 
-\begin{casutilisation}{Description textuelle du cas « Solliciter un confrère »}
+Le tableau~\ref{tab:cu-s6} décrit le cas « Solliciter un confrère », qui met en relation
+deux praticiens autour d'un même examen.
+
+\begin{casutilisation}[tab:cu-s6]{Description textuelle du cas « Solliciter un confrère »}
 Titre & Solliciter un confrère sur un examen \\ \hline
 Acteurs & Médecin demandeur, confrère sollicité \\ \hline
 Description & Ouvrir une discussion rattachée à un examen afin de recueillir un avis, en
 conservant le contexte clinique \\ \hline
 Préconditions & Les deux praticiens sont authentifiés ; l'examen existe \\ \hline
-Scénario de base &
-\begin{minipage}[t]{\linewidth}
-\begin{enumerate}[leftmargin=1.1em,itemsep=1pt,topsep=3pt]
-  \item Le médecin ouvre la fiche du patient et sélectionne l'examen.
-  \item Il demande la liste des confrères disponibles.
-  \item Il sélectionne un confrère et rédige sa demande.
-  \item Le système crée le fil, ou réutilise celui qui existe déjà, et enregistre le message.
-  \item Le confrère consulte sa boîte de réception et répond dans le même fil.
-\end{enumerate}
-\end{minipage} \\ \hline
-Scénario alternatif &
-\begin{minipage}[t]{\linewidth}
-\begin{itemize}[leftmargin=1.1em,itemsep=1pt,topsep=3pt]
-  \item \textbf{4a} --- Un fil existe déjà entre ces deux praticiens sur cet examen : le
-        message y est ajouté plutôt que d'ouvrir un doublon.
-\end{itemize}
-\end{minipage}
+Scénario de base & \etape{1.}{Le médecin ouvre la fiche du patient et sélectionne l'examen.} \\*
+ & \etape{2.}{Il demande la liste des confrères disponibles.} \\
+ & \etape{3.}{Il sélectionne un confrère et rédige sa demande.} \\
+ & \etape{4.}{Le système crée le fil, ou réutilise celui qui existe déjà, et enregistre le message.} \\*
+ & \etape{5.}{Le confrère consulte sa boîte de réception et répond dans le même fil.} \\ \hline
+Scénario alternatif & \etape{\textbullet}{\textbf{4a} --- Un fil existe déjà entre ces deux praticiens sur cet examen : le message y est ajouté plutôt que d'ouvrir un doublon.}
 \end{casutilisation}
 
 \subsection{Conception}
@@ -497,8 +430,9 @@ vérification que l'appelant participe bien au fil.
 
 \begin{figure}[H]
 \centering
-\resizebox{0.98\textwidth}{!}{%
+\resizebox{0.86\textwidth}{!}{%
 \begin{sequencediagram}
+  \def\unitfactor{0.42}% espacement vertical resserre
   \newthread[hypnolight]{u}{\scriptsize Médecin}
   \newinst[1.8]{f}{\scriptsize Client web}
   \newinst[1.8]{a}{\scriptsize Interface applicative}
@@ -540,12 +474,13 @@ vérification que l'appelant participe bien au fil.
 
 \subsubsection{Consultations confraternelles}
 
-Un fil de discussion est rattaché à un examen et à exactement deux praticiens. L'intérêt de ce
+Un fil de discussion (figure~\ref{fig:consultation}) est rattaché à un examen et à
+exactement deux praticiens. L'intérêt de ce
 dispositif est que la discussion reste attachée à l'examen : le correspondant dispose du
 contexte sans qu'il faille le lui transmettre. Une vue centralisée rassemble toutes les
 sollicitations reçues.
 
-\capturefig{consultation}{0.86}{Fil de discussion rattaché à un examen}{fig:consultation}
+\capturefig{consultation}{0.6}{Fil de discussion rattaché à un examen}{fig:consultation}
 
 \subsubsection{Annotation et comparaison aux normes}
 
@@ -559,6 +494,7 @@ d'alertes cliniques reprend en clair les anomalies détectées.
 
 \subsubsection{Production du compte rendu}
 
+\capturewrap[12]{rapport}{0.4}{Compte rendu clinique généré}{fig:rapport}
 Le compte rendu est produit côté client : les sections retenues sont converties en images par
 capture du rendu, puis assemblées dans un document paginé. Cette approche garantit que le
 document reproduit exactement ce que le praticien a validé à l'écran, sans qu'un moteur de
@@ -568,30 +504,39 @@ Le praticien choisit les sections à inclure : hypnogramme, métriques AASM, cla
 facteurs explicatifs, tracés bruts et comparaison aux normes. Cette composition à la carte
 répond à des destinataires différents : un confrère n'attend pas le même document qu'un
 dossier d'assurance. Le document est ensuite archivé au même titre que les autres pièces.
-
-\capturefig{rapport}{0.78}{Compte rendu clinique généré}{fig:rapport}
+La figure~\ref{fig:rapport} en montre un exemple.
 
 \subsubsection{Multilinguisme et thème sombre}
 
 L'interface est intégralement traduite en français et en anglais, les chaînes étant centralisées
-dans un catalogue unique et la bascule immédiate. Un thème sombre est également disponible,
-adapté à la lecture nocturne : un praticien qui interprète un enregistrement le fait
+dans un catalogue unique et la bascule immédiate. Un thème sombre est également disponible
+(figure~\ref{fig:dark}), adapté à la lecture nocturne : un praticien qui interprète un enregistrement le fait
 rarement en plein jour.
 
-\capturefig{dark}{0.86}{Tableau de bord du médecin en thème sombre}{fig:dark}
+\capturefig{dark}{0.68}{Tableau de bord du médecin en thème sombre}{fig:dark}
 
 \subsubsection{Conteneurisation}
 
-La pile est décrite par un fichier d'orchestration unique qui déclare trois services.
+La pile est décrite par un fichier d'orchestration unique qui déclare trois services
+(tableau~\ref{tab:services}).
 
-\begin{table}[H]
-\centering
-
-\small
-\begin{tabular}{@{}lllL{5.4cm}@{}}
+\begingroup\small
+\begin{longtable}{@{}lL{4.3cm}lL{4.9cm}@{}}
 \toprule
 \textbf{Service} & \textbf{Image de base} & \textbf{Port} & \textbf{Particularité} \\
 \midrule
+\endfirsthead
+\multicolumn{4}{@{}l}{\small\itshape Tableau~\ref{tab:services} (suite)}\\
+\toprule
+\textbf{Service} & \textbf{Image de base} & \textbf{Port} & \textbf{Particularité} \\
+\midrule
+\endhead
+\bottomrule
+\multicolumn{4}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\bottomrule
+\caption{Services de la pile conteneurisée}\label{tab:services}\\
+\endlastfoot
 Base de données & \texttt{postgres:15-alpine} & 5432 &
 Volume persistant, sonde de disponibilité \\
 \addlinespace[2pt]
@@ -600,11 +545,8 @@ PyTorch en version processeur installé en premier \\
 \addlinespace[2pt]
 Serveur web & \texttt{node:20-alpine} puis \texttt{nginx:alpine} & 80 &
 Construction en deux étapes, redirection du routage client \\
-\bottomrule
-\end{tabular}
-\caption{Services de la pile conteneurisée}
-\label{tab:services}
-\end{table}
+\end{longtable}
+\endgroup
 
 Le fichier de construction de l'interface applicative comporte une particularité :
 PyTorch y est installé depuis l'index dédié aux processeurs, \emph{avant} les
@@ -619,21 +561,31 @@ schéma.
 \subsubsection{Intégration continue}
 
 Une chaîne d'intégration continue s'exécute à chaque livraison sur la branche principale et à
-chaque proposition de fusion.
+chaque proposition de fusion. Ses trois travaux sont détaillés au tableau~\ref{tab:ci}.
 
-\begin{table}[H]
-\centering
-
-\small
-\begin{tabular}{@{}lL{10.4cm}@{}}
+\begingroup\small
+\begin{longtable}{@{}lL{12.2cm}@{}}
 \toprule
 \textbf{Travail} & \textbf{Étapes} \\
 \midrule
+\endfirsthead
+\multicolumn{2}{@{}l}{\small\itshape Tableau~\ref{tab:ci} (suite)}\\
+\toprule
+\textbf{Travail} & \textbf{Étapes} \\
+\midrule
+\endhead
+\bottomrule
+\multicolumn{2}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\bottomrule
+\caption{Travaux de la chaîne d'intégration continue}\label{tab:ci}\\
+\endlastfoot
 Interface applicative &
 Installation des dépendances avec PyTorch en version processeur ; contrôle syntaxique
-de tous les modules ; démarrage d'une instance PostgreSQL de service ; démarrage réel
-de l'application ; vérification du schéma OpenAPI et de la présence des points
-d'entrée attendus ; contrôle du cloisonnement des rôles \\
+de tous les modules ; \\
+& démarrage d'une instance PostgreSQL de service ; démarrage réel de l'application ; \\
+& vérification du schéma OpenAPI et de la présence des points d'entrée attendus ;
+contrôle du cloisonnement des rôles \\
 \addlinespace[3pt]
 Interface utilisateur &
 Installation reproductible des dépendances ; analyse statique ; construction de
@@ -642,21 +594,18 @@ production ; publication du bundle en tant qu'artefact \\
 Images de conteneur &
 Construction des deux images avec cache de couches, conditionnée à la réussite des
 deux travaux précédents \\
-\bottomrule
-\end{tabular}
-\caption{Travaux de la chaîne d'intégration continue}
-\label{tab:ci}
-\end{table}
+\end{longtable}
+\endgroup
 
+\capturewrap[11]{ci}{0.46}{Exécution de la chaîne d'intégration continue}{fig:ci}
 Le travail portant sur l'interface applicative va au-delà du contrôle syntaxique : il
 démarre réellement l'application contre une base éphémère, puis exerce trois
 vérifications de comportement. Un appel sans jeton doit recevoir un refus d'authentification ;
 une connexion administrateur doit délivrer un jeton ; et ce jeton d'administrateur, présenté au
 registre des patients, doit recevoir un refus d'autorisation. Ces trois assertions couvrent
 l'essentiel du cloisonnement des rôles et échoueraient immédiatement si une dépendance de
-sécurité venait à disparaître au fil d'une modification.
-
-\capturefig{ci}{0.9}{Exécution de la chaîne d'intégration continue}{fig:ci}
+sécurité venait à disparaître au fil d'une modification. La figure~\ref{fig:ci} montre une
+exécution de cette chaîne.
 
 \subsection{Revue du sprint}
 
@@ -677,15 +626,24 @@ démarre réellement l'application et contrôle le cloisonnement des rôles.
 La release a livré ses 160 points en deux sprints, portant le total livré à 358 points sur
 les six sprints du projet (tableau~\ref{tab:revue-r3}).
 
-\begin{table}[H]
-\centering\small
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{@{}L{3.6cm}|L{9.4cm}|c@{}}
+\begingroup\small\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{@{}L{3.6cm}|L{9.4cm}|c@{}}
 \hline
 \ligneentete \entete{Élément attendu} & \entete{Réalisation} & \entete{État} \\
 \hline
+\endfirsthead
+\multicolumn{3}{@{}l}{\small\itshape Tableau~\ref{tab:revue-r3} (suite)}\\
+\hline
+\ligneentete \entete{Élément attendu} & \entete{Réalisation} & \entete{État} \\
+\hline
+\endhead
+\multicolumn{3}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\hline
+\caption{Revue de la release 3 : incrément attendu et incrément livré}\label{tab:revue-r3}\\
+\endlastfoot
 Dossier patient & Registre des patients, historique des examens, cloisonnement des
-données par praticien & \checkmark \\
+données par praticien & \checkmark \\*
 \hline
 Archivage & Stockage objet, transfert en arrière-plan, liens signés valables vingt-quatre
 heures & \checkmark \\
@@ -694,15 +652,12 @@ Gouvernance & Cycle de vie des comptes et des licences, établissements, journal
 exportable & \checkmark \\
 \hline
 Collaboration et restitution & Fils de discussion rattachés aux examens, annotation,
-compte rendu composable & \checkmark \\
+compte rendu composable & \checkmark \\*
 \hline
 Industrialisation & Pile de trois conteneurs, intégration continue, interface bilingue et
 thème sombre & \checkmark \\
-\hline
-\end{tabular}
-\caption{Revue de la release 3 : incrément attendu et incrément livré}
-\label{tab:revue-r3}
-\end{table}
+\end{longtable}
+\endgroup
 
 \subsection{Validation fonctionnelle}
 \label{sec:validation}
@@ -711,15 +666,25 @@ En complément de la chaîne d'intégration continue, une campagne de scénarios
 a été exécutée manuellement à chaque fin de sprint. Le tableau~\ref{tab:tests} en présente
 l'état sur la version livrée au terme de la release.
 
-\begin{table}[H]
-\centering
-
-\small
-\begin{tabular}{@{}clL{7.2cm}c@{}}
+\begingroup\small
+\begin{longtable}{@{}clL{7.2cm}c@{}}
 \toprule
 \textbf{N\textsuperscript{o}} & \textbf{Scénario} & \textbf{Critère de réussite} &
 \textbf{État} \\
 \midrule
+\endfirsthead
+\multicolumn{4}{@{}l}{\small\itshape Tableau~\ref{tab:tests} (suite)}\\
+\toprule
+\textbf{N\textsuperscript{o}} & \textbf{Scénario} & \textbf{Critère de réussite} &
+\textbf{État} \\
+\midrule
+\endhead
+\bottomrule
+\multicolumn{4}{@{}r}{\small\itshape suite page suivante}\\
+\endfoot
+\bottomrule
+\caption{Scénarios de validation fonctionnelle}\label{tab:tests}\\
+\endlastfoot
 1 & Connexion valide & Jeton délivré, espace de travail ouvert & \checkmark \\
 2 & Connexion refusée & Compte suspendu ou licence expirée rejeté avec message
     distinct & \checkmark \\
@@ -749,11 +714,8 @@ l'état sur la version livrée au terme de la release.
 17 & Bascule linguistique & Aucune chaîne non traduite sur le parcours principal &
     \checkmark \\
 18 & Démarrage de la pile & Trois services opérationnels en une commande & \checkmark \\
-\bottomrule
-\end{tabular}
-\caption{Scénarios de validation fonctionnelle}
-\label{tab:tests}
-\end{table}
+\end{longtable}
+\endgroup
 
 Cette approche a une limite : une campagne manuelle n'est ni reproductible
 ni exhaustive, et elle ne protège pas contre les régressions entre deux exécutions. Les trois
