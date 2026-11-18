@@ -1,0 +1,399 @@
+\documentclass[11pt,a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage[left=2.2cm,right=2.2cm,top=2.4cm,bottom=2.4cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs,array,longtable}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{needspace}
+\usepackage{titlesec}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+
+\definecolor{bleu}{HTML}{1F3A5F}
+\definecolor{rouge}{HTML}{B03A2E}
+\definecolor{gris}{HTML}{555555}
+\definecolor{fond}{HTML}{EEF3F8}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\setlist{itemsep=1pt,topsep=2pt}
+
+\titleformat{\chapter}[block]{\Large\bfseries\color{bleu}}{\thechapter.}{0.5em}{}
+\titlespacing*{\chapter}{0pt}{0pt}{12pt}
+\titleformat{\section}{\large\bfseries\color{bleu}}{\thesection}{0.5em}{}
+\titlespacing*{\section}{0pt}{14pt}{6pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{gris}Préparation à la soutenance --- Hypnoria}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+
+% Question / réponse
+\newcounter{qnum}
+\newcommand{\qa}[2]{%
+  \needspace{5\baselineskip}%
+  \refstepcounter{qnum}%
+  \noindent\textbf{\color{rouge}Q\theqnum.}\ \textbf{#1}\par\nopagebreak
+  \noindent\hangindent=1.2em #2\par\vspace{3pt}}
+\newcommand{\piege}[1]{\noindent\colorbox{fond}{\parbox{\dimexpr\linewidth-2\fboxsep}{\small\textbf{\color{rouge}Piège possible.} #1}}\par\vspace{4pt}}
+\newcommand{\astuce}[1]{\noindent\colorbox{fond}{\parbox{\dimexpr\linewidth-2\fboxsep}{\small\textbf{\color{bleu}À retenir.} #1}}\par\vspace{4pt}}
+
+\begin{document}
+
+\begin{titlepage}
+\centering
+\vspace*{3cm}
+{\Huge\bfseries\color{bleu} Questions du jury\par}
+\vspace{0.6cm}
+{\Large Préparation à la soutenance du PFE\par}
+\vspace{0.4cm}
+{\large Hypnoria : plateforme d'aide à l'interprétation polysomnographique\par}
+\vspace{1.5cm}
+\begin{minipage}{0.8\textwidth}\centering\color{gris}
+Ce document réunit les questions que le jury peut poser, avec une réponse prête à dire,
+appuyée sur les chiffres du rapport. Il comprend un rappel des bases de l'apprentissage
+automatique et de l'apprentissage profond, puis les questions propres au projet, classées
+par thème, et une liste des pièges.
+\end{minipage}
+\vfill
+{\small Centre National de l'Informatique --- Tunis --- 2026}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+%=====================================================================
+\chapter{Chiffres à connaître par cœur}
+%=====================================================================
+
+\begin{longtable}{@{}p{6.2cm}p{9.2cm}@{}}
+\toprule
+\textbf{Sujet} & \textbf{Valeur} \\
+\midrule
+\endhead
+Durée, lieu & 26 janvier -- 26 juillet 2026, Centre National de l'Informatique, Tunis \\
+Méthode & Scrum, 3 releases $\times$ 2 sprints de 4 semaines ; 60 récits, 358 points \\
+Corpus & SHHS1, 196 sujets, 195\,130 époques de 30 s, soit 3,4\,\% de la cohorte (5\,793) \\
+Découpage des stades & 80/10/10 : 156\,104 / 19\,513 / 19\,513 époques, stratifié sur la classe \\
+Répartition 5 classes & Éveil 30,7\,\% ; N1 3,3\,\% (6\,361) ; N2 40,2\,\% ; N3 13,0\,\% ; REM 12,9\,\% \\
+Entrée des modèles & tenseur $(N, 5, 3000)$ : 5 dérivations, 100 Hz $\times$ 30 s \\
+Douze modèles & 3 architectures $\times$ 2 montages (2 ou 5 dérivations) $\times$ 2 granularités (3 ou 5 classes) \\
+Meilleur modèle de base & CNN, 5 dérivations, 3 classes : 91,66\,\% d'exactitude, $\kappa = 0{,}853$ \\
+N1 (5 classes, CNN) & F1 = 0,26 ; 150 époques reconnues sur 638 \\
+Empilement ($\kappa$, découpage par sujets) & 0,947 (5d/3c) ; 0,924 (2d/3c) ; 0,899 (5d/5c) ; 0,839 (2d/5c) \\
+Sévérité du SAOS & 2\,647 sujets SHHS2, 53 variables (25 marqueurs + 8 interactions + clinique), 530 en test \\
+Résultat sévérité & forêt aléatoire : 57,0\,\%, $\kappa = 0{,}409$, F1 macro 0,576, 95,5\,\% à $\le 1$ classe ; référence majoritaire 36,2\,\% \\
+Validation croisée (F1 macro) & RF 0,558 ; XGBoost 0,552 ; LightGBM 0,544 ; MLP 0,522 ; SVM 0,492 ; KNN 0,456 \\
+Entraînement & AdamW, pas $5\cdot10^{-4}$ décroissant en cosinus jusqu'à $10^{-6}$, 30 époques, lot de 128, écrêtage du gradient à 1,0, précision mixte \\
+Matériel & RTX 4060 portable (8,6 Go), 32 Go de RAM ; RTX 3060 pour les ensembles \\
+Plateforme & React 19, FastAPI, PostgreSQL, stockage objet S3, Docker ; 36 routes ; bcrypt, jeton HMAC-SHA256 (7 jours), liens signés 24 h \\
+Accord inter-scoreurs humains & environ 83\,\% (AASM) \\
+\bottomrule
+\end{longtable}
+
+\astuce{Si un chiffre vous échappe, dites « de l'ordre de » et donnez l'ordre de grandeur. Ne jamais inventer : un jury préfère « je ne m'en souviens pas, c'est dans le tableau 3.2 » à un chiffre faux.}
+
+%=====================================================================
+\chapter{Bases de l'apprentissage automatique}
+%=====================================================================
+
+\section{Notions générales}
+
+\qa{Qu'est-ce que l'apprentissage automatique ?}{Un programme apprend une fonction $f$ à partir d'exemples plutôt que d'être codé règle par règle. On dispose de données d'entrée $x$ (ici une époque de signal) et, en apprentissage supervisé, d'une étiquette $y$ (le stade). Le modèle ajuste ses paramètres pour que $f(x)$ approche $y$ sur les exemples, puis on vérifie qu'il généralise à des exemples jamais vus.}
+
+\qa{Quelle différence entre apprentissage supervisé, non supervisé et par renforcement ?}{Supervisé : chaque exemple a une étiquette (notre cas : stades de sommeil, classes de sévérité). Non supervisé : pas d'étiquette, on cherche une structure (clustering, réduction de dimension). Par renforcement : un agent apprend par essais et récompenses. Hypnoria est entièrement supervisé.}
+
+\qa{Classification ou régression ?}{En classification la sortie est une catégorie (5 stades, 4 classes de sévérité). En régression elle est un nombre continu (l'IAH lui-même). Nous avons choisi de classer la sévérité en quatre catégories AASM plutôt que de régresser l'IAH, car la décision clinique repose sur ces seuils.}
+
+\qa{Pourquoi découper les données en entraînement, validation et test ?}{L'entraînement ajuste les paramètres. La validation sert à choisir les hyperparamètres et le point d'arrêt. Le test, utilisé une seule fois à la fin, estime la performance réelle. Si l'on évaluait sur les données d'entraînement, on mesurerait la mémorisation et non la généralisation.}
+
+\qa{Qu'est-ce que le surapprentissage (overfitting) et comment l'avez-vous traité ?}{Le modèle colle aux particularités du jeu d'entraînement (bruit compris) et généralise mal : la perte d'entraînement baisse alors que celle de validation remonte. Nous l'observons légèrement sur la figure des courbes d'apprentissage. Parades utilisées : sélection du point de contrôle sur le $\kappa$ de validation (et non sur la dernière époque), décroissance du pas, AdamW (régularisation par décroissance des poids). Parades classiques non citées dans le rapport : dropout, arrêt précoce, augmentation de données.}
+
+\qa{Qu'est-ce que le compromis biais--variance ?}{Un modèle trop simple a un biais élevé (sous-apprentissage : il rate la structure). Un modèle trop flexible a une variance élevée (surapprentissage : il réagit au bruit). L'erreur de généralisation combine les deux. Les ensembles réduisent la variance en moyennant des modèles, ce qui motive l'empilement.}
+
+\qa{Qu'est-ce que la validation croisée et pourquoi l'avez-vous utilisée pour la sévérité ?}{On partage les données en $k$ plis ; chaque pli sert à son tour de validation pendant que les $k-1$ autres entraînent. La moyenne des $k$ scores est plus stable qu'un seul découpage. Nous l'avons utilisée à 5 plis, stratifiée, pour comparer six classifieurs sur un jeu de taille modeste (2\,647 sujets). Pour les réseaux profonds (195\,130 époques, entraînements de plusieurs heures), un découpage unique était le seul choix réaliste.}
+
+\qa{Qu'est-ce qu'une fuite de données (data leakage) ?}{L'information du jeu de test contamine l'entraînement, ce qui gonfle les scores. Deux cas dans ce projet : (1) le découpage par époques met des fenêtres du même patient dans l'entraînement et le test (limite reconnue, voir chapitre~\ref{chap:pieges}) ; (2) nous avons volontairement exclu les index de perturbation respiratoire des variables de la sévérité, car ils mesurent la cible elle-même.}
+
+\qa{Qu'est-ce qu'un hyperparamètre ?}{Un réglage fixé avant l'apprentissage et non appris par descente de gradient : pas d'apprentissage, taille de lot, nombre de couches, taille de noyau, nombre d'arbres, profondeur. Les paramètres, eux, sont les poids appris.}
+
+\qa{Pourquoi normaliser les entrées ?}{Pour mettre les variables sur une échelle comparable, ce qui stabilise et accélère l'optimisation. Nous centrons-réduisons chaque fenêtre et chaque dérivation séparément (z-score par époque) : cela met l'EMG, physiquement faible, au même niveau que l'EEG et évite toute fuite, car aucune statistique globale n'est estimée. Contrepartie : on perd l'amplitude absolue, qui caractérise en partie le sommeil profond.}
+
+\qa{Comment gérez-vous les valeurs manquantes ?}{Imputation par la médiane de la population d'apprentissage, signalée au médecin. La médiane est robuste aux valeurs extrêmes. Limite : elle ne tient pas compte des corrélations entre variables (une imputation multivariée ou par modèle serait plus fine).}
+
+\section{Métriques}
+
+\qa{Pourquoi l'exactitude (accuracy) ne suffit pas ici ?}{Les classes sont déséquilibrées : un modèle qui ignorerait le N1 (3,3\,\% des époques) perdrait à peine trois points d'exactitude. De même, en sévérité, prédire toujours la classe majoritaire donne 36,2\,\%. On regarde donc aussi le $\kappa$, le F1 macro et les métriques par classe.}
+
+\qa{Définissez précision, rappel et F1.}{Précision $=\dfrac{VP}{VP+FP}$ : parmi les époques annoncées N1, quelle part l'est vraiment. Rappel $=\dfrac{VP}{VP+FN}$ : parmi les vraies N1, quelle part est retrouvée. F1 $=\dfrac{2PR}{P+R}$ : moyenne harmonique. F1 macro : moyenne non pondérée des F1 par classe (chaque classe pèse pareil) ; F1 pondéré : pondéré par l'effectif.}
+
+\qa{Qu'est-ce que le $\kappa$ de Cohen et pourquoi l'avoir choisi comme critère ?}{$\kappa=\dfrac{p_o-p_e}{1-p_e}$ où $p_o$ est l'accord observé et $p_e$ l'accord attendu par hasard compte tenu des fréquences de classes. Il vaut 0 pour un modèle au niveau du hasard et 1 pour un accord parfait. C'est la mesure standard de l'accord entre scoreurs en médecine du sommeil, donc directement comparable à l'accord inter-expert. Il est aussi insensible au déséquilibre. Lecture usuelle (Landis et Koch) : 0,41--0,60 modéré ; 0,61--0,80 substantiel ; $>0{,}80$ quasi parfait.}
+
+\qa{Qu'est-ce qu'une matrice de confusion ?}{Un tableau où les lignes sont les classes réelles et les colonnes les classes prédites. La diagonale compte les bonnes réponses ; hors diagonale on voit \emph{quelles} classes sont confondues. Exemple : sur 638 époques N1, 150 reconnues, 233 versées en N2, 136 en éveil, 116 en REM.}
+
+\qa{Que représente une courbe ROC et l'AUC ?}{On fait varier le seuil de décision et on trace le taux de vrais positifs (rappel) contre le taux de faux positifs. L'AUC est l'aire sous la courbe : 0,5 correspond au hasard, 1 à un classifieur parfait. En multi-classes on procède en un-contre-tous. L'AUC mesure le pouvoir de séparation indépendamment du seuil.}
+
+\qa{Pourquoi rapporter « écart $\le$ 1 classe » pour la sévérité ?}{Parce que la sévérité est une variable ordinale : confondre normal et léger est bien moins grave que confondre normal et sévère. Plus de 95\,\% des prédictions sont dans la bonne classe ou une voisine, et aucun sujet sévère n'est classé normal.}
+
+\section{Modèles classiques}
+
+\qa{Comment fonctionne un arbre de décision ?}{Il découpe récursivement l'espace des variables par des tests simples (« index de fragmentation $>$ 12 ? ») choisis pour rendre les nœuds fils le plus purs possible (critère de Gini ou entropie). Lisible, mais instable et enclin au surapprentissage s'il est profond.}
+
+\qa{Forêt aléatoire : principe ?}{Bagging d'arbres : chaque arbre est entraîné sur un échantillon bootstrap des données et ne considère qu'un sous-ensemble aléatoire de variables à chaque coupure. On moyenne les votes. Cela décorrèle les arbres et réduit fortement la variance. C'est notre meilleur modèle de sévérité (F1 macro CV 0,558).}
+
+\qa{Boosting, XGBoost, LightGBM : en quoi diffèrent-ils d'une forêt ?}{En boosting on construit des arbres \emph{séquentiellement}, chacun corrigeant les erreurs (le gradient de la perte) du précédent ; on réduit ainsi le biais. Une forêt construit des arbres indépendants en parallèle (réduit la variance). XGBoost et LightGBM sont des implémentations optimisées avec régularisation ; LightGBM croît par feuilles et utilise des histogrammes pour la vitesse.}
+
+\qa{SVM : principe ?}{Cherche l'hyperplan qui sépare les classes avec la plus grande marge ; avec un noyau (RBF), il opère dans un espace de grande dimension sans le calculer explicitement. Sensible à l'échelle des variables : d'où le pipeline avec normaliseur ajusté sur chaque pli d'entraînement seulement.}
+
+\qa{k plus proches voisins ?}{Prédit la classe majoritaire parmi les $k$ exemples les plus proches. Aucun entraînement mais sensible à l'échelle et à la dimension ; ici c'est le moins bon (F1 0,456).}
+
+\qa{Régression logistique ?}{Modèle linéaire dont la sortie, passée dans une sigmoïde (ou softmax en multi-classes), est une probabilité. Peu de paramètres, bien calibré, d'où son choix comme méta-apprenant.}
+
+\qa{Perceptron multicouche (MLP) ?}{Empilement de couches denses avec non-linéarités. C'est un réseau profond « de base » sur variables tabulaires ; sur des données tabulaires de cette taille, les arbres le battent souvent (ici 0,522 contre 0,558).}
+
+\qa{Pourquoi les modèles à arbres dominent-ils sur les données tabulaires ?}{Ils gèrent bien les variables hétérogènes, les interactions, les valeurs extrêmes et n'exigent pas de normalisation fine. Avec 2\,647 sujets, un réseau profond manquerait de données pour compenser son absence de biais inductif adapté.}
+
+\section{Méthodes d'ensemble}
+
+\qa{Bagging, boosting, stacking, vote : quelles différences ?}{Bagging : modèles indépendants sur des rééchantillonnages, moyenne (réduit la variance). Boosting : modèles séquentiels corrigeant les erreurs (réduit le biais). Vote : on combine des modèles hétérogènes par moyenne ou majorité, poids égaux. Stacking : un méta-apprenant \emph{apprend} à combiner les sorties des modèles de base.}
+
+\qa{Pourquoi le méta-apprenant doit-il être entraîné sur des données que les modèles de base n'ont pas vues ?}{Sur leurs propres données d'entraînement, les modèles de base sont anormalement bons ; le méta-apprenant apprendrait alors une confiance injustifiée. Nous avons collecté les probabilités sur un jeu de validation découpé par sujets.}
+
+\qa{Quand l'empilement aide-t-il ?}{Quand les modèles de base font des erreurs \emph{différentes} (condition de diversité, Dietterich). Pour les stades : CNN, LSTM et Transformer échouent différemment sur le N1, d'où un gain. Pour la sévérité : RF, XGBoost, LightGBM sont tous des ensembles d'arbres sur les mêmes variables, leurs erreurs se recouvrent, et l'empilement perd (54,5\,\% contre 57,0\,\%).}
+
+%=====================================================================
+\chapter{Bases de l'apprentissage profond}
+%=====================================================================
+
+\section{Réseaux de neurones}
+
+\qa{Qu'est-ce qu'un neurone artificiel et un réseau profond ?}{Un neurone calcule $\sigma(w^\top x + b)$ : combinaison linéaire des entrées puis non-linéarité $\sigma$. Un réseau empile des couches de neurones ; « profond » signifie plusieurs couches cachées, ce qui permet d'apprendre des représentations de plus en plus abstraites (ondes locales, puis motifs, puis stade).}
+
+\qa{À quoi servent les fonctions d'activation ?}{Sans non-linéarité, un empilement de couches linéaires reste une fonction linéaire. ReLU $=\max(0,x)$ est la plus courante (simple, limite la disparition du gradient) ; GELU est une variante lisse employée dans les Transformers ; sigmoïde et tanh servent surtout dans les portes des LSTM ; softmax en sortie transforme $K$ scores en probabilités de somme 1.}
+
+\qa{Qu'est-ce que la fonction de perte et laquelle utilisez-vous ?}{Elle mesure l'écart entre prédiction et étiquette. Pour la classification : l'entropie croisée $-\sum_k y_k\log p_k$. Nous l'utilisons pondérée par l'inverse de la fréquence des classes (N1 : poids 12,3 fois celui du N2 ; REM : 4,4 fois celui du NREM en 3 classes), pour que les erreurs sur les classes rares coûtent plus cher.}
+
+\qa{Expliquez la descente de gradient et la rétropropagation.}{On cherche les poids $\theta$ qui minimisent la perte. Le gradient $\nabla_\theta L$ indique la direction de plus forte hausse ; on avance en sens inverse : $\theta\leftarrow\theta-\eta\nabla_\theta L$ ($\eta$ = pas d'apprentissage). La rétropropagation calcule efficacement ce gradient couche par couche, par la règle de dérivation en chaîne, de la sortie vers l'entrée. En pratique on utilise des mini-lots (128 époques) : descente de gradient stochastique.}
+
+\qa{Pourquoi AdamW plutôt que SGD ?}{Adam adapte le pas de chaque paramètre à partir de moyennes mobiles du gradient et de son carré : convergence rapide et peu sensible au réglage. AdamW découple la décroissance des poids (régularisation L2) de la mise à jour adaptative, ce qui généralise mieux qu'Adam avec L2 classique.}
+
+\qa{Qu'est-ce que le pas d'apprentissage (learning rate) et le recuit cosinus ?}{Le pas règle la taille des mises à jour : trop grand, la perte diverge ; trop petit, l'apprentissage est lent. Le recuit cosinus part de $5\cdot10^{-4}$ et le fait décroître en cosinus jusqu'à $10^{-6}$ sur les 30 époques : grands pas au début pour explorer, petits pas à la fin pour affiner.}
+
+\qa{Qu'est-ce que le problème du gradient qui disparaît ou explose ?}{En rétropropageant à travers beaucoup de couches ou de pas de temps, le gradient est multiplié de nombreuses fois : il peut tendre vers 0 (le début du réseau n'apprend plus) ou croître sans borne (divergence). Les LSTM atténuent la disparition par leurs portes ; l'écrêtage du gradient (norme limitée à 1,0) empêche l'explosion, sans quoi le LSTM sur 3\,000 pas divergerait.}
+
+\qa{Dropout, batch normalization : à quoi servent-ils ?}{Dropout éteint aléatoirement des neurones à l'entraînement, ce qui limite la co-adaptation et le surapprentissage. La normalisation par lot recentre/réduit les activations de chaque couche, stabilisant et accélérant l'entraînement. (Dites explicitement que ce sont des outils standards et précisez ceux effectivement présents dans votre code si le jury insiste.)}
+
+\qa{Qu'est-ce que la précision mixte et pourquoi l'avoir employée ?}{Les calculs lourds se font en demi-précision (16 bits), les accumulations sensibles en simple précision (32 bits), avec mise à l'échelle de la perte pour éviter les sous-dépassements. Mémoire des activations divisée par deux et débit supérieur sur les unités tensorielles : indispensable sur une carte de 8 Go.}
+
+\section{Réseaux convolutifs}
+
+\qa{Qu'est-ce qu'une convolution 1D et pourquoi convient-elle à un signal EEG ?}{Un petit filtre (noyau) glisse le long du temps et calcule un produit scalaire avec chaque fenêtre locale : il détecte un motif quel que soit sa position (invariance par translation) avec peu de paramètres (partage des poids). Un fuseau du sommeil ou un complexe K est précisément un motif local qui peut apparaître n'importe où dans la fenêtre.}
+
+\qa{Pourquoi deux branches avec des noyaux de 50 et 200 échantillons ?}{Les éléments AASM vivent à des échelles différentes : fuseau $\approx$ 0,5 s ($50$ échantillons à 100 Hz), onde lente $>1$ s. Un seul noyau ne capte pas les deux. La branche fine (noyau 50, pas 6) voit les détails, la grossière (noyau 200, pas 25) le contexte ; leurs sorties sont concaténées (4\,096 valeurs) puis passent par trois couches denses. Inspiré de DeepSleepNet.}
+
+\qa{Que sont le pas (stride), le pooling et le champ réceptif ?}{Le pas est le saut du filtre : un pas supérieur à 1 sous-échantillonne. Le pooling résume un voisinage (max, moyenne) pour réduire la taille et gagner en invariance. Le champ réceptif est la portion de l'entrée qui influence un neurone ; il grandit avec la profondeur et le pas.}
+
+\section{Réseaux récurrents}
+
+\qa{Qu'est-ce qu'un LSTM et pourquoi bidirectionnel ?}{Un réseau récurrent lit la séquence pas à pas en gardant un état. Le LSTM ajoute une cellule mémoire et trois portes (entrée, oubli, sortie) qui décident quoi écrire, garder ou lire : il retient des dépendances longues et atténue la disparition du gradient. Bidirectionnel : deux LSTM, un dans chaque sens du temps, concaténés (états de dimension 256) ; chaque instant voit passé et futur de la fenêtre. Ici : 2 couches $\times$ 128 unités.}
+
+\qa{Qu'est-ce que le pooling attentionnel ?}{Un petit réseau attribue un poids $\alpha_t$ à chacun des 3\,000 états, avec $\sum\alpha_t=1$, et la représentation finale est $\sum_t\alpha_t h_t$. Le dernier état favoriserait la fin de la fenêtre ; la moyenne diluerait un événement bref ; l'attention apprend où regarder.}
+
+\section{Attention et Transformer}
+
+\qa{Qu'est-ce que l'auto-attention ?}{Chaque élément de la séquence produit une requête $Q$, une clé $K$ et une valeur $V$ ; la sortie est $\mathrm{softmax}\!\left(QK^\top/\sqrt{d}\right)V$. Chaque position agrège les autres en pondérant par leur pertinence : on relie directement deux portions éloignées, sans passer par la récurrence. Plusieurs « têtes » (ici 8) apprennent des relations différentes.}
+
+\qa{Pourquoi découper l'époque en patchs ?}{Le coût de l'auto-attention est quadratique en la longueur de séquence : sur 3\,000 échantillons, $3000^2=9$ millions de coefficients par tête et par époque. Avec 60 patchs de 50 échantillons plus un jeton de synthèse (61 jetons), on tombe à $61^2\approx3\,700$. Chaque patch est projeté linéairement en dimension 128.}
+
+\qa{À quoi servent le jeton de synthèse et l'encodage positionnel ?}{Le jeton de synthèse (type \texttt{[CLS]}) est un vecteur appris ajouté en tête ; sa sortie finale résume toute la séquence et alimente le classifieur. L'auto-attention ignore l'ordre par construction ; l'encodage positionnel sinusoïdal réinjecte l'ordre temporel.}
+
+\qa{Pourquoi le Transformer ne gagne-t-il pas ici ?}{Il arrive derrière le CNN dans les quatre configurations (écart $<4$ points). Les Transformers sont gourmands en données et ont peu de biais inductif ; avec seulement 196 sujets (et même 150 pour la variante 5 dérivations/3 classes, faute de mémoire), le biais inductif des convolutions est un avantage.}
+
+\section{Explicabilité}
+
+\qa{Qu'est-ce que SHAP et d'où vient-il ?}{Les valeurs de Shapley viennent de la théorie des jeux coopératifs (1953) : la contribution d'un joueur est sa valeur marginale moyenne sur toutes les coalitions possibles. SHAP les transpose au ML : chaque variable $i$ reçoit une contribution $\phi_i$ telle que $f(x)=E[f(x)]+\sum_i\phi_i$ (additivité). Propriétés démontrées : efficacité, symétrie, joueur nul, linéarité ; c'est la seule attribution additive qui les respecte toutes.}
+
+\qa{Pourquoi SHAP plutôt que LIME ?}{LIME approche localement le modèle par un modèle linéaire sur des perturbations aléatoires : résultat approximatif et variable d'un tirage à l'autre. TreeSHAP est exact et déterministe sur les arbres, en temps polynomial. Notre besoin : explication locale, exacte, reproductible.}
+
+\qa{Qu'est-ce que Grad-CAM ?}{Méthode d'explication des CNN : on pondère les cartes de caractéristiques d'une couche convolutive par le gradient de la classe prédite, ce qui donne une carte de chaleur des zones du signal qui ont influencé la décision. Elle est mentionnée dans l'architecture fonctionnelle mais \emph{non exposée} dans l'interface (voir chapitre~\ref{chap:pieges}).}
+
+\qa{Que veut-on dire par « l'explication décrit le modèle, pas le phénomène » ?}{Une forte contribution SHAP signifie que la variable influence la prédiction, pas qu'elle cause l'apnée. Le compte rendu porte cette mention. Deuxième nuance : la prédiction vient d'un ensemble, mais l'explication est calculée sur un modèle à arbres entraîné sur les mêmes données ; elle décrit donc un modèle très proche, non le modèle décisionnel lui-même.}
+
+%=====================================================================
+\chapter{Questions sur le projet}
+%=====================================================================
+
+\section{Contexte et problématique}
+
+\qa{Présentez votre projet en deux minutes.}{Hypnoria est une plateforme web d'aide à l'interprétation de la polysomnographie. Elle repose sur deux étages d'apprentissage. Le premier classe automatiquement les stades du sommeil à partir d'un fichier EDF brut, en combinant par empilement un CNN, un LSTM et un Transformer. Le second prédit la sévérité de l'apnée du sommeil (quatre classes) à partir de l'hypnogramme et de marqueurs cliniques, et explique chaque prédiction par des valeurs de Shapley. Autour, une application complète : dossier patient, archivage sécurisé, annotation, compte rendu, collaboration, administration, audit, déploiement par conteneurs.}
+
+\qa{Quel problème résolvez-vous ?}{Trois constats : (1) le scorage manuel d'environ 1\,000 époques par nuit coûte plusieurs heures d'expertise, et c'est le goulet d'étranglement du diagnostic ; (2) il est peu reproductible (accord inter-scoreurs $\approx$ 83\,\%) ; (3) les modèles profonds sont opaques, donc inutilisables par un médecin qui engage sa responsabilité.}
+
+\qa{Qu'est-ce que le SAOS et comment se classe sa sévérité ?}{Obstructions répétées des voies aériennes supérieures pendant le sommeil, avec désaturation en oxygène et micro-éveils. La sévérité se mesure par l'index d'apnées-hypopnées (IAH, événements par heure) : normal $<5$, léger 5 à $<15$, modéré 15 à $<30$, sévère $\ge30$. Environ 936 millions d'adultes sont concernés dans le monde, majoritairement non diagnostiqués.}
+
+\qa{Qu'est-ce qu'une polysomnographie, un hypnogramme, une époque ?}{La polysomnographie enregistre simultanément plusieurs signaux (EEG, EOG, EMG, respiration, oxymétrie, ECG) pendant une nuit. L'époque est la fenêtre de 30 s sur laquelle se fait le scorage. L'hypnogramme est la suite des stades de toutes les époques : une courbe qui résume environ 1\,000 décisions.}
+
+\qa{Quels sont les stades du sommeil et pourquoi le N1 est-il difficile ?}{Éveil (W), N1, N2, N3 (profond) et REM (paradoxal), selon l'AASM. Le N1 est une transition sans marqueur graphique propre : il se définit négativement (disparition de l'alpha, absence de fuseaux), c'est la classe sur laquelle les experts s'accordent le moins ; en plus il est très rare (3,3\,\%).}
+
+\qa{Pourquoi cinq dérivations, et pourquoi aussi une version à deux ?}{Les cinq (2 EEG, 2 EOG, 1 EMG mentonnier) sont le minimum du scorage : l'EOG et l'EMG distinguent le REM. La version à deux dérivations vise les dispositifs ambulatoires ; elle coûte 2,6 à 3,9 points d'exactitude.}
+
+\qa{En quoi Hypnoria diffère-t-il des solutions existantes ?}{Les suites commerciales (Noxturnal, Sleepware, ProFusion, SleepWorks, EnsoSleep) sont liées au matériel, chères, locales, sans explication. Les travaux académiques (DeepSleepNet, U-Sleep, SleepTransformer, XSleepNet\dots) s'arrêtent au modèle. Hypnoria occupe l'espace intermédiaire : une plateforme complète, indépendante du matériel, intégrant des modèles récents \emph{et} leur explication.}
+
+\section{Méthodologie}
+
+\qa{Pourquoi Scrum pour un projet individuel ?}{Deux incertitudes : le délai d'accès aux cohortes cliniques et le niveau de performance atteignable. Une démarche linéaire aurait figé des décisions avant d'avoir les éléments. Scrum permet d'ajuster. Rôles redistribués : Product Owner = encadrant entreprise, Scrum Master = encadrante académique, équipe = étudiant. Sprints de 4 semaines (au lieu de 2) car un entraînement se compte en heures de calcul ; releases de deux sprints.}
+
+\qa{Qu'est-ce qu'un récit utilisateur, MoSCoW, les points de complexité ?}{Récit : « en tant que \dots{} je veux \dots{} afin de \dots ». MoSCoW : Must/Should/Could (priorité). Points : échelle de Fibonacci, relative, qui compare les récits entre eux et ne prétend pas prédire une durée.}
+
+\qa{Qu'avez-vous fait pendant l'attente de l'accès à la cohorte ?}{Nous avons validé toute la chaîne (lecture EDF, résolution des canaux, segmentation, boucle d'entraînement) sur le jeu public Sleep-EDF. À l'arrivée de l'autorisation (semaine 5), il ne restait qu'à rejouer à plus grande échelle.}
+
+\section{Données et prétraitement}
+
+\qa{Quelles données avez-vous utilisées ?}{SHHS (Sleep Heart Health Study, obtenu via le NSRR) : 196 enregistrements de SHHS1 pour les stades (195\,130 époques), et 2\,647 hypnogrammes de SHHS2 pour la sévérité. Sleep-EDF (PhysioNet) a servi d'amorçage. L'accès à MESA a été obtenu mais non exploité.}
+
+\qa{Décrivez la chaîne de prétraitement.}{Six étapes : décodage EDF $\to$ résolution des dérivations (alias de noms) $\to$ rééchantillonnage à 100 Hz par méthode de Fourier $\to$ découpe en fenêtres de 3\,000 échantillons $\to$ z-score par époque et par canal $\to$ tenseur $(N,5,3000)$ sérialisé par sujet. Chaque étape neutralise une source de variabilité (constructeur, nommage, fréquence d'acquisition, convention AASM, amplitudes inter-sujets).}
+
+\qa{Pourquoi 100 Hz ?}{Les phénomènes d'intérêt (delta, thêta, alpha, fuseaux à 12--14 Hz) sont bien en dessous de 50 Hz, limite de Nyquist à 100 Hz. C'est aussi un bon compromis taille/qualité : une nuit pèse $\approx$ 60 Mo.}
+
+\qa{Que fait le z-score par époque, et quelles en sont les limites ?}{$x'=(x-\mu)/(\sigma+\varepsilon)$ calculé sur chaque fenêtre et chaque dérivation, $\varepsilon=10^{-8}$ évite la division par zéro sur une électrode détachée (signal plat). Avantages : insensible à l'impédance des électrodes et au gain, aucune fuite via des statistiques globales. Limite : perte de l'amplitude absolue, utile pour le N3.}
+
+\qa{Comment traitez-vous les annotations ?}{Fichiers XML : chaque événement donne début, durée et stade ; on les projette sur la grille de 30 s, on fusionne le stade 4 dans le N3 (règles Rechtschaffen-Kales $\to$ AASM 2007), on comble les époques non scorées par le dernier stade valide (celles avant le premier stade sont mises en éveil, hypothèse). Les deux flux sont alignés sur le plus court.}
+
+\qa{Comment gérez-vous le déséquilibre des classes ?}{Pondération de la perte par l'inverse de la fréquence (renormalisée), découpage stratifié, et choix du point de contrôle sur le $\kappa$. Pas de sur-échantillonnage ni de génération de données.}
+
+\qa{Pourquoi seulement 196 sujets sur 5\,793 ?}{La cohorte complète pèserait environ 346 Go. J'ai comparé trois stratégies : tout en mémoire vidéo (exclut le protocole à 5 dérivations), tout en RAM (retenue), lecture paresseuse sur disque (le GPU attendrait le disque). Avec 4 semaines pour 12 variantes et 30 époques chacune, la lecture paresseuse aurait obligé à réduire drastiquement le nombre d'époques d'entraînement : le modèle aurait vu plus de patients mais sous-appris. J'ai donc privilégié la qualité de convergence. Limite : 3,4\,\% de la cohorte, sélectionnés par complétude du montage et non au hasard (biais de sélection).}
+
+\section{Modèles de classification des stades}
+
+\qa{Pourquoi ces trois architectures ?}{Elles sont complémentaires : le CNN capte les motifs locaux, le LSTM la dynamique temporelle, le Transformer les relations à longue distance par auto-attention. L'hypothèse était qu'elles échouent différemment, ce qui est la condition d'un bon ensemble.}
+
+\qa{Pourquoi douze modèles ?}{Plan factoriel $3\times2\times2$. Il répond à la question « quelle est la part de l'architecture, du nombre de dérivations et de la granularité dans la performance ? », par comparaison directe sur un protocole identique.}
+
+\qa{Quels sont vos résultats ?}{Meilleur : CNN, 5 dérivations, 3 classes : 91,66\,\%, $\kappa=0{,}853$. À cinq classes : 82,78\,\% et $\kappa=0{,}761$. Le CNN domine les quatre configurations mais de peu (moins de 4 points). Passer de 2 à 5 dérivations gagne 2,6 à 3,9 points ; passer de 3 à 5 classes en coûte 8,6 à 12,3.}
+
+\qa{Pourquoi le N1 échoue-t-il (F1 = 0,26) ?}{Trois raisons : classe très rare (3,3\,\%) ; définition négative sans marqueur propre ; désaccord humain déjà fort. Les erreurs ne sont pas aléatoires : 233 vers N2, 136 vers éveil, 116 vers REM, soit les états voisins, ce que ferait aussi un scoreur hésitant. Les architectures échouent différemment : le LSTM sur-prédit le N1 (rappel 0,59, précision 0,20), le CNN est conservateur (rappel 0,24, précision 0,29).}
+
+\qa{Pourquoi 950 époques N2 sont-elles classées N3 ?}{Confusion de seuil : le N3 est défini par plus de 20\,\% d'ondes lentes dans la fenêtre ; une époque à 19\,\% est presque indiscernable d'une à 21\,\%.}
+
+\qa{Pourquoi choisir le point de contrôle sur le $\kappa$ plutôt que la perte ?}{Sur des classes déséquilibrées, la perte globale peut s'améliorer pendant que la classe minoritaire se dégrade. Le $\kappa$ ne laisse pas passer ce phénomène.}
+
+\qa{Comparez vos résultats à la littérature.}{DeepSleepNet $\approx$ 82\,\%, TinySleepNet $\approx$ 85\,\%, SleepTransformer $\approx$ 88\,\%, XSleepNet $\approx$ 89\,\% (5 classes, Sleep-EDF ou SHHS selon le travail). Nos 82,8\,\% à cinq classes sont dans la fourchette basse. Attention : les protocoles, cohortes et découpages diffèrent, donc la comparaison n'est qu'indicative. Et notre découpage par époques gonfle probablement nos chiffres.}
+
+\section{Empilement}
+
+\qa{Comment fonctionne votre empilement ?}{Chaque modèle produit un vecteur de probabilités sur $K$ classes ; les trois sont concaténés en $3K$ méta-caractéristiques qui alimentent une régression logistique équilibrée. Choix d'un modèle linéaire : peu de variables (9 en 3 classes) et besoin de probabilités calibrées.}
+
+\qa{L'empilement apporte-t-il vraiment quelque chose ?}{Il dépasse le meilleur modèle isolé dans les quatre configurations, mais ne dépasse le vote moyen que dans trois sur quatre (5d/3c : 0,947 contre 0,950, soit $-0{,}003$). Les gains sont de $+0{,}005$ à $+0{,}006$ : réels mais modestes. Quand les modèles sont déjà concordants, le méta-apprenant n'a presque rien à apprendre. J'ai tenu à comparer au vote moyen, souvent omis dans la littérature.}
+
+\qa{Pourquoi la régression logistique et pas un réseau comme méta-apprenant ?}{Peu de variables, besoin de calibrage, risque de surapprentissage sur le second niveau ; un modèle simple fait mieux (Ting et Witten, 1999).}
+
+\section{Prédiction de la sévérité}
+
+\qa{Comment prédit-on le SAOS sans signaux respiratoires ?}{Hypothèse : les micro-éveils répétés laissent une empreinte sur l'architecture du sommeil (fragmentation, moins de sommeil profond, efficacité du sommeil réduite). Je calcule 25 marqueurs depuis l'hypnogramme, 8 interactions, et j'ajoute données cliniques (âge, IMC, sexe), oxymétrie et index d'éveil : 53 variables.}
+
+\qa{Pourquoi avoir exclu les index de perturbation respiratoire ?}{Ils mesurent directement les événements dont on prédit la sévérité : les garder donnerait un excellent modèle sans valeur pratique (fuite de la cible).}
+
+\qa{57\,\% d'exactitude, n'est-ce pas faible ?}{Il faut le situer : quatre classes, référence majoritaire 36,2\,\%, $\kappa=0{,}41$ (accord modéré). La difficulté est structurelle : un IAH de 4,9 et un de 5,1 sont classés différemment sans différence physiologique ; les classes normal/léger se recouvrent presque entièrement (voir la figure des distributions). Surtout, 95,5\,\% des prédictions sont à au plus une classe d'écart et aucun sévère n'est classé normal.}
+
+\qa{Pourquoi l'empilement échoue-t-il ici ?}{Les trois modèles retenus (RF, XGBoost, LightGBM) sont tous des ensembles d'arbres sur les mêmes variables : pas de diversité. Le choix rationnel est de garder la forêt aléatoire seule. C'est un résultat négatif que j'ai choisi de rapporter.}
+
+\qa{Quel est l'usage clinique visé : dépistage ou diagnostic ?}{Aide à l'interprétation et au dépistage, pas un diagnostic automatique : le médecin garde la décision. Le système est à utiliser comme second avis qui pointe les nuits suspectes et explique pourquoi.}
+
+\qa{Quelle est l'erreur sur les figures de matrices de confusion de sévérité ?}{Les premières figures du script avaient des étiquettes d'axes permutées : l'encodeur de classes trie alphabétiquement (Léger, Modéré, Normal, Sévère). Seul l'affichage était faux ; les prédictions étaient correctes. J'ai corrigé le script et recalculé toutes les matrices.}
+
+\section{Explicabilité}
+
+\qa{Comment le médecin voit-il l'explication ?}{Pour chaque prédiction, on calcule les valeurs SHAP, on trie par contribution absolue et on restitue les dix variables dominantes en facteurs aggravants (poussent vers plus de sévérité) et protecteurs, avec une interprétation clinique en clair.}
+
+\qa{Quelles variables dominent ?}{L'oxymétrie et les index d'éveil (conséquences directes des événements respiratoires), puis les marqueurs d'architecture : fragmentation, proportion de sommeil profond, éveil intra-sommeil. C'est physiologiquement cohérent.}
+
+\qa{Avez-vous expliqué les modèles profonds ?}{Non, pas dans l'interface : c'est un objectif partiellement atteint. Les poids d'attention du LSTM sont calculés mais non exposés ; des cartes de saillance sur le CNN sont envisagées. Même alors, la littérature (Jain et Wallace ; Wiegreffe et Pinter) rappelle que l'attention n'est pas une explication fiable : il faudrait le signaler dans l'interface.}
+
+\section{Plateforme}
+
+\qa{Quelle est l'architecture de la solution ?}{Trois couches : application monopage React, API FastAPI sans état portant la logique métier et le moteur d'inférence (modèles chargés une fois en mémoire), persistance séparée : PostgreSQL pour les métadonnées, stockage objet compatible S3 pour les fichiers volumineux. Trois conteneurs Docker orchestrés par un seul fichier.}
+
+\qa{Pourquoi séparer base de données et stockage objet ?}{Un enregistrement pèse plusieurs centaines de Mo ; le garder en base dégraderait sauvegardes et temps de réponse, sans bénéfice transactionnel. Les fichiers sont servis par des liens signés valables 24 h.}
+
+\qa{Pourquoi un jeton signé plutôt qu'une session ?}{Pas d'état côté serveur : on peut répliquer horizontalement sans partage de session. Jeton HMAC-SHA256 contenant adresse, rôle et expiration (7 jours).}
+
+\qa{Comment sécurisez-vous l'application ?}{Mots de passe hachés par bcrypt (sel aléatoire, fonction lente) ; jetons signés ; contrôle du rôle puis de la propriété de la ressource sur chaque route ; liens de fichiers signés et expirants (la conversion est faite par le schéma de sortie, donc aucune route ne peut divulguer une référence brute) ; journal d'audit.}
+
+\qa{Pourquoi le journal d'audit est-il dénormalisé ?}{Il recopie adresse et rôle de l'auteur au lieu de référencer le compte : la trace doit rester lisible même si le compte est supprimé, ce qu'une clé étrangère interdirait.}
+
+\qa{Pourquoi afficher les résultats avant la fin de l'archivage ?}{Principe directeur : ne jamais faire attendre le praticien. Le transfert se fait en arrière-plan avec une vignette de progression ; un échec d'archivage n'empêche pas l'exploitation de l'examen, car les résultats sont en base indépendamment des fichiers.}
+
+\qa{Comment testez-vous ?}{Intégration continue : contrôle syntaxique, démarrage réel de l'application sur PostgreSQL, vérification du schéma OpenAPI, trois assertions de sécurité (appel sans jeton refusé, connexion administrateur OK, jeton administrateur refusé sur le registre des patients). Plus 18 scénarios fonctionnels manuels. Limite : pas de tests unitaires ni de bout en bout automatisés.}
+
+\qa{Pourquoi PyTorch en version CPU dans Docker ?}{L'inférence en production s'exécute sur processeur ; l'index CPU évite de télécharger plusieurs Go de bibliothèques CUDA inutiles et fait échouer moins de constructions.}
+
+%=====================================================================
+\chapter{Pièges et questions difficiles}
+\label{chap:pieges}
+%=====================================================================
+
+Ces questions visent les faiblesses. Les reconnaître avant le jury, avec le correctif prévu, est la meilleure défense.
+
+\qa{Vos 91,66\,\% sont-ils valides ? Votre découpage n'est-il pas biaisé ?}{Reconnaissance franche : les douze modèles de base ont été évalués sur un découpage aléatoire des époques, pas des sujets. Avec $\approx$ 1\,000 époques par patient et 80\,\% en entraînement, le modèle a vu d'autres époques de la même nuit que chaque époque de test. Mes métriques mesurent la classification d'une époque inconnue chez un patient connu, pas d'un patient inconnu ; elles surestiment donc probablement la performance clinique. Correctif : ré-évaluation sur un découpage par sujets, sans modifier les architectures. C'est la première perspective.}
+\piege{Ne pas défendre ces chiffres comme « la performance clinique ». Les présenter comme une performance sur un protocole précis, avec sa limite connue.}
+
+\qa{Pourquoi les ensembles ont-ils $\kappa=0{,}947$ alors que le meilleur modèle de base a $0{,}853$ ? Est-ce un gain de l'empilement ?}{Non, et le rapport le dit : les deux séries utilisent des protocoles différents (époques contre sujets), donc elles ne sont pas comparables. On ne peut pas présenter le passage de 91,66\,\% à 96,93\,\% comme un gain. Pire : les modèles de base avaient déjà vu des fenêtres de sujets que le protocole d'empilement considère comme non vus. La bonne comparaison est interne au tableau des ensembles : modèles de base, vote moyen et empilement sur le même jeu de test.}
+
+\qa{Vous dites atteindre l'accord inter-expert : n'est-ce pas abusif ?}{Prudence : le $\kappa$ de 0,853 est à trois classes, alors que l'accord humain de 83\,\% (AASM) porte sur cinq classes. À cinq classes, mon $\kappa$ est de 0,761. De plus mon protocole surestime la performance. Je dis « au voisinage » de l'accord inter-expert, pas « au niveau ».}
+
+\qa{Le rapport décrit Grad-CAM dans l'architecture ; où est-il dans l'application ?}{Il est mentionné dans la description fonctionnelle du pipeline comme étape prévue, mais il n'a pas été implémenté dans l'interface. La conclusion le dit : l'explicabilité est partiellement atteinte (SHAP sur la sévérité seulement). À assumer.}
+\piege{Incohérence possible entre la figure du pipeline (qui montre SHAP \emph{et} Grad-CAM) et la conclusion. Prévoir la réponse ci-dessus.}
+
+\qa{Pourquoi votre explication SHAP porte-t-elle sur XGBoost alors que la décision vient de la forêt aléatoire ou de l'ensemble ?}{Les attributions exactes en temps polynomial sont disponibles pour les arbres ; l'expliquer directement imposerait une approximation par échantillonnage. L'explication décrit donc un modèle très proche mais non identique au modèle décisionnel : limite à connaître. Elle reste cohérente tant que les modèles voient les mêmes variables.}
+
+\qa{Quel est l'impact du biais de sélection (196 sujets filtrés) ?}{Diversité réduite de morphologies et de conditions d'enregistrement ; risque de mauvaise généralisation à d'autres populations. Correctifs : validation externe sur MESA, élargissement du corpus avec un chargement par blocs qui n'affame pas le GPU (préchargement du bloc suivant).}
+
+\qa{Le système est-il utilisable en clinique aujourd'hui ?}{Non, et le rapport le dit : routes d'inférence non authentifiées (correction d'une ligne par route), non-conformité RGPD (pas de chiffrement applicatif au repos, pas de droit à l'effacement outillé, pas de durée de conservation), pas d'étude de concordance avec un technicien, tests non automatisés. C'est un prototype avancé, pas un dispositif médical : un marquage CE/DM logiciel serait nécessaire.}
+
+\qa{Pourquoi n'avez-vous pas lissé les transitions (post-traitement) ?}{Parce qu'on classe chaque époque indépendamment. Un lissage contextuel (fenêtre glissante sur les probabilités) corrigerait des aberrations isolées et réduirait l'index de fragmentation artificiel qui alimente le modèle de sévérité. Simple à implémenter, gain attendu net ; c'est une perspective. À noter : DeepSleepNet utilise un LSTM sur des séquences d'époques, ce que je n'ai pas fait.}
+
+\qa{Quelle est votre contribution propre par rapport à l'état de l'art ?}{Scientifique : comparaison systématique de trois familles sur quatre configurations avec protocole identique, et résultats nuancés sur l'empilement (comparaison au vote moyen, résultat négatif en sévérité). Technique : l'intégration de bout en bout (EDF $\to$ compte rendu archivé) avec traçabilité, ce que peu de travaux académiques livrent. Je ne propose pas de nouvelle architecture.}
+
+\qa{Quelle serait la prochaine étape si vous aviez trois mois de plus ?}{1) Ré-évaluer tout par sujets avec un protocole unique ; 2) valider sur MESA ; 3) élargir le corpus avec un chargement par blocs ; 4) lisser les transitions ; 5) exposer l'attention et la saillance ; 6) authentifier les routes d'inférence, mise en conformité RGPD et tests automatisés ; 7) étude de concordance avec un technicien.}
+
+\qa{Que feriez-vous différemment ?}{Définir dès le départ un découpage par sujets, unique et partagé par tous les modèles et ensembles, avant tout entraînement. C'est la leçon principale : « un chiffre n'a de valeur que si l'on sait exactement ce qu'il mesure ».}
+
+%=====================================================================
+\chapter{Questions rapides (réponses en une phrase)}
+%=====================================================================
+
+\begin{longtable}{@{}p{6.4cm}p{9.0cm}@{}}
+\toprule
+\textbf{Question} & \textbf{Réponse courte} \\
+\midrule
+\endhead
+Epoch (époque) en AASM vs epoch en DL ? & Époque AASM = fenêtre de 30 s ; \emph{epoch} d'entraînement = un passage complet sur les données (30 dans ce projet). Ne pas confondre. \\
+Batch size ? & 128 : nombre d'exemples par mise à jour des poids. \\
+Combien de paramètres ? & Quelques millions par réseau (le rapport parle d'« architectures de quelques millions de paramètres »). \\
+Pourquoi PyTorch ? & Écriture naturelle des architectures, accélération GPU, bonne communauté. \\
+Pourquoi pas un seul gros modèle ? & Les trois familles sont complémentaires et leurs erreurs diffèrent. \\
+Qu'est-ce qu'un logit ? & Score brut avant le softmax. \\
+Qu'est-ce que softmax ? & Transforme $K$ scores en probabilités positives de somme 1. \\
+Qu'est-ce que le z-score ? & $(x-\mu)/\sigma$ : centrer et réduire. \\
+Qu'est-ce que l'EDF ? & European Data Format : format standard d'enregistrement de signaux physiologiques. \\
+Qu'est-ce que SHHS ? & Sleep Heart Health Study : grande cohorte américaine avec polysomnographies, distribuée par le NSRR. \\
+IAH normal, léger, modéré, sévère ? & $<5$ ; 5--15 ; 15--30 ; $\ge30$. \\
+Qu'est-ce que le CPAP ? & Pression positive continue : traitement indiqué en cas d'apnée sévère. \\
+Qu'est-ce que Docker ? & Conteneurisation : chaque service tourne dans une image reproductible. \\
+Qu'est-ce que FastAPI ? & Framework Python asynchrone, validation déclarative, documentation OpenAPI automatique. \\
+Qu'est-ce qu'un JWT ? & Jeton signé contenant l'identité et l'expiration, vérifiable sans session serveur. \\
+Qu'est-ce que bcrypt ? & Fonction de hachage lente avec sel aléatoire pour mots de passe. \\
+S3 ? & Interface standard de stockage objet. \\
+Qu'est-ce que l'intégration continue ? & Chaîne automatique qui construit et teste à chaque livraison. \\
+Pourquoi des liens signés ? & Aucun fichier patient accessible par URL publique ou devinable ; accès temporaire. \\
+Qu'est-ce que le RGPD impose en plus ? & Chiffrement, droit à l'effacement, durée de conservation, base légale : non couverts ici. \\
+\bottomrule
+\end{longtable}
+
+\end{document}

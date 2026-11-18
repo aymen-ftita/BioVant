@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.8.19)  20 OCT 2026 11:54
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.8.19)  18 NOV 2026 16:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**E:/PFE/sleep/report/main.tex
-(E:/PFE/sleep/report/main.tex
+**./main.tex
+(main.tex
 LaTeX2e <2026-06-01>
 L3 programming layer <2026-06-18>
 (C:\Program Files\MiKTeX\tex/latex/base\report.cls
@@ -1366,12 +1366,44 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 Package hyperref Info: Option `colorlinks' set `true' on input line 93.
  (esprit-style.tex)
+(C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/pdfpages\pdfpages.sty
+Package: pdfpages 2026/03/30 v0.6h Insert pages of external PDF documents (AM)
+
+(C:\Program Files\MiKTeX\tex/latex/tools\calc.sty
+Package: calc 2025/03/01 v4.3b Infix arithmetic (KKT,FJ)
+\calc@Acount=\count561
+\calc@Bcount=\count562
+\calc@Adimen=\dimen351
+\calc@Bdimen=\dimen352
+\calc@Askip=\skip104
+\calc@Bskip=\skip105
+LaTeX Info: Redefining \setlength on input line 86.
+LaTeX Info: Redefining \addtolength on input line 87.
+\calc@Ccount=\count563
+\calc@Cskip=\skip106
+)
+\AM@pagewidth=\dimen353
+\AM@pageheight=\dimen354
+\AM@fboxrule=\dimen355
+
+(C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/pdfpages\pppdftex.def
+File: pppdftex.def 2026/03/30 v0.6h Pdfpages driver for pdfTeX (AM)
+)
+\pdfpages@includegraphics@status=\count564
+\AM@pagebox=\box112
+\AM@global@opts=\toks53
+\AM@pagecnt=\count565
+\AM@toc@title=\toks54
+\AM@lof@heading=\toks55
+\c@AM@survey=\count566
+\AM@templatesizebox=\box113
+)
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
 Package csquotes Info: Adjusting default style.
 Package csquotes Info: Redefining alias 'default' -> 'french'.
 LaTeX Font Info:    Trying to load font information for T1+ptm on input line 23
-6.
+7.
 
 (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/psnfss\t1ptm.fd
 File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
@@ -1379,30 +1411,30 @@ File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 Package babel Info: 'french' activates 'french' shorthands.
 (babel)             Reported on input line 13.
 
-(validation.aux) (dedicaces.aux) (remerciements.aux) (acronymes.aux)
-(introduction.aux) (chapitre1.aux) (chapitre2.aux) (chapitre3.aux)
-(chapitre4.aux) (chapitre5.aux) (conclusion.aux))
+(dedicaces.aux) (remerciements.aux) (acronymes.aux) (introduction.aux)
+(chapitre1.aux) (chapitre2.aux) (chapitre3.aux) (chapitre4.aux) (chapitre5.aux)
+(conclusion.aux))
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 236.
-LaTeX Font Info:    ... okay on input line 236.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 236.
-LaTeX Font Info:    ... okay on input line 236.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 236.
-LaTeX Font Info:    ... okay on input line 236.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 236.
-LaTeX Font Info:    ... okay on input line 236.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 236.
-LaTeX Font Info:    ... okay on input line 236.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 236.
-LaTeX Font Info:    ... okay on input line 236.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 236.
-LaTeX Font Info:    ... okay on input line 236.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 236.
-LaTeX Font Info:    ... okay on input line 236.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 236.
-LaTeX Font Info:    ... okay on input line 236.
-LaTeX Info: Redefining \degres on input line 236.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 237.
+LaTeX Font Info:    ... okay on input line 237.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 237.
+LaTeX Font Info:    ... okay on input line 237.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 237.
+LaTeX Font Info:    ... okay on input line 237.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 237.
+LaTeX Font Info:    ... okay on input line 237.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 237.
+LaTeX Font Info:    ... okay on input line 237.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 237.
+LaTeX Font Info:    ... okay on input line 237.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 237.
+LaTeX Font Info:    ... okay on input line 237.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 237.
+LaTeX Font Info:    ... okay on input line 237.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 237.
+LaTeX Font Info:    ... okay on input line 237.
+LaTeX Info: Redefining \degres on input line 237.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -1438,13 +1470,13 @@ LaTeX Info: Redefining \degres on input line 236.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Info: Redefining \microtypecontext on input line 236.
-Package microtype Info: Applying patch `item' on input line 236.
-Package microtype Info: Applying patch `toc' on input line 236.
-Package microtype Info: Applying patch `eqnum' on input line 236.
-Package microtype Info: Applying patch `footnote' on input line 236.
-Package microtype Info: Applying patch `verbatim' on input line 236.
-LaTeX Info: Redefining \microtypesetup on input line 236.
+LaTeX Info: Redefining \microtypecontext on input line 237.
+Package microtype Info: Applying patch `item' on input line 237.
+Package microtype Info: Applying patch `toc' on input line 237.
+Package microtype Info: Applying patch `eqnum' on input line 237.
+Package microtype Info: Applying patch `footnote' on input line 237.
+Package microtype Info: Applying patch `verbatim' on input line 237.
+LaTeX Info: Redefining \microtypesetup on input line 237.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -1460,17 +1492,17 @@ File: mt-ptm.cfg 2006/04/20 v1.7 microtype config. file: Times (RS)
 )
 (C:\Program Files\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count561
-\scratchdimen=\dimen351
-\scratchbox=\box112
-\nofMPsegments=\count562
-\nofMParguments=\count563
-\everyMPshowfont=\toks53
-\MPscratchCnt=\count564
-\MPscratchDim=\dimen352
-\MPnumerator=\count565
-\makeMPintoPDFobject=\count566
-\everyMPtoPDFconversion=\toks54
+\scratchcounter=\count567
+\scratchdimen=\dimen356
+\scratchbox=\box114
+\nofMPsegments=\count568
+\nofMParguments=\count569
+\everyMPshowfont=\toks56
+\MPscratchCnt=\count570
+\MPscratchDim=\dimen357
+\MPnumerator=\count571
+\makeMPintoPDFobject=\count572
+\everyMPtoPDFconversion=\toks57
 ) (C:\Program Files\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
@@ -1496,8 +1528,8 @@ File: translations-basic-dictionary-french.trsl (french translation file `trans
 lations-basic-dictionary')
 )
 Package translations Info: loading dictionary `translations-basic-dictionary' f
-or `french'. on input line 236.
-\c@lstlisting=\count567
+or `french'. on input line 237.
+\c@lstlisting=\count573
 Package biblatex Info: Trying to load language 'french'...
 Package biblatex Info: ... file 'french.lbx' found.
 
@@ -1512,27 +1544,118 @@ Package biblatex Info: Automatic encoding selection.
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'main.bbl' found.
  (main.bbl)
-Package biblatex Info: Reference section=0 on input line 236.
-Package biblatex Info: Reference segment=0 on input line 236.
-Package hyperref Info: Link coloring ON on input line 236.
+Package biblatex Info: Reference section=0 on input line 237.
+Package biblatex Info: Reference segment=0 on input line 237.
+Package hyperref Info: Link coloring ON on input line 237.
 
 (main.out) (main.out)
 \@outlinefile=\write5
 \openout5 = `main.out'.
 
+
+(C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/pdflscape\pdflscape.sty
+Package: pdflscape 2022-10-27 v0.13 Display of landscape pages in PDF
+
+(C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/pdflscape\pdflscape-nometadata
+.sty
+Package: pdflscape-nometadata 2022-10-28 v0.13 Display of landscape pages in PD
+F (HO)
+ (C:\Program Files\MiKTeX\tex/latex/graphics\lscape.sty
+Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
+)
+Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
+))
 Package babel Info: Main language set to 'french'.
-<images/logo_esprit.png, id=694, 1192.455pt x 597.23125pt>
+<images/cover_front.pdf, id=694, 597.50829pt x 845.0471pt>
+File: images/cover_front.pdf Graphic file (type pdf)
+<use images/cover_front.pdf>
+Package pdftex.def Info: images/cover_front.pdf  used on input line 242.
+(pdftex.def)             Requested size: 597.50682pt x 845.04504pt.
+<images/cover_front.pdf, id=696, page=1, 597.50829pt x 845.0471pt>
+File: images/cover_front.pdf Graphic file (type pdf)
+<use images/cover_front.pdf, page 1>
+Package pdftex.def Info: images/cover_front.pdf , page1 used on input line 242.
+
+(pdftex.def)             Requested size: 597.50682pt x 845.04504pt.
+File: images/cover_front.pdf Graphic file (type pdf)
+<use images/cover_front.pdf, page 1>
+Package pdftex.def Info: images/cover_front.pdf , page1 used on input line 242.
+
+(pdftex.def)             Requested size: 597.53416pt x 845.08372pt.
+File: images/cover_front.pdf Graphic file (type pdf)
+<use images/cover_front.pdf, page 1>
+Package pdftex.def Info: images/cover_front.pdf , page1 used on input line 242.
+
+(pdftex.def)             Requested size: 597.53416pt x 845.08372pt.
+File: images/cover_front.pdf Graphic file (type pdf)
+<use images/cover_front.pdf, page 1>
+Package pdftex.def Info: images/cover_front.pdf , page1 used on input line 242.
+
+(pdftex.def)             Requested size: 597.53416pt x 845.08372pt.
+File: images/cover_front.pdf Graphic file (type pdf)
+<use images/cover_front.pdf, page 1>
+Package pdftex.def Info: images/cover_front.pdf , page1 used on input line 242.
+
+(pdftex.def)             Requested size: 597.53416pt x 845.08372pt.
+ [1
+
+
+ <./images/cover_front.pdf>]
+<images/signature.pdf, id=714, 614.77678pt x 845.07718pt>
+File: images/signature.pdf Graphic file (type pdf)
+<use images/signature.pdf>
+Package pdftex.def Info: images/signature.pdf  used on input line 253.
+(pdftex.def)             Requested size: 614.77527pt x 845.07512pt.
+<images/signature.pdf, id=716, page=1, 614.77678pt x 845.07718pt>
+File: images/signature.pdf Graphic file (type pdf)
+<use images/signature.pdf, page 1>
+Package pdftex.def Info: images/signature.pdf , page1 used on input line 253.
+(pdftex.def)             Requested size: 614.77527pt x 845.07512pt.
+File: images/signature.pdf Graphic file (type pdf)
+<use images/signature.pdf, page 1>
+Package pdftex.def Info: images/signature.pdf , page1 used on input line 253.
+(pdftex.def)             Requested size: 598.2558pt x 822.36732pt.
+File: images/signature.pdf Graphic file (type pdf)
+<use images/signature.pdf, page 1>
+Package pdftex.def Info: images/signature.pdf , page1 used on input line 253.
+(pdftex.def)             Requested size: 598.2558pt x 822.36732pt.
+File: images/signature.pdf Graphic file (type pdf)
+<use images/signature.pdf, page 1>
+Package pdftex.def Info: images/signature.pdf , page1 used on input line 253.
+(pdftex.def)             Requested size: 598.2558pt x 822.36732pt.
+<images/logo_esprit.png, id=717, 1192.455pt x 597.23125pt>
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 250.
-(pdftex.def)             Requested size: 191.20169pt x 95.75943pt.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 253.
+(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
+File: images/signature.pdf Graphic file (type pdf)
+<use images/signature.pdf, page 1>
+Package pdftex.def Info: images/signature.pdf , page1 used on input line 253.
+(pdftex.def)             Requested size: 598.2558pt x 822.36732pt.
+ [2
 
+ <./images/logo_esprit.png> <./images/signature.pdf>]
+\openout2 = `dedicaces.aux'.
+
+
+(dedicaces.tex)
+File: images/logo_esprit.png Graphic file (type png)
+<use images/logo_esprit.png>
+Package pdftex.def Info: images/logo_esprit.png  used on input line 254.
+(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
+ [3
+
+
+{C:/Users/aymen/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Program Fi
+les/MiKTeX/fonts/enc/dvips/base/8r.enc}]
+\openout2 = `remerciements.aux'.
+
+ (remerciements.tex
 (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/microtype\mt-cmr.cfg
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 250
-.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 9.
 
 (C:\Program Files\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
@@ -1540,67 +1663,28 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/microtype\mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 250
-.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 9.
 
 (C:\Program Files\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/microtype\mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
-)
-<images/cni_logo.jpg, id=696, 225.84375pt x 112.92188pt>
-File: images/cni_logo.jpg Graphic file (type jpg)
-<use images/cni_logo.jpg>
-Package pdftex.def Info: images/cni_logo.jpg  used on input line 250.
-(pdftex.def)             Requested size: 72.84071pt x 36.42003pt.
- [1
-
-{C:/Users/aymen/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Program Fi
-les/MiKTeX/fonts/enc/dvips/base/8r.enc} <./images/logo_esprit.png> <./images/cn
-i_logo.jpg>]
-\openout2 = `validation.aux'.
-
- (validation.tex)
+))
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 261.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 255.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [2
+
+[4
 
 
 
-]
-\openout2 = `dedicaces.aux'.
 
- (dedicaces.tex)
+] (main.toc
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 262.
-(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [3
-
-
-
-
-]
-\openout2 = `remerciements.aux'.
-
- (remerciements.tex)
-File: images/logo_esprit.png Graphic file (type png)
-<use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 263.
-(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [4
-
-
-
-
-]
-(main.toc
-File: images/logo_esprit.png Graphic file (type png)
-<use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 40.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 32.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
  [5
 
@@ -1609,27 +1693,32 @@ Package pdftex.def Info: images/logo_esprit.png  used on input line 40.
 ]
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 100.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 76.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
  [6]
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 167.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 141.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [7])
+ [7]
+File: images/logo_esprit.png Graphic file (type png)
+<use images/logo_esprit.png>
+Package pdftex.def Info: images/logo_esprit.png  used on input line 183.
+(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
+ [8])
 \tf@toc=\write6
 \openout6 = `main.toc'.
 
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 266.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 258.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [8] (main.lof
+ [9] (main.lof
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 46.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 39.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [9
+ [10
 
 
 ])
@@ -1638,14 +1727,14 @@ Package pdftex.def Info: images/logo_esprit.png  used on input line 46.
 
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 269.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 261.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [10] (main.lot
+ [11] (main.lot
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 46.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 39.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [11
+ [12
 
 
 ])
@@ -1654,35 +1743,35 @@ Package pdftex.def Info: images/logo_esprit.png  used on input line 46.
 
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 272.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 264.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [12]
+
+[13]
 \openout2 = `acronymes.aux'.
 
-
-(acronymes.tex
+ (acronymes.tex
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 83.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 61.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [13
+ [14
 
 
 
 ])
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 274.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 266.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [14]
+ [15]
 \openout2 = `introduction.aux'.
 
  (introduction.tex)
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 279.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 271.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [15
+ [16
 
 
 
@@ -1707,9 +1796,9 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 91.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 84.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[16
+[17
 
 
 
@@ -1722,10 +1811,10 @@ File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 182.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 130.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
 
-[17]
+[18]
 
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 259.
@@ -1734,64 +1823,70 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 259.
 
-<images/polysomnogramme.png, id=1174, 788.82706pt x 317.988pt>
+File: images/logo_esprit.png Graphic file (type png)
+<use images/logo_esprit.png>
+Package pdftex.def Info: images/logo_esprit.png  used on input line 262.
+(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
+[19]
+<images/polysomnogramme.png, id=1201, 788.82706pt x 317.988pt>
 File: images/polysomnogramme.png Graphic file (type png)
 <use images/polysomnogramme.png>
 Package pdftex.def Info: images/polysomnogramme.png  used on input line 274.
 (pdftex.def)             Requested size: 455.24411pt x 183.51611pt.
 
-LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 279.
-
 
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 279.
 
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 279.
+
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 282.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 308.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[18]
+[20 <./images/polysomnogramme.png>]
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 336.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 367.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [19 <./images/polysomnogramme.png>]
+ [21]
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 413.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 420.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [20]
-<images/logos/noxturnal.png, id=1213, 227.85126pt x 37.64063pt>
+ [22]
+<images/logos/noxturnal.png, id=1244, 227.85126pt x 37.64063pt>
 File: images/logos/noxturnal.png Graphic file (type png)
 <use images/logos/noxturnal.png>
 Package pdftex.def Info: images/logos/noxturnal.png  used on input line 467.
 (pdftex.def)             Requested size: 56.90356pt x 9.40036pt.
-<images/logos/sleepware.png, id=1214, 963.6pt x 192.72pt>
+<images/logos/sleepware.png, id=1245, 963.6pt x 192.72pt>
 File: images/logos/sleepware.png Graphic file (type png)
 <use images/logos/sleepware.png>
 Package pdftex.def Info: images/logos/sleepware.png  used on input line 470.
 (pdftex.def)             Requested size: 56.90189pt x 11.38037pt.
-<images/logos/profusion.png, id=1215, 1552.80125pt x 263.98625pt>
+<images/logos/profusion.png, id=1246, 1552.80125pt x 263.98625pt>
 File: images/logos/profusion.png Graphic file (type png)
 <use images/logos/profusion.png>
 Package pdftex.def Info: images/logos/profusion.png  used on input line 473.
 (pdftex.def)             Requested size: 56.88882pt x 9.67146pt.
-<images/logos/sleepworks.png, id=1216, 1215.54124pt x 375.4025pt>
+<images/logos/sleepworks.png, id=1247, 1215.54124pt x 375.4025pt>
 File: images/logos/sleepworks.png Graphic file (type png)
 <use images/logos/sleepworks.png>
 Package pdftex.def Info: images/logos/sleepworks.png  used on input line 476.
 (pdftex.def)             Requested size: 56.90416pt x 17.57404pt.
-<images/logos/ensosleep.png, id=1217, 894.34125pt x 166.6225pt>
+<images/logos/ensosleep.png, id=1248, 894.34125pt x 166.6225pt>
 File: images/logos/ensosleep.png Graphic file (type png)
 <use images/logos/ensosleep.png>
 Package pdftex.def Info: images/logos/ensosleep.png  used on input line 479.
 (pdftex.def)             Requested size: 56.89238pt x 10.59947pt.
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 501.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 489.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [21 <./images/logos/noxturnal.png> <./images/logos/sleepware.png> <./images/lo
+ [23 <./images/logos/noxturnal.png> <./images/logos/sleepware.png> <./images/lo
 gos/profusion.png (PNG copy)> <./images/logos/sleepworks.png> <./images/logos/e
 nsosleep.png>]
 Overfull \hbox (3.15775pt too wide) in paragraph at lines 545--545
@@ -1802,12 +1897,12 @@ File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
 Package pdftex.def Info: images/logo_esprit.png  used on input line 597.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[22]
+[24]
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 653.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 640.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [23]
+ [25]
 
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 723.
@@ -1816,21 +1911,25 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 723.
 
-)
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 281.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 726.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [24]
+[26])
+File: images/logo_esprit.png Graphic file (type png)
+<use images/logo_esprit.png>
+Package pdftex.def Info: images/logo_esprit.png  used on input line 273.
+(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
+ [27]
 \openout2 = `chapitre2.aux'.
 
  (chapitre2.tex
 Chapitre 2.
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 123.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 77.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[25
+[28
 
 
 
@@ -1840,70 +1939,80 @@ File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
 Package pdftex.def Info: images/logo_esprit.png  used on input line 191.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [26]
-
-LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 239.
-
-
-LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 239.
-
-
-LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 239.
-
-
-LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 239.
-
-File: images/logo_esprit.png Graphic file (type png)
-<use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 247.
-(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[27]
-
-LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 276.
-
-
-LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 276.
-
-File: images/logo_esprit.png Graphic file (type png)
-<use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 318.
-(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[28]
-File: images/logo_esprit.png Graphic file (type png)
-<use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 372.
-(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
  [29]
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 237.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 237.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 237.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 237.
+
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 495.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 240.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [30]
+[30]
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 274.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 274.
+
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 495.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 316.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [31]
-Overfull \hbox (4.66756pt too wide) in paragraph at lines 640--644
+[31]
+File: images/logo_esprit.png Graphic file (type png)
+<use images/logo_esprit.png>
+Package pdftex.def Info: images/logo_esprit.png  used on input line 351.
+(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
+ [32]
+File: images/logo_esprit.png Graphic file (type png)
+<use images/logo_esprit.png>
+Package pdftex.def Info: images/logo_esprit.png  used on input line 493.
+(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
+ [33]
+File: images/logo_esprit.png Graphic file (type png)
+<use images/logo_esprit.png>
+Package pdftex.def Info: images/logo_esprit.png  used on input line 493.
+(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
+ [34]
+File: images/logo_esprit.png Graphic file (type png)
+<use images/logo_esprit.png>
+Package pdftex.def Info: images/logo_esprit.png  used on input line 493.
+(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
+ [35]
+File: images/logo_esprit.png Graphic file (type png)
+<use images/logo_esprit.png>
+Package pdftex.def Info: images/logo_esprit.png  used on input line 498.
+(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
+ [36]
+Overfull \hbox (4.66756pt too wide) in paragraph at lines 638--642
  [][] 
  []
 
 
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 644.
+(Font)              using `T1/ptm/m/sc' instead on input line 642.
 
 
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 644.
+(Font)              using `T1/ptm/m/sc' instead on input line 642.
 
 LaTeX Font Info:    Trying to load font information for T1+pcr on input line 65
-7.
+5.
 (C:\Users\aymen\AppData\Roaming\MiKTeX\tex/latex/psnfss\t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 )
@@ -1912,139 +2021,144 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 
-Underfull \hbox (badness 1629) in paragraph at lines 659--660
+Underfull \hbox (badness 1629) in paragraph at lines 657--658
 []\T1/pcr/m/n/10 users ($[]$, email, hashed_password, role, first_name, last_na
 me, 
  []
 
 
-Underfull \hbox (badness 4048) in paragraph at lines 663--664
+Underfull \hbox (badness 4048) in paragraph at lines 661--662
 []\T1/pcr/m/n/10 psgs ($[]$, #patient_id, date, severity, report_data, edf_url,
  
  []
 
 
-Underfull \hbox (badness 4168) in paragraph at lines 668--669
+Underfull \hbox (badness 4168) in paragraph at lines 666--667
 []\T1/pcr/m/n/10 file_conversations ($[]$, #psg_id, file_type, #doctor_one_id, 
 
  []
 
 
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 680.
+(Font)              using `T1/ptm/m/sc' instead on input line 678.
 
 
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 680.
+(Font)              using `T1/ptm/m/sc' instead on input line 678.
 
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 683.
-(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[32]
-File: images/logo_esprit.png Graphic file (type png)
-<use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 746.
-(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [33]
-File: images/logo_esprit.png Graphic file (type png)
-<use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 806.
-(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [34]
-
-LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 863.
-
-
-LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 863.
-
-File: images/logo_esprit.png Graphic file (type png)
-<use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 908.
-(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[35]
-<images/architecture.jpeg, id=1372, 687.56876pt x 1606.0pt>
-File: images/architecture.jpeg Graphic file (type jpg)
-<use images/architecture.jpeg>
-Package pdftex.def Info: images/architecture.jpeg  used on input line 917.
-(pdftex.def)             Requested size: 141.29872pt x 330.05214pt.
-
-
-LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 920.
-
-
-LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 920.
-
-
-LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 992.
-
-
-LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 992.
-
-File: images/logo_esprit.png Graphic file (type png)
-<use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 995.
-(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[36 <./images/architecture.jpeg>]
-
-LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 1056.
-
-
-LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 1056.
-
-File: images/logo_esprit.png Graphic file (type png)
-<use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 1091.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 681.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
 [37]
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 1154.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 744.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
  [38]
+File: images/logo_esprit.png Graphic file (type png)
+<use images/logo_esprit.png>
+Package pdftex.def Info: images/logo_esprit.png  used on input line 789.
+(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
+ [39]
 
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 1224.
-
-
-LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 1224.
-
-
-LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 1288.
+(Font)              using `T1/ptm/m/sc' instead on input line 861.
 
 
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 1288.
+(Font)              using `T1/ptm/m/sc' instead on input line 861.
+
+File: images/logo_esprit.png Graphic file (type png)
+<use images/logo_esprit.png>
+Package pdftex.def Info: images/logo_esprit.png  used on input line 906.
+(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
+[40]
+<images/architecture.jpeg, id=1415, 687.56876pt x 1606.0pt>
+File: images/architecture.jpeg Graphic file (type jpg)
+<use images/architecture.jpeg>
+Package pdftex.def Info: images/architecture.jpeg  used on input line 915.
+(pdftex.def)             Requested size: 141.29872pt x 330.05214pt.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 918.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 918.
+
+File: images/logo_esprit.png Graphic file (type png)
+<use images/logo_esprit.png>
+Package pdftex.def Info: images/logo_esprit.png  used on input line 936.
+(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
+[41 <./images/architecture.jpeg>]
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 990.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 990.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 1054.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 1054.
+
+File: images/logo_esprit.png Graphic file (type png)
+<use images/logo_esprit.png>
+Package pdftex.def Info: images/logo_esprit.png  used on input line 1057.
+(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
+[42]
+File: images/logo_esprit.png Graphic file (type png)
+<use images/logo_esprit.png>
+Package pdftex.def Info: images/logo_esprit.png  used on input line 1152.
+(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
+ [43]
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 1222.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 1222.
+
+File: images/logo_esprit.png Graphic file (type png)
+<use images/logo_esprit.png>
+Package pdftex.def Info: images/logo_esprit.png  used on input line 1225.
+(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
+[44]
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 1286.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 1286.
 
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
 Package pdftex.def Info: images/logo_esprit.png  used on input line 1291.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[39])
+[45])
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 282.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 274.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [40]
+ [46]
 \openout2 = `chapitre3.aux'.
 
  (chapitre3.tex
 Chapitre 3.
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 70.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 55.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[41
+[47
 
 
 
@@ -2061,6 +2175,11 @@ Overfull \vbox (9.6598pt too high) detected at line 104
 Overfull \vbox (9.6598pt too high) detected at line 113
  []
 
+File: images/logo_esprit.png Graphic file (type png)
+<use images/logo_esprit.png>
+Package pdftex.def Info: images/logo_esprit.png  used on input line 116.
+(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
+[48]
 
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 150.
@@ -2071,13 +2190,13 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 152.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 174.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[42]
-\pgf@layerbox@umlsd@background=\box113
-\pgf@layerboxsaved@umlsd@background=\box114
-\pgf@layerbox@umlsd@threadlayer=\box115
-\pgf@layerboxsaved@umlsd@threadlayer=\box116
+[49]
+\pgf@layerbox@umlsd@background=\box115
+\pgf@layerboxsaved@umlsd@background=\box116
+\pgf@layerbox@umlsd@threadlayer=\box117
+\pgf@layerboxsaved@umlsd@threadlayer=\box118
 
 
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
@@ -2087,11 +2206,7 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 212.
 
-File: images/logo_esprit.png Graphic file (type png)
-<use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 214.
-(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[43]
+
 Overfull \hbox (58.7033pt too wide) in paragraph at lines 253--256
  [][] 
  []
@@ -2106,9 +2221,14 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 287.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 258.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[44]
+[50]
+File: images/logo_esprit.png Graphic file (type png)
+<use images/logo_esprit.png>
+Package pdftex.def Info: images/logo_esprit.png  used on input line 303.
+(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
+ [51]
 
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 396.
@@ -2121,7 +2241,7 @@ File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
 Package pdftex.def Info: images/logo_esprit.png  used on input line 405.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[45]
+[52]
 Overfull \vbox (9.6598pt too high) detected at line 476
  []
 
@@ -2133,7 +2253,7 @@ File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
 Package pdftex.def Info: images/logo_esprit.png  used on input line 491.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[46]
+[53]
 
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 525.
@@ -2144,9 +2264,9 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 548.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 528.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[47]
+[54]
 
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 590.
@@ -2157,9 +2277,9 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 597.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 593.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[48]
+[55]
 Overfull \hbox (5.48782pt too wide) in paragraph at lines 649--652
  [][] 
  []
@@ -2172,19 +2292,19 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 652.
 
-
-LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 703.
-
-
-LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 703.
-
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 715.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 662.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[49]
+[56]
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 703.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 703.
+
 
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 751.
@@ -2195,10 +2315,15 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 840.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 766.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[50]
-<images/resultats/curves_CNN_5ch_3cls.png, id=1510, 1076.1003pt x 286.1892pt>
+[57]
+File: images/logo_esprit.png Graphic file (type png)
+<use images/logo_esprit.png>
+Package pdftex.def Info: images/logo_esprit.png  used on input line 849.
+(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
+ [58]
+<images/resultats/curves_CNN_5ch_3cls.png, id=1563, 1076.1003pt x 286.1892pt>
 File: images/resultats/curves_CNN_5ch_3cls.png Graphic file (type png)
 <use images/resultats/curves_CNN_5ch_3cls.png>
 Package pdftex.def Info: images/resultats/curves_CNN_5ch_3cls.png  used on inpu
@@ -2217,20 +2342,25 @@ File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
 Package pdftex.def Info: images/logo_esprit.png  used on input line 905.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[51]
-<images/resultats/cm_CNN_5ch_3cls.png, id=1525, 361.35pt x 289.08pt>
+[59]
+File: images/logo_esprit.png Graphic file (type png)
+<use images/logo_esprit.png>
+Package pdftex.def Info: images/logo_esprit.png  used on input line 968.
+(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
+ [60 <./images/resultats/curves_CNN_5ch_3cls.png>]
+<images/resultats/cm_CNN_5ch_3cls.png, id=1588, 361.35pt x 289.08pt>
 File: images/resultats/cm_CNN_5ch_3cls.png Graphic file (type png)
 <use images/resultats/cm_CNN_5ch_3cls.png>
 Package pdftex.def Info: images/resultats/cm_CNN_5ch_3cls.png  used on input li
 ne 977.
 (pdftex.def)             Requested size: 147.95294pt x 118.36035pt.
-<images/resultats/cm_LSTM_5ch_3cls.png, id=1526, 361.35pt x 289.08pt>
+<images/resultats/cm_LSTM_5ch_3cls.png, id=1589, 361.35pt x 289.08pt>
 File: images/resultats/cm_LSTM_5ch_3cls.png Graphic file (type png)
 <use images/resultats/cm_LSTM_5ch_3cls.png>
 Package pdftex.def Info: images/resultats/cm_LSTM_5ch_3cls.png  used on input l
 ine 983.
 (pdftex.def)             Requested size: 147.95294pt x 118.36035pt.
-<images/resultats/cm_Transformer_5ch_3cls.png, id=1527, 361.35pt x 289.08pt>
+<images/resultats/cm_Transformer_5ch_3cls.png, id=1590, 361.35pt x 289.08pt>
 File: images/resultats/cm_Transformer_5ch_3cls.png Graphic file (type png)
 <use images/resultats/cm_Transformer_5ch_3cls.png>
 Package pdftex.def Info: images/resultats/cm_Transformer_5ch_3cls.png  used on 
@@ -2247,10 +2377,11 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 996.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 1051.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[52 <./images/resultats/curves_CNN_5ch_3cls.png>]
-<images/resultats/cm_CNN_5ch_5cls.png, id=1543, 433.62pt x 361.35pt>
+[61 <./images/resultats/cm_CNN_5ch_3cls.png> <./images/resultats/cm_LSTM_5ch_3c
+ls.png> <./images/resultats/cm_Transformer_5ch_3cls.png>]
+<images/resultats/cm_CNN_5ch_5cls.png, id=1605, 433.62pt x 361.35pt>
 File: images/resultats/cm_CNN_5ch_5cls.png Graphic file (type png)
 <use images/resultats/cm_CNN_5ch_5cls.png>
 Package pdftex.def Info: images/resultats/cm_CNN_5ch_5cls.png  used on input li
@@ -2267,29 +2398,28 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 1068.
-(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[53 <./images/resultats/cm_CNN_5ch_3cls.png> <./images/resultats/cm_LSTM_5ch_3c
-ls.png> <./images/resultats/cm_Transformer_5ch_3cls.png>]
-File: images/logo_esprit.png Graphic file (type png)
-<use images/logo_esprit.png>
 Package pdftex.def Info: images/logo_esprit.png  used on input line 1124.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [54 <./images/resultats/cm_CNN_5ch_5cls.png>])
+[62 <./images/resultats/cm_CNN_5ch_5cls.png>])
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 283.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 275.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [55]
+ [63]
+File: images/logo_esprit.png Graphic file (type png)
+<use images/logo_esprit.png>
+Package pdftex.def Info: images/logo_esprit.png  used on input line 275.
+(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
+ [64]
 \openout2 = `chapitre4.aux'.
 
  (chapitre4.tex
 Chapitre 4.
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 64.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 56.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[56
+[65
 
 
 
@@ -2302,24 +2432,24 @@ Overfull \vbox (9.6598pt too high) detected at line 98
 Overfull \vbox (9.6598pt too high) detected at line 106
  []
 
-
-LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 143.
-
-
-LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 143.
-
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 146.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 109.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[57]
+[66]
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 143.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 143.
+
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
 Package pdftex.def Info: images/logo_esprit.png  used on input line 170.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [58]
+[67]
 
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 208.
@@ -2328,7 +2458,11 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 208.
 
-
+File: images/logo_esprit.png Graphic file (type png)
+<use images/logo_esprit.png>
+Package pdftex.def Info: images/logo_esprit.png  used on input line 211.
+(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
+[68]
 Overfull \hbox (5.08676pt too wide) in paragraph at lines 244--244
  [][]\T1/ptm/m/n/10.95 (-20) Concaténation 
  []
@@ -2348,10 +2482,10 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 277.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 310.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[59]
-<images/resultats/kappa_comparison_5ch_5cls.png, id=1603, 650.43pt x 289.08pt>
+[69]
+<images/resultats/kappa_comparison_5ch_5cls.png, id=1666, 650.43pt x 289.08pt>
 File: images/resultats/kappa_comparison_5ch_5cls.png Graphic file (type png)
 <use images/resultats/kappa_comparison_5ch_5cls.png>
 Package pdftex.def Info: images/resultats/kappa_comparison_5ch_5cls.png  used o
@@ -2366,7 +2500,7 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 340.
 
-<images/resultats/cm_stacking_5ch_3cls.png, id=1604, 361.35pt x 289.08pt>
+<images/resultats/cm_stacking_5ch_3cls.png, id=1667, 361.35pt x 289.08pt>
 File: images/resultats/cm_stacking_5ch_3cls.png Graphic file (type png)
 <use images/resultats/cm_stacking_5ch_3cls.png>
 Package pdftex.def Info: images/resultats/cm_stacking_5ch_3cls.png  used on inp
@@ -2382,9 +2516,9 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 392.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 362.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[60 <./images/resultats/kappa_comparison_5ch_5cls.png> <./images/resultats/cm_s
+[70 <./images/resultats/kappa_comparison_5ch_5cls.png> <./images/resultats/cm_s
 tacking_5ch_3cls.png>]
 
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
@@ -2394,7 +2528,12 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 444.
 
-<images/resultats/feature_distributions.png, id=1620, 1582.2312pt x 640.3122pt>
+File: images/logo_esprit.png Graphic file (type png)
+<use images/logo_esprit.png>
+Package pdftex.def Info: images/logo_esprit.png  used on input line 455.
+(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
+[71]
+<images/resultats/feature_distributions.png, id=1691, 1582.2312pt x 640.3122pt>
 
 File: images/resultats/feature_distributions.png Graphic file (type png)
 <use images/resultats/feature_distributions.png>
@@ -2402,46 +2541,33 @@ Package pdftex.def Info: images/resultats/feature_distributions.png  used on in
 put line 464.
 (pdftex.def)             Requested size: 364.19667pt x 147.38594pt.
 
-LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 466.
-
 
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 466.
 
-File: images/logo_esprit.png Graphic file (type png)
-<use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 469.
-(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[61]
-<images/resultats/model_comparison.png, id=1632, 642.7212pt x 352.6776pt>
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 466.
+
+<images/resultats/model_comparison.png, id=1693, 642.7212pt x 352.6776pt>
 File: images/resultats/model_comparison.png Graphic file (type png)
 <use images/resultats/model_comparison.png>
 Package pdftex.def Info: images/resultats/model_comparison.png  used on input l
 ine 477.
 (pdftex.def)             Requested size: 400.61703pt x 219.8256pt.
 
-
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 480.
 
 
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 480.
-
-
-Overfull \hbox (2.22832pt too wide) in paragraph at lines 484--489
-[]\T1/ptm/m/n/10 (-20) La fo-rêt aléa-toire [[][]52[][]] ob-tient le meilleur s
-core ($\OT1/cmr/m/n/10 0[]558$\T1/ptm/m/n/10 (-20) ), sui-vie de près par XG-Bo
-ost [[][]29[][]] ($\OT1/cmr/m/n/10 0[]552$\T1/ptm/m/n/10 (-20) ) et LightGBM [[
-][]30[][]]
- []
 
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 519.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 490.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[62 <./images/resultats/feature_distributions.png> <./images/resultats/model_co
+[72 <./images/resultats/feature_distributions.png> <./images/resultats/model_co
 mparison.png>]
 
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
@@ -2451,33 +2577,39 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 583.
 
-<images/resultats/roc_curves.png, id=1651, 1004.0712pt x 427.3566pt>
+File: images/logo_esprit.png Graphic file (type png)
+<use images/logo_esprit.png>
+Package pdftex.def Info: images/logo_esprit.png  used on input line 586.
+(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
+[73]
+<images/resultats/roc_curves.png, id=1722, 1004.0712pt x 427.3566pt>
 File: images/resultats/roc_curves.png Graphic file (type png)
 <use images/resultats/roc_curves.png>
 Package pdftex.def Info: images/resultats/roc_curves.png  used on input line 60
 4.
 (pdftex.def)             Requested size: 327.7763pt x 139.50873pt.
 
+
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 606.
 
 
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 606.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 674.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 674.
 
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 609.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 677.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[63]
-
-LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 674.
-
-
-LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 674.
-
+[74 <./images/resultats/roc_curves.png>]
 
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 740.
@@ -2488,10 +2620,10 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 743.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 750.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[64 <./images/resultats/roc_curves.png>]
-<images/resultats/xgb_feature_importance.png, id=1685, 714.9912pt x 569.0058pt>
+[75]
+<images/resultats/xgb_feature_importance.png, id=1752, 714.9912pt x 569.0058pt>
 
 File: images/resultats/xgb_feature_importance.png Graphic file (type png)
 <use images/resultats/xgb_feature_importance.png>
@@ -2509,14 +2641,14 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 769.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 789.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[65 <./images/resultats/xgb_feature_importance.png>]
+[76 <./images/resultats/xgb_feature_importance.png>]
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 845.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 848.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [66]
+ [77]
 Overfull \vbox (9.6598pt too high) detected at line 878
  []
 
@@ -2540,20 +2672,20 @@ File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
 Package pdftex.def Info: images/logo_esprit.png  used on input line 932.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[67]
-
-LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 991.
-
-
-LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 991.
-
+[78]
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 993.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 954.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[68]
+ [79]
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 991.
+
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 991.
+
 
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 1033.
@@ -2564,15 +2696,15 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 1048.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 1040.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[69]
+[80]
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 1119.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 1106.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [70]
-<images/captures/swagger.png, id=1728, 1577.14218pt x 947.03813pt>
+ [81]
+<images/captures/swagger.png, id=1793, 1577.14218pt x 947.03813pt>
 File: images/captures/swagger.png Graphic file (type png)
 <use images/captures/swagger.png>
 Package pdftex.def Info: images/captures/swagger.png  used on input line 1120.
@@ -2588,10 +2720,10 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 1206.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 1159.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[71 <./images/captures/swagger.png>]
-<images/captures/wizard-1.png, id=1740, 753.5653pt x 444.15938pt>
+[82 <./images/captures/swagger.png>]
+<images/captures/wizard-1.png, id=1805, 753.5653pt x 444.15938pt>
 File: images/captures/wizard-1.png Graphic file (type png)
 <use images/captures/wizard-1.png>
 Package pdftex.def Info: images/captures/wizard-1.png  used on input line 1215.
@@ -2606,7 +2738,7 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 1215.
 
-<images/captures/wizard-2.png, id=1741, 755.82375pt x 406.51875pt>
+<images/captures/wizard-2.png, id=1806, 755.82375pt x 406.51875pt>
 File: images/captures/wizard-2.png Graphic file (type png)
 <use images/captures/wizard-2.png>
 Package pdftex.def Info: images/captures/wizard-2.png  used on input line 1215.
@@ -2620,32 +2752,32 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 1215.
 
-<images/captures/progression.png, id=1743, 750.55406pt x 501.37312pt>
+File: images/logo_esprit.png Graphic file (type png)
+<use images/logo_esprit.png>
+Package pdftex.def Info: images/logo_esprit.png  used on input line 1216.
+(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
+[83]
+<images/captures/progression.png, id=1812, 750.55406pt x 501.37312pt>
 File: images/captures/progression.png Graphic file (type png)
 <use images/captures/progression.png>
 Package pdftex.def Info: images/captures/progression.png  used on input line 12
 22.
 (pdftex.def)             Requested size: 391.51021pt x 261.5341pt.
 
-LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 1222.
-
 
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 1222.
 
-File: images/logo_esprit.png Graphic file (type png)
-<use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 1223.
-(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[72 <./images/captures/wizard-1.png> <./images/captures/wizard-2.png>]
-<images/captures/resultats.png, id=1751, 1191.7022pt x 955.31906pt>
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 1222.
+
+<images/captures/resultats.png, id=1814, 1191.7022pt x 955.31906pt>
 File: images/captures/resultats.png Graphic file (type png)
 <use images/captures/resultats.png>
 Package pdftex.def Info: images/captures/resultats.png  used on input line 1231
 .
 (pdftex.def)             Requested size: 418.82375pt x 335.73691pt.
-
 
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 1231.
@@ -2658,8 +2790,9 @@ File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
 Package pdftex.def Info: images/logo_esprit.png  used on input line 1232.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[73 <./images/captures/progression.png>]
-<images/captures/custom-osa.png, id=1759, 978.65625pt x 857.45343pt>
+[84 <./images/captures/wizard-1.png> <./images/captures/wizard-2.png> <./images
+/captures/progression.png>]
+<images/captures/custom-osa.png, id=1823, 978.65625pt x 857.45343pt>
 File: images/captures/custom-osa.png Graphic file (type png)
 <use images/captures/custom-osa.png>
 Package pdftex.def Info: images/captures/custom-osa.png  used on input line 123
@@ -2678,26 +2811,26 @@ File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
 Package pdftex.def Info: images/logo_esprit.png  used on input line 1239.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[74 <./images/captures/resultats.png>]
+[85 <./images/captures/resultats.png>]
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
 Package pdftex.def Info: images/logo_esprit.png  used on input line 1290.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [75 <./images/captures/custom-osa.png>])
+ [86 <./images/captures/custom-osa.png>])
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 284.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 276.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[76]
+[87]
 \openout2 = `chapitre5.aux'.
 
  (chapitre5.tex
 Chapitre 5.
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 102.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 54.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[77
+[88
 
 
 
@@ -2713,9 +2846,14 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 158.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 138.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[78]
+[89]
+File: images/logo_esprit.png Graphic file (type png)
+<use images/logo_esprit.png>
+Package pdftex.def Info: images/logo_esprit.png  used on input line 167.
+(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
+ [90]
 
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 207.
@@ -2726,10 +2864,10 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 220.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 247.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[79]
-<images/captures/admin-medecins.png, id=1801, 1205.2528pt x 956.07187pt>
+[91]
+<images/captures/admin-medecins.png, id=1870, 1205.2528pt x 956.07187pt>
 File: images/captures/admin-medecins.png Graphic file (type png)
 <use images/captures/admin-medecins.png>
 Package pdftex.def Info: images/captures/admin-medecins.png  used on input line
@@ -2744,7 +2882,7 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 259.
 
-<images/captures/admin-hopitaux.png, id=1802, 1190.94937pt x 444.15938pt>
+<images/captures/admin-hopitaux.png, id=1871, 1190.94937pt x 444.15938pt>
 File: images/captures/admin-hopitaux.png Graphic file (type png)
 <use images/captures/admin-hopitaux.png>
 Package pdftex.def Info: images/captures/admin-hopitaux.png  used on input line
@@ -2760,10 +2898,11 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 262.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 270.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[80 <./images/captures/admin-medecins.png>]
-<images/captures/audit.png, id=1809, 1194.71344pt x 959.08313pt>
+[92 <./images/captures/admin-medecins.png> <./images/captures/admin-hopitaux.pn
+g>]
+<images/captures/audit.png, id=1879, 1194.71344pt x 959.08313pt>
 File: images/captures/audit.png Graphic file (type png)
 <use images/captures/audit.png>
 Package pdftex.def Info: images/captures/audit.png  used on input line 274.
@@ -2779,9 +2918,9 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 290.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 297.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[81 <./images/captures/admin-hopitaux.png> <./images/captures/audit.png>]
+[93 <./images/captures/audit.png>]
 Overfull \vbox (9.6598pt too high) detected at line 349
  []
 
@@ -2789,7 +2928,7 @@ File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
 Package pdftex.def Info: images/logo_esprit.png  used on input line 362.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[82]
+[94]
 
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 398.
@@ -2802,7 +2941,7 @@ File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
 Package pdftex.def Info: images/logo_esprit.png  used on input line 419.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[83]
+[95]
 
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 469.
@@ -2811,32 +2950,32 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 469.
 
-<images/captures/consultation.png, id=1830, 1201.48875pt x 956.82469pt>
+File: images/logo_esprit.png Graphic file (type png)
+<use images/logo_esprit.png>
+Package pdftex.def Info: images/logo_esprit.png  used on input line 482.
+(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
+[96]
+<images/captures/consultation.png, id=1903, 1201.48875pt x 956.82469pt>
 File: images/captures/consultation.png Graphic file (type png)
 <use images/captures/consultation.png>
 Package pdftex.def Info: images/captures/consultation.png  used on input line 4
 83.
 (pdftex.def)             Requested size: 273.14923pt x 217.52466pt.
 
-LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
-(Font)              using `T1/ptm/m/sc' instead on input line 483.
-
 
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 483.
 
-File: images/logo_esprit.png Graphic file (type png)
-<use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 483.
-(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[84]
-<images/captures/rapport.png, id=1835, 1191.7022pt x 955.31906pt>
+
+LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
+(Font)              using `T1/ptm/m/sc' instead on input line 483.
+
+<images/captures/rapport.png, id=1904, 1191.7022pt x 955.31906pt>
 File: images/captures/rapport.png Graphic file (type png)
 <use images/captures/rapport.png>
 Package pdftex.def Info: images/captures/rapport.png  used on input line 497.
 (pdftex.def)             Requested size: 182.09486pt x 145.97383pt.
 
-
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 497.
 
@@ -2844,12 +2983,18 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 497.
 
-<images/captures/dark.png, id=1838, 1190.19656pt x 837.88031pt>
+File: images/logo_esprit.png Graphic file (type png)
+<use images/logo_esprit.png>
+Package pdftex.def Info: images/logo_esprit.png  used on input line 508.
+(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
+[97 <./images/captures/consultation.png> <./images/captures/rapport.png>]
+<images/captures/dark.png, id=1914, 1190.19656pt x 837.88031pt>
 File: images/captures/dark.png Graphic file (type png)
 <use images/captures/dark.png>
 Package pdftex.def Info: images/captures/dark.png  used on input line 516.
 (pdftex.def)             Requested size: 309.56265pt x 217.92046pt.
 
+
 LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 (Font)              using `T1/ptm/m/sc' instead on input line 516.
 
@@ -2859,16 +3004,10 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 517.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 556.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[85 <./images/captures/consultation.png> <./images/captures/rapport.png>]
-File: images/logo_esprit.png Graphic file (type png)
-<use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 597.
-(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-
-[86 <./images/captures/dark.png>]
-<images/captures/ci.png, id=1855, 985.43156pt x 624.83438pt>
+[98 <./images/captures/dark.png>]
+<images/captures/ci.png, id=1924, 985.43156pt x 624.83438pt>
 File: images/captures/ci.png Graphic file (type png)
 <use images/captures/ci.png>
 Package pdftex.def Info: images/captures/ci.png  used on input line 600.
@@ -2884,19 +3023,24 @@ LaTeX Font Warning: Font shape `T1/ptm/m/scit' undefined
 
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 659.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 616.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[87 <./images/captures/ci.png>]
+[99 <./images/captures/ci.png>]
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
 Package pdftex.def Info: images/logo_esprit.png  used on input line 717.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [88])
+ [100]
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 285.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 745.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [89]
+ [101])
+File: images/logo_esprit.png Graphic file (type png)
+<use images/logo_esprit.png>
+Package pdftex.def Info: images/logo_esprit.png  used on input line 277.
+(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
+ [102]
 \openout2 = `conclusion.aux'.
 
  (conclusion.tex
@@ -2906,9 +3050,9 @@ Package hyperref Warning: The anchor of a bookmark and its parent's must not
 
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 76.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 67.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[90
+[103
 
 
 
@@ -2916,25 +3060,30 @@ Package pdftex.def Info: images/logo_esprit.png  used on input line 76.
 ]
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 152.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 112.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [91])
+ [104]
+File: images/logo_esprit.png Graphic file (type png)
+<use images/logo_esprit.png>
+Package pdftex.def Info: images/logo_esprit.png  used on input line 168.
+(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
+ [105])
+File: images/logo_esprit.png Graphic file (type png)
+<use images/logo_esprit.png>
+Package pdftex.def Info: images/logo_esprit.png  used on input line 279.
+(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
+ [106]
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
 Package pdftex.def Info: images/logo_esprit.png  used on input line 287.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [92]
-File: images/logo_esprit.png Graphic file (type png)
-<use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 295.
-(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [93
+ [107
 
 
 
 
 ]
-Overfull \hbox (3.03296pt too wide) in paragraph at lines 295--295
+Overfull \hbox (3.03296pt too wide) in paragraph at lines 287--287
 []\T1/ptm/m/n/12 (-20) A. []\T1/ptm/m/sc/12 (-20) Paszke[]\T1/ptm/m/n/12 (-20) 
 , S. []\T1/ptm/m/sc/12 (-20) Gross[]\T1/ptm/m/n/12 (-20) , F. []\T1/ptm/m/sc/12
  (-20) Massa []\T1/ptm/m/n/12 (-20) et al. ^^S   Py-Torch : An Im-pe-ra-tive St
@@ -2943,68 +3092,101 @@ yle, High-Performance
 
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 295.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 287.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
-[94]
+[108]
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 295.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 287.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [95]
+ [109]
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 295.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 287.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [96]
+ [110]
 File: images/logo_esprit.png Graphic file (type png)
 <use images/logo_esprit.png>
-Package pdftex.def Info: images/logo_esprit.png  used on input line 298.
+Package pdftex.def Info: images/logo_esprit.png  used on input line 290.
 (pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
- [97] (main.aux (validation.aux) (dedicaces.aux)
-(remerciements.aux) (acronymes.aux) (introduction.aux) (chapitre1.aux)
-(chapitre2.aux) (chapitre3.aux) (chapitre4.aux) (chapitre5.aux) (conclusion.aux
-))
+ [111]
+<images/cover_back.pdf, id=1995, 597.50829pt x 845.0471pt>
+File: images/cover_back.pdf Graphic file (type pdf)
+<use images/cover_back.pdf>
+Package pdftex.def Info: images/cover_back.pdf  used on input line 291.
+(pdftex.def)             Requested size: 597.50682pt x 845.04504pt.
+<images/cover_back.pdf, id=1997, page=1, 597.50829pt x 845.0471pt>
+File: images/cover_back.pdf Graphic file (type pdf)
+<use images/cover_back.pdf, page 1>
+Package pdftex.def Info: images/cover_back.pdf , page1 used on input line 291.
+(pdftex.def)             Requested size: 597.50682pt x 845.04504pt.
+File: images/cover_back.pdf Graphic file (type pdf)
+<use images/cover_back.pdf, page 1>
+Package pdftex.def Info: images/cover_back.pdf , page1 used on input line 291.
+(pdftex.def)             Requested size: 597.53416pt x 845.08372pt.
+File: images/cover_back.pdf Graphic file (type pdf)
+<use images/cover_back.pdf, page 1>
+Package pdftex.def Info: images/cover_back.pdf , page1 used on input line 291.
+(pdftex.def)             Requested size: 597.53416pt x 845.08372pt.
+File: images/cover_back.pdf Graphic file (type pdf)
+<use images/cover_back.pdf, page 1>
+Package pdftex.def Info: images/cover_back.pdf , page1 used on input line 291.
+(pdftex.def)             Requested size: 597.53416pt x 845.08372pt.
+File: images/logo_esprit.png Graphic file (type png)
+<use images/logo_esprit.png>
+Package pdftex.def Info: images/logo_esprit.png  used on input line 291.
+(pdftex.def)             Requested size: 51.1108pt x 25.60747pt.
+File: images/cover_back.pdf Graphic file (type pdf)
+<use images/cover_back.pdf, page 1>
+Package pdftex.def Info: images/cover_back.pdf , page1 used on input line 291.
+(pdftex.def)             Requested size: 597.53416pt x 845.08372pt.
+ [112
+
+
+ <./images/cover_back.pdf>] (main.aux
+(dedicaces.aux) (remerciements.aux) (acronymes.aux) (introduction.aux)
+(chapitre1.aux) (chapitre2.aux) (chapitre3.aux) (chapitre4.aux) (chapitre5.aux)
+(conclusion.aux))
  ***********
 LaTeX2e <2026-06-01>
 L3 programming layer <2026-06-18>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: DAF6102F4061C7ADA2C074B96F00D045;31915.
+(rerunfilecheck)             Checksum: A7C0C8BD3216D4CFFFA6BAC49F506431;31915.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 51152 strings out of 467510
- 1040195 string characters out of 5418903
- 1926824 words of memory out of 5000000
- 78318 multiletter control sequences out of 15000+600000
- 781638 words of font info for 676 fonts, out of 8000000 for 9000
+ 51724 strings out of 467510
+ 1051568 string characters out of 5418903
+ 1943277 words of memory out of 5000000
+ 78995 multiletter control sequences out of 15000+600000
+ 745976 words of font info for 577 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,15n,94p,1217b,2939s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,17n,94p,1199b,2968s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Progra
 m Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKT
 eX/fonts/type1/public/amsfonts/cmextra/cmex7.pfb><C:/Program Files/MiKTeX/fonts
 /type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX/fonts/type1/publi
-c/amsfonts/cm/cmmi5.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm
-/cmmi6.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C
-:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program Fil
-es/MiKTeX/fonts/type1/public/amsfonts/cm/cmmib10.pfb><C:/Program Files/MiKTeX/f
-onts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX/fonts/type1/pu
-blic/amsfonts/cm/cmr5.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/
-cm/cmr6.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C
-:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program File
-s/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX/fon
-ts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Program Files/MiKTeX/fonts/type1/publ
-ic/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/c
-m/cmsy8.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/symbols/msam10
-.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/courier/ucrr8a.pfb><C:/Program Fi
-les/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files/MiKTeX/fonts/type
-1/urw/times/utmbi8a.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/times/utmr8a.p
-fb><C:/Program Files/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (97 pages, 8025796 bytes).
+c/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/c
+m/cmmi5.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><
+C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program Fi
+les/MiKTeX/fonts/type1/public/amsfonts/cm/cmmib10.pfb><C:/Program Files/MiKTeX/
+fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX/fonts/type1/p
+ublic/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfont
+s/cm/cmr5.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb>
+<C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Fi
+les/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX/f
+onts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Program Files/MiKTeX/fonts/type1/pu
+blic/amsfonts/cm/cmsy8.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts
+/symbols/msam10.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/courier/ucrr8a.pfb
+><C:/Program Files/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files/Mi
+KTeX/fonts/type1/urw/times/utmbi8a.pfb><C:/Program Files/MiKTeX/fonts/type1/urw
+/times/utmr8a.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (112 pages, 9173058 bytes).
 PDF statistics:
- 2119 PDF objects out of 2487 (max. 8388607)
- 469 named destinations out of 1000 (max. 500000)
- 136778 words of extra memory for PDF output out of 154059 (max. 10000000)
+ 2209 PDF objects out of 2487 (max. 8388607)
+ 483 named destinations out of 1000 (max. 500000)
+ 103026 words of extra memory for PDF output out of 106986 (max. 10000000)
 

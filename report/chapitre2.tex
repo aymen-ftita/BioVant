@@ -223,15 +223,13 @@ acteurs et le système.
   \foreach \c in {auth,comp,etab,audit,stats}
     \draw[culien] (13.15,0.6) -- (\c.east);
 
-  % Acteurs secondaires sous la frontiere, nommes sur leur droite
-  \pic[pic text={}] at (7.6,-4.35) {cuacteur};
-  \node[font=\scriptsize\bfseries,align=left,anchor=west] at (7.95,-4.85)
-       {Moteur\\d'inférence};
+  % Moteur d'inference sous le medecin, service de stockage sous la frontiere
+  \pic[pic text={Moteur\\d'inférence}] at (1.3,-2.6) {cuacteur};
   \pic[pic text={}] at (10.6,-4.35) {cuacteur};
   \node[font=\scriptsize\bfseries,align=left,anchor=west] at (10.95,-4.85)
        {Service de\\stockage};
-  \draw[culien] (7.6,-4.19) -- (ana.east);
-  \draw[culien] (7.6,-4.19) -- (osa.east);
+  \draw[culien] (1.65,-2.3) -- (ana.west);
+  \draw[culien] (1.65,-2.3) -- (osa.west);
   \draw[culien] (10.6,-4.19) -- (annot.east);
 \end{tikzpicture}
 \vspace{0.2cm}
